@@ -6,58 +6,110 @@ import {
   IconButton,
   Button,
   Typography,
+  createStyles,
+  Theme,
+  makeStyles,
+  Container,
 } from "@material-ui/core";
+import { Person } from "@material-ui/icons";
 
 import { BrandLogo } from "../../static/icons/brand-logo";
 import { Link } from "react-router-dom";
-import { useState } from "react";
+
+const paths = {
+  root: "/",
+  howItWorks: "/",
+  projects: "/",
+  creators: "/",
+  contactUs: "/",
+  dashboard: "/",
+  settings: "/",
+};
+
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    root: {
+      flexGrow: 1,
+    },
+    menuButton: {
+      marginRight: theme.spacing(2),
+    },
+    title: {
+      flexGrow: 1,
+    },
+    link: {
+      textDecoration: "none",
+      color: "inherit",
+      marginLeft: "0.7rem",
+      marginRight: "0.7rem",
+    },
+    a: {
+      "&:hover": {
+        color: "#121E31",
+      },
+      lineHeight: "27px",
+      fontSize: "18px",
+      fontFamily: "Poppins",
+      fontStyle: "normal",
+      fontWeight: 500,
+      color: "#717579",
+    },
+  })
+);
 
 export const Root = () => {
-  const initialState = {
-    paths: {
-      root: "/",
-      howItWorks: "/",
-      projects: "/",
-      creators: "/",
-      contactUs: "/",
-      dashboard: "/",
-      settings: "/",
-    },
-  };
-  const [state, setState] = useState(initialState);
-  const { paths } = state;
-
-  const style = { textDecoration: "none", color: "inherit" };
+  // const style = { textDecoration: "none", color: "inherit" };
+  const classes = useStyles();
   return (
     <div>
       <AppBar position="static" color="transparent">
-        <Toolbar variant="dense">
-          {/* Brand */}
-          <IconButton edge="start" aria-label="logo" color="inherit">
-            <BrandLogo />
-          </IconButton>
-          {/* Brand */}
+        <Container maxWidth="xl">
+          <Toolbar variant="dense">
+            {/* Brand */}
+            <IconButton edge="start" aria-label="logo" color="inherit">
+              <BrandLogo />
+            </IconButton>
+            {/* Brand */}
 
-          <Link to={paths.root} style={style}>
-            <Typography variant="h6">Home</Typography>
-          </Link>
-          <Link to={paths.howItWorks} style={style}>
-            <Typography variant="h6">How It Works</Typography>
-          </Link>
-          <Link to={paths.projects} style={style}>
-            <Typography variant="h6">Projects</Typography>
-          </Link>
-          <Link to={paths.creators} style={style}>
-            <Typography variant="h6">Creators</Typography>
-          </Link>
-          <Link to={paths.contactUs} style={style}>
-            <Typography variant="h6">Contact Us</Typography>
-          </Link>
-          <Link to={paths.root} style={style}>
-            <Button color="primary">Sign in</Button>
-            {/* <Typography variant="h6">Sign In</Typography> */}
-          </Link>
-        </Toolbar>
+            <Typography className={classes.title}></Typography>
+
+            <Link to={paths.root} className={classes.link}>
+              <Typography variant="h5" className={classes.a}>
+                Home
+              </Typography>
+            </Link>
+            <Link to={paths.howItWorks} className={classes.link}>
+              <Typography variant="h5" className={classes.a}>
+                How It Works
+              </Typography>
+            </Link>
+            <Link to={paths.projects} className={classes.link}>
+              <Typography variant="h5" className={classes.a}>
+                Projects
+              </Typography>
+            </Link>
+            <Link to={paths.creators} className={classes.link}>
+              <Typography variant="h5" className={classes.a}>
+                Creators
+              </Typography>
+            </Link>
+            <Link to={paths.contactUs} className={classes.link}>
+              <Typography variant="h5" className={classes.a}>
+                Contact Us
+              </Typography>
+            </Link>
+            <Link to={paths.root} className={classes.link}>
+              <Button
+                variant="outlined"
+                color="secondary"
+                disableElevation
+                startIcon={<Person />}
+              >
+                Sign in
+              </Button>
+            </Link>
+          </Toolbar>
+        </Container>
       </AppBar>
     </div>
   );
