@@ -6,7 +6,6 @@ import {green, lightGreen} from "@material-ui/core/colors";
 const useStyles = makeStyles((theme: Theme)=> createStyles({
   root: {
     display: "flex",
-    padding: "2vw",
     paddingTop: "150px",
   },
   left: {
@@ -51,7 +50,7 @@ const useStyles = makeStyles((theme: Theme)=> createStyles({
   },
   buttons: {
     "& > button": {
-       marginRight: theme.spacing(3),
+       marginRight: theme.spacing(5),
     },
     paddingTop: "46px",
   },
@@ -120,7 +119,7 @@ export const Hero = () => {
 
           <div className={classes.buttons}>
             <Button endIcon={<ArrowRight/>} color="secondary" variant="contained" className={classes.buttonLeft}>Learn More</Button>
-            <Button variant="outlined"className={classes.buttonRight}>Donate</Button>
+            <Button variant="outlined" className={classes.buttonRight} >Donate</Button>
           </div>
         </div>
 
