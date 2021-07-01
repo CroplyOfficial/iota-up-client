@@ -110,7 +110,7 @@ export const Hero = () => {
               Create. Share. Grow.
             </Typography>
             <Typography className={classes.subHeader}>
-              Open Community Donations.
+              Open Community Donations
             </Typography>
           </div>
 
