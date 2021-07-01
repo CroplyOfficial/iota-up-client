@@ -12,15 +12,18 @@ import {
 import { Link } from "react-router-dom";
 import { Person } from "@material-ui/icons";
 import {BrandLogo} from "../../static/icons/brand-logo";
+import {useState} from "react";
+import {ActionButton} from "./loginButton.navbar";
 
 const paths = {
   root: "/",
-  howItWorks: "/",
-  projects: "/",
-  creators: "/",
-  contactUs: "/",
-  dashboard: "/",
-  settings: "/",
+  howItWorks: "/explained",
+  projects: "/projects",
+  creators: "/creators",
+  contactUs: "/contact",
+  dashboard: "/dashboard",
+  settings: "/settings",
+  login: "/login"
 };
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -63,14 +66,21 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export const Navbar = () => {
   const classes = useStyles(); 
+
+  // TODO implement context or redux
+  const initialState = {};
+  const [userInfo, setUserInfo] = useState(initialState);
+
   return (<div>
   <AppBar position="static" color="transparent">
         <Container maxWidth="xl">
           <Toolbar variant="dense">
             {/* Brand */}
-            <IconButton edge="start" aria-label="logo" color="inherit">
-              <BrandLogo />
-            </IconButton>
+            <Link to={paths.root}>
+              <IconButton edge="start" aria-label="logo" color="inherit">
+                <BrandLogo />
+              </IconButton>
+            </Link>
             {/* Brand */}
 
             <Typography className={classes.title}></Typography>
@@ -100,16 +110,8 @@ export const Navbar = () => {
                 Contact Us
               </Typography>
             </Link>
-            <Link to={paths.root} className={classes.link}>
-              <Button
-                variant="outlined"
-                className={classes.loginButton}
-                color="primary"
-                disableElevation
-                startIcon={<Person />}
-              >
-                Sign in
-              </Button>
+            <Link to={paths.login} className={classes.link}>
+              <ActionButton />
             </Link>
           </Toolbar>
         </Container>
