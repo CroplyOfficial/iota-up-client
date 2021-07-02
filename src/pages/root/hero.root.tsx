@@ -1,7 +1,7 @@
 import React from "react";
-import { Container, Typography, Button, createStyles, makeStyles, Theme } from "@material-ui/core";
+import { Typography, Button, createStyles, makeStyles, Theme } from "@material-ui/core";
 import {ArrowRight} from "@material-ui/icons";
-import {green, lightGreen} from "@material-ui/core/colors";
+import {green} from "@material-ui/core/colors";
 
 const useStyles = makeStyles((theme: Theme)=> createStyles({
   root: {
