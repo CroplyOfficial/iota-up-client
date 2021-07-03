@@ -124,7 +124,6 @@ export const Card = (props: IProps) => {
   //TODO use user.fullName
   const fullName = "Robert Johnson";
 
-  console.log(project)
   return (
     <MaterialCard className={classes.root}>
       <CardMedia image={mainImage} title={project.title} className={classes.media} />
