@@ -1,6 +1,6 @@
-import {createStyles, makeStyles, Typography} from "@material-ui/core";
-import {useState} from "react";
+import {createStyles, makeStyles, Typography, Button } from "@material-ui/core";
 import { Card } from "../../components/card/card";
+import { IProject } from "../../interfaces/project.interface";
 
 const useStyles = makeStyles(() => createStyles({
   root: {
@@ -28,57 +28,54 @@ const useStyles = makeStyles(() => createStyles({
     display: "flex",
     flexGrow: 1,
     justifyContent: "space-around",
+  },
+  actionButton: {
+    
+  },
+  actionButtonContainer: {
+    display: "flex",
+    justifyContent: "center",
+    paddingTop: "2.5rem",
+  },
+  actionButtonSpan: {
+    fontFamily: "Poppins",
+    fontWeight: 7000,
+    fontStyle: "standard",
+    fontSize: "18px",
+    lineHeight: "27px",
+    paddingLeft: "10px",
+    paddingRight: "10px",
   }
 }))
 
-export const FeaturedSection = () => {
-  const initialState: Array<any> = [{
-    title: "IOTA MEMES - fun community meme website",
-    description: "Long project description",
-    images: ["https://live.staticflickr.com/7629/28393379471_fd6ce887c3_b.jpg"],
-    tags: [],
-    donations: 143,
-    upvotes: 2132,
-  },
-    { 
-    title: "Identity Suite - Open Source Application Blueprints",
-    description: "Long project description",
-    images: ["https://images.unsplash.com/photo-1481349518771-20055b2a7b24?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1109&q=80"],
-    tags: ["technology"],
-    donations: 143,
-    upvotes: 2132,
-  },
-    {
-    title: "IOTA Live - Deep Dive Web Series with IF & Community Members",
-    description: "Long project description",
-    images: ["https://images.unsplash.com/photo-1508138221679-760a23a2285b?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=967&q=80"],
-    tags: ["creative"],
-    donations: 143,
-    upvotes: 2132,
-  },
+interface IProps {
+  title: string | React.ReactNode;
+  subHeader: string | React.ReactNode;
+  projects: IProject[];
+  onClick: () => void;
+}
 
-
-  ]
-  const [projects, setProjects] = useState<Array<any>>(initialState);
+export const FeaturedSection = (props: IProps & React.HTMLProps<HTMLElement>) => {
+  const {title, subHeader, projects, onClick, className} = props;
 
   const classes = useStyles();
   return (
-    <div>
+    <div className={className}>
       <div className={classes.text}>
       <Typography variant="h2" className={classes.header}>
-        Projects on the UP
+        {title}
       </Typography>
       <Typography variant="h4" className={classes.subHeader}>
-        Some of the top voted and supported projects
-        <br/>
-        across all categories from the UP community
-        <br/>
-        creators, designers, and developers
+        {subHeader}
       </Typography>
       </div>
       <div className={classes.cards}>
-       {projects.map((p,i)=> <Card project={p} key={"featured-project-"+(i +1)} />)
-      }
+       { projects.map((p,i)=> <Card project={p} key={"featured-project-"+(i +1)} />)}
+      </div>
+      <div className={classes.actionButtonContainer}>
+      <Button variant="contained" className={classes.actionButton} color="secondary" onClick={onClick}> 
+        <span className={classes.actionButtonSpan}> View More </span> 
+      </Button>
       </div>
     </div>
   );
