@@ -1,5 +1,4 @@
 import {createMuiTheme, responsiveFontSizes} from "@material-ui/core";
-import {green} from "@material-ui/core/colors";
 
 const palette = {
   primary: {
