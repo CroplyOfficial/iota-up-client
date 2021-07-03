@@ -1,6 +1,6 @@
 import {
-  makeStyles, 
-  createStyles, 
+  makeStyles,
+  createStyles,
   Theme,
   AppBar,
   Toolbar,
@@ -11,20 +11,31 @@ import {
 } from "@material-ui/core";
 import { Link } from "react-router-dom";
 import { Person } from "@material-ui/icons";
-import {BrandLogo} from "../../static/icons/brand-logo";
-import {useState} from "react";
-import {ActionButton} from "./loginButton.navbar";
+import { BrandLogo } from "../../static/icons/brand-logo";
+import { useState } from "react";
+import { ActionButton } from "./loginButton.navbar";
 
-const paths = {
-  root: "/",
-  howItWorks: "/explained",
-  projects: "/projects",
-  creators: "/creators",
-  contactUs: "/contact",
-  dashboard: "/dashboard",
-  settings: "/settings",
-  login: "/login"
-};
+const paths = [
+  {
+    name: 'How it Works',
+    url: '/explained'
+  }, {
+    name: 'Projects',
+    url: '/projects'
+  }, {
+    name: 'Creators',
+    url: '/creators'
+  }, {
+    name: 'Contact Us',
+    url: '/contact'
+  }, {
+    name: 'Dashboard',
+    url: '/dashboard'
+  }, {
+    name: 'Settings',
+    url: '/settings'
+  }
+]
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -65,57 +76,42 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 export const Navbar = () => {
-  const classes = useStyles(); 
+  const classes = useStyles();
 
   // TODO implement context or redux
   const initialState = {};
   const [userInfo, setUserInfo] = useState(initialState);
 
+
   return (<div>
-  <AppBar position="static" color="transparent">
-        <Container maxWidth="xl">
-          <Toolbar variant="dense">
-            {/* Brand */}
-            <Link to={paths.root}>
-              <IconButton edge="start" aria-label="logo" color="inherit">
-                <BrandLogo />
-              </IconButton>
-            </Link>
-            {/* Brand */}
+    <AppBar position="static" color="transparent">
+      <Container maxWidth="xl">
+        <Toolbar variant="dense">
+          {/* Brand */}
+          <Link to='/'>
+            <IconButton edge="start" aria-label="logo" color="inherit">
+              <BrandLogo />
+            </IconButton>
+          </Link>
+          {/* Brand */}
 
-            <Typography className={classes.title}></Typography>
+          <Typography className={classes.title}></Typography>
 
-            <Link to={paths.root} className={classes.link}>
+          {paths.map((path, index) => (
+            <Link to={path.url} className={classes.link} key={index}>
               <Typography variant="h5" className={classes.a}>
-                Home
+                {path.name}
               </Typography>
             </Link>
-            <Link to={paths.howItWorks} className={classes.link}>
-              <Typography variant="h5" className={classes.a}>
-                How It Works
-              </Typography>
-            </Link>
-            <Link to={paths.projects} className={classes.link}>
-              <Typography variant="h5" className={classes.a}>
-                Projects
-              </Typography>
-            </Link>
-            <Link to={paths.creators} className={classes.link}>
-              <Typography variant="h5" className={classes.a}>
-                Creators
-              </Typography>
-            </Link>
-            <Link to={paths.contactUs} className={classes.link}>
-              <Typography variant="h5" className={classes.a}>
-                Contact Us
-              </Typography>
-            </Link>
-            <Link to={paths.login} className={classes.link}>
-              <ActionButton />
-            </Link>
-          </Toolbar>
-        </Container>
-      </AppBar>
+          ))}
 
-    </div>);
+          <Link to='/login' className={classes.link}>
+            <ActionButton />
+          </Link>
+
+        </Toolbar>
+      </Container>
+    </AppBar>
+
+  </div>);
 }
