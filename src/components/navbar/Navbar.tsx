@@ -5,15 +5,13 @@ import {
   AppBar,
   Toolbar,
   IconButton,
-  Button,
   Typography,
-  Container,
 } from "@material-ui/core";
 import { Link } from "react-router-dom";
-import { Person } from "@material-ui/icons";
 import {BrandLogo} from "../../static/icons/brand-logo";
 import {useState} from "react";
 import {ActionButton} from "./loginButton.navbar";
+import { Container } from "../container/container";
 
 const paths = {
   root: "/",
@@ -61,6 +59,9 @@ const useStyles = makeStyles((theme: Theme) =>
       fontStyle: "normal",
       fontWeight: 700,
     }
+    , iconButton: {
+      paddingLeft: 0,
+    }
   })
 );
 
@@ -73,11 +74,11 @@ export const Navbar = () => {
 
   return (<div>
   <AppBar position="static" color="transparent">
-        <Container maxWidth="xl">
+        <Container >
           <Toolbar variant="dense">
             {/* Brand */}
             <Link to={paths.root}>
-              <IconButton edge="start" aria-label="logo" color="inherit">
+              <IconButton className={classes.iconButton} edge="start" aria-label="logo" color="inherit">
                 <BrandLogo />
               </IconButton>
             </Link>
