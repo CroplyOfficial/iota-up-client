@@ -133,7 +133,7 @@ const Card = (props: ICardProps) => {
   const { title, icon } = card;
   const classes = useStyles();
   return (
-    <Link to={`/` + title}>
+    <Link to={`/` + title} style={{ textDecoration: "none" }}>
       <MaterialCard className={classes.card}>
         <div className={classes.cardIcon}>{icon}</div>
         <Typography
