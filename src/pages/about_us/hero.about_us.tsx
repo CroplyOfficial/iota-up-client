@@ -1,0 +1,155 @@
+import React from "react";
+import {
+  createStyles,
+  makeStyles,
+  Theme,
+  Button,
+  Typography,
+} from "@material-ui/core";
+import { green } from "@material-ui/core/colors";
+import { AboutUsHeroCard } from "./heroCard.about_us";
+
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    root: {
+      display: "flex",
+      paddingTop: "100px",
+      paddingBottom: "100px",
+    },
+    left: {},
+    right: {
+      zIndex: -1,
+      position: "absolute",
+      bottom: "5vh",
+      right: "-5vw",
+    },
+    preHeader: {
+      fontSize: "20px",
+      lineHeight: "30px",
+      fontFamily: "Poppins",
+      fontWeight: 700,
+      fontStyle: "normal",
+      paddingBottom: "16px",
+    },
+    header: {
+      fontSize: "50px",
+      lineHeight: "75px",
+      fontFamily: "Poppins",
+      fontWeight: 600,
+      fontStyle: "normal",
+    },
+    subHeader: {
+      fontSize: "50px",
+      lineHeight: "75px",
+      fontFamily: "Poppins",
+      fontWeight: 600,
+      fontStyle: "normal",
+    },
+    text: {
+      paddingTop: "20px",
+      maxWidth: "30vw",
+      fontFamily: "Open Sans",
+      fontWeight: 400,
+      fontStyle: "normal",
+      fontSize: "16px",
+      lineHeight: "28px",
+    },
+    buttons: {
+      paddingTop: "46px",
+      display: "block",
+    },
+    buttonLeft: {
+      paddingBottom: "10px",
+    },
+    buttonRight: {
+      padding: "20px",
+      paddingTop: "10px",
+      paddingBottom: "10px",
+      fontFamily: "Poppins",
+      fontWeight: 700,
+      fontStyle: "normal",
+      fontSize: "16px",
+      lineHeight: "28px",
+    },
+  })
+);
+interface IOvalProps {
+  image: string;
+  color?: string;
+}
+const Oval = ({ image, color }: IOvalProps) => {
+  const useStyles = makeStyles(() =>
+    createStyles({
+      oval: {
+        width: "1046px",
+        height: "678px",
+        background: color || green[300],
+        borderRadius: "50%",
+        maskImage: `url(${image})`,
+      },
+    })
+  );
+  const classes = useStyles();
+  return (
+    <React.Fragment>
+      <div className={classes.oval}>
+        <img src={image} />
+      </div>
+    </React.Fragment>
+  );
+};
+
+export const AboutUsHero = () => {
+  const classes = useStyles();
+  const heroCard1 = {
+    header: "UP Vote Projects",
+    subHeader:
+      "Creators can share their work, projects, and solutions, and provide insights into their world and how support will create a change.",
+  };
+  const heroCard2 = {
+    header: "Donate & Support",
+    subHeader:
+      "Supports can browse the community projects and support, share, and donate, to what they believe in, knowing their donations go straight to the creators.",
+  };
+  return (
+    <div className={classes.root}>
+      <div className={classes.left}>
+        <Typography variant="h6" className={classes.preHeader} color="primary">
+          - How it works
+        </Typography>
+        <div>
+          <Typography variant="h3" className={classes.header}>
+            Community Funded Open
+          </Typography>
+          <Typography className={classes.subHeader}>
+            Donations Platform
+          </Typography>
+        </div>
+
+        <Typography className={classes.text}>
+          As a global community, there is always the need to support and
+          encourage one another to help progress and develop new creative
+          initiatives. UP provides a zero commitment, social donation platform,
+          so that you can support or create in an open space.
+        </Typography>
+
+        <div className={classes.buttons}>
+          <AboutUsHeroCard
+            header={heroCard1.header}
+            subHeader={heroCard1.subHeader}
+            className={classes.buttonLeft}
+          />
+          <AboutUsHeroCard
+            header={heroCard2.header}
+            subHeader={heroCard2.subHeader}
+            variant="flat"
+          />
+        </div>
+      </div>
+
+      <div className={classes.right}>
+        <Oval image="https://source.unsplash.com/random" color="#C4C4C4" />
+      </div>
+    </div>
+  );
+};
