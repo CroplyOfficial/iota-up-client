@@ -9,6 +9,7 @@ import { Counter } from "./counter.root";
 import { SampleProjects, SampleCategorieCards } from "./sampleState";
 import { Categories } from "./categories/categories.root";
 import { ICard } from "../../interfaces/categoriesCard.interface";
+import { RootDonateHero } from "./donateHero.root";
 import { Footer } from "../../components/footer/Footer";
 
 const useStyles = makeStyles(() =>
@@ -112,7 +113,7 @@ export const Root = () => {
           cards={categoriesCards}
         />
       </Container>
-
+      <RootDonateHero />
       <Footer />
     </React.Fragment>
   );
