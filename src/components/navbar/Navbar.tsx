@@ -1,6 +1,6 @@
 import {
-  makeStyles, 
-  createStyles, 
+  makeStyles,
+  createStyles,
   Theme,
   AppBar,
   Toolbar,
@@ -8,20 +8,20 @@ import {
   Typography,
 } from "@material-ui/core";
 import { Link } from "react-router-dom";
-import {BrandLogo} from "../../static/icons/brand-logo";
-import {useState} from "react";
-import {ActionButton} from "./loginButton.navbar";
+import { BrandLogo } from "../../static/icons/brand-logo";
+import { useState } from "react";
+import { ActionButton } from "./loginButton.navbar";
 import { Container } from "../container/container";
 
 const paths = {
   root: "/",
-  howItWorks: "/explained",
+  howItWorks: "/about",
   projects: "/projects",
   creators: "/creators",
   contactUs: "/contact",
   dashboard: "/dashboard",
   settings: "/settings",
-  login: "/login"
+  login: "/login",
 };
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -58,27 +58,33 @@ const useStyles = makeStyles((theme: Theme) =>
       fontFamiliy: "Poppins",
       fontStyle: "normal",
       fontWeight: 700,
-    }
-    , iconButton: {
+    },
+    iconButton: {
       paddingLeft: 0,
-    }
+    },
   })
 );
 
 export const Navbar = () => {
-  const classes = useStyles(); 
+  const classes = useStyles();
 
   // TODO implement context or redux
   const initialState = {};
   const [userInfo, setUserInfo] = useState(initialState);
 
-  return (<div>
-  <AppBar position="static" color="transparent">
-        <Container >
+  return (
+    <div>
+      <AppBar position="static" color="transparent">
+        <Container>
           <Toolbar variant="dense">
             {/* Brand */}
             <Link to={paths.root}>
-              <IconButton className={classes.iconButton} edge="start" aria-label="logo" color="inherit">
+              <IconButton
+                className={classes.iconButton}
+                edge="start"
+                aria-label="logo"
+                color="inherit"
+              >
                 <BrandLogo />
               </IconButton>
             </Link>
@@ -117,6 +123,6 @@ export const Navbar = () => {
           </Toolbar>
         </Container>
       </AppBar>
-
-    </div>);
-}
+    </div>
+  );
+};
