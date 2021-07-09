@@ -1,20 +1,20 @@
 import React from "react";
 import {
-  Typography,
-  Button,
   createStyles,
   makeStyles,
   Theme,
+  Button,
+  Typography,
 } from "@material-ui/core";
-import { ArrowRight } from "@material-ui/icons";
 import { green } from "@material-ui/core/colors";
+import { AboutUsHeroCard } from "./heroCard.about_us";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       display: "flex",
       paddingTop: "100px",
-      paddingBottom: "50px",
+      paddingBottom: "100px",
     },
     left: {},
     right: {
@@ -32,10 +32,10 @@ const useStyles = makeStyles((theme: Theme) =>
       paddingBottom: "16px",
     },
     header: {
-      fontSize: "60px",
-      lineHeight: "90px",
+      fontSize: "50px",
+      lineHeight: "75px",
       fontFamily: "Poppins",
-      fontWeight: 700,
+      fontWeight: 600,
       fontStyle: "normal",
     },
     subHeader: {
@@ -46,7 +46,7 @@ const useStyles = makeStyles((theme: Theme) =>
       fontStyle: "normal",
     },
     text: {
-      paddingTop: "51px",
+      paddingTop: "20px",
       maxWidth: "30vw",
       fontFamily: "Open Sans",
       fontWeight: 400,
@@ -55,21 +55,11 @@ const useStyles = makeStyles((theme: Theme) =>
       lineHeight: "28px",
     },
     buttons: {
-      "& > button": {
-        marginRight: theme.spacing(5),
-      },
       paddingTop: "46px",
+      display: "block",
     },
     buttonLeft: {
-      marginLeft: "0px",
-      padding: "20px",
-      paddingTop: "10px",
       paddingBottom: "10px",
-      fontFamily: "Poppins",
-      fontWeight: 700,
-      fontStyle: "normal",
-      fontSize: "16px",
-      lineHeight: "28px",
     },
     buttonRight: {
       padding: "20px",
@@ -83,7 +73,6 @@ const useStyles = makeStyles((theme: Theme) =>
     },
   })
 );
-
 interface IOvalProps {
   image: string;
   color?: string;
@@ -96,58 +85,70 @@ const Oval = ({ image, color }: IOvalProps) => {
         height: "678px",
         background: color || green[300],
         borderRadius: "50%",
+        maskImage: `url(${image})`,
       },
     })
   );
   const classes = useStyles();
   return (
     <React.Fragment>
-      <div className={classes.oval}></div>
+      <div className={classes.oval}>
+        <img src={image} />
+      </div>
     </React.Fragment>
   );
 };
 
-export const Hero = () => {
+export const AboutUsHero = () => {
   const classes = useStyles();
+  const heroCard1 = {
+    header: "UP Vote Projects",
+    subHeader:
+      "Creators can share their work, projects, and solutions, and provide insights into their world and how support will create a change.",
+  };
+  const heroCard2 = {
+    header: "Donate & Support",
+    subHeader:
+      "Supports can browse the community projects and support, share, and donate, to what they believe in, knowing their donations go straight to the creators.",
+  };
   return (
     <div className={classes.root}>
       <div className={classes.left}>
         <Typography variant="h6" className={classes.preHeader} color="primary">
-          - Rise Up!
+          - How it works
         </Typography>
         <div>
           <Typography variant="h3" className={classes.header}>
-            Create. Share. Grow.
+            Community Funded Open
           </Typography>
           <Typography className={classes.subHeader}>
-            Open Community Donations
+            Donations Platform
           </Typography>
         </div>
 
         <Typography className={classes.text}>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-          aliquip
+          As a global community, there is always the need to support and
+          encourage one another to help progress and develop new creative
+          initiatives. UP provides a zero commitment, social donation platform,
+          so that you can support or create in an open space.
         </Typography>
 
         <div className={classes.buttons}>
-          <Button
-            endIcon={<ArrowRight />}
-            color="secondary"
-            variant="contained"
+          <AboutUsHeroCard
+            header={heroCard1.header}
+            subHeader={heroCard1.subHeader}
             className={classes.buttonLeft}
-          >
-            Learn More
-          </Button>
-          <Button variant="outlined" className={classes.buttonRight}>
-            Donate
-          </Button>
+          />
+          <AboutUsHeroCard
+            header={heroCard2.header}
+            subHeader={heroCard2.subHeader}
+            variant="flat"
+          />
         </div>
       </div>
 
       <div className={classes.right}>
-        <Oval image="" color="#C4C4C4" />
+        <Oval image="https://source.unsplash.com/random" color="#C4C4C4" />
       </div>
     </div>
   );
