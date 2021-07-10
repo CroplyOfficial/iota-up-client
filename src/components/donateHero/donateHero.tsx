@@ -53,7 +53,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
   })
 );
-export const RootDonateHero = (props: IProps) => {
+export const DonateHero = (props: IProps) => {
   const { onClick } = props;
   const classes = useStyles();
   return (
