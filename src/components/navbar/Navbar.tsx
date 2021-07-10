@@ -65,7 +65,16 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-export const Navbar = () => {
+enum NavbarVariants {
+  contained = "contained",
+  transparent = "transparent",
+}
+
+interface INavbarProps {
+  variant?: keyof typeof NavbarVariants;
+}
+export const Navbar = (props: INavbarProps) => {
+  const isTransparent = props.variant === NavbarVariants.transparent;
   const classes = useStyles();
 
   // TODO implement context or redux
