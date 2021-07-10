@@ -8,6 +8,7 @@ import {
 } from "@material-ui/core";
 import { green } from "@material-ui/core/colors";
 import { AboutUsHeroCard } from "./heroCard.about_us";
+import { VerifiedUser } from "@material-ui/icons";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -70,6 +71,10 @@ const useStyles = makeStyles((theme: Theme) =>
       fontStyle: "normal",
       fontSize: "16px",
       lineHeight: "28px",
+    },
+    icon: {
+      width: "50px",
+      height: "50px",
     },
   })
 );
@@ -138,11 +143,25 @@ export const AboutUsHero = () => {
             header={heroCard1.header}
             subHeader={heroCard1.subHeader}
             className={classes.buttonLeft}
+            icon={
+              <VerifiedUser
+                color="primary"
+                fontSize="large"
+                className={classes.icon}
+              />
+            }
           />
           <AboutUsHeroCard
             header={heroCard2.header}
             subHeader={heroCard2.subHeader}
             variant="flat"
+            icon={
+              <VerifiedUser
+                color="primary"
+                fontSize="large"
+                className={classes.icon}
+              />
+            }
           />
         </div>
       </div>

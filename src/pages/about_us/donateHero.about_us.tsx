@@ -1,4 +1,10 @@
-import { Typography, makeStyles, createStyles, Theme } from "@material-ui/core";
+import {
+  Typography,
+  makeStyles,
+  createStyles,
+  Theme,
+  Box,
+} from "@material-ui/core";
 import { Container } from "../../components/container/container";
 
 const imageSource = "https://source.unsplash.com/random";
@@ -23,8 +29,17 @@ const useStyles = makeStyles((theme: Theme) =>
       height: "100%",
       backgroundColor: "#f5f5f5",
       borderRadius: "20px 0 0 20px",
+      backgroundSize: "150%",
+      backgroundImage: `url(${imageSource})`,
+      /*
       maskImage: `url(${imageSource})`,
       WebKitMaskImage: `url(${imageSource})`,
+       */
+      WebKitFilter: "drop-shadow(1px 10px 4px rgba(0,0,0,0.3))",
+      MozFilter: "drop-shadow(1px 10px 4px rgba(0,0,0,0.3))",
+      MsFilter: "drop-shadow(1px 10px 4px rgba(0,0,0,0.3))",
+      OFilter: "drop-shadow(1px 10px 4px rgba(0,0,0,0.3))",
+      filter: "drop-shadow(1px 10px 10px rgba(0,0,0,0.3))",
     },
     right: {
       display: "flex",
@@ -36,6 +51,7 @@ const useStyles = makeStyles((theme: Theme) =>
       padding: "75px",
       paddingTop: "10%",
       borderRadius: "0 20px 20px 0",
+      filter: "drop-shadow(1px 10px 10px rgba(0,0,0,0.3))",
     },
     title: {
       fontFamily: "Poppins",
@@ -62,6 +78,10 @@ const useStyles = makeStyles((theme: Theme) =>
       lineHeight: "28px",
       flexGrow: 0.5,
     },
+    image: {
+      WebKitMaskBoxImage: `url(${imageSource})`,
+      maskImage: `url(${imageSource})`,
+    },
   })
 );
 
@@ -86,9 +106,7 @@ UP is all about providing a platform for change. Providing the opportunity for i
     <div className={classes.root}>
       <Container>
         <div className={classes.wideCard}>
-          <div className={classes.left}>
-            <img src={imageSource} />
-          </div>
+          <div className={classes.left}></div>
           <div className={classes.right}>
             <Typography variant="h2" className={classes.title}>
               {title}

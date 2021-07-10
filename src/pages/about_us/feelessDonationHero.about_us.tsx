@@ -1,15 +1,19 @@
 import { Typography, makeStyles, createStyles } from "@material-ui/core";
+import { AboutUsHeroCard } from "./heroCard.about_us";
+import { Container } from "../../components/container/container";
+import { MyBook } from "../../static/icons/book";
+import { VrGlasses } from "../../static/icons/vrGlasses";
+import { Transformation } from "../../static/icons/transformation";
+import { DoctorBag } from "../../static/icons/doctorBag";
 
 const useStyles = makeStyles(() =>
   createStyles({
     root: {
-      paddingTop: "250px",
+      paddingTop: "400px",
       width: "100%",
       height: "100vh",
-      display: "flex",
-      flexDirection: "column",
-      justifyContent: "space-around",
-      alignItems: "center",
+      display: "block",
+      textAlign: "center",
     },
     preHeader: {
       fontFamily: "Poppins",
@@ -18,6 +22,7 @@ const useStyles = makeStyles(() =>
       fontSize: "20px",
       lineHeight: "30px",
       textAlign: "center",
+      paddingBottom: "15px",
     },
     header: {
       fontFamily: "Poppins",
@@ -26,8 +31,8 @@ const useStyles = makeStyles(() =>
       fontSize: "50px",
       lineHeight: "75px",
       textAlign: "center",
+      paddingBottom: "15px",
     },
-    subHeader: {},
     poppins800Large: {
       fontFamily: "Poppins",
       fontWeight: 800,
@@ -41,9 +46,25 @@ const useStyles = makeStyles(() =>
       fontStyle: "normal",
       fontSize: "16px",
       lineHeight: "28px",
+      textAlign: "center",
     },
-    card: {},
-    cards: {},
+    cards: {
+      paddingTop: "35px",
+      flexDirection: "row",
+      display: "flex",
+      maxWidth: "1619px",
+      flexWrap: "wrap",
+      "& > *": {
+        paddingBottom: "35px",
+        textAlign: "start",
+      },
+      justifyContent: "space-around",
+      paddingBottom: "35px",
+    },
+    icon: {
+      width: "50px",
+      height: "50px",
+    },
   })
 );
 export const AboutUsFeelessDonationsHero = () => {
@@ -71,34 +92,63 @@ export const AboutUsFeelessDonationsHero = () => {
       a project or not.
     </span>
   );
-  const cards = [{ title: "Firefly Wallet", icon: "", description: "" }];
+  const cards = [
+    {
+      header: "Firefly Wallet",
+      icon: <MyBook color="primary" className={classes.icon} />,
+      subHeader:
+        "To send and receive donations, it is recommended to use the official IOTA Firefly Wallet. This can be downloaded here.",
+    },
+    {
+      header: "Create Your Project",
+      subHeader:
+        "Sign up to the system. Create your profile. Create your project. Share. It’s that simple to start building UP.",
+      icon: <VrGlasses color="primary" className={classes.icon} />,
+    },
+    {
+      header: "Exploring Projects",
+      subHeader:
+        "All projects are open and visible to everyone. Explore the opportunities, challenges, and innitiatives that you feel warrant your support.",
+      icon: <Transformation color="primary" className={classes.icon} />,
+    },
+    {
+      header: "UP & Donate",
+      subHeader:
+        "UP vote the projects you think are worthy of support. Click donate to send what you feel you can. All transfers go direct from you to the creator, no inbetweens.",
+      icon: <DoctorBag color="primary" className={classes.icon} />,
+    },
+  ];
   return (
     <div className={classes.root}>
-      <Typography variant="h6" className={classes.preHeader} color="primary">
-        {preHeader}
-      </Typography>
-      <Typography variant="h2" className={classes.header}>
-        {header}
-      </Typography>
-      <Typography variant="h6" className={classes.openSans400Small}>
-        {subHeader}
-      </Typography>
+      <Container>
+        <Typography variant="h6" className={classes.preHeader} color="primary">
+          {preHeader}
+        </Typography>
+        <Typography variant="h2" className={classes.header}>
+          {header}
+        </Typography>
+        <Typography variant="h6" className={classes.openSans400Small}>
+          {subHeader}
+        </Typography>
 
-      <div className={classes.cards}>
-        {cards.map((c) => (
-          <AboutUsCard card={c} />
-        ))}
-      </div>
+        <div className={classes.cards}>
+          {cards.map((c) => (
+            <AboutUsHeroCard
+              header={c.header}
+              subHeader={c.subHeader}
+              variant="outlined"
+              icon={c.icon}
+            />
+          ))}
+        </div>
+        <Typography
+          variant="h6"
+          component="span"
+          className={classes.openSans400Small}
+        >
+          {footer}{" "}
+        </Typography>
+      </Container>
     </div>
   );
-};
-
-interface IAboutUsCardProps {
-  card: any;
-}
-const AboutUsCard = (props: IAboutUsCardProps) => {
-  const { card } = props;
-  const classes = useStyles();
-
-  return <div className={classes.card}></div>;
 };
