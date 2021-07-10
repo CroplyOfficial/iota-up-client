@@ -8,7 +8,6 @@ export const WorldMap = (props: SVGProps<SVGElement>) => {
       <svg
         width="1590"
         height="486"
-        viewBox="0 0 1590 486"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
       >
