@@ -74,7 +74,7 @@ export const Navbar = () => {
 
   return (
     <div>
-      <AppBar position="static" color="transparent">
+      <AppBar position="static" color="transparent" elevation={0}>
         <Container>
           <Toolbar variant="dense">
             {/* Brand */}
