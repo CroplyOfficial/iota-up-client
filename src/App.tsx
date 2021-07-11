@@ -6,6 +6,7 @@ import { Root } from "./pages/root/Root";
 import { ThemeProvider } from "@material-ui/core";
 import { theme } from "./theme/theme";
 import { AboutUs } from "./pages/about_us/AboutUs";
+import { ProjectOverview } from "./pages/projectOverview/ProjectOverview";
 
 function App() {
   return (
@@ -15,6 +16,10 @@ function App() {
           <Switch>
             <Route path="/" exact render={() => <Root />} />
             <Route path="/about" exact render={() => <AboutUs />} />
+            <Route
+              path="/project/:id"
+              render={(props: any) => <ProjectOverview {...props} />}
+            />
           </Switch>
         </Router>
       </ThemeProvider>
