@@ -27,7 +27,7 @@ export const Projects = () => {
   const handleOnChange = () => {};
   return (
     <div>
-      <Navbar variant="transparent" />
+      <Navbar variant="secondary" />
       <ProjectsNavbarHero />
       <ProjectsSearchBar onChange={handleOnChange} />
       <ProjectsView projects={projects} />
