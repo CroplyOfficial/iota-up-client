@@ -27,7 +27,8 @@ const paths = {
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
-      flexGrow: 1,
+      paddingTop: "20px",
+      paddingBottom: "20px",
     },
     menuButton: {
       marginRight: theme.spacing(2),
@@ -73,7 +74,7 @@ export const Navbar = () => {
   const [userInfo, setUserInfo] = useState(initialState);
 
   return (
-    <div>
+    <div className={classes.root}>
       <AppBar position="static" color="transparent" elevation={0}>
         <Container>
           <Toolbar variant="dense">
