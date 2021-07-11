@@ -132,8 +132,9 @@ export const AboutUsFeelessDonationsHero = () => {
         </Typography>
 
         <div className={classes.cards}>
-          {cards.map((c) => (
+          {cards.map((c, i) => (
             <AboutUsHeroCard
+              key={"about-us-hero-card#" + i++}
               header={c.header}
               subHeader={c.subHeader}
               variant="outlined"
