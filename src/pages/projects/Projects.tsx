@@ -4,7 +4,7 @@ import { Navbar } from "../../components/navbar/Navbar";
 import { Footer } from "../../components/footer/Footer";
 import { IProject } from "../../interfaces/project.interface";
 import { ProjectsView } from "./projectsView.projects";
-import { ProjectsSearchBar } from "./searchBar.projects";
+import { ProjectsSearchBar } from "./searchBar/SearchBar";
 import { ProjectsNavbarHero } from "./navbarHero.projects";
 
 export const Projects = () => {
@@ -25,11 +25,12 @@ export const Projects = () => {
   ]);
 
   const handleOnChange = () => {};
+  const handleOnClick = () => {};
   return (
     <div>
       <Navbar variant="secondary" />
       <ProjectsNavbarHero />
-      <ProjectsSearchBar onChange={handleOnChange} />
+      <ProjectsSearchBar onChange={handleOnChange} onClick={handleOnClick} />
       <ProjectsView projects={projects} />
       <DonateHero />
       <Footer />
