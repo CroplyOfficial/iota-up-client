@@ -1,14 +1,14 @@
+import { useState } from "react";
 import {
   makeStyles,
   createStyles,
   Card,
   CardContent,
-  CardHeader,
-  CardMedia,
   Typography,
   Checkbox,
   Button,
 } from "@material-ui/core";
+import { ExpandLess, ExpandMore } from "@material-ui/icons";
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -44,6 +44,7 @@ const useStyles = makeStyles(() =>
       justifyContent: "flex-start",
       alignItems: "center",
       gap: "15px",
+      cursor: "pointer",
     },
     button1: {
       fontFamily: "Open Sans",
@@ -51,7 +52,8 @@ const useStyles = makeStyles(() =>
       lineHeight: "28px",
       fontWeight: 400,
       fontStyle: "normal",
-      paddingBottom: "50px",
+
+      textTransform: "none",
     },
     button2: {
       fontFamily: "Poppins",
@@ -64,21 +66,52 @@ const useStyles = makeStyles(() =>
     },
     buttons: {},
     hr: {
-      border: "0.05px solid rgba(0,0,0,0.1)",
+      border: "0.05px solid rgba(0,0,0,0.05)",
     },
   })
 );
+interface ICategory {
+  title: string;
+  onClick: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  checked: boolean;
+}
 export const ProjectsFilterCard = () => {
   const classes = useStyles();
-  const categories = [
-    { title: "All Projects", onClick: () => null },
-    { title: "Technology", onClick: () => null },
-    { title: "Film", onClick: () => null },
-    { title: "Business", onClick: () => null },
-    { title: "Design", onClick: () => null },
-    { title: "All Projects", onClick: () => null },
-  ];
-  const visibleCategories = categories.slice(0, 5);
+
+  /* HELPERS */
+  const onClick = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = e.target;
+    const categoryIndex = categories.findIndex((c) => c.title === value);
+    if (categoryIndex < 0) return;
+    const newCategories = [...categories];
+    newCategories[categoryIndex].checked =
+      !newCategories[categoryIndex].checked;
+    setCategories([...categories]);
+  };
+  /* HELPERS */
+
+  const initialThreshold = 5;
+  const [categories, setCategories] = useState<ICategory[]>([
+    {
+      title: "All Projects",
+      onClick,
+      checked: true,
+    },
+    { title: "Technology", onClick, checked: false },
+    { title: "Film", onClick, checked: false },
+    { title: "Business", onClick, checked: false },
+    { title: "Design", onClick, checked: false },
+    { title: "Design2", onClick, checked: false },
+  ]);
+  const [visibleCategories, setVisibleCategories] = useState<ICategory[]>(
+    categories.slice(0, initialThreshold)
+  );
+  const onClickButton1 = () => {
+    visibleCategories.length <= initialThreshold
+      ? setVisibleCategories(categories)
+      : setVisibleCategories(categories.slice(0, initialThreshold));
+  };
+  const onClickButton2 = () => null;
   return (
     <Card className={classes.root} variant="outlined">
       <CardContent>
@@ -96,9 +129,11 @@ export const ProjectsFilterCard = () => {
               key={"filter-category#" + i++}
             >
               <Checkbox
-                checked={false}
+                checked={c.checked}
                 onChange={c.onClick}
-                inputProps={{ "aria-label": "secondary checkbox" }}
+                inputProps={{ "aria-label": "primary checkbox" }}
+                color="primary"
+                value={c.title}
               />
               <Typography className={classes.text}>{c.title}</Typography>
             </div>
@@ -107,13 +142,27 @@ export const ProjectsFilterCard = () => {
         ))}
 
         <div className={classes.buttons}>
-          <Button className={classes.button1} color="primary">
-            See more categories
+          <Button
+            className={classes.button1}
+            color="primary"
+            endIcon={
+              visibleCategories.length <= initialThreshold ? (
+                <ExpandMore style={{ fontSize: "45px" }} />
+              ) : (
+                <ExpandLess style={{ fontSize: "45px" }} />
+              )
+            }
+            onClick={onClickButton1}
+          >
+            See {visibleCategories.length <= initialThreshold ? "more" : "less"}{" "}
+            categories
           </Button>
+          <hr className={classes.hr} style={{ marginBottom: "50px" }} />
           <Button
             className={classes.button2}
             color="primary"
             variant="contained"
+            onClick={onClickButton2}
           >
             Update Results
           </Button>
