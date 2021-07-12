@@ -9,6 +9,7 @@ import { ArrowDownward } from "@material-ui/icons";
 import { Card } from "../../../components/card/card";
 import { Container } from "../../../components/container/container";
 import { IProject } from "../../../interfaces/project.interface";
+import { ProjectsFilterCard } from "./filterCard.projects";
 import { ProjectsPopularSearch } from "./popularSearch.projects";
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -22,10 +23,13 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     left: {
       width: "25%",
-      backgroundColor: "green",
+      padding: "20px",
+      paddingTop: "0",
     },
     right: {
       width: "75%",
+      padding: "20px",
+      paddingTop: "0",
     },
     actionBar: {
       display: "flex",
@@ -38,6 +42,8 @@ const useStyles = makeStyles((theme: Theme) =>
       display: "flex",
       flexWrap: "wrap",
       gap: "15px",
+      padding: "0",
+      justifyContent: "space-around",
     },
     actionBarText: {
       fontFamily: "Poppins",
@@ -46,9 +52,7 @@ const useStyles = makeStyles((theme: Theme) =>
       fontSize: "32px",
       lineHeight: "48px",
     },
-    filterHeader: {
-      paddingBottom: "25px",
-    },
+    filterHeader: {},
     button: {
       border: `3px solid ${theme.palette.primary.main}`,
       fontSize: "18px",
@@ -76,11 +80,17 @@ export const ProjectsOverview = (props: IProps) => {
   ];
   return (
     <div className={classes.root}>
-      <Container>
+      <Container maxWidth="md">
         <ProjectsPopularSearch tags={popularTags} />
         <div className={classes.columns}>
           <div className={classes.left}>
-            <Typography className={classes.actionBarText}>Filter</Typography>
+            <Typography
+              className={classes.actionBarText}
+              style={{ paddingBottom: "25px" }}
+            >
+              Filter
+            </Typography>
+            <ProjectsFilterCard />
           </div>
           <div className={classes.right}>
             <div className={classes.actionBar}>
