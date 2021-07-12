@@ -9,6 +9,7 @@ import { ExpandMore } from "@material-ui/icons";
 import { Card } from "../../../components/card/card";
 import { Container } from "../../../components/container/container";
 import { IProject } from "../../../interfaces/project.interface";
+import { ProjectsDonateCard } from "./donateCard.projects";
 import { ProjectsFilterCard } from "./filterCard.projects";
 import { ProjectsPopularSearch } from "./popularSearch.projects";
 
@@ -94,6 +95,7 @@ export const ProjectsOverview = (props: IProps) => {
               Filter
             </Typography>
             <ProjectsFilterCard />
+            <ProjectsDonateCard />
           </div>
           <div className={classes.right}>
             <div className={classes.actionBar}>

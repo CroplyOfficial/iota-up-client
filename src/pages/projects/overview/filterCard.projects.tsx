@@ -14,6 +14,7 @@ const useStyles = makeStyles(() =>
   createStyles({
     root: {
       borderRadius: "10px",
+      minHeight: "569px",
     },
     header: {
       fontFamily: "Poppins",
