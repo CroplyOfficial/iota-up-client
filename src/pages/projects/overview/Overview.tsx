@@ -5,7 +5,7 @@ import {
   Button,
   Theme,
 } from "@material-ui/core";
-import { ArrowDownward } from "@material-ui/icons";
+import { ExpandMore } from "@material-ui/icons";
 import { Card } from "../../../components/card/card";
 import { Container } from "../../../components/container/container";
 import { IProject } from "../../../interfaces/project.interface";
@@ -41,9 +41,9 @@ const useStyles = makeStyles((theme: Theme) =>
     projectsWrapper: {
       display: "flex",
       flexWrap: "wrap",
-      gap: "15px",
+      gap: "25px",
       padding: "0",
-      justifyContent: "space-around",
+      justifyContent: "flex-start",
     },
     actionBarText: {
       fontFamily: "Poppins",
@@ -61,6 +61,9 @@ const useStyles = makeStyles((theme: Theme) =>
       fontWeight: 700,
       fontStyle: "normal",
       borderRadius: "10px",
+      "&:hover": {
+        border: `3px solid ${theme.palette.primary.main}`,
+      },
     },
   })
 );
@@ -102,7 +105,7 @@ export const ProjectsOverview = (props: IProps) => {
                 variant="outlined"
                 className={classes.button}
               >
-                Most Popular <ArrowDownward />{" "}
+                Most Popular <ExpandMore style={{ marginLeft: "15px" }} />{" "}
               </Button>
             </div>
             <div className={classes.projectsWrapper}>

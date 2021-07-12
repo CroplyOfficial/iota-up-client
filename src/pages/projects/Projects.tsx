@@ -6,9 +6,11 @@ import { IProject } from "../../interfaces/project.interface";
 import { ProjectsOverview } from "./overview/Overview";
 import { ProjectsSearchBar } from "./searchBar/SearchBar";
 import { ProjectsNavbarHero } from "./navbarHero.projects";
+import { SampleProjects } from "../root/sampleState";
 
 export const Projects = () => {
-  const [projects, setProjects] = useState<IProject[]>([
+  const [projects, setProjects] = useState<IProject[]>(
+    /*[
     {
       created_at: 0,
       tags: [],
@@ -48,7 +50,9 @@ export const Projects = () => {
       description: "I am a project.",
       milestones: [],
     },
-  ]);
+  ] */
+    SampleProjects
+  );
 
   const handleOnChange = () => {};
   const handleOnClick = () => {};
