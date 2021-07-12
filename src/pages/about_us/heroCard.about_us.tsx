@@ -1,20 +1,24 @@
 import { makeStyles, createStyles, Typography } from "@material-ui/core";
-import { VerifiedUser } from "@material-ui/icons";
 
 enum AboutUsHeroCardVariants {
   "flat" = "flat",
   "outlined" = "outlined",
+  "shadow" = "shadow",
 }
 interface IProps {
   header: string | React.ReactNode;
   subHeader: string | React.ReactNode;
   variant?: keyof typeof AboutUsHeroCardVariants;
+  icon?: any;
 }
 export const AboutUsHeroCard = (
   props: IProps & React.HTMLProps<HTMLElement>
 ) => {
-  const { header, subHeader, variant } = props;
+  const { header, subHeader, variant, icon } = props;
   const isFlat = variant === AboutUsHeroCardVariants.flat;
+  const hasShadow = variant === AboutUsHeroCardVariants.shadow;
+  const isOutlined = variant === AboutUsHeroCardVariants.outlined;
+
   const useStyles = makeStyles(() =>
     createStyles({
       root: {
@@ -68,13 +72,7 @@ export const AboutUsHeroCard = (
   return (
     <div className={props.className} style={props.style}>
       <div className={classes.root}>
-        <div className={classes.iconWrapper}>
-          <VerifiedUser
-            color="primary"
-            fontSize="large"
-            className={classes.icon}
-          />
-        </div>
+        <div className={classes.iconWrapper}>{icon}</div>
         <div className={classes.column}>
           <Typography variant="h2" className={classes.header}>
             {header}
