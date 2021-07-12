@@ -27,8 +27,8 @@ const useStyles = makeStyles((theme: Theme) =>
       display: "flex",
       flexDirection: "row",
       justifyContent: "space-around",
-      paddingLeft: "250px",
-      paddingRight: "250px",
+      paddingLeft: "200px",
+      paddingRight: "200px",
     },
   })
 );
