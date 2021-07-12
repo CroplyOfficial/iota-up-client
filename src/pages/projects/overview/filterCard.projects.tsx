@@ -86,7 +86,7 @@ export const ProjectsFilterCard = () => {
     const newCategories = [...categories];
     newCategories[categoryIndex].checked =
       !newCategories[categoryIndex].checked;
-    setCategories([...categories]);
+    setCategories(categories);
   };
   /* HELPERS */
 
