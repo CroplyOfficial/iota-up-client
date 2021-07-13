@@ -31,6 +31,9 @@ const useStyles = makeStyles((theme: Theme) =>
       width: "75%",
       padding: "20px",
       paddingTop: "0",
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
     },
     actionBar: {
       display: "flex",
@@ -66,6 +69,19 @@ const useStyles = makeStyles((theme: Theme) =>
         border: `3px solid ${theme.palette.primary.main}`,
       },
     },
+    loadMoreButton: {
+      marginTop: "75px",
+      marginBottom: "150px",
+      fontSize: "18px",
+      lineHeight: "27px",
+      fontFamily: "Poppins",
+      fontWeight: 700,
+      fontStyle: "normal",
+      borderRadius: "5px",
+      padding: "15px",
+      paddingLeft: "50px",
+      paddingRight: "50px",
+    },
   })
 );
 
@@ -74,6 +90,9 @@ interface IProps {
 }
 export const ProjectsOverview = (props: IProps) => {
   const { projects } = props;
+  const onClick = () => {
+    // TODO lazy load
+  };
   const classes = useStyles();
   // TODO get popular Tags from API
   // TODO remove default popular tags in <ProjectsPopularSearch />
@@ -82,6 +101,7 @@ export const ProjectsOverview = (props: IProps) => {
     { title: "Charity Programs", onClick: () => null },
     { title: "Community Website", onClick: () => null },
   ];
+  const loadMoreThreshold = 6;
   return (
     <div className={classes.root}>
       <Container maxWidth="md">
@@ -115,6 +135,18 @@ export const ProjectsOverview = (props: IProps) => {
                 <Card project={p} key={"project-card#" + i++} />
               ))}
             </div>
+            {projects.length >= loadMoreThreshold ? (
+              <Button
+                className={classes.loadMoreButton}
+                onClick={onClick}
+                variant="contained"
+                color="secondary"
+              >
+                Load more
+              </Button>
+            ) : (
+              <div></div>
+            )}
           </div>
         </div>
       </Container>
