@@ -6,9 +6,11 @@ import {
   Toolbar,
   IconButton,
   Typography,
+  Color,
 } from "@material-ui/core";
 import { Link } from "react-router-dom";
 import { BrandLogo } from "../../static/icons/brand-logo";
+import { BrandLogoSecondary } from "../../static/icons/brand-logo.secondary";
 import { useState } from "react";
 import { ActionButton } from "./loginButton.navbar";
 import { Container } from "../container/container";
@@ -65,14 +67,69 @@ const useStyles = makeStyles((theme: Theme) =>
     },
   })
 );
+const useAltStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    root: {
+      flexGrow: 1,
+    },
+    menuButton: {
+      marginRight: theme.spacing(2),
+    },
+    title: {
+      flexGrow: 1,
+    },
+    link: {
+      textDecoration: "none",
+      color: "inherit",
+      marginLeft: "0.7rem",
+      marginRight: "0.7rem",
+    },
+    a: {
+      "&:hover": {
+        color: "#121E31",
+      },
+      lineHeight: "27px",
+      fontSize: "18px",
+      fontFamily: "Poppins",
+      fontStyle: "normal",
+      fontWeight: 500,
+      color: "#ffffff",
+    },
+    loginButton: {
+      lineHeight: "27px",
+      fontSize: "18px",
+      fontFamiliy: "Poppins",
+      fontStyle: "normal",
+      fontWeight: 700,
+    },
+    iconButton: {
+      paddingLeft: 0,
+    },
+  })
+);
 
-export const Navbar = () => {
-  const classes = useStyles();
+enum NavbarVariants {
+  main = "main",
+  secondary = "secondary",
+}
+
+interface INavbarProps {
+  variant?: keyof typeof NavbarVariants;
+}
+export const Navbar = (props: INavbarProps) => {
+  const isSecondary = props.variant === NavbarVariants.secondary;
+  const mainClasses = useStyles();
+  // TODO may be redundant ( use logic within usestyles, move usestyles inside component scope)
+  const altClasses = useAltStyles();
+  const classes = isSecondary ? altClasses : mainClasses;
 
   // TODO implement context or redux
   const initialState = {};
   const [userInfo, setUserInfo] = useState(initialState);
 
+  const appBarColor = isSecondary ? "primary" : "transparent";
+  const actionButtonVariant = isSecondary ? "contained" : "outlined";
+  const brandLogo = isSecondary ? <BrandLogoSecondary /> : <BrandLogo />;
   return (
     <div className={classes.root}>
       <AppBar position="static" color="transparent" elevation={0}>
@@ -86,7 +143,7 @@ export const Navbar = () => {
                 aria-label="logo"
                 color="inherit"
               >
-                <BrandLogo />
+                {brandLogo}
               </IconButton>
             </Link>
             {/* Brand */}
@@ -119,7 +176,7 @@ export const Navbar = () => {
               </Typography>
             </Link>
             <Link to={paths.login} className={classes.link}>
-              <ActionButton />
+              <ActionButton variant={actionButtonVariant} />
             </Link>
           </Toolbar>
         </Container>

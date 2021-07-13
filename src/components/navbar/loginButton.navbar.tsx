@@ -14,11 +14,14 @@ const useStyles = makeStyles(() =>
   })
 );
 
-const SignInButton = () => {
+interface ISignInButton {
+  variant?: "outlined" | "contained";
+}
+const SignInButton = (props: ISignInButton) => {
   const classes = useStyles();
   return (
     <Button
-      variant="outlined"
+      variant={props.variant ?? "outlined"}
       className={classes.button}
       color="secondary"
       disableElevation
@@ -29,13 +32,14 @@ const SignInButton = () => {
   );
 };
 
-export const ActionButton = () => {
+export const ActionButton = (props: ISignInButton) => {
+  const { variant } = props;
   const initialState = {};
   const [userInfo, setUserInfo] = useState<Record<string, any>>(initialState);
 
   return (
     <React.Fragment>
-      {userInfo.name ? "hello pete" : <SignInButton />}
+      {userInfo.name ? "hello anonymous" : <SignInButton variant={variant} />}
     </React.Fragment>
   );
 };

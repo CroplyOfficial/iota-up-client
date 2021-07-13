@@ -71,6 +71,26 @@ export const SampleProjects: IProject[] = [
     milestones: [],
     created_by: "abc",
   },
+  {
+    title: "IOTA MEMES - fun community meme website",
+    description: "Long project description",
+    images: [
+      "https://live.staticflickr.com/7629/28393379471_fd6ce887c3_b.jpg",
+      "",
+      "",
+      "",
+      "",
+      "",
+    ],
+    tags: [],
+    donations: 143,
+    upvotes: 2132,
+    created_at: 0,
+    completed: false,
+    funding: [0, 100],
+    milestones: [],
+    created_by: "abc",
+  },
 ];
 
 const style = { fontSize: "90px" };
