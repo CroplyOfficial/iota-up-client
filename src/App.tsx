@@ -7,6 +7,7 @@ import { ThemeProvider } from "@material-ui/core";
 import { theme } from "./theme/theme";
 import { AboutUs } from "./pages/about_us/AboutUs";
 import { Projects } from "./pages/projects/Projects";
+import { Dashboard } from "./pages/dashboard/Dashboard";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
             <Route path="/" exact render={() => <Root />} />
             <Route path="/about" exact render={() => <AboutUs />} />
             <Route path="/projects" exact render={() => <Projects />} />
+            <Route path="/dashboard" exact render={() => <Dashboard />} />
           </Switch>
         </Router>
       </ThemeProvider>
