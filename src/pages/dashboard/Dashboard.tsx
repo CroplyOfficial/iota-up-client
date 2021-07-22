@@ -7,6 +7,7 @@ import { DashboardProfile } from "./tabs/profile.dashboard";
 import { DashboardHeaderStripe } from "./headerStripe.dashboard";
 import { DashboardDeleteModal } from "./verifyDeleteModal.dashboard";
 import { useState } from "react";
+import { DashboardProjects } from "./tabs/projects.dashboard";
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -29,7 +30,8 @@ export const Dashboard = () => {
       <div className={classes.overview}>
         <DashboardSideNavbar />
         <DashboardHeaderStripe>
-          <DashboardProfile verifyDelete={handleVerifyDeleteModal} />
+          {/*<DashboardProfile verifyDelete={handleVerifyDeleteModal} />*/}
+          <DashboardProjects projects={[]} />
         </DashboardHeaderStripe>
       </div>
       <DonateHero />

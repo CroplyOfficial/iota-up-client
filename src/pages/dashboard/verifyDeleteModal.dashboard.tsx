@@ -5,7 +5,7 @@ const useStyles = makeStyles(() =>
     modal: {
       width: "100vw",
       height: "100vh",
-      backgroundColor: "red",
+      backgroundColor: "rgba(0,0,0,0.5)",
       position: "absolute",
       zIndex: 2,
     },
