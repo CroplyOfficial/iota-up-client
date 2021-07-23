@@ -330,11 +330,10 @@ export const DashboardProfile = (props: IProps) => {
             />
           ))}
         </div>
-        <Typography className={classes.label}>IOTA</Typography>
         <TextField
           value={fireflyAdress}
           onChange={(e: any) => handleOnChange(e)}
-          label={"Wallet Adress"}
+          label={"IOTA Wallet Adress"}
           className={classes.textField}
           style={{ paddingBottom: "35px" }}
         />
