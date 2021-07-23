@@ -1,6 +1,8 @@
 contact us modal
-name
-email
-subject
-message
-submit button
+  - name
+  - email
+  - subject
+  - message
+  - submit button
+
+make icons
