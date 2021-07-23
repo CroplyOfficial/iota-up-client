@@ -159,8 +159,6 @@ export const DashboardProfile = (props: IProps) => {
     skills: userSkills,
     wallet: userWallet,
     city: userCity,
-    firstName,
-    lastName,
     country: userCountry,
     connections,
     bio: userBio,
@@ -281,6 +279,7 @@ export const DashboardProfile = (props: IProps) => {
           className={classes.textField}
         />
         <br />
+        <Typography className={classes.label}>About</Typography>
         <TextareaAutosize
           aria-label="Bio"
           placeholder="Your bio here..."
@@ -331,12 +330,13 @@ export const DashboardProfile = (props: IProps) => {
             />
           ))}
         </div>
+        <Typography className={classes.label}>IOTA</Typography>
         <TextField
           value={fireflyAdress}
           onChange={(e: any) => handleOnChange(e)}
           label={"Wallet Adress"}
           className={classes.textField}
-          style={{ marginTop: "25px", paddingBottom: "35px" }}
+          style={{ paddingBottom: "35px" }}
         />
 
         <br />

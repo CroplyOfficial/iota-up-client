@@ -76,7 +76,7 @@ export const DashboardSideNavbar = () => {
   const classes = useStyles();
   const links = [
     { title: "My Profile", path: "/dashboard/profile", classes: [] },
-    { title: "My Projecs", path: "/dashboard/projects", classes: [] },
+    { title: "My Projects", path: "/dashboard/projects", classes: [] },
     { title: "My Favorites", path: "/dashboard/favorites", classes: [] },
     { title: "Chat", path: "/dashboard/chat", classes: [] },
     { title: "Logout", path: "/dashboard/logout", classes: [classes.logout] },
