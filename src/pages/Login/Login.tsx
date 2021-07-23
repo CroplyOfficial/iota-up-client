@@ -1,6 +1,9 @@
 import { API } from "../../config";
 
-const Login = () => {
+interface IProps {
+  toggleLoginModal: () => void;
+}
+const Login = (props: IProps) => {
   return (
     <div>
       <a href={`${API}/users/authgoogle`}>

@@ -4,7 +4,10 @@ import React, { useState } from "react";
 import { RootState } from "../../store";
 import { IUser } from "../../interfaces/user.interface";
 
-const Settings = () => {
+interface IProps {
+  toggleLoginModal: () => void;
+}
+const Settings = (props: IProps) => {
   const [wallet, setWallet] = useState<string>("");
   const [skills, setSkills] = useState<string[]>([]);
   const [city, setCity] = useState<string>("");

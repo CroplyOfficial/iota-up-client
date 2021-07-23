@@ -114,6 +114,7 @@ enum NavbarVariants {
 
 interface INavbarProps {
   variant?: keyof typeof NavbarVariants;
+  toggleLoginModal: () => void;
 }
 export const Navbar = (props: INavbarProps) => {
   const isSecondary = props.variant === NavbarVariants.secondary;
@@ -174,9 +175,10 @@ export const Navbar = (props: INavbarProps) => {
                 Contact Us
               </Typography>
             </Link>
-            <Link to={paths.login} className={classes.link}>
-              <ActionButton variant={actionButtonVariant} />
-            </Link>
+            <ActionButton
+              variant={actionButtonVariant}
+              toggleLoginModal={props.toggleLoginModal}
+            />
           </Toolbar>
         </Container>
       </AppBar>
