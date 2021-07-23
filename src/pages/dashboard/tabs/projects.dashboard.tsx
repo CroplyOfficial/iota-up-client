@@ -31,7 +31,7 @@ const useStyles = makeStyles(() =>
   })
 );
 interface IProps {
-  projects: IProject[];
+  projects?: IProject[];
 }
 export const DashboardProjects = (props: IProps) => {
   const { projects } = props;

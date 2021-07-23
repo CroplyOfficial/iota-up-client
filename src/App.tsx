@@ -14,12 +14,10 @@ function App() {
     <div className="App">
       <ThemeProvider theme={theme}>
         <Router>
-          <Switch>
-            <Route path="/" exact render={() => <Root />} />
-            <Route path="/about" exact render={() => <AboutUs />} />
-            <Route path="/projects" exact render={() => <Projects />} />
-            <Route path="/dashboard" exact render={() => <Dashboard />} />
-          </Switch>
+          <Route path="/" exact render={() => <Root />} />
+          <Route path="/about" exact render={() => <AboutUs />} />
+          <Route path="/projects" exact render={() => <Projects />} />
+          <Route path="/dashboard" render={() => <Dashboard />} />
         </Router>
       </ThemeProvider>
     </div>

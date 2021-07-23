@@ -8,7 +8,8 @@ import { DashboardHeaderStripe } from "./headerStripe.dashboard";
 import { DashboardDeleteModal } from "./verifyDeleteModal.dashboard";
 import { useState } from "react";
 import { DashboardProjects } from "./tabs/projects.dashboard";
-
+import { DashboardFavorites } from "./tabs/favorites.dashboard";
+import { Switch, Route } from "react-router-dom";
 const useStyles = makeStyles(() =>
   createStyles({
     overview: {
@@ -25,13 +26,41 @@ export const Dashboard = () => {
   };
   return (
     <div>
-      <DashboardDeleteModal showing={showingVerifyDeleteModal} />
+      <DashboardDeleteModal
+        showing={showingVerifyDeleteModal}
+        onClick={handleVerifyDeleteModal}
+      />
       <Navbar />
       <div className={classes.overview}>
         <DashboardSideNavbar />
         <DashboardHeaderStripe>
           {/*<DashboardProfile verifyDelete={handleVerifyDeleteModal} />*/}
-          <DashboardProjects projects={[]} />
+          {/*<DashboardProjects projects={[]} />*/}
+          <Switch>
+            <Route
+              exact
+              path="/dashboard"
+              render={() => (
+                <DashboardProfile verifyDelete={handleVerifyDeleteModal} />
+              )}
+            />
+            <Route
+              exact
+              path="/dashboard/profile"
+              render={() => (
+                <DashboardProfile verifyDelete={handleVerifyDeleteModal} />
+              )}
+            />
+            <Route
+              path="/dashboard/projects"
+              render={() => <DashboardProjects />}
+            />
+            <Route
+              path="/dashboard/favorites"
+              render={() => <DashboardFavorites />}
+            />
+            <Route path="/dashboard/chat" render={() => <></>} />
+          </Switch>
         </DashboardHeaderStripe>
       </div>
       <DonateHero />
