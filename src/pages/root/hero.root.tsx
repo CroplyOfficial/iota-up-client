@@ -9,6 +9,7 @@ import {
 import { ArrowRight } from "@material-ui/icons";
 import { green } from "@material-ui/core/colors";
 import greenFairy from "../../static/images/green_fairy.png";
+import { Link } from "react-router-dom";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -140,14 +141,23 @@ export const Hero = () => {
         </Typography>
 
         <div className={classes.buttons}>
-          <Button
-            endIcon={<ArrowRight />}
-            color="secondary"
-            variant="contained"
-            className={classes.buttonLeft}
+          <Link
+            to="/about"
+            style={{
+              textDecoration: "none",
+              color: "inherit",
+              paddingRight: "45px",
+            }}
           >
-            Learn More
-          </Button>
+            <Button
+              endIcon={<ArrowRight />}
+              color="secondary"
+              variant="contained"
+              className={classes.buttonLeft}
+            >
+              Learn More
+            </Button>
+          </Link>
           <Button variant="outlined" className={classes.buttonRight}>
             Donate
           </Button>
