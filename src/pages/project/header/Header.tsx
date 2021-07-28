@@ -12,13 +12,10 @@ import { Container } from "../../../components/container/container";
 import { IProject } from "../../../interfaces/project.interface";
 import { HeaderTags } from "./tags.header";
 import { HeaderCardHeader } from "./cardHeader.header";
+import { ProjectPageVariants } from "../../../interfaces/project.variants.interface";
 
-enum ProjectHeaderVariants {
-  editable = "editable",
-  static = "static",
-}
 interface IProps {
-  variant: keyof typeof ProjectHeaderVariants;
+  variant: ProjectPageVariants;
   project: IProject | Record<never, never>;
 }
 export const ProjectHeader = (props: IProps) => {
