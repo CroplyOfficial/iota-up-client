@@ -16,4 +16,5 @@ export interface IUser {
   country: string;
   city: string;
   bio?: string;
+  username?: string;
 }

@@ -162,8 +162,9 @@ export const DashboardProfile = (props: IProps) => {
     country: userCountry,
     connections,
     bio: userBio,
+    username: _username,
   } = user;
-
+  //
   const { verifyDelete } = props;
   const classes = useStyles();
 
@@ -172,6 +173,7 @@ export const DashboardProfile = (props: IProps) => {
   const [fireflyAdress, setFireflyAdress] = useState<string>(userWallet ?? "");
   const [skills, setSkills] = useState<string[]>(userSkills || []);
   const [newSkill, setNewSkill] = useState<string>("");
+  const [username, setUsername] = useState<string>(_username || "");
   const [showingModal, setShowingModal] = useState<boolean>(false);
   const [bio, setBio] = useState<string>(userBio ?? "");
 
@@ -196,6 +198,8 @@ export const DashboardProfile = (props: IProps) => {
         country,
         skills,
         bio,
+        user,
+        username,
       },
       config
     );
@@ -273,8 +277,8 @@ export const DashboardProfile = (props: IProps) => {
 
         <TextField
           type="text"
-          onChange={(e: any) => setCity(e.target.value)}
-          value={city || null}
+          onChange={(e: any) => setUsername(e.target.value)}
+          value={username || null}
           label="Username"
           className={classes.textField}
         />
