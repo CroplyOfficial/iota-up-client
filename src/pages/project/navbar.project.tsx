@@ -15,6 +15,7 @@ const useStyles = makeStyles((theme: Theme) =>
       transition: "0.3s ease-out color",
       width: "100%",
       height: "3rem",
+      padding: "15px",
     },
     active: {
       fontFamily: "Poppins",
@@ -34,6 +35,10 @@ const useStyles = makeStyles((theme: Theme) =>
       color: theme.palette.text.secondary,
       width: "auto",
     },
+    justifyEnd: {
+      marginLeft: "auto",
+      paddingRight: "15px",
+    },
   })
 );
 
@@ -49,17 +54,24 @@ export const ProjectNavbar = (props: IProps) => {
   return (
     <div className={classes.root}>
       <Typography
-        className={isInformation ? classes.active : classes.active}
+        className={isInformation ? classes.active : classes.link}
         onClick={() => onClick(BodyOptions.INFORMATION)}
       >
         Project Information
       </Typography>
       <Typography
-        className={isUpdates ? classes.link : classes.link}
+        className={isUpdates ? classes.active : classes.link}
         onClick={() => onClick(BodyOptions.UPDATES)}
       >
         Updates
       </Typography>
+      {isUpdates ? (
+        <Typography className={`${classes.link} ${classes.justifyEnd}`}>
+          Add
+        </Typography>
+      ) : (
+        ""
+      )}
       {/*
       <Typography className={isInformation ? classes.active : classes.link}>
         Polls

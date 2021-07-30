@@ -13,4 +13,5 @@ export interface IProject {
   upvotes: number;
   donations: number;
   information?: EditorState;
+  _id?: string;
 }

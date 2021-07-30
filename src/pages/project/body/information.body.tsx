@@ -69,14 +69,6 @@ export const ProjectBodyInformation = (props: IProps) => {
             },
           }}
         />
-        <textarea
-          disabled
-          value={
-            editorState
-              ? draftToHtml(convertToRaw(editorState.getCurrentContent()))
-              : ""
-          }
-        />
       </div>
     </div>
   );

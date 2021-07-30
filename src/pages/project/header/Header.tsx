@@ -17,9 +17,10 @@ import { ProjectPageVariants } from "../../../interfaces/project.variants.interf
 interface IProps {
   variant: ProjectPageVariants;
   project: IProject | Record<never, never>;
+  showImageModal: () => void;
 }
 export const ProjectHeader = (props: IProps) => {
-  const { variant, project } = props;
+  const { variant, project, showImageModal } = props;
   const {
     completed,
     created_at,
@@ -233,10 +234,13 @@ export const ProjectHeader = (props: IProps) => {
     <Container>
       <Card className={classes.root}>
         <div className={classes.left}>
-          <div className={classes.mainImageWrapper}></div>
+          <div
+            className={classes.mainImageWrapper}
+            onClick={() => showImageModal()}
+          ></div>
           <div className={classes.imagesWrapper}>
             {images.slice(1, images.length).map((image, i) => (
-              <div className={"image-" + i++}></div>
+              <div className={"image-" + i++} onClick={showImageModal}></div>
             ))}
           </div>
         </div>
