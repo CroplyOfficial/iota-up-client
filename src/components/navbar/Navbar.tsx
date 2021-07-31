@@ -26,46 +26,7 @@ const paths = {
   login: "/login",
 };
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    root: {
-      flexGrow: 1,
-    },
-    menuButton: {
-      marginRight: theme.spacing(2),
-    },
-    title: {
-      flexGrow: 1,
-    },
-    link: {
-      textDecoration: "none",
-      color: "inherit",
-      marginLeft: "0.7rem",
-      marginRight: "0.7rem",
-    },
-    a: {
-      "&:hover": {
-        color: "#121E31",
-      },
-      lineHeight: "27px",
-      fontSize: "18px",
-      fontFamily: "Poppins",
-      fontStyle: "normal",
-      fontWeight: 500,
-      color: "#717579",
-    },
-    loginButton: {
-      lineHeight: "27px",
-      fontSize: "18px",
-      fontFamiliy: "Poppins",
-      fontStyle: "normal",
-      fontWeight: 700,
-    },
-    iconButton: {
-      paddingLeft: 0,
-    },
-  })
-);
+/*
 const useAltStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
@@ -105,7 +66,7 @@ const useAltStyles = makeStyles((theme: Theme) =>
       paddingLeft: 0,
     },
   })
-);
+);*/
 
 enum NavbarVariants {
   main = "main",
@@ -117,10 +78,49 @@ interface INavbarProps {
 }
 export const Navbar = (props: INavbarProps) => {
   const isSecondary = props.variant === NavbarVariants.secondary;
-  const mainClasses = useStyles();
-  // TODO may be redundant ( use logic within usestyles, move usestyles inside component scope)
-  const altClasses = useAltStyles();
-  const classes = isSecondary ? altClasses : mainClasses;
+  const useStyles = makeStyles((theme: Theme) =>
+    createStyles({
+      root: {
+        paddingTop: "20px",
+        paddingBottom: "20px",
+      },
+      menuButton: {
+        marginRight: theme.spacing(2),
+      },
+      title: {
+        flexGrow: 1,
+      },
+      link: {
+        textDecoration: "none",
+        color: "inherit",
+        marginLeft: "0.7rem",
+        marginRight: "0.7rem",
+      },
+      a: {
+        "&:hover": {
+          color: isSecondary ? theme.palette.text.secondary : "#121E31",
+        },
+        lineHeight: "27px",
+        fontSize: "18px",
+        fontFamily: "Poppins",
+        fontStyle: "normal",
+        fontWeight: 500,
+        color: isSecondary ? "#ffffff" : "#717579",
+      },
+      loginButton: {
+        lineHeight: "27px",
+        fontSize: "18px",
+        fontFamiliy: "Poppins",
+        fontStyle: "normal",
+        fontWeight: 700,
+      },
+      iconButton: {
+        paddingLeft: 0,
+      },
+    })
+  );
+
+  const classes = useStyles();
 
   // TODO implement context or redux
   const initialState = {};
@@ -131,7 +131,12 @@ export const Navbar = (props: INavbarProps) => {
   const brandLogo = isSecondary ? <BrandLogoSecondary /> : <BrandLogo />;
   return (
     <div>
-      <AppBar position="static" color={appBarColor}>
+      <AppBar
+        position="static"
+        color={isSecondary ? "primary" : "transparent"}
+        elevation={0}
+        className={classes.root}
+      >
         <Container>
           <Toolbar variant="dense">
             {/* Brand */}
