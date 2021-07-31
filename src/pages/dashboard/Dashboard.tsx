@@ -9,6 +9,7 @@ import { DashboardDeleteModal } from "./verifyDeleteModal.dashboard";
 import { useState } from "react";
 import { DashboardProjects } from "./tabs/projects.dashboard";
 import { DashboardFavorites } from "./tabs/favorites.dashboard";
+import { DashboardCreateProjectModal } from "./createProjectModal.dashboard";
 import { Switch, Route } from "react-router-dom";
 const useStyles = makeStyles(() =>
   createStyles({
@@ -24,11 +25,21 @@ export const Dashboard = () => {
   const handleVerifyDeleteModal = () => {
     setShowingVerifyDeleteModal(!showingVerifyDeleteModal);
   };
+
+  const [showingCreateProjectModal, setShowingCreateProjectModal] =
+    useState<boolean>(false);
+  const handleCreateProjectModal = () => {
+    setShowingCreateProjectModal(!showingCreateProjectModal);
+  };
   return (
     <div>
       <DashboardDeleteModal
         showing={showingVerifyDeleteModal}
         onClick={handleVerifyDeleteModal}
+      />
+      <DashboardCreateProjectModal
+        showing={showingCreateProjectModal}
+        onClick={handleCreateProjectModal}
       />
       <Navbar />
       <div className={classes.overview}>
@@ -53,7 +64,11 @@ export const Dashboard = () => {
             />
             <Route
               path="/dashboard/projects"
-              render={() => <DashboardProjects />}
+              render={() => (
+                <DashboardProjects
+                  handleCreateProjectModal={handleCreateProjectModal}
+                />
+              )}
             />
             <Route
               path="/dashboard/favorites"
