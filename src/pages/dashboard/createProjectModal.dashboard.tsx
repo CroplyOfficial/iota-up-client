@@ -147,6 +147,10 @@ export const DashboardCreateProjectModal = (props: IProps) => {
     setCategories([...newCategories]);
   };
   const [select, setSelect] = useState<string>("");
+  const [walletAdress, setWalletAdress] = useState<string>("");
+  const handleWallet = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setWalletAdress(e.currentTarget.value);
+  };
   const allCategories = ["Technology", "Community", "Theater"];
   const handleCreateProject = () => {
     axios
@@ -211,12 +215,22 @@ export const DashboardCreateProjectModal = (props: IProps) => {
                   />
                 ))}
               </div>
+
+              <Typography className={classes.label}>Wallet Adress</Typography>
+              <TextField
+                value={walletAdress}
+                onChange={handleWallet}
+                placeholder="iota:12312"
+                label={"IOTA Wallet Adress"}
+                className={classes.textField}
+              />
             </div>
+
             <div className={classes.footer}>
               <Button
                 variant="outlined"
                 color="primary"
-                onClick={handleDeleteAccount}
+                onClick={handleCreateProject}
                 className={classes.button}
               >
                 Create
