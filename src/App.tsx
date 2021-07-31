@@ -20,10 +20,9 @@ function App() {
           <Route path="/about" exact render={() => <AboutUs />} />
           <Route path="/projects" exact render={() => <Projects />} />
           <Route path="/dashboard" render={() => <Dashboard />} />
-<Route path="/login" exact component={Login} />
-            <Route path="/authorize" exact component={Authorize} />
-            <Route path="/settings" exact component={Settings} />
-
+          <Route path="/login" exact component={Login} />
+          <Route path="/authorize" exact component={Authorize} />
+          <Route path="/settings" exact component={Settings} />
         </Router>
       </ThemeProvider>
     </div>
