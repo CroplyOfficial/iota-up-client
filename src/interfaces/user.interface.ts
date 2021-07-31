@@ -12,4 +12,9 @@ export interface IUser {
   skills?: string[];
   token?: string;
   upvotedProjects?: string[];
+  wallet: string;
+  country: string;
+  city: string;
+  bio?: string;
+  username?: string;
 }

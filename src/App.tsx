@@ -7,6 +7,7 @@ import { theme } from "./theme/theme";
 import { AboutUs } from "./pages/about_us/AboutUs";
 import { ProjectOverview } from "./pages/project/Project";
 import { Projects } from "./pages/projects/Projects";
+import { Dashboard } from "./pages/dashboard/Dashboard";
 import { Login } from "./pages/Login/Login";
 import { Authorize } from "./pages/Authorize/Authorize";
 import { Settings } from "./pages/Settings/Settings";
@@ -24,6 +25,7 @@ function App() {
               path="/project/:id"
               render={(props: any) => <ProjectOverview {...props} />}
             />
+            <Route path="/dashboard" render={() => <Dashboard />} />
             <Route path="/login" exact component={Login} />
             <Route path="/authorize" exact component={Authorize} />
             <Route path="/settings" exact component={Settings} />
