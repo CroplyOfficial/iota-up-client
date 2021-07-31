@@ -4,6 +4,9 @@ import {
   Typography,
   Button,
   TextField,
+  Theme,
+  FormHelperText,
+  FormControl,
 } from "@material-ui/core";
 import { IPost } from "../../interfaces/post.interface";
 import htmlToDraft from "html-to-draftjs";
@@ -13,7 +16,7 @@ import { CloseSharp } from "@material-ui/icons";
 import { IProject } from "../../interfaces/project.interface";
 import { useState } from "react";
 
-const useStyles = makeStyles(() =>
+const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     modal: {
       width: "100vw",
@@ -110,21 +113,63 @@ const useStyles = makeStyles(() =>
       borderRadius: "10px",
       width: "300px",
     },
-    label: {},
+    label: {
+      fontFamily: "Poppins",
+      fontWeight: 400,
+      fontStyle: "normal",
+      fontSize: "18px",
+      lineHeight: "27px",
+      color: theme.palette.text.secondary,
+      paddingTop: "10px",
+    },
+    hint: {
+      fontFamily: "Poppins",
+      fontWeight: 400,
+      fontStyle: "normal",
+      fontSize: "12px",
+      lineHeight: "28px",
+      color: theme.palette.text.hint,
+    },
     textField: {
       width: "300px",
     },
     featuredImage: {
-      width: "100%",
-      height: "500px",
+      width: "400px",
+      height: "225px",
+    },
+    featuredImageMissing: {
+      width: "400px",
+      height: "225px",
+      border: "3px solid grey",
     },
     images: {
       display: "flex",
-      flexDirection: "row",
+      width: "100%",
+      flexWrap: "wrap",
+      gap: "15px",
     },
     image: {
       width: "200px",
       height: "200px",
+    },
+    imageMissing: {
+      width: "200px",
+      height: "200px",
+      border: "3px solid grey",
+    },
+    level: {
+      display: "flex",
+      justifyContent: "space-between",
+      gap: "50px",
+    },
+    left: {
+      display: "flex",
+      flexDirection: "column",
+    },
+    right: {
+      display: "flex",
+      flexDirection: "column",
+      width: "450px",
     },
   })
 );
@@ -139,6 +184,13 @@ export const ProjectImageModal = (props: IProps) => {
   const [url, setUrl] = useState<string>("");
   const [featuredImage, setFeaturedImage] = useState<string>("");
   const [images, setImages] = useState<string[]>([]);
+
+  const handleUrlOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setUrl(e.currentTarget.value);
+  };
+  const handleSave = () => {
+    onClick();
+  };
 
   const handlePrimaryImage = () => {};
   const handleSecondaryImages = () => {};
@@ -155,39 +207,89 @@ export const ProjectImageModal = (props: IProps) => {
             </Button>
           </div>
           <div className={classes.body}>
-            <TextField label="Video Url" className={classes.textField} />
-            <Typography color="textPrimary" className={classes.label}>
-              Only youtube.com or vimeo.com urls.
-            </Typography>
-            <div className={classes.images}>
-              {featuredImage && (
-                <img src={featuredImage} className={classes.featuredImage} />
-              )}
-            </div>
-            <Button
-              onClick={handlePrimaryImage}
-              color="primary"
-              variant="contained"
-              className={classes.button}
-            >
-              Set Featured Image
-            </Button>
+            <div className={classes.level}>
+              <div className={classes.left}>
+                <Typography className={classes.label}>Video</Typography>
+                {url.length < 8 ||
+                ["youtube.", "vimeo."].some((domain) =>
+                  url.includes(domain)
+                ) ? (
+                  <TextField
+                    label="Video Url"
+                    className={classes.textField}
+                    onChange={handleUrlOnChange}
+                  />
+                ) : (
+                  <TextField
+                    error
+                    label="Video Url"
+                    className={classes.textField}
+                    helperText={"Only youtube.com or vimeo.com urls."}
+                    onChange={handleUrlOnChange}
+                  />
+                )}
+                <Typography className={classes.label}>Main Image</Typography>
+                <Button
+                  onClick={handlePrimaryImage}
+                  color="primary"
+                  variant="contained"
+                  className={classes.button}
+                >
+                  Set Featured Image
+                </Button>
+                <Typography className={classes.label}>
+                  Secondary Images
+                </Typography>
+                <Button
+                  onClick={handleSecondaryImages}
+                  color="secondary"
+                  className={classes.button}
+                  variant="outlined"
+                >
+                  Add other images
+                </Button>
+              </div>
+              <div className={classes.right}>
+                {featuredImage && (
+                  <>
+                    <Typography className={classes.label}>
+                      Featured Image
+                    </Typography>
+                    <img
+                      src={featuredImage}
+                      className={classes.featuredImage}
+                    />
+                  </>
+                )}
 
-            <div className={classes.images}>
-              {images.length
-                ? images.map((i) => <img src={i} className={classes.image} />)
-                : ""}
+                {images.length ? (
+                  <>
+                    <Typography className={classes.label}>
+                      Secondary Images
+                    </Typography>
+                    <div className={classes.images}>
+                      {images.map((i) => (
+                        <img src={i} className={classes.image} />
+                      ))}
+                    </div>
+                  </>
+                ) : (
+                  ""
+                )}
+              </div>
             </div>
+          </div>
+          <div className={classes.footer}>
             <Button
-              onClick={handleSecondaryImages}
-              color="secondary"
+              onClick={handleSave}
+              color="primary"
               className={classes.button}
-              variant="outlined"
+              variant="contained"
+              style={{ margin: "15px" }}
             >
-              Add other images
+              Save
             </Button>
           </div>
-          <div className={classes.footer}></div>
         </div>
       </div>
     </div>
