@@ -32,8 +32,6 @@ export const ProjectHeader = (props: IProps) => {
       "https://source.unsplash.com/random",
       "https://source.unsplash.com/random",
       "https://source.unsplash.com/random",
-      "https://source.unsplash.com/random",
-      "https://source.unsplash.com/random",
     ], // TODO not sure if this set's fallback or default
     donations = 132,
     tags: initialTags = [
@@ -93,25 +91,25 @@ export const ProjectHeader = (props: IProps) => {
         "& > div:nth-child(1)": {
           borderRadius: "20px",
           backgroundSize: "100%",
-          backgroundImage: `url(${mainImage})`,
+          backgroundImage: `url(${images[1]})`,
         },
         "& > div:nth-child(2)": {
           borderRadius: "20px",
           backgroundColor: "#f5f5f5",
           backgroundSize: "100%",
-          backgroundImage: `url(${mainImage})`,
+          backgroundImage: `url(${images[2]})`,
         },
         "& > div:nth-child(3)": {
           borderRadius: "20px",
           backgroundColor: "#f5f5f5",
           backgroundSize: "100%",
-          backgroundImage: `url(${mainImage})`,
+          backgroundImage: `url(${images[3]})`,
         },
         "& > div:nth-child(4)": {
           borderRadius: "20px",
           backgroundColor: "#f5f5f5",
           backgroundSize: "100%",
-          backgroundImage: `url(${mainImage})`,
+          backgroundImage: `url(${images[4]})`,
           marginRight: "0",
         },
         "& > div:nth-child(5)": {

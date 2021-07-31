@@ -151,6 +151,8 @@ const useStyles = makeStyles((theme: Theme) =>
     image: {
       width: "200px",
       height: "200px",
+      backgroundPosition: "center center",
+      backgroundRepeat: "no-repeat",
     },
     imageMissing: {
       width: "200px",
@@ -182,8 +184,10 @@ export const ProjectImageModal = (props: IProps) => {
   const classes = useStyles();
   const { onClick, project } = props;
   const [url, setUrl] = useState<string>("");
-  const [featuredImage, setFeaturedImage] = useState<string>("");
-  const [images, setImages] = useState<string[]>([]);
+  const [featuredImage, setFeaturedImage] = useState<string>(
+    project?.images[0] ?? ""
+  );
+  const [images, setImages] = useState<string[]>(project?.images ?? []);
 
   const handleUrlOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUrl(e.currentTarget.value);
