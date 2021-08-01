@@ -13,16 +13,16 @@ import { IProject } from "../../interfaces/project.interface";
 export const SampleProjects: IProject[] = [
   {
     title: "IOTA MEMES - fun community meme website",
-    description: "Long project description",
+    description: `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip`,
     images: [
-      "https://live.staticflickr.com/7629/28393379471_fd6ce887c3_b.jpg",
-      "",
-      "",
-      "",
-      "",
-      "",
+      "https://source.unsplash.com/random",
+      "https://source.unsplash.com/random",
+      "https://source.unsplash.com/random",
+      "https://source.unsplash.com/random",
+      "https://source.unsplash.com/random",
+      "https://source.unsplash.com/random",
     ],
-    tags: [],
+    tags: ["Creative", "IOTA", "Community"],
     donations: 143,
     upvotes: 2132,
     created_at: 0,
@@ -30,6 +30,7 @@ export const SampleProjects: IProject[] = [
     funding: [0, 100],
     milestones: [],
     created_by: "abc",
+    _id: "1233333333331212d",
   },
   {
     title: "Identity Suite - Open Source Application Blueprints",
@@ -50,6 +51,7 @@ export const SampleProjects: IProject[] = [
     funding: [0, 100],
     milestones: [],
     created_by: "abc",
+    _id: "1237123899093e",
   },
   {
     title: "IOTA Live - Deep Dive Web Series with IF & Community Members",
@@ -70,6 +72,7 @@ export const SampleProjects: IProject[] = [
     funding: [0, 100],
     milestones: [],
     created_by: "abc",
+    _id: "92133292139b",
   },
   {
     title: "IOTA MEMES - fun community meme website",
@@ -82,7 +85,7 @@ export const SampleProjects: IProject[] = [
       "",
       "",
     ],
-    tags: [],
+    tags: ["community"],
     donations: 143,
     upvotes: 2132,
     created_at: 0,
@@ -90,6 +93,7 @@ export const SampleProjects: IProject[] = [
     funding: [0, 100],
     milestones: [],
     created_by: "abc",
+    _id: "23z2137123a",
   },
 ];
 

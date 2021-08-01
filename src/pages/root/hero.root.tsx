@@ -8,6 +8,8 @@ import {
 } from "@material-ui/core";
 import { ArrowRight } from "@material-ui/icons";
 import { green } from "@material-ui/core/colors";
+import greenFairy from "../../static/images/green_fairy.png";
+import { Link } from "react-router-dom";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -39,7 +41,7 @@ const useStyles = makeStyles((theme: Theme) =>
       fontStyle: "normal",
     },
     subHeader: {
-      fontSize: "50px",
+      fontSize: "44px",
       lineHeight: "75px",
       fontFamily: "Poppins",
       fontWeight: 600,
@@ -70,6 +72,7 @@ const useStyles = makeStyles((theme: Theme) =>
       fontStyle: "normal",
       fontSize: "16px",
       lineHeight: "28px",
+      color: "white",
     },
     buttonRight: {
       padding: "20px",
@@ -94,15 +97,21 @@ const Oval = ({ image, color }: IOvalProps) => {
       oval: {
         width: "1046px",
         height: "678px",
-        background: color || green[300],
+        background: !image ? color || green[300] : "",
         borderRadius: "50%",
+      },
+      image: {
+        height: "100%",
+        transform: "translate(0, -50px)",
       },
     })
   );
   const classes = useStyles();
   return (
     <React.Fragment>
-      <div className={classes.oval}></div>
+      <div className={classes.oval}>
+        <img src={image} className={classes.image} />
+      </div>
     </React.Fragment>
   );
 };
@@ -120,26 +129,35 @@ export const Hero = () => {
             Create. Share. Grow.
           </Typography>
           <Typography className={classes.subHeader}>
-            Open Community Donations
+            The Community Project Platform
           </Typography>
         </div>
 
         <Typography className={classes.text}>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-          aliquip
+          UP is a project sharing platform that enables creators to connect with
+          the community. Offering a one-stop shop to share updates and connect
+          with a global audience, to gain support and exposure for
+          groundbreaking innovation and design.
         </Typography>
 
         <div className={classes.buttons}>
-          <Button
-            endIcon={<ArrowRight />}
-            color="secondary"
-            variant="contained"
-            className={classes.buttonLeft}
+          <Link
+            to="/about"
+            style={{
+              textDecoration: "none",
+              color: "inherit",
+              paddingRight: "45px",
+            }}
           >
-            Learn More
-          </Button>
+            <Button
+              endIcon={<ArrowRight />}
+              color="secondary"
+              variant="contained"
+              className={classes.buttonLeft}
+            >
+              Learn More
+            </Button>
+          </Link>
           <Button variant="outlined" className={classes.buttonRight}>
             Donate
           </Button>
@@ -147,7 +165,7 @@ export const Hero = () => {
       </div>
 
       <div className={classes.right}>
-        <Oval image="" color="#C4C4C4" />
+        <Oval image={greenFairy} color="#C4C4C4" />
       </div>
     </div>
   );

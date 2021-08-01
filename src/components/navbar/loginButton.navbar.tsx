@@ -2,23 +2,25 @@ import { createStyles, makeStyles, Button } from "@material-ui/core";
 import { Person } from "@material-ui/icons";
 import React, { useState } from "react";
 
-const useStyles = makeStyles(() =>
-  createStyles({
-    button: {
-      lineHeight: "27px",
-      fontSize: "18px",
-      font: "Poppins",
-      fontWeight: 700,
-      fontStyle: "normal",
-    },
-  })
-);
-
 interface ISignInButton {
   variant?: "outlined" | "contained";
   toggleLoginModal: () => void;
 }
 const SignInButton = (props: ISignInButton) => {
+  const isSecondary = props.variant === "contained";
+  const useStyles = makeStyles(() =>
+    createStyles({
+      button: {
+        lineHeight: "27px",
+        fontSize: "18px",
+        font: "Poppins",
+        fontWeight: 700,
+        fontStyle: "normal",
+        color: isSecondary ? "white" : "",
+      },
+    })
+  );
+
   const classes = useStyles();
   return (
     <Button

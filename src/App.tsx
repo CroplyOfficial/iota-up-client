@@ -6,7 +6,9 @@ import { Root } from "./pages/root/Root";
 import { ThemeProvider } from "@material-ui/core";
 import { theme } from "./theme/theme";
 import { AboutUs } from "./pages/about_us/AboutUs";
+import { ProjectOverview } from "./pages/project/Project";
 import { Projects } from "./pages/projects/Projects";
+import { Dashboard } from "./pages/dashboard/Dashboard";
 import { Login } from "./pages/Login/Login";
 import { Authorize } from "./pages/Authorize/Authorize";
 import { Settings } from "./pages/Settings/Settings";
@@ -27,46 +29,17 @@ function App() {
             <div></div>
           )}
           <Switch>
+            <Route path="/" exact component={Root} />
+            <Route path="/about" exact component={AboutUs} />
+            <Route path="/projects" exact component={Projects} />
             <Route
-              path="/"
-              exact
-              render={() => <Root toggleLoginModal={toggleShowingLoginModal} />}
+              path="/project/:id"
+              render={(props: any) => <ProjectOverview {...props} />}
             />
-            <Route
-              path="/about"
-              exact
-              render={() => (
-                <AboutUs toggleLoginModal={toggleShowingLoginModal} />
-              )}
-            />
-            <Route
-              path="/projects"
-              exact
-              render={() => (
-                <Projects toggleLoginModal={toggleShowingLoginModal} />
-              )}
-            />
-            <Route
-              path="/login"
-              exact
-              render={() => (
-                <Login toggleLoginModal={toggleShowingLoginModal} />
-              )}
-            />
-            <Route
-              path="/authorize"
-              exact
-              render={() => (
-                <Authorize toggleLoginModal={toggleShowingLoginModal} />
-              )}
-            />
-            <Route
-              path="/settings"
-              exact
-              render={() => (
-                <Settings toggleLoginModal={toggleShowingLoginModal} />
-              )}
-            />
+            <Route path="/dashboard" render={() => <Dashboard />} />
+            <Route path="/login" exact component={Login} />
+            <Route path="/authorize" exact component={Authorize} />
+            <Route path="/settings" exact component={Settings} />
           </Switch>
         </Router>
       </ThemeProvider>

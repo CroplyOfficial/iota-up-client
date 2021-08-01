@@ -46,8 +46,9 @@ const useStyles = makeStyles(() =>
       fontStyle: "standard",
       fontSize: "18px",
       lineHeight: "27px",
-      paddingLeft: "10px",
-      paddingRight: "10px",
+      paddingLeft: "20px",
+      paddingRight: "20px",
+      color: "white",
     },
   })
 );
