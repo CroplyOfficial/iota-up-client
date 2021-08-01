@@ -4,6 +4,7 @@ import {
   LinkedInLoginButton,
   FacebookLoginButton,
 } from "react-social-login-buttons";
+import { API } from "../../config";
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -62,7 +63,6 @@ interface IProps {
 export const LoginModal = (props: IProps) => {
   const { onClick } = props;
   const classes = useStyles();
-  const API = `http://localhost:5000/api`;
   return (
     <div className={classes.modal}>
       <div className={classes.background} onClick={onClick}></div>
