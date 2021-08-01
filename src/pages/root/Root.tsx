@@ -26,7 +26,10 @@ const useStyles = makeStyles(() =>
   })
 );
 
-export const Root = () => {
+interface IProps {
+  toggleLoginModal: () => void;
+}
+export const Root = (props: IProps) => {
   const classes = useStyles();
 
   /* FEATURED */
@@ -82,7 +85,7 @@ export const Root = () => {
 
   return (
     <React.Fragment>
-      <Navbar />
+      <Navbar toggleLoginModal={props.toggleLoginModal} />
       <Container className={classes.heroContainer}>
         <Hero />
       </Container>

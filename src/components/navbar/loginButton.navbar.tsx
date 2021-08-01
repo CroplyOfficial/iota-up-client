@@ -4,6 +4,7 @@ import React, { useState } from "react";
 
 interface ISignInButton {
   variant?: "outlined" | "contained";
+  toggleLoginModal: () => void;
 }
 const SignInButton = (props: ISignInButton) => {
   const isSecondary = props.variant === "contained";
@@ -28,6 +29,7 @@ const SignInButton = (props: ISignInButton) => {
       color="secondary"
       disableElevation
       startIcon={<Person />}
+      onClick={props.toggleLoginModal}
     >
       Sign in
     </Button>
@@ -41,7 +43,14 @@ export const ActionButton = (props: ISignInButton) => {
 
   return (
     <React.Fragment>
-      {userInfo.name ? "hello anonymous" : <SignInButton variant={variant} />}
+      {userInfo.name ? (
+        "hello anonymous"
+      ) : (
+        <SignInButton
+          variant={variant}
+          toggleLoginModal={props.toggleLoginModal}
+        />
+      )}
     </React.Fragment>
   );
 };

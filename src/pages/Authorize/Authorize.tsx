@@ -2,7 +2,10 @@ import { useDispatch } from "react-redux";
 import { login } from "../../actions/userActions";
 import { useEffect } from "react";
 
-const Authorize = () => {
+interface IProps {
+  toggleLoginModal: () => void;
+}
+const Authorize = (props: IProps) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
