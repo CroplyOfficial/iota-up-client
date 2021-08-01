@@ -8,9 +8,7 @@ import { ProjectsSearchBar } from "./searchBar/SearchBar";
 import { ProjectsNavbarHero } from "./navbarHero.projects";
 import { SampleProjects } from "../root/sampleState";
 
-interface IProps {
-  toggleLoginModal: () => void;
-}
+interface IProps {}
 export const Projects = (props: IProps) => {
   const [projects, setProjects] = useState<IProject[]>(
     /*[
@@ -61,7 +59,6 @@ export const Projects = (props: IProps) => {
   const handleOnClick = () => {};
   return (
     <div>
-      <Navbar variant="secondary" toggleLoginModal={props.toggleLoginModal} />
       <ProjectsNavbarHero />
       <ProjectsSearchBar onChange={handleOnChange} onClick={handleOnClick} />
       <ProjectsOverview projects={projects} />

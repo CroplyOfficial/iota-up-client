@@ -63,7 +63,6 @@ export const ProjectOverview = () => {
         <ProjectImageModal project={p} onClick={toggleShowImageModal} />
       )}
 
-      <Navbar />
       {loading ? (
         <div>Loading...</div>
       ) : (

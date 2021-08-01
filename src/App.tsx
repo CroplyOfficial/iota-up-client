@@ -14,11 +14,14 @@ import { Authorize } from "./pages/Authorize/Authorize";
 import { Settings } from "./pages/Settings/Settings";
 import { LoginModal } from "./components/loginModal/LoginModal";
 import { Navbar } from "./components/navbar/Navbar";
+import { useLocation } from "react-router-dom";
 
-function App() {
+function App(props: any) {
   const [showingLoginModal, setShowingLoginModal] = useState<boolean>(false);
   const toggleShowingLoginModal = () =>
     setShowingLoginModal(!showingLoginModal);
+  console.log(window.location.pathname, window.location.href, props);
+
   return (
     <div className="App">
       <ThemeProvider theme={theme}>
@@ -28,6 +31,7 @@ function App() {
           ) : (
             <div></div>
           )}
+          <Navbar toggleLoginModal={toggleShowingLoginModal} />
           <Switch>
             <Route path="/" exact component={Root} />
             <Route path="/about" exact component={AboutUs} />
