@@ -14,7 +14,7 @@ import { LoginModal } from "./components/loginModal/LoginModal";
 import { Navbar } from "./components/navbar/Navbar";
 
 function App() {
-  const [showingLoginModal, setShowingLoginModal] = useState<boolean>(true);
+  const [showingLoginModal, setShowingLoginModal] = useState<boolean>(false);
   const toggleShowingLoginModal = () =>
     setShowingLoginModal(!showingLoginModal);
   return (

@@ -10,7 +10,8 @@ const useStyles = makeStyles(() =>
     modal: {
       width: "100vw",
       height: "100vh",
-      position: "absolute",
+      position: "fixed",
+      zIndex: 3,
     },
     background: {
       width: "100%",
