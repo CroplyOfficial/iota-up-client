@@ -41,7 +41,6 @@ export const Dashboard = () => {
         showing={showingCreateProjectModal}
         onClick={handleCreateProjectModal}
       />
-      <Navbar />
       <div className={classes.overview}>
         <DashboardSideNavbar />
         <DashboardHeaderStripe>

@@ -8,7 +8,7 @@ import {
   Typography,
   Color,
 } from "@material-ui/core";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { BrandLogo } from "../../static/icons/brand-logo";
 import { BrandLogoSecondary } from "../../static/icons/brand-logo.secondary";
 import { useState } from "react";
@@ -78,7 +78,8 @@ interface INavbarProps {
   toggleLoginModal: () => void;
 }
 export const Navbar = (props: INavbarProps) => {
-  const isSecondary = props.variant === NavbarVariants.secondary;
+  const { pathname } = useLocation();
+  const isSecondary = pathname.includes("/projects");
   const useStyles = makeStyles((theme: Theme) =>
     createStyles({
       root: {

@@ -26,9 +26,7 @@ const useStyles = makeStyles(() =>
   })
 );
 
-interface IProps {
-  toggleLoginModal: () => void;
-}
+interface IProps {}
 export const Root = (props: IProps) => {
   const classes = useStyles();
 
@@ -85,7 +83,6 @@ export const Root = (props: IProps) => {
 
   return (
     <React.Fragment>
-      <Navbar toggleLoginModal={props.toggleLoginModal} />
       <Container className={classes.heroContainer}>
         <Hero />
       </Container>
