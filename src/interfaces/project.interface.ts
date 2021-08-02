@@ -1,3 +1,4 @@
+import { EditorState } from "draft-js";
 import { IMilestone } from "./milestone.interface";
 export interface IProject {
   created_at: number;
@@ -11,4 +12,6 @@ export interface IProject {
   images: [string, string, string, string, string, string];
   upvotes: number;
   donations: number;
+  information?: EditorState;
+  _id?: string;
 }

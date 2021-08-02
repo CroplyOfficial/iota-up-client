@@ -32,18 +32,18 @@ const useStyles = makeStyles(() =>
 );
 interface IProps {
   projects?: IProject[];
+  handleCreateProjectModal: () => void;
 }
 export const DashboardProjects = (props: IProps) => {
-  const { projects } = props;
+  const { projects, handleCreateProjectModal } = props;
   const classes = useStyles();
-  const handleAddNewProject = () => null;
   return (
     <div>
       <div className={classes.root}>
         {SampleProjects.concat(SampleProjects).map((p) => (
           <Card2 project={p} />
         ))}
-        <AddNewProjectCard onClick={handleAddNewProject} />
+        <AddNewProjectCard onClick={handleCreateProjectModal} />
         <Button
           color="secondary"
           variant="contained"
