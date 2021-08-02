@@ -171,11 +171,6 @@ export const Navbar = (props: INavbarProps) => {
                 Projects
               </Typography>
             </Link>
-            <Link to={paths.creators} className={classes.link}>
-              <Typography variant="h5" className={classes.a}>
-                Creators
-              </Typography>
-            </Link>
             <Link to={paths.contactUs} className={classes.link}>
               <Typography variant="h5" className={classes.a}>
                 Contact Us
