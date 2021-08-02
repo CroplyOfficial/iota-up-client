@@ -8,7 +8,8 @@ import { ProjectsSearchBar } from "./searchBar/SearchBar";
 import { ProjectsNavbarHero } from "./navbarHero.projects";
 import { SampleProjects } from "../root/sampleState";
 
-export const Projects = () => {
+interface IProps {}
+export const Projects = (props: IProps) => {
   const [projects, setProjects] = useState<IProject[]>(
     /*[
     {
@@ -58,7 +59,6 @@ export const Projects = () => {
   const handleOnClick = () => {};
   return (
     <div>
-      <Navbar variant="secondary" />
       <ProjectsNavbarHero />
       <ProjectsSearchBar onChange={handleOnChange} onClick={handleOnClick} />
       <ProjectsOverview projects={projects} />

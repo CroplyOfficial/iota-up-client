@@ -6,10 +6,10 @@ import { DonateHero } from "../../components/donateHero/donateHero";
 import { AboutUsFeelessDonationsHero } from "./feelessDonationHero.about_us";
 import { AboutUsDonateHero } from "./donateHero.about_us";
 
-export const AboutUs = () => {
+interface IProps {}
+export const AboutUs = (props: IProps) => {
   return (
     <div>
-      <Navbar />
       <Container>
         <AboutUsHero />
       </Container>

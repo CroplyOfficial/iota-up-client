@@ -26,7 +26,8 @@ const useStyles = makeStyles(() =>
   })
 );
 
-export const Root = () => {
+interface IProps {}
+export const Root = (props: IProps) => {
   const classes = useStyles();
 
   /* FEATURED */
@@ -82,7 +83,6 @@ export const Root = () => {
 
   return (
     <React.Fragment>
-      <Navbar />
       <Container className={classes.heroContainer}>
         <Hero />
       </Container>

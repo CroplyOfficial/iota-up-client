@@ -8,7 +8,7 @@ import {
   Typography,
   Color,
 } from "@material-ui/core";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { BrandLogo } from "../../static/icons/brand-logo";
 import { BrandLogoSecondary } from "../../static/icons/brand-logo.secondary";
 import { useState } from "react";
@@ -75,9 +75,11 @@ enum NavbarVariants {
 
 interface INavbarProps {
   variant?: keyof typeof NavbarVariants;
+  toggleLoginModal: () => void;
 }
 export const Navbar = (props: INavbarProps) => {
-  const isSecondary = props.variant === NavbarVariants.secondary;
+  const { pathname } = useLocation();
+  const isSecondary = pathname.includes("/projects");
   const useStyles = makeStyles((theme: Theme) =>
     createStyles({
       root: {
@@ -179,9 +181,10 @@ export const Navbar = (props: INavbarProps) => {
                 Contact Us
               </Typography>
             </Link>
-            <Link to={paths.login} className={classes.link}>
-              <ActionButton variant={actionButtonVariant} />
-            </Link>
+            <ActionButton
+              variant={actionButtonVariant}
+              toggleLoginModal={props.toggleLoginModal}
+            />
           </Toolbar>
         </Container>
       </AppBar>

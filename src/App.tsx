@@ -1,5 +1,6 @@
 import "./App.css";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { useState } from "react";
 
 import { Root } from "./pages/root/Root";
 import { ThemeProvider } from "@material-ui/core";
@@ -11,12 +12,26 @@ import { Dashboard } from "./pages/dashboard/Dashboard";
 import { Login } from "./pages/Login/Login";
 import { Authorize } from "./pages/Authorize/Authorize";
 import { Settings } from "./pages/Settings/Settings";
+import { LoginModal } from "./components/loginModal/LoginModal";
+import { Navbar } from "./components/navbar/Navbar";
+import { useLocation } from "react-router-dom";
 
-function App() {
+function App(props: any) {
+  const [showingLoginModal, setShowingLoginModal] = useState<boolean>(false);
+  const toggleShowingLoginModal = () =>
+    setShowingLoginModal(!showingLoginModal);
+  console.log(window.location.pathname, window.location.href, props);
+
   return (
     <div className="App">
       <ThemeProvider theme={theme}>
         <Router>
+          {showingLoginModal ? (
+            <LoginModal onClick={toggleShowingLoginModal} />
+          ) : (
+            <div></div>
+          )}
+          <Navbar toggleLoginModal={toggleShowingLoginModal} />
           <Switch>
             <Route path="/" exact component={Root} />
             <Route path="/about" exact component={AboutUs} />
