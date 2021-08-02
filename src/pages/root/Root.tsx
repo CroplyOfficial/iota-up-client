@@ -102,9 +102,11 @@ export const Root = (props: IProps) => {
           onClick={latestOnClick}
         />
       </Container>
+      {/*
       <Container>
         <Counter />
       </Container>
+          */}
       <Container>
         <Categories
           preHeader={categoriesPreHeader}
