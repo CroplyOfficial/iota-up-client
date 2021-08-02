@@ -101,23 +101,91 @@ const style = { fontSize: "90px" };
 export const SampleCategorieCards: Array<ICard> = [
   {
     icon: <Add color="primary" style={style} />,
-    title: "Add",
+    title: "Business",
   },
   {
     icon: <Book color="primary" style={style} />,
-    title: "Book",
+    title: "Culture",
   },
   {
     icon: <FilterFrames color="primary" style={style} />,
-    title: "Filter",
+    title: "Education",
   },
   {
     icon: <HelpTwoTone color="primary" style={style} />,
-    title: "Help",
+    title: "Environment",
   },
   {
     icon: <Close color="primary" style={style} />,
-    title: "Close",
+    title: "Events",
+  },
+  {
+    icon: "",
+    title: "Human Rights",
+  },
+  {
+    icon: "",
+    title: "Wellness",
+  },
+  {
+    icon: "",
+    title: "Art",
+  },
+  {
+    icon: "",
+    title: "Design",
+  },
+  {
+    icon: "",
+    title: "Film",
+  },
+  {
+    icon: "",
+    title: "Games",
+  },
+  {
+    icon: "",
+    title: "Journalism",
+  },
+  {
+    icon: "",
+    title: "Performance",
+  },
+  {
+    icon: "",
+    title: "Writing",
+  },
+  {
+    icon: "",
+    title: "Applications",
+  },
+  {
+    icon: "",
+    title: "Green Tech",
+  },
+  {
+    icon: "",
+    title: "Hardware",
+  },
+  {
+    icon: "",
+    title: "Research",
+  },
+  {
+    icon: "",
+    title: "Software",
+  },
+  {
+    icon: "Community",
+    title: "Software",
+  },
+  {
+    icon: "Creative",
+    title: "Software",
+  },
+  {
+    icon: "Technology",
+    title: "Software",
   },
   /*
    {
