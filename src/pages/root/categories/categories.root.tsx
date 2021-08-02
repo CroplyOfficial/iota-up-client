@@ -151,7 +151,12 @@ const Card = (props: ICardProps) => {
   const { title, icon } = card;
   const classes = useStyles();
   return (
-    <Link to={`/` + title} style={{ textDecoration: "none" }}>
+    <Link
+      to={`/projects?filter=${encodeURIComponent(
+        title.toLowerCase()
+      )}&order=newest`}
+      style={{ textDecoration: "none" }}
+    >
       <MaterialCard className={classes.card}>
         <div className={classes.cardIcon}>{icon}</div>
         <Typography
