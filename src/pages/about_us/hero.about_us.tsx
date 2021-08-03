@@ -9,6 +9,7 @@ import {
 import { green } from "@material-ui/core/colors";
 import { AboutUsHeroCard } from "./heroCard.about_us";
 import { VerifiedUser } from "@material-ui/icons";
+import LandingPageImage from "../../static/images/landingpage.png";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -167,7 +168,7 @@ export const AboutUsHero = () => {
       </div>
 
       <div className={classes.right}>
-        <Oval image="https://source.unsplash.com/random" color="#C4C4C4" />
+        <Oval image={LandingPageImage} color="#C4C4C4" />
       </div>
     </div>
   );
