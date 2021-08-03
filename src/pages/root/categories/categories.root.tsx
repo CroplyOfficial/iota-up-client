@@ -57,7 +57,25 @@ const useStyles = makeStyles(() =>
       paddingTop: "48px",
       display: "flex",
       flexDirection: "row",
-      justifyContent: "space-around",
+      overflowX: "scroll",
+      gap: "25px",
+      padding: "5px",
+      paddingBottom: "25px",
+      "&::-webkit-scrollbar": {
+        width: "0.4em",
+      },
+      "&::-webkit-scrollbar-track": {},
+      "&::-webkit-scrollbar-thumb": {
+        borderRadius: "25px",
+        backgroundColor: "#EEEEEE",
+      },
+      "&::-webkit-scrollbar-thumb:hover": {
+        backgroundColor: "rgba(0,0,0,.15)",
+        transition: "all 5s ease",
+        MozTransition: "all 5s ease",
+        WebkitTransition: "all 5s ease",
+        OTransition: "all 5s ease",
+      },
     },
     card: {
       width: "243.33px",
@@ -133,7 +151,12 @@ const Card = (props: ICardProps) => {
   const { title, icon } = card;
   const classes = useStyles();
   return (
-    <Link to={`/` + title} style={{ textDecoration: "none" }}>
+    <Link
+      to={`/projects?filter=${encodeURIComponent(
+        title.toLowerCase()
+      )}&order=newest`}
+      style={{ textDecoration: "none" }}
+    >
       <MaterialCard className={classes.card}>
         <div className={classes.cardIcon}>{icon}</div>
         <Typography
