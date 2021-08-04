@@ -22,18 +22,12 @@ interface IProps {
 export const ProjectHeader = (props: IProps) => {
   const { variant, project, showImageModal } = props;
   const {
-    completed,
-    created_at,
-    created_by,
-    description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip",
-    title = "Identity Suite - Open Source Application Blueprints",
-    images = [
-      "https://source.unsplash.com/random",
-      "https://source.unsplash.com/random",
-      "https://source.unsplash.com/random",
-      "https://source.unsplash.com/random",
-    ], // TODO not sure if this set's fallback or default
-    donations = 132,
+    created,
+    projectAuthor,
+    desc,
+    name,
+    media,
+    backers,
     tags: initialTags = [
       "JavaScript",
       "React.js",
@@ -45,12 +39,10 @@ export const ProjectHeader = (props: IProps) => {
       "Web Applications",
       "Web Applications",
     ],
-    funding,
     upvotes = 365,
-    milestones,
   } = project as IProject;
   const fallbackImage = "https://source.unsplash.com/random";
-  const mainImage = (images || [])[0] || fallbackImage;
+  const mainImage = media[0] || fallbackImage;
   const [tags, setTags] = useState<Array<string>>(initialTags || []);
 
   const useStyles = makeStyles((theme: Theme) =>
@@ -73,9 +65,8 @@ export const ProjectHeader = (props: IProps) => {
         height: "75%",
         borderRadius: "20px",
         backgroundColor: "#f5f5f5",
-        backgroundSize: "100%",
-        backgroundImage: `url(${mainImage})`,
         marginBottom: "20px",
+        overflow: "hidden",
       },
       imagesWrapper: {
         display: "flex",
@@ -86,30 +77,21 @@ export const ProjectHeader = (props: IProps) => {
           width: "170.13px",
           height: "142.96px",
           marginRight: "25px",
+          backgroundColor: "#f5f5f5",
+          overflow: "hidden",
         },
 
         "& > div:nth-child(1)": {
           borderRadius: "20px",
-          backgroundSize: "100%",
-          backgroundImage: `url(${images[1]})`,
         },
         "& > div:nth-child(2)": {
           borderRadius: "20px",
-          backgroundColor: "#f5f5f5",
-          backgroundSize: "100%",
-          backgroundImage: `url(${images[2]})`,
         },
         "& > div:nth-child(3)": {
           borderRadius: "20px",
-          backgroundColor: "#f5f5f5",
-          backgroundSize: "100%",
-          backgroundImage: `url(${images[3]})`,
         },
         "& > div:nth-child(4)": {
           borderRadius: "20px",
-          backgroundColor: "#f5f5f5",
-          backgroundSize: "100%",
-          backgroundImage: `url(${images[4]})`,
           marginRight: "0",
         },
         "& > div:nth-child(5)": {
@@ -224,6 +206,11 @@ export const ProjectHeader = (props: IProps) => {
           paddingRight: "12px",
         },
       },
+      objectFill: {
+        objectFit: "cover",
+        width: "100%",
+        height: "100%",
+      },
     })
   );
 
@@ -235,24 +222,28 @@ export const ProjectHeader = (props: IProps) => {
           <div
             className={classes.mainImageWrapper}
             onClick={() => showImageModal()}
-          ></div>
+          >
+            <img src={mainImage} className={classes.objectFill} />
+          </div>
           <div className={classes.imagesWrapper}>
-            {images.slice(1, images.length).map((image, i) => (
-              <div className={"image-" + i++} onClick={showImageModal}></div>
+            {media.slice(1, media.length).map((image, i) => (
+              <div className={"image-" + i++} onClick={showImageModal}>
+                <img src={image} className={classes.objectFill} />
+              </div>
             ))}
           </div>
         </div>
         <div className={classes.right}>
           <HeaderCardHeader project={project} />
           <Typography variant="h2" className={classes.title}>
-            {title}
+            {name}
           </Typography>
           <Typography
             variant="body1"
             component="span"
             className={classes.description}
           >
-            {description}
+            {desc}
           </Typography>
           <div className={classes.statsWrapper}>
             <div className={classes.stats}>
@@ -272,7 +263,7 @@ export const ProjectHeader = (props: IProps) => {
               <CalendarToday fontSize="large" className={classes.statsIcon} />
               <div>
                 <Typography variant="h4" className={classes.statsHeader}>
-                  {donations}
+                  {backers}
                 </Typography>
                 <Typography variant="h4" className={classes.statsSubHeader}>
                   Donations

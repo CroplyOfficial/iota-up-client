@@ -69,11 +69,10 @@ const useStyles = makeStyles((theme: Theme) =>
 export const HeaderCardHeader = (props: IProps) => {
   const classes = useStyles();
   const { project } = props;
-  const { images = ["", "", "", "", "", "", ""], created_by } =
-    project as IProject;
-  const fullName = "Peter Parker"; // TODO get user from created_by
+  const { media, projectAuthor } = project as IProject;
+  const fullName = projectAuthor; // TODO get user from created_by
   const fallbackImage = "";
-  const mainImage = images[0] || fallbackImage;
+  const mainImage = media[0] || fallbackImage;
   return (
     <CardHeader
       className={classes.root}
@@ -84,7 +83,7 @@ export const HeaderCardHeader = (props: IProps) => {
           alt={fullName}
         ></Avatar>
       }
-      title={<span className={classes.header}>Peter Parker</span>}
+      title={<span className={classes.header}>{fullName}</span>}
       subheader={
         <span>
           <span className={classes.subHeader}> 6 Projects </span>

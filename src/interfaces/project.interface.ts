@@ -1,17 +1,15 @@
 import { EditorState } from "draft-js";
-import { IMilestone } from "./milestone.interface";
 export interface IProject {
-  created_at: number;
-  title: string;
-  description: string;
+  created: number;
+  name: string;
+  desc: string;
+  category: Array<string>;
   tags: Array<string>;
-  milestones: Array<Record<string, IMilestone>>;
-  created_by: any;
-  funding: [number, number]; // [current, goal]
-  completed: boolean;
-  images: [string, string, string, string, string, string];
+  projectAuthor: any;
+  media: [string, string, string, string, string];
+  video: string;
   upvotes: number;
-  donations: number;
+  backers: number;
   information?: EditorState;
   _id?: string;
 }

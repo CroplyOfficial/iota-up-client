@@ -10,8 +10,8 @@ interface IProps {
 }
 export const CreateProjectCard = (props: IProps, ctx: any) => {
   const { project } = props;
-  const { images, title, description } = project;
-  const mainImage = images[0];
+  const { media, name, desc } = project;
+  const mainImage = media[0];
   const history = useHistory();
 
   const useStyles = makeStyles((theme: Theme) =>
@@ -70,8 +70,8 @@ export const CreateProjectCard = (props: IProps, ctx: any) => {
   return (
     <div className={classes.root}>
       <div className={classes.imageWrapper}></div>
-      <div className={classes.header}>{title}</div>
-      <div className={classes.description}>{truncate(description, 206)}</div>
+      <div className={classes.header}>{name}</div>
+      <div className={classes.description}>{truncate(desc, 206)}</div>
       <CardFooter project={project} />
 
       <Button
@@ -151,11 +151,10 @@ const useStyles2 = makeStyles((theme: Theme) =>
 function CardFooter(props: IHeaderProps) {
   const classes = useStyles2();
   const { project } = props;
-  const { images = ["", "", "", "", "", "", ""], created_by } =
-    project as IProject;
-  const fullName = "Peter Parker"; // TODO get user from created_by
+  const { media, projectAuthor } = project as IProject;
+  const fullName = projectAuthor; // TODO get user from created_by
   const fallbackImage = "";
-  const mainImage = images[0] || fallbackImage;
+  const mainImage = media[0] || fallbackImage;
   return (
     <CardHeader
       className={classes.root}
@@ -166,7 +165,7 @@ function CardFooter(props: IHeaderProps) {
           alt={fullName}
         ></Avatar>
       }
-      title={<span className={classes.header}>Peter Parker</span>}
+      title={<span className={classes.header}>{fullName}</span>}
       subheader={
         <span>
           <span className={classes.subHeader}> 6 Projects </span>
