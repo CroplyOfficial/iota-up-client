@@ -28,18 +28,9 @@ export const ProjectHeader = (props: IProps) => {
     name,
     media,
     backers,
-    tags: initialTags = [
-      "JavaScript",
-      "React.js",
-      "CSS",
-      "HTML",
-      "Open Source",
-      "IOTA",
-      "Web Applications",
-      "Web Applications",
-      "Web Applications",
-    ],
-    upvotes = 365,
+    tags: initialTags,
+    category,
+    upvotes,
   } = project as IProject;
   const fallbackImage = "https://source.unsplash.com/random";
   const mainImage = media[0] || fallbackImage;
@@ -48,10 +39,10 @@ export const ProjectHeader = (props: IProps) => {
   const useStyles = makeStyles((theme: Theme) =>
     createStyles({
       root: {
-        paddingTop: "50px",
-        paddingBottom: "50px",
+        paddingTop: "15px",
+        paddingBottom: "15px",
         marginTop: "50px",
-        height: "750px",
+        minheight: "750px",
         display: "flex",
         borderRadius: "20px",
       },
@@ -61,8 +52,8 @@ export const ProjectHeader = (props: IProps) => {
         paddingRight: "20px",
       },
       mainImageWrapper: {
-        width: "100%",
-        height: "75%",
+        width: "756px",
+        height: "425px",
         borderRadius: "20px",
         backgroundColor: "#f5f5f5",
         marginBottom: "20px",
@@ -74,11 +65,12 @@ export const ProjectHeader = (props: IProps) => {
         alignItems: "center",
         "& > div": {
           background: "#f5f5f5",
-          width: "170.13px",
-          height: "142.96px",
+          width: "170px",
+          height: "96px",
           marginRight: "25px",
           backgroundColor: "#f5f5f5",
           overflow: "hidden",
+          marginBottom: "20px",
         },
 
         "& > div:nth-child(1)": {
@@ -179,12 +171,17 @@ export const ProjectHeader = (props: IProps) => {
         fontStyle: "normal",
         fontSize: "16px",
         lineHeight: "24px",
-        paddingBottom: "50px",
+        paddingBottom: "15px",
+        paddingTop: "10px",
       },
       hr: {
         stroke: "3px solid green",
         border: "0.1px solid rgba(0,0,0,0.05)",
         marginBottom: "35px",
+      },
+      pills: {
+        minWidth: "100%",
+        minHeight: "40px",
       },
       tags: {
         fontFamily: "Open Sans",
@@ -206,8 +203,30 @@ export const ProjectHeader = (props: IProps) => {
           paddingRight: "12px",
         },
       },
+      categories: {
+        fontFamily: "Open Sans",
+        fontWeight: 400,
+        fontStyle: "normal",
+        fontSize: "16px",
+        lineHeight: "28px",
+        display: "flex",
+        justifyContent: "flex-start",
+        flexWrap: "wrap",
+        maxWidth: "100%",
+        gap: "1rem",
+
+        "& > *": {
+          backgroundColor: `${theme.palette.primary.main}4D`,
+          borderRadius: "7.5px",
+          padding: "2px",
+          paddingLeft: "12px",
+          paddingRight: "12px",
+        },
+        paddingBottom: "1rem",
+      },
+
       objectFill: {
-        objectFit: "cover",
+        objectFit: "fill",
         width: "100%",
         height: "100%",
       },
@@ -231,6 +250,21 @@ export const ProjectHeader = (props: IProps) => {
                 <img src={image} className={classes.objectFill} />
               </div>
             ))}
+          </div>
+          <Typography className={classes.projectTagsHeader}>
+            Project Tags:
+          </Typography>
+          <div className={classes.pills}>
+            <HeaderTags
+              tags={category}
+              variant={variant}
+              className={classes.categories}
+            />
+            <HeaderTags
+              tags={tags}
+              variant={variant}
+              className={classes.tags}
+            />
           </div>
         </div>
         <div className={classes.right}>
@@ -291,10 +325,6 @@ export const ProjectHeader = (props: IProps) => {
             </div>
           </div>
           <hr className={classes.hr} />
-          <Typography className={classes.projectTagsHeader}>
-            Project Tags:
-          </Typography>
-          <HeaderTags tags={tags} variant={variant} className={classes.tags} />
         </div>
       </Card>
     </Container>
