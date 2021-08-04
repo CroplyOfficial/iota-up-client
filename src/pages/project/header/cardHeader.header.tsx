@@ -6,9 +6,11 @@ import {
   createStyles,
   Avatar,
   Theme,
+  SvgIcon,
 } from "@material-ui/core";
 import { Flag, ArrowUpward, Share } from "@material-ui/icons";
 import { IProject } from "../../../interfaces/project.interface";
+import { ReactComponent as UpButton } from "../../../static/images/icons/up.svg";
 
 interface IProps {
   project: IProject | Record<never, never>;
@@ -112,13 +114,16 @@ export const HeaderCardHeader = (props: IProps) => {
       action={
         <div className={classes.action}>
           <IconButton>
-            <Share fontSize="large" />
-          </IconButton>
-          <IconButton>
             <Flag fontSize="large" />
           </IconButton>
           <IconButton>
-            <ArrowUpward fontSize="large" color="primary" />
+            <Share fontSize="large" />
+          </IconButton>
+          <IconButton>
+            {/* <ArrowUpward fontSize="large" color="primary" /> */}
+            <SvgIcon fontSize="large" color="primary">
+              <UpButton />
+            </SvgIcon>
           </IconButton>
         </div>
       }

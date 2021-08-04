@@ -193,7 +193,7 @@ export const ProjectHeader = (props: IProps) => {
         display: "flex",
         justifyContent: "flex-start",
         flexWrap: "wrap",
-        maxWidth: "100%",
+        width: "80vw",
         gap: "1rem",
 
         "& > *": {
