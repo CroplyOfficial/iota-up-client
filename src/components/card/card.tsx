@@ -8,6 +8,7 @@ import {
   CardHeader,
   Avatar,
   IconButton,
+  SvgIcon,
 } from "@material-ui/core";
 import {
   ArrowUpward,
@@ -20,6 +21,7 @@ import { useHistory, useLocation } from "react-router-dom";
 import { IProject } from "../../interfaces/project.interface";
 import { BrandLogo } from "../../static/icons/brand-logo";
 import { BrandLogoOutlined } from "../../static/icons/brand-logo.outlined";
+import { ReactComponent as UpButton } from "../../static/images/icons/up.svg";
 
 interface IProps {
   project: IProject;
@@ -182,8 +184,7 @@ export const Card = (props: IProps) => {
                 color="primary"
                 className={classes.statusBarSubHeader1}
               >
-                {" "}
-                6Projects
+                6 Projects
               </Typography>
               <ul className={classes.ul}>
                 <li className={classes.li}>
@@ -196,7 +197,10 @@ export const Card = (props: IProps) => {
           }
           action={
             <IconButton>
-              <ArrowUpward color="primary" />
+              <SvgIcon color="primary" fontSize="large">
+                <UpButton />
+              </SvgIcon>
+              {/*  <ArrowUpward color="primary" /> */}
             </IconButton>
           }
         />
