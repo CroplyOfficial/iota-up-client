@@ -16,6 +16,7 @@ import {
   FavoriteOutlined,
   ThumbUpOutlined,
 } from "@material-ui/icons";
+import { useHistory, useLocation } from "react-router-dom";
 import { IProject } from "../../interfaces/project.interface";
 import { BrandLogo } from "../../static/icons/brand-logo";
 import { BrandLogoOutlined } from "../../static/icons/brand-logo.outlined";
@@ -32,6 +33,7 @@ export const Card = (props: IProps) => {
         width: "381px",
         height: "569px",
         borderRadius: ".8rem",
+        cursor: "pointer",
       },
       media: {
         height: 0,
@@ -118,45 +120,56 @@ export const Card = (props: IProps) => {
     })
   );
   const classes = useStyles();
-
-  const { name, media, tags, upvotes, backers } = project;
+  const history = useHistory();
+  const { name, media, category, upvotes, backers } = project;
   const fallbackImage = "";
   const fallbackTag = "community";
   const mainImage = media[0] || fallbackImage;
-  const mainTag = (tags[0] || fallbackTag).toUpperCase();
+  const mainTag = (category[0] || fallbackTag).toUpperCase();
   //TODO use user.fullName
   const fullName = "Adam Eunson";
 
+  const handleOnClick = () => {
+    history.push("/project/" + project._id);
+  };
+
   return (
     <MaterialCard className={classes.root}>
-      <CardMedia image={mainImage} title={name} className={classes.media} />
+      <CardMedia
+        image={mainImage}
+        title={name}
+        className={classes.media}
+        onClick={handleOnClick}
+      />
       <CardContent>
-        <div className={classes.level}>
-          <Typography variant="h2" color="primary">
-            {mainTag}
-          </Typography>
-          {/*
+        <div id="not-card-header" onClick={handleOnClick}>
+          <div className={classes.level}>
+            <Typography variant="h2" color="primary">
+              {mainTag}
+            </Typography>
+            {/*
           <IconButton>
             <ArrowUpward />
           </IconButton>
             */}
-        </div>
+          </div>
 
-        <Typography variant="h3" className={classes.header}>
-          {name}
-        </Typography>
+          <Typography variant="h3" className={classes.header}>
+            {name}
+          </Typography>
 
-        <div className={classes.stats}>
-          <Typography variant="h6" className={classes.stat}>
-            <LocalAtm className={classes.statIcon} />
-            Total Donations
-            <span className={classes.statAmount}> {backers} </span>
-          </Typography>
-          <Typography variant="h6" className={classes.stat}>
-            <FavoriteBorder className={classes.statIcon} />
-            UP Votes
-            <span className={classes.statAmount}> {upvotes} </span>
-          </Typography>
+          <div className={classes.stats}>
+            <Typography variant="h6" className={classes.stat}>
+              <LocalAtm className={classes.statIcon} />
+              Total Donations
+              <span className={classes.statAmount}> {backers} </span>
+            </Typography>
+            <Typography variant="h6" className={classes.stat}>
+              <FavoriteBorder className={classes.statIcon} />
+              UP Votes
+              <span className={classes.statAmount}> {upvotes} </span>
+            </Typography>
+          </div>
         </div>
 
         <CardHeader

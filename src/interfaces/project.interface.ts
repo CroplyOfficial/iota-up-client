@@ -10,6 +10,6 @@ export interface IProject {
   video: string;
   upvotes: number;
   backers: number;
-  information?: EditorState;
   _id?: string;
+  editorState?: EditorState;
 }

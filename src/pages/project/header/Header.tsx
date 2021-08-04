@@ -115,6 +115,7 @@ export const ProjectHeader = (props: IProps) => {
         flexDirection: "column",
         justifyContent: "space-around",
         gap: "1rem",
+        paddingTop: "45px",
       },
       button: {
         fontFamily: "Poppins",
