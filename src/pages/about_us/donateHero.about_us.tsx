@@ -6,6 +6,7 @@ import {
   Box,
 } from "@material-ui/core";
 import { Container } from "../../components/container/container";
+import BlueGreenGuru from "../../static/images/green_floating_guru.png";
 
 const imageSource = "https://source.unsplash.com/random";
 const useStyles = makeStyles((theme: Theme) =>
@@ -23,35 +24,41 @@ const useStyles = makeStyles((theme: Theme) =>
       flexDirection: "row",
       flexGrow: 1,
       transform: "translateY(20%)",
-    },
-    left: {
-      width: "37.5%",
-      height: "100%",
-      backgroundColor: "#f5f5f5",
-      borderRadius: "20px 0 0 20px",
-      backgroundSize: "150%",
-      backgroundImage: `url(${imageSource})`,
-      /*
-      maskImage: `url(${imageSource})`,
-      WebKitMaskImage: `url(${imageSource})`,
-       */
       WebKitFilter: "drop-shadow(1px 10px 4px rgba(0,0,0,0.3))",
       MozFilter: "drop-shadow(1px 10px 4px rgba(0,0,0,0.3))",
       MsFilter: "drop-shadow(1px 10px 4px rgba(0,0,0,0.3))",
       OFilter: "drop-shadow(1px 10px 4px rgba(0,0,0,0.3))",
       filter: "drop-shadow(1px 10px 10px rgba(0,0,0,0.3))",
+      overflow: "hidden",
+    },
+    left: {
+      width: "75.5%",
+      height: "100%",
+      backgroundColor: "#ffffff",
+      borderRadius: "20px 0 0 20px",
+      /*
+      maskImage: `url(${imageSource})`,
+      WebKitMaskImage: `url(${imageSource})`,
+       */
+    },
+    imageWrapper: {
+      position: "absolute",
+      top: 0,
+      transform: "translate(-42%,-2%)",
+      zIndex: 1,
+      backgroundSize: "150%",
     },
     right: {
       display: "flex",
       flexDirection: "column",
       justifyContent: "flex-start",
-      alignItems: "flex-start",
+      alignItems: "flex-end",
       backgroundColor: "#ffffff",
-      width: "100%",
+      width: "70%",
       padding: "75px",
       paddingTop: "10%",
       borderRadius: "0 20px 20px 0",
-      filter: "drop-shadow(1px 10px 10px rgba(0,0,0,0.3))",
+      textAlign: "end",
     },
     title: {
       fontFamily: "Poppins",
@@ -69,6 +76,9 @@ const useStyles = makeStyles((theme: Theme) =>
       lineHeight: "28px",
       color: theme.palette.text.secondary,
       flexGrow: 2,
+      textAlign: "start",
+      width: "90%",
+      paddingTop: "10px",
     },
     footer: {
       fontFamily: "Open Sans",
@@ -106,7 +116,14 @@ UP is all about providing a platform for change. Providing the opportunity for i
     <div className={classes.root}>
       <Container>
         <div className={classes.wideCard}>
-          <div className={classes.left}></div>
+          <div className={classes.left}>
+            <div className={classes.imageWrapper}>
+              <img
+                src={BlueGreenGuru}
+                style={{ width: "130%", height: "auto" }}
+              />
+            </div>
+          </div>
           <div className={classes.right}>
             <Typography variant="h2" className={classes.title}>
               {title}

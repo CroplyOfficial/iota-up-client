@@ -6,9 +6,11 @@ import {
   createStyles,
   Avatar,
   Theme,
+  SvgIcon,
 } from "@material-ui/core";
 import { Flag, ArrowUpward, Share } from "@material-ui/icons";
 import { IProject } from "../../../interfaces/project.interface";
+import { ReactComponent as UpButton } from "../../../static/images/icons/up.svg";
 
 interface IProps {
   project: IProject | Record<never, never>;
@@ -69,11 +71,10 @@ const useStyles = makeStyles((theme: Theme) =>
 export const HeaderCardHeader = (props: IProps) => {
   const classes = useStyles();
   const { project } = props;
-  const { images = ["", "", "", "", "", "", ""], created_by } =
-    project as IProject;
-  const fullName = "Peter Parker"; // TODO get user from created_by
+  const { media, projectAuthor } = project as IProject;
+  const fullName = projectAuthor; // TODO get user from created_by
   const fallbackImage = "";
-  const mainImage = images[0] || fallbackImage;
+  const mainImage = media[0] || fallbackImage;
   return (
     <CardHeader
       className={classes.root}
@@ -84,7 +85,7 @@ export const HeaderCardHeader = (props: IProps) => {
           alt={fullName}
         ></Avatar>
       }
-      title={<span className={classes.header}>Peter Parker</span>}
+      title={<span className={classes.header}>{fullName}</span>}
       subheader={
         <span>
           <span className={classes.subHeader}> 6 Projects </span>
@@ -113,13 +114,16 @@ export const HeaderCardHeader = (props: IProps) => {
       action={
         <div className={classes.action}>
           <IconButton>
-            <Share fontSize="large" />
-          </IconButton>
-          <IconButton>
             <Flag fontSize="large" />
           </IconButton>
           <IconButton>
-            <ArrowUpward fontSize="large" color="primary" />
+            <Share fontSize="large" />
+          </IconButton>
+          <IconButton>
+            {/* <ArrowUpward fontSize="large" color="primary" /> */}
+            <SvgIcon fontSize="large" color="primary">
+              <UpButton />
+            </SvgIcon>
           </IconButton>
         </div>
       }

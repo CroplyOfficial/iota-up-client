@@ -62,10 +62,11 @@ interface IProps {
 }
 export const Card2 = (props: IProps) => {
   const { project } = props;
+  const { media, name, backers, upvotes } = project;
   const classes = useStyles();
   const mainTag = project?.tags[0];
   const fallbackImage = "https://source.unsplash.com/random";
-  const mainImage = project?.images[0] || fallbackImage;
+  const mainImage = media[0] || fallbackImage;
   return (
     <MaterialCard className={classes.root}>
       <CardMedia className={classes.media} image={mainImage} />
@@ -73,14 +74,14 @@ export const Card2 = (props: IProps) => {
         <Typography color="primary" className={classes.header}>
           {mainTag}
         </Typography>
-        <Typography className={classes.title}>{project.title}</Typography>
+        <Typography className={classes.title}>{name}</Typography>
         <Typography color="textPrimary" className={classes.subHeader}>
           <MoneySharp />
-          Total Donations: {project.donations}
+          Total Donations: {backers}
         </Typography>
         <Typography color="textPrimary" className={classes.subHeader}>
           <CalendarTodaySharp />
-          UP Votes: {project.upvotes}
+          UP Votes: {upvotes}
         </Typography>
       </div>
     </MaterialCard>

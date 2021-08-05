@@ -22,44 +22,27 @@ interface IProps {
 export const ProjectHeader = (props: IProps) => {
   const { variant, project, showImageModal } = props;
   const {
-    completed,
-    created_at,
-    created_by,
-    description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip",
-    title = "Identity Suite - Open Source Application Blueprints",
-    images = [
-      "https://source.unsplash.com/random",
-      "https://source.unsplash.com/random",
-      "https://source.unsplash.com/random",
-      "https://source.unsplash.com/random",
-    ], // TODO not sure if this set's fallback or default
-    donations = 132,
-    tags: initialTags = [
-      "JavaScript",
-      "React.js",
-      "CSS",
-      "HTML",
-      "Open Source",
-      "IOTA",
-      "Web Applications",
-      "Web Applications",
-      "Web Applications",
-    ],
-    funding,
-    upvotes = 365,
-    milestones,
+    created,
+    projectAuthor,
+    desc,
+    name,
+    media,
+    backers,
+    tags: initialTags,
+    category,
+    upvotes,
   } = project as IProject;
   const fallbackImage = "https://source.unsplash.com/random";
-  const mainImage = (images || [])[0] || fallbackImage;
+  const mainImage = media[0] || fallbackImage;
   const [tags, setTags] = useState<Array<string>>(initialTags || []);
 
   const useStyles = makeStyles((theme: Theme) =>
     createStyles({
       root: {
-        paddingTop: "50px",
-        paddingBottom: "50px",
+        paddingTop: "15px",
+        paddingBottom: "15px",
         marginTop: "50px",
-        height: "750px",
+        minheight: "750px",
         display: "flex",
         borderRadius: "20px",
       },
@@ -69,13 +52,12 @@ export const ProjectHeader = (props: IProps) => {
         paddingRight: "20px",
       },
       mainImageWrapper: {
-        width: "100%",
-        height: "75%",
+        width: "756px",
+        height: "425px",
         borderRadius: "20px",
         backgroundColor: "#f5f5f5",
-        backgroundSize: "100%",
-        backgroundImage: `url(${mainImage})`,
         marginBottom: "20px",
+        overflow: "hidden",
       },
       imagesWrapper: {
         display: "flex",
@@ -83,33 +65,25 @@ export const ProjectHeader = (props: IProps) => {
         alignItems: "center",
         "& > div": {
           background: "#f5f5f5",
-          width: "170.13px",
-          height: "142.96px",
+          width: "170px",
+          height: "96px",
           marginRight: "25px",
+          backgroundColor: "#f5f5f5",
+          overflow: "hidden",
+          marginBottom: "20px",
         },
 
         "& > div:nth-child(1)": {
           borderRadius: "20px",
-          backgroundSize: "100%",
-          backgroundImage: `url(${images[1]})`,
         },
         "& > div:nth-child(2)": {
           borderRadius: "20px",
-          backgroundColor: "#f5f5f5",
-          backgroundSize: "100%",
-          backgroundImage: `url(${images[2]})`,
         },
         "& > div:nth-child(3)": {
           borderRadius: "20px",
-          backgroundColor: "#f5f5f5",
-          backgroundSize: "100%",
-          backgroundImage: `url(${images[3]})`,
         },
         "& > div:nth-child(4)": {
           borderRadius: "20px",
-          backgroundColor: "#f5f5f5",
-          backgroundSize: "100%",
-          backgroundImage: `url(${images[4]})`,
           marginRight: "0",
         },
         "& > div:nth-child(5)": {
@@ -141,6 +115,7 @@ export const ProjectHeader = (props: IProps) => {
         flexDirection: "column",
         justifyContent: "space-around",
         gap: "1rem",
+        paddingTop: "45px",
       },
       button: {
         fontFamily: "Poppins",
@@ -197,14 +172,39 @@ export const ProjectHeader = (props: IProps) => {
         fontStyle: "normal",
         fontSize: "16px",
         lineHeight: "24px",
-        paddingBottom: "50px",
+        paddingBottom: "15px",
+        paddingTop: "10px",
       },
       hr: {
         stroke: "3px solid green",
         border: "0.1px solid rgba(0,0,0,0.05)",
         marginBottom: "35px",
       },
+      pills: {
+        minWidth: "100%",
+        minHeight: "40px",
+      },
       tags: {
+        fontFamily: "Open Sans",
+        fontWeight: 400,
+        fontStyle: "normal",
+        fontSize: "16px",
+        lineHeight: "28px",
+        display: "flex",
+        justifyContent: "flex-start",
+        flexWrap: "wrap",
+        width: "80vw",
+        gap: "1rem",
+
+        "& > *": {
+          backgroundColor: "#E9E9E9",
+          borderRadius: "7.5px",
+          padding: "2px",
+          paddingLeft: "12px",
+          paddingRight: "12px",
+        },
+      },
+      categories: {
         fontFamily: "Open Sans",
         fontWeight: 400,
         fontStyle: "normal",
@@ -217,12 +217,19 @@ export const ProjectHeader = (props: IProps) => {
         gap: "1rem",
 
         "& > *": {
-          backgroundColor: "#E9E9E9",
+          backgroundColor: `${theme.palette.primary.main}4D`,
           borderRadius: "7.5px",
           padding: "2px",
           paddingLeft: "12px",
           paddingRight: "12px",
         },
+        paddingBottom: "1rem",
+      },
+
+      objectFill: {
+        objectFit: "fill",
+        width: "100%",
+        height: "100%",
       },
     })
   );
@@ -235,24 +242,43 @@ export const ProjectHeader = (props: IProps) => {
           <div
             className={classes.mainImageWrapper}
             onClick={() => showImageModal()}
-          ></div>
+          >
+            <img src={mainImage} className={classes.objectFill} />
+          </div>
           <div className={classes.imagesWrapper}>
-            {images.slice(1, images.length).map((image, i) => (
-              <div className={"image-" + i++} onClick={showImageModal}></div>
+            {media.slice(1, media.length).map((image, i) => (
+              <div className={"image-" + i++} onClick={showImageModal}>
+                <img src={image} className={classes.objectFill} />
+              </div>
             ))}
+          </div>
+          <Typography className={classes.projectTagsHeader}>
+            Project Tags:
+          </Typography>
+          <div className={classes.pills}>
+            <HeaderTags
+              tags={category}
+              variant={variant}
+              className={classes.categories}
+            />
+            <HeaderTags
+              tags={tags}
+              variant={variant}
+              className={classes.tags}
+            />
           </div>
         </div>
         <div className={classes.right}>
           <HeaderCardHeader project={project} />
           <Typography variant="h2" className={classes.title}>
-            {title}
+            {name}
           </Typography>
           <Typography
             variant="body1"
             component="span"
             className={classes.description}
           >
-            {description}
+            {desc}
           </Typography>
           <div className={classes.statsWrapper}>
             <div className={classes.stats}>
@@ -272,7 +298,7 @@ export const ProjectHeader = (props: IProps) => {
               <CalendarToday fontSize="large" className={classes.statsIcon} />
               <div>
                 <Typography variant="h4" className={classes.statsHeader}>
-                  {donations}
+                  {backers}
                 </Typography>
                 <Typography variant="h4" className={classes.statsSubHeader}>
                   Donations
@@ -300,10 +326,6 @@ export const ProjectHeader = (props: IProps) => {
             </div>
           </div>
           <hr className={classes.hr} />
-          <Typography className={classes.projectTagsHeader}>
-            Project Tags:
-          </Typography>
-          <HeaderTags tags={tags} variant={variant} className={classes.tags} />
         </div>
       </Card>
     </Container>

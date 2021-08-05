@@ -53,14 +53,18 @@ export const ProjectOverview = () => {
   };
   return (
     <div className={classes.root}>
-      {postModal && Object.keys(postModal).length && (
+      {postModal && Object.keys(postModal).length ? (
         <ProjectPostModal
           post={postModal as IPost}
           onClick={() => setPostModal({})}
         />
+      ) : (
+        ""
       )}
-      {showImageModal && (
+      {showImageModal ? (
         <ProjectImageModal project={p} onClick={toggleShowImageModal} />
+      ) : (
+        ""
       )}
 
       {loading ? (

@@ -37,14 +37,16 @@ interface IProps {
 
 export const ProjectBodyInformation = (props: IProps) => {
   const { project, variant } = props;
-  const { information } = project as IProject;
+  const { editorState: information } = project as IProject;
+
   const [editorState, setEditorState] = useState<EditorState>(
-    information as any
+    information || EditorState.createEmpty()
   );
   const onEditorStateChange = (editorState: EditorState) => {
     setEditorState(editorState);
   };
   const classes = useStyles();
+  console.log(EditorState.createEmpty());
   return (
     <div className={classes.root}>
       <div>
