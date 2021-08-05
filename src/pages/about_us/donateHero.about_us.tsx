@@ -44,19 +44,21 @@ const useStyles = makeStyles((theme: Theme) =>
     imageWrapper: {
       position: "absolute",
       top: 0,
-      transform: "translate(-30%,10%)",
+      transform: "translate(-42%,-2%)",
       zIndex: 1,
+      backgroundSize: "150%",
     },
     right: {
       display: "flex",
       flexDirection: "column",
       justifyContent: "flex-start",
-      alignItems: "flex-start",
+      alignItems: "flex-end",
       backgroundColor: "#ffffff",
-      width: "100%",
+      width: "70%",
       padding: "75px",
       paddingTop: "10%",
       borderRadius: "0 20px 20px 0",
+      textAlign: "end",
     },
     title: {
       fontFamily: "Poppins",
@@ -74,6 +76,9 @@ const useStyles = makeStyles((theme: Theme) =>
       lineHeight: "28px",
       color: theme.palette.text.secondary,
       flexGrow: 2,
+      textAlign: "start",
+      width: "90%",
+      paddingTop: "10px",
     },
     footer: {
       fontFamily: "Open Sans",
@@ -113,7 +118,10 @@ UP is all about providing a platform for change. Providing the opportunity for i
         <div className={classes.wideCard}>
           <div className={classes.left}>
             <div className={classes.imageWrapper}>
-              <img src={BlueGreenGuru} />
+              <img
+                src={BlueGreenGuru}
+                style={{ width: "130%", height: "auto" }}
+              />
             </div>
           </div>
           <div className={classes.right}>
