@@ -2,6 +2,15 @@ import {
   PROJECTS_LOADING_REQUEST,
   PROJECTS_LOADING_SUCCESS,
   PROJECTS_LOADING_FAIL,
+  GET_TRENDING_SUCCESS,
+  GET_TRENDING_FAIL,
+  GET_TRENDING_REQUEST,
+  GET_RECOMMENDED_REQUEST,
+  GET_RECOMMENDED_SUCCESS,
+  GET_RECOMMENDED_FAIL,
+  GET_LATEST_REQUEST,
+  GET_LATEST_SUCCESS,
+  GET_LATEST_FAIL,
 } from "../constants/projectConstants";
 
 export const loadProjectsReducer = (state = {}, action: any) => {
@@ -11,6 +20,45 @@ export const loadProjectsReducer = (state = {}, action: any) => {
     case PROJECTS_LOADING_SUCCESS:
       return { loading: false, projects: action.payload };
     case PROJECTS_LOADING_FAIL:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const loadTrendingProjectsReducer = (state = {}, action: any) => {
+  switch (action.type) {
+    case GET_TRENDING_REQUEST:
+      return { loading: true };
+    case GET_TRENDING_SUCCESS:
+      return { loading: false, trendingProjects: action.payload };
+    case GET_TRENDING_FAIL:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const loadReccomendedProjectsReducer = (state = {}, action: any) => {
+  switch (action.type) {
+    case GET_RECOMMENDED_REQUEST:
+      return { loading: true };
+    case GET_RECOMMENDED_SUCCESS:
+      return { loading: false, recommendedProjects: action.payload };
+    case GET_RECOMMENDED_FAIL:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const loadLatestProjectsReducer = (state = {}, action: any) => {
+  switch (action.type) {
+    case GET_LATEST_REQUEST:
+      return { loading: true };
+    case GET_LATEST_SUCCESS:
+      return { loading: false, latestProjects: action.payload };
+    case GET_LATEST_FAIL:
       return { loading: false, error: action.payload };
     default:
       return state;
