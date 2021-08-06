@@ -76,9 +76,10 @@ export const Root = (props: IProps) => {
       community projects by category.
     </div>
   );
-  const categoriesCards: Array<ICard> = [...SampleCategorieCards].sort(
-    () => Math.random() - 0.5
-  );
+  const categoriesCards: Array<ICard> = [...SampleCategorieCards];
+  // .sort(
+  // () => Math.random() - 0.5
+  //);
   /* Cards */
 
   return (
@@ -102,9 +103,11 @@ export const Root = (props: IProps) => {
           onClick={latestOnClick}
         />
       </Container>
+      {/*
       <Container>
         <Counter />
       </Container>
+          */}
       <Container>
         <Categories
           preHeader={categoriesPreHeader}

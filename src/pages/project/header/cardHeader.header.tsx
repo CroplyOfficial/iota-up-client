@@ -6,9 +6,11 @@ import {
   createStyles,
   Avatar,
   Theme,
+  SvgIcon,
 } from "@material-ui/core";
 import { Flag, ArrowUpward, Share } from "@material-ui/icons";
 import { IProject } from "../../../interfaces/project.interface";
+import { ReactComponent as UpButton } from "../../../static/images/icons/up.svg";
 
 interface IProps {
   project: IProject;
@@ -69,6 +71,7 @@ const useStyles = makeStyles((theme: Theme) =>
 export const HeaderCardHeader = (props: IProps) => {
   const classes = useStyles();
   const { project } = props;
+
   const media = project.media;
   const fallbackImage = "";
   const mainImage = media[0] || fallbackImage;
@@ -82,11 +85,13 @@ export const HeaderCardHeader = (props: IProps) => {
           alt={project.author && project.author.fullName}
         ></Avatar>
       }
+
       title={
         <span className={classes.header}>
           {project.author && project.author.fullName}
         </span>
       }
+
       subheader={
         <span>
           <span className={classes.subHeader}>
@@ -127,13 +132,16 @@ export const HeaderCardHeader = (props: IProps) => {
       action={
         <div className={classes.action}>
           <IconButton>
-            <Share fontSize="large" />
-          </IconButton>
-          <IconButton>
             <Flag fontSize="large" />
           </IconButton>
           <IconButton>
-            <ArrowUpward fontSize="large" color="primary" />
+            <Share fontSize="large" />
+          </IconButton>
+          <IconButton>
+            {/* <ArrowUpward fontSize="large" color="primary" /> */}
+            <SvgIcon fontSize="large" color="primary">
+              <UpButton />
+            </SvgIcon>
           </IconButton>
         </div>
       }

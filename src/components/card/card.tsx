@@ -8,6 +8,7 @@ import {
   CardHeader,
   Avatar,
   IconButton,
+  SvgIcon,
 } from "@material-ui/core";
 import {
   ArrowUpward,
@@ -16,6 +17,7 @@ import {
   FavoriteOutlined,
   ThumbUpOutlined,
 } from "@material-ui/icons";
+
 import { IProject } from "../../interfaces/project.interface";
 import { BrandLogo } from "../../static/icons/brand-logo";
 import { BrandLogoOutlined } from "../../static/icons/brand-logo.outlined";
@@ -29,12 +31,15 @@ interface IProps {
 }
 
 export const Card = ({ project, history }: IProps) => {
+export const Card = (props: IProps) => {
+  const { project } = props;
   const useStyles = makeStyles(() =>
     createStyles({
       root: {
         width: "381px",
         height: "569px",
         borderRadius: ".8rem",
+        cursor: "pointer",
       },
       media: {
         height: 0,
@@ -136,7 +141,11 @@ export const Card = ({ project, history }: IProps) => {
   const mainImage = media[0] || fallbackImage;
   const mainTag = (tags[0] || fallbackTag).toUpperCase();
   //TODO use user.fullName
-  const fullName = "Robert Johnson";
+  const fullName = "Adam Eunson";
+
+  const handleOnClick = () => {
+    history.push("/project/" + project._id);
+  };
 
   useEffect(() => {
     const getCreator = async (userId: string) => {
@@ -166,6 +175,20 @@ export const Card = ({ project, history }: IProps) => {
             {mainTag}
           </Typography>
           {/*
+    <MaterialCard className={classes.root}>
+      <CardMedia
+        image={mainImage}
+        title={name}
+        className={classes.media}
+        onClick={handleOnClick}
+      />
+      <CardContent>
+        <div id="not-card-header" onClick={handleOnClick}>
+          <div className={classes.level}>
+            <Typography variant="h2" color="primary">
+              {mainTag}
+            </Typography>
+            {/*
           <IconButton>
             <ArrowUpward />
           </IconButton>
@@ -182,6 +205,19 @@ export const Card = ({ project, history }: IProps) => {
             UP Votes
             <span className={classes.statAmount}> {upvotes} </span>
           </Typography>
+
+          <div className={classes.stats}>
+            <Typography variant="h6" className={classes.stat}>
+              <LocalAtm className={classes.statIcon} />
+              Total Donations
+              <span className={classes.statAmount}> {backers} </span>
+            </Typography>
+            <Typography variant="h6" className={classes.stat}>
+              <FavoriteBorder className={classes.statIcon} />
+              UP Votes
+              <span className={classes.statAmount}> {upvotes} </span>
+            </Typography>
+          </div>
         </div>
         {creator && (
           <CardHeader
@@ -216,6 +252,7 @@ export const Card = ({ project, history }: IProps) => {
             }
           />
         )}
+
       </CardContent>
     </MaterialCard>
   );

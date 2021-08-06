@@ -11,6 +11,7 @@ interface IProps {
 export const CreateProjectCard = (props: IProps, ctx: any) => {
   const { project } = props;
   const { name, media, desc } = project;
+
   const mainImage = media[0];
   const history = useHistory();
 
@@ -152,7 +153,6 @@ function CardFooter(props: IHeaderProps) {
   const classes = useStyles2();
   const { project }: { project: IProject } = props;
   const media = project.media;
-  const fullName = "Peter Parker"; // TODO get user from created_by
   const fallbackImage = "";
   const mainImage = media[0] || fallbackImage;
   return (
@@ -165,7 +165,7 @@ function CardFooter(props: IHeaderProps) {
           alt={fullName}
         ></Avatar>
       }
-      title={<span className={classes.header}>Peter Parker</span>}
+      title={<span className={classes.header}>{fullName}</span>}
       subheader={
         <span>
           <span className={classes.subHeader}> 6 Projects </span>
