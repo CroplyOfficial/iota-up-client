@@ -1,7 +1,6 @@
 import { createStyles, makeStyles, Button } from "@material-ui/core";
 import { Card2 } from "../../../components/card/card2";
 import { IProject } from "../../../interfaces/project.interface";
-import { SampleProjects } from "../../root/sampleState";
 import { AddNewProjectCard } from "../AddNewProjectCard.dashboard";
 
 const useStyles = makeStyles(() =>
@@ -40,9 +39,9 @@ export const DashboardFavorites = (props: IProps) => {
   return (
     <div>
       <div className={classes.root}>
-        {SampleProjects.map((p) => (
+        {/* {SampleProjects.map((p) => (
           <Card2 project={p} />
-        ))}
+        ))} */}
         <Button
           color="secondary"
           variant="contained"

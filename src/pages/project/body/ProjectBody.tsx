@@ -11,7 +11,6 @@ import {
 } from "../../../interfaces/project.bodyOptions.intercace";
 import { ProjectNavbar } from "../navbar.project";
 import { CreateProjectCard } from "../../../components/card/card.createProject";
-import { SampleProjects } from "../../root/sampleState";
 import { IPost } from "../../../interfaces/post.interface";
 
 const useStyles = makeStyles(() =>
@@ -67,7 +66,6 @@ interface IProps {
 
 export const ProjectBody = (props: IProps) => {
   const { variant, project, setPostModal } = props;
-  const otherProjects = [...SampleProjects];
   const classes = useStyles();
   const [bodyOption, setBodyOption] = useState<BodyOption>(
     BodyOptions.INFORMATION
@@ -121,7 +119,7 @@ Quisque dictum libero ac ullamcorper vehicula. Duis semper erat non rhoncus sagi
         </div>
         <div className={classes.right}>
           <div className={classes.rightHeader}>Creator’s Other Projects</div>
-          {otherProjects.slice(0, 2).map((p, i) => (
+          {/* {otherProjects.slice(0, 2).map((p, i) => (
             <div>
               <CreateProjectCard project={p} key={"other-projects#" + i++} />
               {i === 1 ? (
@@ -136,7 +134,7 @@ Quisque dictum libero ac ullamcorper vehicula. Duis semper erat non rhoncus sagi
                 ""
               )}
             </div>
-          ))}
+          ))} */}
         </div>
       </div>
     </Container>

@@ -6,7 +6,7 @@ import "../../static/css/root/root.css";
 import { FeaturedSection } from "./featuredSection.root";
 import { Hero } from "./hero.root";
 import { Counter } from "./counter.root";
-import { SampleProjects, SampleCategorieCards } from "./sampleState";
+import { SampleCategorieCards } from "./sampleState";
 import { Categories } from "./categories/categories.root";
 import { ICard } from "../../interfaces/categoriesCard.interface";
 import { DonateHero } from "../../components/donateHero/donateHero";
@@ -41,7 +41,7 @@ export const Root = (props: IProps) => {
       creators, designers, and developers
     </div>
   );
-  const featuredProjects = [...SampleProjects].sort(() => Math.random() - 0.5);
+  // const featuredProjects = [...SampleProjects].sort(() => Math.random() - 0.5);
   const featuredOnClick = () => null;
   /* FEATURED */
 
@@ -54,7 +54,7 @@ export const Root = (props: IProps) => {
       are looking for UP votes and support
     </div>
   );
-  const latestProjects = [...SampleProjects].sort(() => Math.random() - 0.5);
+  // const latestProjects = [...SampleProjects].sort(() => Math.random() - 0.5);
   const latestOnClick = () => null;
   /* LATEST */
 
@@ -88,7 +88,7 @@ export const Root = (props: IProps) => {
         <Hero />
       </Container>
       <Container>
-        <FeaturedSection
+        {/* <FeaturedSection
           className={classes.featuredSection}
           title={featuredTitle}
           subHeader={featuredSubHeader}
@@ -100,8 +100,7 @@ export const Root = (props: IProps) => {
           title={latestTitle}
           subHeader={latestSubHeader}
           projects={latestProjects}
-          onClick={latestOnClick}
-        />
+          onClick={latestOnClick}  /> */}
       </Container>
       {/*
       <Container>

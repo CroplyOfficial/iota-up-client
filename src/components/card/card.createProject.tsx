@@ -4,6 +4,9 @@ import { Typography, IconButton, Avatar, CardHeader } from "@material-ui/core";
 import { Flag, ArrowUpward, Share } from "@material-ui/icons";
 import { Link, Redirect } from "react-router-dom";
 import { useHistory } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { ICreator } from "../../interfaces/creator.interface";
+import axios from "axios";
 
 interface IProps {
   project: IProject;
@@ -152,45 +155,46 @@ const useStyles2 = makeStyles((theme: Theme) =>
 function CardFooter(props: IHeaderProps) {
   const classes = useStyles2();
   const { project }: { project: IProject } = props;
-  const media = project.media;
+  const { media, projectAuthor } = project as IProject;
   const fallbackImage = "";
   const mainImage = media[0] || fallbackImage;
+  const [creator, setCreator] = useState<ICreator>();
+
+  useEffect(() => {
+    const getCreator = async (userId: string) => {
+      const { data }: any = await axios.get(`/api/users/overview/${userId}`, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      setCreator(data);
+    };
+    getCreator(projectAuthor);
+  }, []);
+
   return (
     <CardHeader
       className={classes.root}
       avatar={
         <Avatar
-          src={mainImage}
+          src={creator && creator.avatar}
           className={classes.avatar}
-          alt={fullName}
+          alt="creator avatar"
         ></Avatar>
       }
-      title={<span className={classes.header}>{fullName}</span>}
+      title={<span className={classes.header}>{project.name}</span>}
       subheader={
         <span>
-          <span className={classes.subHeader}> 6 Projects </span>
-          <span className={classes.subHeader2}>&bull; New York, USA</span>
+          <span className={classes.subHeader}>
+            {" "}
+            {`${creator?.projects && creator?.projects.length} Projects`}
+          </span>
+          <span className={classes.subHeader2}>
+            &bull; $
+            {`${creator && creator.city}, ${creator && creator.country}`}
+          </span>
         </span>
       }
-      /*title={
-        <span className={classes.headerWrapper}>
-          <Typography className={classes.header}>{fullName}</Typography>
-        </span>
-      }
-      subheader={
-        <div className={classes.subHeaderWrapper}>
-          <Typography color="primary" className={classes.subHeader}>
-            6Projects
-          </Typography>
-          <ul className={classes.ul}>
-            <li className={classes.li}>
-              <Typography className={classes.subHeader2}>
-                New York, USA
-              </Typography>
-            </li>
-          </ul>
-        </div>
-      }*/
-    />
+    ></CardHeader>
   );
 }

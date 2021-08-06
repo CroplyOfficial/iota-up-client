@@ -17,7 +17,7 @@ import {
   FavoriteOutlined,
   ThumbUpOutlined,
 } from "@material-ui/icons";
-
+import { ICreator } from "../../interfaces/creator.interface";
 import { IProject } from "../../interfaces/project.interface";
 import { BrandLogo } from "../../static/icons/brand-logo";
 import { BrandLogoOutlined } from "../../static/icons/brand-logo.outlined";
@@ -31,8 +31,6 @@ interface IProps {
 }
 
 export const Card = ({ project, history }: IProps) => {
-export const Card = (props: IProps) => {
-  const { project } = props;
   const useStyles = makeStyles(() =>
     createStyles({
       root: {
@@ -127,21 +125,12 @@ export const Card = (props: IProps) => {
   );
   const classes = useStyles();
 
-  interface ICreator {
-    fullName: string;
-    avatar: string;
-    projects?: string[];
-    city?: string;
-    country?: string;
-  }
   const { name, media, tags, upvotes, projectAuthor } = project;
   const [creator, setCreator] = useState<ICreator>();
   const fallbackImage = "";
   const fallbackTag = "community";
   const mainImage = media[0] || fallbackImage;
   const mainTag = (tags[0] || fallbackTag).toUpperCase();
-  //TODO use user.fullName
-  const fullName = "Adam Eunson";
 
   const handleOnClick = () => {
     history.push("/project/" + project._id);
@@ -205,19 +194,6 @@ export const Card = (props: IProps) => {
             UP Votes
             <span className={classes.statAmount}> {upvotes} </span>
           </Typography>
-
-          <div className={classes.stats}>
-            <Typography variant="h6" className={classes.stat}>
-              <LocalAtm className={classes.statIcon} />
-              Total Donations
-              <span className={classes.statAmount}> {backers} </span>
-            </Typography>
-            <Typography variant="h6" className={classes.stat}>
-              <FavoriteBorder className={classes.statIcon} />
-              UP Votes
-              <span className={classes.statAmount}> {upvotes} </span>
-            </Typography>
-          </div>
         </div>
         {creator && (
           <CardHeader
@@ -252,7 +228,6 @@ export const Card = (props: IProps) => {
             }
           />
         )}
-
       </CardContent>
     </MaterialCard>
   );
