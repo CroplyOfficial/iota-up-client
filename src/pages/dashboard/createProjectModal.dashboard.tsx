@@ -14,6 +14,8 @@ import {
 } from "@material-ui/core";
 import { useState } from "react";
 import axios from "axios";
+import { RootState } from "../../store";
+import { useSelector } from "react-redux";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -125,9 +127,34 @@ interface IProps {
   showing: boolean;
   onClick: () => void;
 }
-export const DashboardCreateProjectModal = (props: IProps) => {
+export const DashboardCreateProjectModal = ({ showing, onClick }: IProps) => {
+  const userMeta = useSelector((state: RootState) => state.userLogin);
+  const { userInfo }: any = userMeta;
+
+  const handleProjectCreation = async () => {
+    if (userInfo) {
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      };
+      const projectCreated: any = await axios.post(
+        "/api/projects",
+        {
+          name: title,
+          desc: description,
+          wallet: walletAdress,
+          category: categories,
+        },
+        config
+      );
+      console.log(projectCreated);
+      window.location.href = `/project/${projectCreated.data._id}`;
+    }
+  };
+
   const classes = useStyles();
-  const { showing, onClick } = props;
   const handleDeleteAccount = () => null;
   const [title, setTitle] = useState<string>("");
   const handleTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -152,14 +179,6 @@ export const DashboardCreateProjectModal = (props: IProps) => {
     setWalletAdress(e.currentTarget.value);
   };
   const allCategories = ["Technology", "Community", "Theater"];
-  const handleCreateProject = () => {
-    axios
-      .post(`api/create`)
-      .then((res) => null)
-      .then((data) => {
-        onClick();
-      });
-  };
   return (
     <div>
       {showing && (
@@ -230,14 +249,14 @@ export const DashboardCreateProjectModal = (props: IProps) => {
               <Button
                 variant="outlined"
                 color="primary"
-                onClick={handleCreateProject}
+                onClick={handleProjectCreation}
                 className={classes.button}
               >
                 Create
               </Button>
               <Button
-                onClick={onClick}
                 variant="contained"
+                onClick={onClick}
                 color="secondary"
                 className={classes.saveButton}
               >

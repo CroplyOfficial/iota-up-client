@@ -13,7 +13,7 @@ import { IProject } from "../../../interfaces/project.interface";
 import { ReactComponent as UpButton } from "../../../static/images/icons/up.svg";
 
 interface IProps {
-  project: IProject | Record<never, never>;
+  project: IProject;
 }
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -71,8 +71,8 @@ const useStyles = makeStyles((theme: Theme) =>
 export const HeaderCardHeader = (props: IProps) => {
   const classes = useStyles();
   const { project } = props;
-  const { media, projectAuthor } = project as IProject;
-  const fullName = projectAuthor; // TODO get user from created_by
+
+  const media = project.media;
   const fallbackImage = "";
   const mainImage = media[0] || fallbackImage;
   return (
@@ -80,16 +80,34 @@ export const HeaderCardHeader = (props: IProps) => {
       className={classes.root}
       avatar={
         <Avatar
-          src={mainImage}
+          src={project.author && project.author.avatar}
           className={classes.avatar}
-          alt={fullName}
+          alt={project.author && project.author.fullName}
         ></Avatar>
       }
-      title={<span className={classes.header}>{fullName}</span>}
+
+      title={
+        <span className={classes.header}>
+          {project.author && project.author.fullName}
+        </span>
+      }
+
       subheader={
         <span>
-          <span className={classes.subHeader}> 6 Projects </span>
-          <span className={classes.subHeader2}>&bull; New York, USA</span>
+          <span className={classes.subHeader}>
+            {" "}
+            {`${
+              project.author &&
+              project.author.projects &&
+              project.author.projects.length
+            } Projects`}
+          </span>
+          <span className={classes.subHeader2}>
+            &bull;{" "}
+            {`${project.author && project.author.city}, ${
+              project.author && project.author.country
+            }`}
+          </span>
         </span>
       }
       /*title={

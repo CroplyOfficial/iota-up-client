@@ -54,6 +54,9 @@ const MySvgIcon = (props: any) => {
   );
 };
 
+
+export const SampleProjects: IProject[] = [];
+
 export const SampleProjects: IProject[] = [
   {
     name: "Identity Suite - Digital Identity for All",

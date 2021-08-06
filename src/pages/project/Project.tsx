@@ -1,11 +1,8 @@
 import { createStyles, makeStyles } from "@material-ui/core";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { ProjectHeader } from "./header/Header";
-import { useProject } from "./utils/useProject";
-import { Navbar } from "../../components/navbar/Navbar";
 import { ProjectBody } from "./body/ProjectBody";
-import { SampleProjects } from "../root/sampleState";
 import { FeaturedSection } from "../root/featuredSection.root";
 import { Container } from "../../components/container/container";
 import { DonateHero } from "../../components/donateHero/donateHero";
@@ -13,6 +10,8 @@ import { Footer } from "../../components/footer/Footer";
 import { IPost } from "../../interfaces/post.interface";
 import { ProjectPostModal } from "./postModal.project";
 import { ProjectImageModal } from "./imageModal.project";
+import { IProject } from "../../interfaces/project.interface";
+import axios from "axios";
 
 interface IRouteParams {
   id: string;
@@ -28,11 +27,9 @@ const useStyles = makeStyles(() =>
     },
   })
 );
-export const ProjectOverview = () => {
+export const ProjectOverview = ({ match }: any) => {
   const { id } = useParams<IRouteParams>();
-
-  const { loading, project } = useProject(id);
-  const p = SampleProjects[0];
+  const [p, setP] = useState<any>();
   const variant = "static";
   const classes = useStyles();
 
@@ -44,13 +41,26 @@ export const ProjectOverview = () => {
     </span>
   );
   const featuredOnClick = () => {};
-  const featuredProjects: any[] = SampleProjects.slice(0, 5);
 
   const [postModal, setPostModal] = useState<IPost | Record<never, never>>();
   const [showImageModal, setShowImageModal] = useState<boolean>(false);
   const toggleShowImageModal = () => {
     setShowImageModal(!showImageModal);
   };
+
+  useEffect(() => {
+    const setProject = async () => {
+      const projectById = await axios.get(`/api/projects/${match.params.id}`, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      setP(projectById.data);
+    };
+
+    setProject();
+  }, []);
+
   return (
     <div className={classes.root}>
       {postModal && Object.keys(postModal).length ? (
@@ -67,9 +77,7 @@ export const ProjectOverview = () => {
         ""
       )}
 
-      {loading ? (
-        <div>Loading...</div>
-      ) : (
+      {p && (
         <React.Fragment>
           <ProjectHeader
             project={p}
@@ -85,7 +93,7 @@ export const ProjectOverview = () => {
             <FeaturedSection
               title={featuredTitle}
               subHeader={featuredSubHeader}
-              projects={featuredProjects}
+              projects={[]}
               onClick={featuredOnClick}
             />
           </Container>

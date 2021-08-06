@@ -185,7 +185,8 @@ export const ProjectImageModal = (props: IProps) => {
   const { onClick, project } = props;
   const [url, setUrl] = useState<string>("");
   const [featuredImage, setFeaturedImage] = useState<string>(
-    project?.media[0] || ""
+    project?.media[0] ?? ""
+
   );
   const [images, setImages] = useState<string[]>(project?.media ?? []);
 

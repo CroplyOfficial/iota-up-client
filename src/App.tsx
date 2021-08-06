@@ -1,7 +1,6 @@
 import "./App.css";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { useState } from "react";
-
 import { Root } from "./pages/root/Root";
 import { ThemeProvider } from "@material-ui/core";
 import { theme } from "./theme/theme";
@@ -14,7 +13,6 @@ import { Authorize } from "./pages/Authorize/Authorize";
 import { Settings } from "./pages/Settings/Settings";
 import { LoginModal } from "./components/loginModal/LoginModal";
 import { Navbar } from "./components/navbar/Navbar";
-import { useLocation } from "react-router-dom";
 
 function App(props: any) {
   const [showingLoginModal, setShowingLoginModal] = useState<boolean>(false);

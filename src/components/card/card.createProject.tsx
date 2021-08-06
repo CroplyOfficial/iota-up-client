@@ -10,7 +10,8 @@ interface IProps {
 }
 export const CreateProjectCard = (props: IProps, ctx: any) => {
   const { project } = props;
-  const { media, name, desc } = project;
+  const { name, media, desc } = project;
+
   const mainImage = media[0];
   const history = useHistory();
 
@@ -91,7 +92,7 @@ function truncate(str: string, n: number) {
 }
 
 interface IHeaderProps {
-  project: IProject | Record<never, never>;
+  project: IProject;
 }
 
 const useStyles2 = makeStyles((theme: Theme) =>
@@ -150,9 +151,8 @@ const useStyles2 = makeStyles((theme: Theme) =>
 
 function CardFooter(props: IHeaderProps) {
   const classes = useStyles2();
-  const { project } = props;
-  const { media, projectAuthor } = project as IProject;
-  const fullName = projectAuthor; // TODO get user from created_by
+  const { project }: { project: IProject } = props;
+  const media = project.media;
   const fallbackImage = "";
   const mainImage = media[0] || fallbackImage;
   return (

@@ -16,7 +16,7 @@ import { ProjectPageVariants } from "../../../interfaces/project.variants.interf
 
 interface IProps {
   variant: ProjectPageVariants;
-  project: IProject | Record<never, never>;
+  project: IProject;
   showImageModal: () => void;
 }
 export const ProjectHeader = (props: IProps) => {
@@ -75,6 +75,7 @@ export const ProjectHeader = (props: IProps) => {
 
         "& > div:nth-child(1)": {
           borderRadius: "20px",
+          backgroundSize: "100%",
         },
         "& > div:nth-child(2)": {
           borderRadius: "20px",
@@ -247,9 +248,11 @@ export const ProjectHeader = (props: IProps) => {
           </div>
           <div className={classes.imagesWrapper}>
             {media.slice(1, media.length).map((image, i) => (
+
               <div className={"image-" + i++} onClick={showImageModal}>
                 <img src={image} className={classes.objectFill} />
               </div>
+
             ))}
           </div>
           <Typography className={classes.projectTagsHeader}>

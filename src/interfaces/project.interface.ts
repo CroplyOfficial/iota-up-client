@@ -1,15 +1,25 @@
-import { EditorState } from "draft-js";
+
 export interface IProject {
-  created: number;
   name: string;
   desc: string;
-  category: Array<string>;
-  tags: Array<string>;
   projectAuthor: any;
-  media: [string, string, string, string, string];
-  video: string;
+  tags: Array<string>;
   upvotes: number;
   backers: number;
-  _id?: string;
-  editorState?: EditorState;
+  media: Array<string>;
+  created: Date;
+  video: string;
+  _id?: any;
+  id: any;
+  category: string[];
+  editorState: string;
+  wallet: string;
+  author?: {
+    fullName?: string;
+    avatar?: string;
+    city?: string;
+    country?: string;
+    projects?: string[];
+  };
 }
+

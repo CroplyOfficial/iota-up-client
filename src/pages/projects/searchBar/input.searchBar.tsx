@@ -1,7 +1,7 @@
 import { createStyles, makeStyles, Theme } from "@material-ui/core";
 
 interface IProps {
-  onChange: () => void;
+  onKeyUp: (e: any) => void;
 }
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -31,11 +31,11 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 export const ProjectsSearchBarInput = (props: IProps) => {
   const classes = useStyles();
-  const { onChange } = props;
+  const { onKeyUp } = props;
   const placeHolder = "Find projects...";
   return (
     <input
-      onChange={onChange}
+      onKeyUp={onKeyUp}
       className={classes.root}
       placeholder={placeHolder}
     />

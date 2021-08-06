@@ -1,67 +1,56 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { DonateHero } from "../../components/donateHero/donateHero";
-import { Navbar } from "../../components/navbar/Navbar";
 import { Footer } from "../../components/footer/Footer";
 import { IProject } from "../../interfaces/project.interface";
 import { ProjectsOverview } from "./overview/Overview";
 import { ProjectsSearchBar } from "./searchBar/SearchBar";
 import { ProjectsNavbarHero } from "./navbarHero.projects";
-import { SampleProjects } from "../root/sampleState";
+import { useDispatch, useSelector } from "react-redux";
+import { getProjects } from "../../actions/projectsActions";
+import { RootState } from "../../store";
+import axios from "axios";
 
 interface IProps {}
 export const Projects = (props: IProps) => {
-  const [projects, setProjects] = useState<IProject[]>(
-    /*[
-    {
-      created_at: 0,
-      tags: [],
-      images: ["https://source.unsplash.com/random", "", "", "", "", ""],
-      donations: 2,
-      funding: [423, 2332],
-      created_by: "Peter McKinnon",
-      upvotes: 112,
-      completed: false,
-      title: "Peter McKinnon's Photography 101 For Beginners",
-      description: "I am a project.",
-      milestones: [],
-    },
-    {
-      created_at: 0,
-      tags: [],
-      images: ["https://source.unsplash.com/random", "", "", "", "", ""],
-      donations: 2,
-      funding: [423, 2332],
-      created_by: "Peter McKinnon",
-      upvotes: 112,
-      completed: false,
-      title: "Peter McKinnon's Photography 101 For Beginners",
-      description: "I am a project.",
-      milestones: [],
-    },
-    {
-      created_at: 0,
-      tags: [],
-      images: ["https://source.unsplash.com/random", "", "", "", "", ""],
-      donations: 2,
-      funding: [423, 2332],
-      created_by: "Peter McKinnon",
-      upvotes: 112,
-      completed: false,
-      title: "Peter McKinnon's Photography 101 For Beginners",
-      description: "I am a project.",
-      milestones: [],
-    },
-  ] */
-    SampleProjects
-  );
+  const [query, setQuery] = useState<string>();
 
-  const handleOnChange = () => {};
-  const handleOnClick = () => {};
+  const [fetchedProjects, setProjects] = useState<
+    IProject[] | null | undefined
+  >([]);
+
+  const [rendered_projects, setRenderedProjects] = useState<
+    IProject[] | null | undefined
+  >([]);
+
+  const projectsMeta = useSelector((state: RootState) => state.loadProjects);
+  const { projects }: any = projectsMeta;
+
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getProjects());
+  }, []);
+
+  useEffect(() => {
+    setProjects(projects);
+    setRenderedProjects(projects);
+  }, [projects]);
+
+  const handleOnClick = async () => {
+    const { data }: any = await axios.get(`/api/projects?q=${query}`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    setRenderedProjects(data);
+  };
   return (
     <div>
       <ProjectsNavbarHero />
-      <ProjectsSearchBar onChange={handleOnChange} onClick={handleOnClick} />
-      <ProjectsOverview projects={projects} />
+      <ProjectsSearchBar
+        onKeyUp={(e: any) => setQuery(e.target.value)}
+        onClick={handleOnClick}
+      />
+      <ProjectsOverview projects={rendered_projects} />
       <DonateHero />
       <Footer />
     </div>

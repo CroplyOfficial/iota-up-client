@@ -17,16 +17,20 @@ import {
   FavoriteOutlined,
   ThumbUpOutlined,
 } from "@material-ui/icons";
-import { useHistory, useLocation } from "react-router-dom";
+
 import { IProject } from "../../interfaces/project.interface";
 import { BrandLogo } from "../../static/icons/brand-logo";
 import { BrandLogoOutlined } from "../../static/icons/brand-logo.outlined";
-import { ReactComponent as UpButton } from "../../static/images/icons/up.svg";
+import { Redirect } from "react-router-dom";
+import axios from "axios";
+import { useState, useEffect } from "react";
 
 interface IProps {
   project: IProject;
+  history?: any;
 }
 
+export const Card = ({ project, history }: IProps) => {
 export const Card = (props: IProps) => {
   const { project } = props;
   const useStyles = makeStyles(() =>
@@ -122,12 +126,20 @@ export const Card = (props: IProps) => {
     })
   );
   const classes = useStyles();
-  const history = useHistory();
-  const { name, media, category, upvotes, backers } = project;
+
+  interface ICreator {
+    fullName: string;
+    avatar: string;
+    projects?: string[];
+    city?: string;
+    country?: string;
+  }
+  const { name, media, tags, upvotes, projectAuthor } = project;
+  const [creator, setCreator] = useState<ICreator>();
   const fallbackImage = "";
   const fallbackTag = "community";
   const mainImage = media[0] || fallbackImage;
-  const mainTag = (category[0] || fallbackTag).toUpperCase();
+  const mainTag = (tags[0] || fallbackTag).toUpperCase();
   //TODO use user.fullName
   const fullName = "Adam Eunson";
 
@@ -135,7 +147,34 @@ export const Card = (props: IProps) => {
     history.push("/project/" + project._id);
   };
 
+  useEffect(() => {
+    const getCreator = async (userId: string) => {
+      const { data }: any = await axios.get(`/api/users/overview/${userId}`, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      setCreator(data);
+    };
+    getCreator(projectAuthor);
+  }, []);
+
   return (
+    <MaterialCard
+      className={classes.root}
+      onClick={(e) => (window.location.href = `/project/${project._id}`)}
+    >
+      <CardMedia
+        image={mainImage}
+        title={project.name}
+        className={classes.media}
+      />
+      <CardContent>
+        <div className={classes.level}>
+          <Typography variant="h2" color="primary">
+            {mainTag}
+          </Typography>
+          {/*
     <MaterialCard className={classes.root}>
       <CardMedia
         image={mainImage}
@@ -154,10 +193,17 @@ export const Card = (props: IProps) => {
             <ArrowUpward />
           </IconButton>
             */}
-          </div>
+        </div>
 
-          <Typography variant="h3" className={classes.header}>
-            {name}
+        <Typography variant="h3" className={classes.header}>
+          {name}
+        </Typography>
+
+        <div className={classes.stats}>
+          <Typography variant="h6" className={classes.stat}>
+            <FavoriteBorder className={classes.statIcon} />
+            UP Votes
+            <span className={classes.statAmount}> {upvotes} </span>
           </Typography>
 
           <div className={classes.stats}>
@@ -173,37 +219,40 @@ export const Card = (props: IProps) => {
             </Typography>
           </div>
         </div>
+        {creator && (
+          <CardHeader
+            className={classes.statusBar}
+            avatar={<Avatar alt="avatar" src={creator.avatar}></Avatar>}
+            title={
+              <span className={classes.statusBarHeader}>
+                {creator.fullName}
+              </span>
+            }
+            subheader={
+              <div className={classes.subHeader}>
+                <Typography
+                  color="primary"
+                  className={classes.statusBarSubHeader1}
+                >
+                  {`${creator.projects && creator.projects.length} Projects`}
+                </Typography>
+                <ul className={classes.ul}>
+                  <li className={classes.li}>
+                    <Typography className={classes.statusBarSubHeader2}>
+                      {`${creator.city}, ${creator.country}`}
+                    </Typography>
+                  </li>
+                </ul>
+              </div>
+            }
+            action={
+              <IconButton>
+                <ArrowUpward color="primary" />
+              </IconButton>
+            }
+          />
+        )}
 
-        <CardHeader
-          className={classes.statusBar}
-          avatar={<Avatar alt="avatar" src={mainImage}></Avatar>}
-          title={<span className={classes.statusBarHeader}>{fullName}</span>}
-          subheader={
-            <div className={classes.subHeader}>
-              <Typography
-                color="primary"
-                className={classes.statusBarSubHeader1}
-              >
-                6 Projects
-              </Typography>
-              <ul className={classes.ul}>
-                <li className={classes.li}>
-                  <Typography className={classes.statusBarSubHeader2}>
-                    New York, USA
-                  </Typography>
-                </li>
-              </ul>
-            </div>
-          }
-          action={
-            <IconButton>
-              <SvgIcon color="primary" fontSize="large">
-                <UpButton />
-              </SvgIcon>
-              {/*  <ArrowUpward color="primary" /> */}
-            </IconButton>
-          }
-        />
       </CardContent>
     </MaterialCard>
   );
