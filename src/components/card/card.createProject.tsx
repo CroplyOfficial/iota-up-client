@@ -190,8 +190,8 @@ function CardFooter(props: IHeaderProps) {
             {`${creator?.projects && creator?.projects.length} Projects`}
           </span>
           <span className={classes.subHeader2}>
-            &bull; $
-            {`${creator && creator.city}, ${creator && creator.country}`}
+            &bull;
+            {` ${creator && creator.city}, ${creator && creator.country}`}
           </span>
         </span>
       }

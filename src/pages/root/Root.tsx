@@ -11,6 +11,14 @@ import { Categories } from "./categories/categories.root";
 import { ICard } from "../../interfaces/categoriesCard.interface";
 import { DonateHero } from "../../components/donateHero/donateHero";
 import { Footer } from "../../components/footer/Footer";
+import { useDispatch, useSelector } from "react-redux";
+import { useState, useEffect } from "react";
+import { RootState } from "../../store";
+import { IProject } from "../../interfaces/project.interface";
+import {
+  getTrendingProjects,
+  getLatestProjects,
+} from "../../actions/projectsActions";
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -28,8 +36,30 @@ const useStyles = makeStyles(() =>
 
 interface IProps {}
 export const Root = (props: IProps) => {
+  const dispatch = useDispatch();
+
+  const [featured, setFeatured] = useState<IProject[] | undefined | null>();
+  const [latest, setLatest] = useState<IProject[] | undefined | null>();
+
+  const featuredMeta = useSelector((state: RootState) => state.loadTrending);
+  const latestMeta = useSelector((state: RootState) => state.loadLatest);
+  const { trendingProjects }: any = featuredMeta;
+  const { latestProjects }: any = latestMeta;
+
   const classes = useStyles();
 
+  useEffect(() => {
+    dispatch(getTrendingProjects());
+    dispatch(getLatestProjects());
+  }, []);
+
+  useEffect(() => {
+    setLatest(latestProjects);
+  }, [latestProjects]);
+
+  useEffect(() => {
+    setFeatured(trendingProjects);
+  }, [trendingProjects]);
   /* FEATURED */
   const featuredTitle = "Projects on the UP";
   const featuredSubHeader = (
@@ -88,19 +118,20 @@ export const Root = (props: IProps) => {
         <Hero />
       </Container>
       <Container>
-        {/* <FeaturedSection
+        <FeaturedSection
           className={classes.featuredSection}
           title={featuredTitle}
           subHeader={featuredSubHeader}
-          projects={featuredProjects}
+          projects={featured}
           onClick={featuredOnClick}
         />
         <FeaturedSection
           className={classes.lastSection}
           title={latestTitle}
           subHeader={latestSubHeader}
-          projects={latestProjects}
-          onClick={latestOnClick}  /> */}
+          projects={latest}
+          onClick={latestOnClick}
+        />
       </Container>
       {/*
       <Container>

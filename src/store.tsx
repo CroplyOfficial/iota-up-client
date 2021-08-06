@@ -2,11 +2,19 @@ import { createStore, combineReducers, applyMiddleware } from "redux";
 import thunk from "redux-thunk";
 import { composeWithDevTools } from "redux-devtools-extension";
 import { userLoginReducer } from "./reducers/userReducers";
-import { loadProjectsReducer } from "./reducers/projectReducers";
+import {
+  loadProjectsReducer,
+  loadLatestProjectsReducer,
+  loadReccomendedProjectsReducer,
+  loadTrendingProjectsReducer,
+} from "./reducers/projectReducers";
 
 const reducer = combineReducers({
   userLogin: userLoginReducer,
   loadProjects: loadProjectsReducer,
+  loadTrending: loadTrendingProjectsReducer,
+  loadRecommended: loadReccomendedProjectsReducer,
+  loadLatest: loadLatestProjectsReducer,
 });
 
 export type RootState = ReturnType<typeof reducer>;
