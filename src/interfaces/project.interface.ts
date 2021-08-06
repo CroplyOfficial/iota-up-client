@@ -1,4 +1,3 @@
-
 export interface IProject {
   name: string;
   desc: string;
@@ -21,5 +20,5 @@ export interface IProject {
     country?: string;
     projects?: string[];
   };
+  lookingForContributors?: boolean;
 }
-

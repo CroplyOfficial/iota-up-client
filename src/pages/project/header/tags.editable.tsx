@@ -6,13 +6,14 @@ interface IProps {
   tags: string[];
   onChange?: () => void;
   variant: "static" | "editable";
+  onDelete: (i: number) => void;
 }
-export const HeaderTags = (props: IProps & HTMLProps<HTMLElement>) => {
-  const { tags } = props;
+export const EditableHeaderTags = (props: IProps & HTMLProps<HTMLElement>) => {
+  const { tags, onDelete } = props;
   return (
     <div className={props.className}>
       {tags.map((t, i) => (
-        <Chip key={"tag#" + i++} label={t} />
+        <Chip key={"tag#" + i++} label={t} onDelete={() => onDelete(i)} />
       ))}
     </div>
   );

@@ -66,7 +66,7 @@ interface IProps {
   onToggle: () => void;
 }
 
-export const ProjectBody = (props: IProps) => {
+export const EditableProjectBody = (props: IProps) => {
   const { variant, project, setPostModal, recommended } = props;
   const classes = useStyles();
   const [bodyOption, setBodyOption] = useState<BodyOption>(
