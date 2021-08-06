@@ -61,11 +61,12 @@ const useStyles = makeStyles(() =>
 interface IProps {
   variant: ProjectPageVariants;
   project: IProject;
+  recommended: IProject[] | undefined | null;
   setPostModal: Function;
 }
 
 export const ProjectBody = (props: IProps) => {
-  const { variant, project, setPostModal } = props;
+  const { variant, project, setPostModal, recommended } = props;
   const classes = useStyles();
   const [bodyOption, setBodyOption] = useState<BodyOption>(
     BodyOptions.INFORMATION
@@ -119,22 +120,23 @@ Quisque dictum libero ac ullamcorper vehicula. Duis semper erat non rhoncus sagi
         </div>
         <div className={classes.right}>
           <div className={classes.rightHeader}>Creator’s Other Projects</div>
-          {/* {otherProjects.slice(0, 2).map((p, i) => (
-            <div>
-              <CreateProjectCard project={p} key={"other-projects#" + i++} />
-              {i === 1 ? (
-                <hr
-                  style={{
-                    border: "0.1px solid rgba(0,0,0,0.05)",
-                    marginTop: "15px",
-                    marginBottom: "15px",
-                  }}
-                />
-              ) : (
-                ""
-              )}
-            </div>
-          ))} */}
+          {recommended &&
+            recommended.slice(0, 2).map((p, i) => (
+              <div>
+                <CreateProjectCard project={p} key={"other-projects#" + i++} />
+                {i === 1 ? (
+                  <hr
+                    style={{
+                      border: "0.1px solid rgba(0,0,0,0.05)",
+                      marginTop: "15px",
+                      marginBottom: "15px",
+                    }}
+                  />
+                ) : (
+                  ""
+                )}
+              </div>
+            ))}
         </div>
       </div>
     </Container>

@@ -11,6 +11,9 @@ import { IPost } from "../../interfaces/post.interface";
 import { ProjectPostModal } from "./postModal.project";
 import { ProjectImageModal } from "./imageModal.project";
 import { IProject } from "../../interfaces/project.interface";
+import { getTrendingProjects } from "../../actions/projectsActions";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../store";
 import axios from "axios";
 
 interface IRouteParams {
@@ -27,11 +30,17 @@ const useStyles = makeStyles(() =>
     },
   })
 );
+
 export const ProjectOverview = ({ match }: any) => {
   const { id } = useParams<IRouteParams>();
   const [p, setP] = useState<any>();
   const variant = "static";
   const classes = useStyles();
+  const [trending, setTrending] = useState<IProject[] | undefined | null>();
+  const dispatch = useDispatch();
+
+  const trendingMeta = useSelector((state: RootState) => state.loadTrending);
+  const { trendingProjects }: any = trendingMeta;
 
   const featuredTitle = "Recommended Projects";
   const featuredSubHeader = (
@@ -47,6 +56,14 @@ export const ProjectOverview = ({ match }: any) => {
   const toggleShowImageModal = () => {
     setShowImageModal(!showImageModal);
   };
+
+  useEffect(() => {
+    dispatch(getTrendingProjects());
+  }, []);
+
+  useEffect(() => {
+    setTrending(trendingProjects);
+  }, [trendingProjects]);
 
   useEffect(() => {
     const setProject = async () => {
@@ -91,12 +108,13 @@ export const ProjectOverview = ({ match }: any) => {
             project={p}
             variant={variant}
             setPostModal={setPostModal}
+            recommended={trendingProjects}
           />
           <Container className={classes.featuredSection}>
             <FeaturedSection
               title={featuredTitle}
               subHeader={featuredSubHeader}
-              projects={[]}
+              projects={trending}
               onClick={featuredOnClick}
             />
           </Container>
