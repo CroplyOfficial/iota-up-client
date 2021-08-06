@@ -9,29 +9,37 @@ import {
   Avatar,
   IconButton,
 } from "@material-ui/core";
-import { ArrowUpward, LocalAtm, FavoriteBorder, FavoriteOutlined, ThumbUpOutlined } from "@material-ui/icons";
+import {
+  ArrowUpward,
+  LocalAtm,
+  FavoriteBorder,
+  FavoriteOutlined,
+  ThumbUpOutlined,
+} from "@material-ui/icons";
 import { IProject } from "../../interfaces/project.interface";
 import { BrandLogo } from "../../static/icons/brand-logo";
 import { BrandLogoOutlined } from "../../static/icons/brand-logo.outlined";
+import { Redirect } from "react-router-dom";
+import axios from "axios";
+import { useState, useEffect } from "react";
 
 interface IProps {
   project: IProject;
+  history?: any;
 }
 
-export const Card = (props: IProps) => {
-  const {project} = props;
+export const Card = ({ project, history }: IProps) => {
   const useStyles = makeStyles(() =>
     createStyles({
       root: {
         width: "381px",
         height: "569px",
         borderRadius: ".8rem",
-
       },
       media: {
         height: 0,
         maxHeight: "172px",
-        paddingTop: '56.25%', // 16:9 
+        paddingTop: "56.25%", // 16:9
       },
       level: {
         display: "flex",
@@ -44,15 +52,15 @@ export const Card = (props: IProps) => {
           fontStyle: "standard",
           fontSize: "18px",
           lineHeight: "27px",
-        }
+        },
       },
       header: {
-          fontFamily: "Poppins",
-          fontWeight: 700,
-          fontStyle: "standard",
-          fontSize: "20px",
-          lineHeight: "30px",
-          paddingBottom: "30px",
+        fontFamily: "Poppins",
+        fontWeight: 700,
+        fontStyle: "standard",
+        fontSize: "20px",
+        lineHeight: "30px",
+        paddingBottom: "30px",
       },
       stats: {
         "& > *": {
@@ -61,28 +69,27 @@ export const Card = (props: IProps) => {
           fontStyle: "standard",
           fontSize: "16px",
           lineHeight: "28px",
-          
-        }
+        },
       },
       stat: {
         display: "flex",
         flexDirection: "row",
         justifyContent: "flex-start",
-        alignItems: "center"
+        alignItems: "center",
       },
       statIcon: {
-        paddingRight: "20px"
+        paddingRight: "20px",
       },
       statAmount: {
         paddingLeft: "20px",
       },
       statusBar: {
         paddingTop: "80px",
-        paddingLeft: "0px"
+        paddingLeft: "0px",
       },
       subHeader: {
         display: "flex",
-        flexDirection:"row",
+        flexDirection: "row",
       },
       statusBarHeader: {
         fontFamily: "Poppins",
@@ -108,76 +115,107 @@ export const Card = (props: IProps) => {
       ul: {
         padding: 0,
         margin: 0,
-        paddingLeft: "2rem"
+        paddingLeft: "2rem",
       },
-      li: {
-      }
+      li: {},
     })
   );
   const classes = useStyles();
 
-  const { title, images, tags, upvotes, donations } = project;
+  interface ICreator {
+    fullName: string;
+    avatar: string;
+    projects?: string[];
+    city?: string;
+    country?: string;
+  }
+  const { name, media, tags, upvotes, projectAuthor } = project;
+  const [creator, setCreator] = useState<ICreator>();
   const fallbackImage = "";
   const fallbackTag = "community";
-  const mainImage = images[0] || fallbackImage;
+  const mainImage = media[0] || fallbackImage;
   const mainTag = (tags[0] || fallbackTag).toUpperCase();
   //TODO use user.fullName
   const fullName = "Robert Johnson";
 
+  useEffect(() => {
+    const getCreator = async (userId: string) => {
+      const { data }: any = await axios.get(`/api/users/overview/${userId}`, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      setCreator(data);
+    };
+    getCreator(projectAuthor);
+  }, []);
+
   return (
-    <MaterialCard className={classes.root}>
-      <CardMedia image={mainImage} title={project.title} className={classes.media} />
+    <MaterialCard
+      className={classes.root}
+      onClick={(e) => (window.location.href = `/project/${project._id}`)}
+    >
+      <CardMedia
+        image={mainImage}
+        title={project.name}
+        className={classes.media}
+      />
       <CardContent>
         <div className={classes.level}>
-          <Typography variant="h2" color="primary">{mainTag}</Typography>
+          <Typography variant="h2" color="primary">
+            {mainTag}
+          </Typography>
           {/*
           <IconButton>
             <ArrowUpward />
           </IconButton>
             */}
         </div>
-        
+
         <Typography variant="h3" className={classes.header}>
-          {title}
+          {name}
         </Typography>
 
         <div className={classes.stats}>
           <Typography variant="h6" className={classes.stat}>
-            <LocalAtm className={classes.statIcon}/>
-            Total Donations 
-            <span className={classes.statAmount}> {donations} </span>
-          </Typography>
-          <Typography variant="h6" className={classes.stat}>
-            <FavoriteBorder className={classes.statIcon}/>
-           UP Votes
+            <FavoriteBorder className={classes.statIcon} />
+            UP Votes
             <span className={classes.statAmount}> {upvotes} </span>
           </Typography>
         </div>
-
-        <CardHeader 
-          className={classes.statusBar}
-          avatar={
-            <Avatar
-              alt="avatar"
-              src={mainImage}
-            ></Avatar>
-          }
-          title={<span className={classes.statusBarHeader}>{fullName}</span>}
-          subheader={<div className={classes.subHeader}>
-            <Typography color="primary" className={classes.statusBarSubHeader1}> 6Projects</Typography>
-            <ul className={classes.ul}>
-              <li className={classes.li}>
-            <Typography className={classes.statusBarSubHeader2}>New York, USA</Typography>
-              </li>
-            </ul>
-        </div>}
-          action={
-            <IconButton >
-              <ArrowUpward color="primary" />
-            </IconButton>
-              }
-        />
-
+        {creator && (
+          <CardHeader
+            className={classes.statusBar}
+            avatar={<Avatar alt="avatar" src={creator.avatar}></Avatar>}
+            title={
+              <span className={classes.statusBarHeader}>
+                {creator.fullName}
+              </span>
+            }
+            subheader={
+              <div className={classes.subHeader}>
+                <Typography
+                  color="primary"
+                  className={classes.statusBarSubHeader1}
+                >
+                  {`${creator.projects && creator.projects.length} Projects`}
+                </Typography>
+                <ul className={classes.ul}>
+                  <li className={classes.li}>
+                    <Typography className={classes.statusBarSubHeader2}>
+                      {`${creator.city}, ${creator.country}`}
+                    </Typography>
+                  </li>
+                </ul>
+              </div>
+            }
+            action={
+              <IconButton>
+                <ArrowUpward color="primary" />
+              </IconButton>
+            }
+          />
+        )}
       </CardContent>
     </MaterialCard>
   );

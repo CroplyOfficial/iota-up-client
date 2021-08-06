@@ -86,7 +86,7 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 interface IProps {
-  projects: IProject[];
+  projects: IProject[] | null | undefined;
 }
 export const ProjectsOverview = (props: IProps) => {
   const { projects } = props;
@@ -120,7 +120,8 @@ export const ProjectsOverview = (props: IProps) => {
           <div className={classes.right}>
             <div className={classes.actionBar}>
               <Typography className={classes.actionBarText}>
-                {projects.length} Projects found
+                {projects && projects.length ? projects.length : "0"} Projects
+                found
               </Typography>
               <Button
                 color="primary"
@@ -131,11 +132,14 @@ export const ProjectsOverview = (props: IProps) => {
               </Button>
             </div>
             <div className={classes.projectsWrapper}>
-              {projects.map((p, i) => (
-                <Card project={p} key={"project-card#" + i++} />
-              ))}
+              {projects &&
+                projects.map((p, i) => (
+                  <Card project={p} key={"project-card#" + i++} />
+                ))}
             </div>
-            {projects.length >= loadMoreThreshold ? (
+            {projects &&
+            projects.length &&
+            projects.length >= loadMoreThreshold ? (
               <Button
                 className={classes.loadMoreButton}
                 onClick={onClick}

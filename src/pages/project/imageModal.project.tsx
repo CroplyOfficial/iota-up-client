@@ -185,9 +185,9 @@ export const ProjectImageModal = (props: IProps) => {
   const { onClick, project } = props;
   const [url, setUrl] = useState<string>("");
   const [featuredImage, setFeaturedImage] = useState<string>(
-    project?.images[0] ?? ""
+    project?.media[0] ?? ""
   );
-  const [images, setImages] = useState<string[]>(project?.images ?? []);
+  const [images, setImages] = useState<string[]>(project?.media ?? []);
 
   const handleUrlOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUrl(e.currentTarget.value);
@@ -205,7 +205,7 @@ export const ProjectImageModal = (props: IProps) => {
         <div className={classes.background} onClick={onClick}></div>
         <div className={classes.card}>
           <div className={classes.header}>
-            <Typography className={classes.title}>{project?.title}</Typography>
+            <Typography className={classes.title}>{project?.name}</Typography>
             <Button onClick={onClick} className={classes.justifyEnd}>
               <CloseSharp />
             </Button>

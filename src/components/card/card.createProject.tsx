@@ -10,8 +10,8 @@ interface IProps {
 }
 export const CreateProjectCard = (props: IProps, ctx: any) => {
   const { project } = props;
-  const { images, title, description } = project;
-  const mainImage = images[0];
+  const { name, media, desc } = project;
+  const mainImage = media[0];
   const history = useHistory();
 
   const useStyles = makeStyles((theme: Theme) =>
@@ -70,8 +70,8 @@ export const CreateProjectCard = (props: IProps, ctx: any) => {
   return (
     <div className={classes.root}>
       <div className={classes.imageWrapper}></div>
-      <div className={classes.header}>{title}</div>
-      <div className={classes.description}>{truncate(description, 206)}</div>
+      <div className={classes.header}>{name}</div>
+      <div className={classes.description}>{truncate(desc, 206)}</div>
       <CardFooter project={project} />
 
       <Button
@@ -91,7 +91,7 @@ function truncate(str: string, n: number) {
 }
 
 interface IHeaderProps {
-  project: IProject | Record<never, never>;
+  project: IProject;
 }
 
 const useStyles2 = makeStyles((theme: Theme) =>
@@ -150,12 +150,11 @@ const useStyles2 = makeStyles((theme: Theme) =>
 
 function CardFooter(props: IHeaderProps) {
   const classes = useStyles2();
-  const { project } = props;
-  const { images = ["", "", "", "", "", "", ""], created_by } =
-    project as IProject;
+  const { project }: { project: IProject } = props;
+  const media = project.media;
   const fullName = "Peter Parker"; // TODO get user from created_by
   const fallbackImage = "";
-  const mainImage = images[0] || fallbackImage;
+  const mainImage = media[0] || fallbackImage;
   return (
     <CardHeader
       className={classes.root}

@@ -65,7 +65,7 @@ export const Card2 = (props: IProps) => {
   const classes = useStyles();
   const mainTag = project?.tags[0];
   const fallbackImage = "https://source.unsplash.com/random";
-  const mainImage = project?.images[0] || fallbackImage;
+  const mainImage = project?.media[0] || fallbackImage;
   return (
     <MaterialCard className={classes.root}>
       <CardMedia className={classes.media} image={mainImage} />
@@ -73,11 +73,7 @@ export const Card2 = (props: IProps) => {
         <Typography color="primary" className={classes.header}>
           {mainTag}
         </Typography>
-        <Typography className={classes.title}>{project.title}</Typography>
-        <Typography color="textPrimary" className={classes.subHeader}>
-          <MoneySharp />
-          Total Donations: {project.donations}
-        </Typography>
+        <Typography className={classes.title}>{project.name}</Typography>
         <Typography color="textPrimary" className={classes.subHeader}>
           <CalendarTodaySharp />
           UP Votes: {project.upvotes}

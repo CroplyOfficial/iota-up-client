@@ -16,24 +16,20 @@ import { ProjectPageVariants } from "../../../interfaces/project.variants.interf
 
 interface IProps {
   variant: ProjectPageVariants;
-  project: IProject | Record<never, never>;
+  project: IProject;
   showImageModal: () => void;
 }
 export const ProjectHeader = (props: IProps) => {
   const { variant, project, showImageModal } = props;
   const {
-    completed,
-    created_at,
-    created_by,
-    description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip",
-    title = "Identity Suite - Open Source Application Blueprints",
-    images = [
+    desc = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip",
+    name = "Identity Suite - Open Source Application Blueprints",
+    media = [
       "https://source.unsplash.com/random",
       "https://source.unsplash.com/random",
       "https://source.unsplash.com/random",
       "https://source.unsplash.com/random",
     ], // TODO not sure if this set's fallback or default
-    donations = 132,
     tags: initialTags = [
       "JavaScript",
       "React.js",
@@ -45,12 +41,10 @@ export const ProjectHeader = (props: IProps) => {
       "Web Applications",
       "Web Applications",
     ],
-    funding,
     upvotes = 365,
-    milestones,
   } = project as IProject;
   const fallbackImage = "https://source.unsplash.com/random";
-  const mainImage = (images || [])[0] || fallbackImage;
+  const mainImage = (media || [])[0] || fallbackImage;
   const [tags, setTags] = useState<Array<string>>(initialTags || []);
 
   const useStyles = makeStyles((theme: Theme) =>
@@ -91,25 +85,25 @@ export const ProjectHeader = (props: IProps) => {
         "& > div:nth-child(1)": {
           borderRadius: "20px",
           backgroundSize: "100%",
-          backgroundImage: `url(${images[1]})`,
+          backgroundImage: `url(${media[1]})`,
         },
         "& > div:nth-child(2)": {
           borderRadius: "20px",
           backgroundColor: "#f5f5f5",
           backgroundSize: "100%",
-          backgroundImage: `url(${images[2]})`,
+          backgroundImage: `url(${media[2]})`,
         },
         "& > div:nth-child(3)": {
           borderRadius: "20px",
           backgroundColor: "#f5f5f5",
           backgroundSize: "100%",
-          backgroundImage: `url(${images[3]})`,
+          backgroundImage: `url(${media[3]})`,
         },
         "& > div:nth-child(4)": {
           borderRadius: "20px",
           backgroundColor: "#f5f5f5",
           backgroundSize: "100%",
-          backgroundImage: `url(${images[4]})`,
+          backgroundImage: `url(${media[4]})`,
           marginRight: "0",
         },
         "& > div:nth-child(5)": {
@@ -237,7 +231,7 @@ export const ProjectHeader = (props: IProps) => {
             onClick={() => showImageModal()}
           ></div>
           <div className={classes.imagesWrapper}>
-            {images.slice(1, images.length).map((image, i) => (
+            {media.slice(1, media.length).map((image, i) => (
               <div className={"image-" + i++} onClick={showImageModal}></div>
             ))}
           </div>
@@ -245,14 +239,14 @@ export const ProjectHeader = (props: IProps) => {
         <div className={classes.right}>
           <HeaderCardHeader project={project} />
           <Typography variant="h2" className={classes.title}>
-            {title}
+            {name}
           </Typography>
           <Typography
             variant="body1"
             component="span"
             className={classes.description}
           >
-            {description}
+            {desc}
           </Typography>
           <div className={classes.statsWrapper}>
             <div className={classes.stats}>
@@ -270,14 +264,6 @@ export const ProjectHeader = (props: IProps) => {
             </div>
             <div className={classes.stats}>
               <CalendarToday fontSize="large" className={classes.statsIcon} />
-              <div>
-                <Typography variant="h4" className={classes.statsHeader}>
-                  {donations}
-                </Typography>
-                <Typography variant="h4" className={classes.statsSubHeader}>
-                  Donations
-                </Typography>
-              </div>
             </div>
 
             <div className={classes.buttons}>

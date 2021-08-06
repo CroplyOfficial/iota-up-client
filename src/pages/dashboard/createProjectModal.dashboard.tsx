@@ -150,7 +150,7 @@ export const DashboardCreateProjectModal = ({ showing, onClick }: IProps) => {
         config
       );
       console.log(projectCreated);
-      window.location.href = `/projects/${projectCreated.data._id}`;
+      window.location.href = `/project/${projectCreated.data._id}`;
     }
   };
 

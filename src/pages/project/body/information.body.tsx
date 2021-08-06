@@ -32,14 +32,14 @@ const useStyles = makeStyles((theme: Theme) =>
 
 interface IProps {
   variant: ProjectPageVariants;
-  project: IProject | Record<never, never>;
+  project: IProject;
 }
 
 export const ProjectBodyInformation = (props: IProps) => {
   const { project, variant } = props;
-  const { information } = project as IProject;
+  const { desc } = project as IProject;
   const [editorState, setEditorState] = useState<EditorState>(
-    information as any
+    project.editorState as any
   );
   const onEditorStateChange = (editorState: EditorState) => {
     setEditorState(editorState);

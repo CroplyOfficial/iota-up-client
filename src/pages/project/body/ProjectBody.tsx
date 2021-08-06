@@ -61,7 +61,7 @@ const useStyles = makeStyles(() =>
 
 interface IProps {
   variant: ProjectPageVariants;
-  project: IProject | Record<never, never>;
+  project: IProject;
   setPostModal: Function;
 }
 
