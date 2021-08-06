@@ -93,7 +93,7 @@ export const getRecommendedProjects = () => async (dispatch: any) => {
 export const getLatestProjects = () => async (dispatch: any) => {
   try {
     dispatch({
-      type: GET_LATEST_SUCCESS,
+      type: GET_LATEST_REQUEST,
     });
 
     const config = {
@@ -105,10 +105,11 @@ export const getLatestProjects = () => async (dispatch: any) => {
     data.sort((a: any, b: any) => {
       return new Date(b.created).valueOf() - new Date(a.created).valueOf();
     });
-    dispatch({ type: PROJECTS_LOADING_SUCCESS, payload: data });
+    console.log(data);
+    dispatch({ type: GET_LATEST_SUCCESS, payload: data });
   } catch (error) {
     dispatch({
-      type: PROJECTS_LOADING_FAIL,
+      type: GET_LATEST_FAIL,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message

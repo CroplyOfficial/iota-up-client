@@ -56,7 +56,7 @@ const useStyles = makeStyles(() =>
 interface IProps {
   title: string | React.ReactNode;
   subHeader: string | React.ReactNode;
-  projects: IProject[];
+  projects: IProject[] | undefined | null;
   onClick: () => void;
 }
 
@@ -77,9 +77,12 @@ export const FeaturedSection = (
         </Typography>
       </div>
       <div className={classes.cards}>
-        {projects.slice(0, 3).map((p, i) => (
-          <Card project={p} key={"featured-project-" + (i + 1)} />
-        ))}
+        {projects &&
+          projects
+            .slice(0, 3)
+            .map((p, i) => (
+              <Card project={p} key={"featured-project-" + (i + 1)} />
+            ))}
       </div>
       <div className={classes.actionButtonContainer}>
         <Button

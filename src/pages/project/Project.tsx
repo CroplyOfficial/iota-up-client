@@ -50,11 +50,14 @@ export const ProjectOverview = ({ match }: any) => {
 
   useEffect(() => {
     const setProject = async () => {
-      const projectById = await axios.get(`/api/projects/${match.params.id}`, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      const projectById = await axios.get(
+        `/api/projects/by-id/${match.params.id}`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
       setP(projectById.data);
     };
 
