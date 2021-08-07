@@ -14,6 +14,8 @@ import { BrandLogoSecondary } from "../../static/icons/brand-logo.secondary";
 import { useState } from "react";
 import { ActionButton } from "./loginButton.navbar";
 import { Container } from "../container/container";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store";
 
 const paths = {
   root: "/",
@@ -25,48 +27,6 @@ const paths = {
   settings: "/settings",
   login: "/login",
 };
-
-/*
-const useAltStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    root: {
-      flexGrow: 1,
-    },
-    menuButton: {
-      marginRight: theme.spacing(2),
-    },
-    title: {
-      flexGrow: 1,
-    },
-    link: {
-      textDecoration: "none",
-      color: "inherit",
-      marginLeft: "0.7rem",
-      marginRight: "0.7rem",
-    },
-    a: {
-      "&:hover": {
-        color: "#121E31",
-      },
-      lineHeight: "27px",
-      fontSize: "18px",
-      fontFamily: "Poppins",
-      fontStyle: "normal",
-      fontWeight: 500,
-      color: "#ffffff",
-    },
-    loginButton: {
-      lineHeight: "27px",
-      fontSize: "18px",
-      fontFamiliy: "Poppins",
-      fontStyle: "normal",
-      fontWeight: 700,
-    },
-    iconButton: {
-      paddingLeft: 0,
-    },
-  })
-);*/
 
 enum NavbarVariants {
   main = "main",
@@ -125,10 +85,11 @@ export const Navbar = (props: INavbarProps) => {
   const classes = useStyles();
 
   // TODO implement context or redux
-  const initialState = {};
-  const [userInfo, setUserInfo] = useState(initialState);
 
-  const appBarColor = isSecondary ? "primary" : "transparent";
+  const selectedUser = useSelector((state: RootState) => state.userLogin);
+  const [userInfo] = useState((selectedUser as any).userInfo);
+  const isLoggedIn = userInfo !== null;
+
   const actionButtonVariant = isSecondary ? "contained" : "outlined";
   const brandLogo = isSecondary ? <BrandLogoSecondary /> : <BrandLogo />;
   return (

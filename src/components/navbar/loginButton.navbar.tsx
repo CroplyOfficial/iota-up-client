@@ -1,6 +1,9 @@
 import { createStyles, makeStyles, Button } from "@material-ui/core";
 import { Person } from "@material-ui/icons";
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store";
+import { AvatarDropDown } from "./avatarDropDown.navbar";
 
 interface ISignInButton {
   variant?: "outlined" | "contained";
@@ -39,12 +42,14 @@ const SignInButton = (props: ISignInButton) => {
 export const ActionButton = (props: ISignInButton) => {
   const { variant } = props;
   const initialState = {};
-  const [userInfo, setUserInfo] = useState<Record<string, any>>(initialState);
+  const selectedUser = useSelector((root: RootState) => root.userLogin);
+  const userInfo = (selectedUser as any).userInfo;
+  console.log("TEST", userInfo);
 
   return (
     <React.Fragment>
-      {userInfo.name ? (
-        "hello anonymous"
+      {userInfo?.firstName ? (
+        <AvatarDropDown userInfo={userInfo} />
       ) : (
         <SignInButton
           variant={variant}
