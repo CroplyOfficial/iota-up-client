@@ -1,5 +1,7 @@
 # iota-up-client
 
+This is the repository for the IOTA UP application
+
 ## Preface
 
 i. read the [conventions.md](./CONVENTIONS.md)
