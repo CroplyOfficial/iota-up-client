@@ -3,12 +3,15 @@ import {
   makeStyles,
   Typography,
   Button,
+  TextField,
 } from "@material-ui/core";
 import { IPost } from "../../interfaces/post.interface";
 import htmlToDraft from "html-to-draftjs";
-import { EditorState, ContentState } from "draft-js";
+import { EditorState, ContentState, convertToRaw } from "draft-js";
 import { Editor } from "react-draft-wysiwyg";
 import { CloseSharp } from "@material-ui/icons";
+import { useState } from "react";
+import draftToHtml from "draftjs-to-html";
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -28,7 +31,7 @@ const useStyles = makeStyles(() =>
     },
     card: {
       width: "60%",
-      backgroundColor: "#f5f5f5",
+      backgroundColor: "#ffffff",
       zIndex: 3,
       display: "flex",
       flexDirection: "column",
@@ -47,7 +50,7 @@ const useStyles = makeStyles(() =>
       display: "flex",
       justifyContent: "start",
       height: "30px",
-      paddingBottom: "15px",
+      padding: "15px",
     },
     title: {
       fontSize: "32px",
@@ -105,23 +108,52 @@ const useStyles = makeStyles(() =>
       paddingRight: "30px",
       borderRadius: "10px",
     },
+    textField: {
+      paddingBottom: "15px",
+    },
   })
 );
 
 interface IProps {
-  post: IPost;
   onClick: () => void;
 }
 export const ProjectCreatePostModal = (props: IProps) => {
   const classes = useStyles();
-  const { post, onClick } = props;
-  const blocksFromHtml = htmlToDraft(post.body);
-  const { contentBlocks, entityMap } = blocksFromHtml;
-  const contentState = ContentState.createFromBlockArray(
-    contentBlocks,
-    entityMap
+  const { onClick } = props;
+  const [title, setTitle] = useState<string>("");
+  const handleChangeTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setTitle(e.currentTarget.value);
+  };
+  const [editorState, setEditorState] = useState<EditorState>(
+    EditorState.createEmpty()
   );
-  const editorState = EditorState.createWithContent(contentState);
+  const onEditorStateChange = (editorState: EditorState) => {
+    setEditorState(editorState);
+  };
+
+  const toolBar = {
+    image: {
+      uploadEnabled: true,
+      inputAccept: "image/gif,image/jpeg,image/jpg,image/png,image/svg",
+      urlEnabled: false,
+      uploadCallback: async function (...params: any[]) {
+        console.log(params);
+        return {
+          data: {
+            link: "https://images.unsplash.com/photo-1485550409059-9afb054cada4?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=701&q=80",
+          },
+        };
+      },
+    },
+  };
+
+  const handleCreatePost = () => {
+    //TODO Merul :P
+    // editorState as html,
+    const html = draftToHtml(convertToRaw(editorState.getCurrentContent()));
+    const needed = [title, html];
+    onClick();
+  };
 
   return (
     <div>
@@ -129,20 +161,36 @@ export const ProjectCreatePostModal = (props: IProps) => {
         <div className={classes.background} onClick={onClick}></div>
         <div className={classes.card}>
           <div className={classes.header}>
+            <Typography className={classes.title}> Create A Post</Typography>
             <Button onClick={onClick} className={classes.justifyEnd}>
               <CloseSharp />
             </Button>
           </div>
           <div className={classes.body}>
-            <Typography className={classes.title}> {post.title} </Typography>
+            <TextField
+              value={title}
+              onChange={handleChangeTitle}
+              label="Title"
+              className={classes.textField}
+            />
+            <Typography className={classes.title}> </Typography>
             <Editor
               editorState={editorState}
-              onEditorStateChange={() => null}
-              toolbarHidden
+              toolbar={toolBar}
+              onEditorStateChange={onEditorStateChange}
             />
             <Typography color="textPrimary"></Typography>
           </div>
-          <div className={classes.footer}></div>
+          <div className={classes.footer}>
+            <Button
+              onClick={handleCreatePost}
+              color="primary"
+              variant="contained"
+              className={classes.button}
+            >
+              Create Post
+            </Button>
+          </div>
         </div>
       </div>
     </div>

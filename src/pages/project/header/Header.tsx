@@ -400,16 +400,20 @@ export const ProjectHeader = (props: IProps) => {
             </div>
           </div>
           <hr className={classes.hr} />
-          <div className={classes.editButton}>
-            <Button
-              color="primary"
-              variant="contained"
-              className={classes.button}
-              onClick={onToggle}
-            >
-              Edit Project
-            </Button>
-          </div>
+          {isProjectAuthor ? (
+            <div className={classes.editButton}>
+              <Button
+                color="primary"
+                variant="contained"
+                className={classes.button}
+                onClick={onToggle}
+              >
+                Edit Project
+              </Button>
+            </div>
+          ) : (
+            ""
+          )}
         </div>
       </Card>
     </Container>

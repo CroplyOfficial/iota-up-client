@@ -15,6 +15,8 @@ import draftToHtml from "draftjs-to-html";
 import htmlToDraft from "html-to-draftjs";
 import { useState } from "react";
 import "../../../../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../store";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -46,31 +48,49 @@ export const ProjectBodyInformation = (props: IProps) => {
     setEditorState(editorState);
   };
   const classes = useStyles();
-  console.log(EditorState.createEmpty());
+  const selectedUser = useSelector((state: RootState) => state.userLogin);
+  //@ts-ignore
+  const userInfo = selectedUser.userInfo;
+  const isOwner = userInfo?._id === project?.projectAuthor;
+
+  const toolBar = {
+    image: {
+      uploadEnabled: true,
+      inputAccept: "image/gif,image/jpeg,image/jpg,image/png,image/svg",
+      urlEnabled: false,
+      uploadCallback: async function (...params: any[]) {
+        console.log(params);
+        return {
+          data: {
+            link: "https://images.unsplash.com/photo-1485550409059-9afb054cada4?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=701&q=80",
+          },
+        };
+      },
+    },
+  };
+
   return (
     <div className={classes.root}>
       <div>
-        <Editor
-          editorState={editorState}
-          wrapperClassName="demo-wrapper"
-          editorClassName="demo-editor"
-          onEditorStateChange={onEditorStateChange}
-          toolbar={{
-            image: {
-              uploadEnabled: true,
-              inputAccept: "image/gif,image/jpeg,image/jpg,image/png,image/svg",
-              urlEnabled: false,
-              uploadCallback: async function (...params: any[]) {
-                console.log(params);
-                return {
-                  data: {
-                    link: "https://images.unsplash.com/photo-1485550409059-9afb054cada4?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=701&q=80",
-                  },
-                };
-              },
-            },
-          }}
-        />
+        {isOwner ? (
+          <>
+            <Editor
+              editorState={editorState}
+              wrapperClassName="demo-wrapper"
+              editorClassName="demo-editor"
+              onEditorStateChange={onEditorStateChange}
+              toolbar={toolBar}
+            />
+          </>
+        ) : (
+          <Editor
+            editorState={editorState}
+            wrapperClassName="demo-wrapper"
+            editorClassName="demo-editor"
+            onEditorStateChange={onEditorStateChange}
+            toolbarHidden
+          />
+        )}
       </div>
     </div>
   );

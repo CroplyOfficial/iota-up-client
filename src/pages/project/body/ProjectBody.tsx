@@ -64,10 +64,12 @@ interface IProps {
   recommended: IProject[] | undefined | null;
   setPostModal: Function;
   onToggle: () => void;
+  showCreatePostModal: () => void;
 }
 
 export const ProjectBody = (props: IProps) => {
-  const { variant, project, setPostModal, recommended } = props;
+  const { variant, project, setPostModal, recommended, showCreatePostModal } =
+    props;
   const classes = useStyles();
   const [bodyOption, setBodyOption] = useState<BodyOption>(
     BodyOptions.INFORMATION
@@ -105,7 +107,12 @@ Quisque dictum libero ac ullamcorper vehicula. Duis semper erat non rhoncus sagi
       <div className={classes.root}>
         <br />
         <div className={classes.left}>
-          <ProjectNavbar onClick={toggleBodyOption} option={bodyOption} />
+          <ProjectNavbar
+            onClick={toggleBodyOption}
+            option={bodyOption}
+            project={project}
+            showCreatePostModal={showCreatePostModal}
+          />
           {isInformation ? (
             <ProjectBodyInformation variant={variant} project={project} />
           ) : isUpdates ? (
