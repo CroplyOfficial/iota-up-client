@@ -170,7 +170,7 @@ export const getMyProjects = () => async (dispatch: any, getState: any) => {
       },
     };
     const { data }: any = await axios.get(
-      `/api/projects/by-user/${userInfo.id}`,
+      `/api/projects/by-user/${userInfo._id}`,
       config
     );
     dispatch({ type: GET_MY_PROJECTS_SUCCESS, payload: data });
