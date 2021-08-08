@@ -19,6 +19,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../../store";
 import { userLoginReducer } from "../../../reducers/userReducers";
 import axios from "axios";
+import { DonateButton } from "../../../components/DonateButton/DonateButton";
 
 interface IProps {
   variant: ProjectPageVariants;
@@ -32,6 +33,7 @@ export const ProjectHeader = (props: IProps) => {
     _id,
     desc,
     name,
+    wallet,
     media,
     backers,
     tags: initialTags,
@@ -374,6 +376,11 @@ export const ProjectHeader = (props: IProps) => {
             </div>
 
             <div className={classes.buttons}>
+              <DonateButton
+                wallet={wallet}
+                text="DONATE"
+                recipientName={name}
+              />
               <Button
                 variant="contained"
                 color="secondary"
