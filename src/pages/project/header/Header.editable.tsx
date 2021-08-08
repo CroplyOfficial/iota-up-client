@@ -5,12 +5,14 @@ import {
   Typography,
   Button,
   Theme,
+  TextField,
 } from "@material-ui/core";
 import { FavoriteSharp, Money, CalendarToday } from "@material-ui/icons";
 import { useState } from "react";
 import { Container } from "../../../components/container/container";
 import { IProject } from "../../../interfaces/project.interface";
 import { HeaderTags } from "./tags.header";
+import { EditableHeaderTags } from "./tags.editable";
 import { HeaderCardHeader } from "./cardHeader.header";
 import { ProjectPageVariants } from "../../../interfaces/project.variants.interface";
 import { ContributorPill } from "./contributor.pill";
@@ -19,13 +21,22 @@ import { ContributorCheckBox } from "./contributor.checkbox";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../../store";
 import { userLoginReducer } from "../../../reducers/userReducers";
+import axios from "axios";
+import { API } from "../../../config";
+
+const KeyCodes = {
+  comma: [188],
+  enter: [10, 13],
+  space: [47],
+};
+
 interface IProps {
   variant: ProjectPageVariants;
   project: IProject;
   showImageModal: () => void;
   onToggle: () => void;
 }
-export const ProjectHeader = (props: IProps) => {
+export const EditableProjectHeader = (props: IProps) => {
   const { variant, project, showImageModal, onToggle } = props;
   const {
     created,
@@ -40,7 +51,47 @@ export const ProjectHeader = (props: IProps) => {
   } = project as IProject;
   const fallbackImage = "https://source.unsplash.com/random";
   const mainImage = media[0] || fallbackImage;
+  /* Tags */
   const [tags, setTags] = useState<Array<string>>(initialTags || []);
+  const [newTag, setNewTag] = useState<string>("");
+
+  const handleNewSkill = (e: any) => {
+    const skill = e.currentTarget.value;
+    if (skill.toLowerCase() === newTag.toLowerCase()) return;
+    setNewTag(skill);
+  };
+  const handleAddSkill = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    e.preventDefault();
+    if (!newTag.length) return;
+    if (tags.includes(newTag.toLowerCase())) return;
+    if (tags.length >= 6) return;
+    setNewTag("");
+    setTags([...tags, newTag]);
+  };
+  const removeChipAt = (i: number) => {
+    const newTags = [...tags];
+    newTags.splice(i - 1, 1);
+    setTags([...newTags]);
+  };
+  /* Tags */
+
+  /* Title */
+  const [title, setTitle] = useState(name);
+  const handleChangeTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setTitle(e.currentTarget.value);
+  };
+  /* Title */
+
+  /* Description */
+  const [description, setDescription] = useState(desc);
+  const handleChangeDescription = (
+    e: React.ChangeEvent<HTMLTextAreaElement>
+  ) => {
+    setDescription(e.currentTarget.value);
+  };
+  /* Description */
+
+  /* Looking For Contributors */
   const [lookingForContributors, setLookingForContributors] = useState<boolean>(
     project.lookingForContributors ?? false
   );
@@ -48,12 +99,25 @@ export const ProjectHeader = (props: IProps) => {
   const onToggleCheckbox = () => {
     setLookingForContributors(!lookingForContributors);
   };
+  /* Looking For Contributors */
 
   const dispatch = useDispatch();
   const userInfo = useSelector((state: RootState) => state.userLogin);
   //@ts-ignore
   const isProjectAuthor = userInfo?.userInfo?._id === project?.projectAuthor;
-  console.log(userInfo, project, isProjectAuthor);
+  const handleSaveProject = () => {
+    const editables = [title, description, tags];
+    {
+      /*
+    const options = {
+      headers: {},
+      body: {}
+    }
+    axios.put(`${API}/somewhere`, options);
+      */
+    }
+    onToggle();
+  };
 
   const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -122,6 +186,8 @@ export const ProjectHeader = (props: IProps) => {
         fontSize: "32px",
         lineHeight: "48px",
         paddingBottom: "20px",
+        border: "0px solid white",
+        display: "block",
       },
       description: {
         fontFamily: "Open Sans",
@@ -129,13 +195,17 @@ export const ProjectHeader = (props: IProps) => {
         fontStyle: "normal",
         fontSize: "16px",
         lineHeight: "28px",
+        border: "0px solid white",
+        display: "block",
+        width: "100%",
+        minHeight: "150px",
+        resize: "vertical",
       },
       buttons: {
         display: "flex",
         flexDirection: "column",
         justifyContent: "space-around",
         gap: "1rem",
-        paddingTop: "45px",
       },
       button: {
         fontFamily: "Poppins",
@@ -153,7 +223,6 @@ export const ProjectHeader = (props: IProps) => {
         display: "flex",
         justifyContent: "space-between",
         alignItems: "center",
-        paddingTop: "75px",
         paddingBottom: "10px",
       },
       stats: {
@@ -285,17 +354,29 @@ export const ProjectHeader = (props: IProps) => {
                 variant={variant}
                 className={classes.categories}
               />
-              <HeaderTags
+              <EditableHeaderTags
                 tags={tags}
                 variant={variant}
                 className={classes.tags}
+                onDelete={removeChipAt}
               />
+              <form onSubmit={(e: any) => handleAddSkill(e)}>
+                <TextField
+                  label="Add a tag"
+                  onChange={(e: any) => handleNewSkill(e)}
+                  value={newTag}
+                />
+              </form>
             </span>
           </div>
         </div>
         <div className={classes.right}>
           <HeaderCardHeader project={project} />
-          <ContributorPill project={project} />
+          <ContributorCheckBox
+            project={project}
+            checked={lookingForContributors}
+            onChange={onToggleCheckbox}
+          />
           {/* <ContributorPill project={project} /> 
  <ContributorCheckBox
             project={project}
@@ -304,6 +385,18 @@ export const ProjectHeader = (props: IProps) => {
           />
 
           */}
+          <input
+            className={classes.title}
+            value={title}
+            onChange={handleChangeTitle}
+          />
+
+          <textarea
+            className={classes.description}
+            value={description}
+            onChange={handleChangeDescription}
+          />
+          {/*
           <Typography variant="h2" className={classes.title}>
             {name}
           </Typography>
@@ -314,6 +407,7 @@ export const ProjectHeader = (props: IProps) => {
           >
             {desc}
           </Typography>
+            */}
           <div className={classes.statsWrapper}>
             <div className={classes.stats}>
               <Money fontSize="large" className={classes.statsIcon} />
@@ -365,9 +459,9 @@ export const ProjectHeader = (props: IProps) => {
               color="primary"
               variant="contained"
               className={classes.button}
-              onClick={onToggle}
+              onClick={handleSaveProject}
             >
-              Edit Project
+              Save Project
             </Button>
           </div>
         </div>

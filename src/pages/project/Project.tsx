@@ -2,7 +2,9 @@ import { createStyles, makeStyles } from "@material-ui/core";
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { ProjectHeader } from "./header/Header";
+import { EditableProjectHeader } from "./header/Header.editable";
 import { ProjectBody } from "./body/ProjectBody";
+import { EditableProjectBody } from "./body/ProjectBody.editable";
 import { FeaturedSection } from "../root/featuredSection.root";
 import { Container } from "../../components/container/container";
 import { DonateHero } from "../../components/donateHero/donateHero";
@@ -56,6 +58,14 @@ export const ProjectOverview = ({ match }: any) => {
   const toggleShowImageModal = () => {
     setShowImageModal(!showImageModal);
   };
+  const [editableHeader, setEditableHeader] = useState<boolean>(false);
+  const [editableBody, setEditableBody] = useState<boolean>(false);
+  const toggleEditableHeader = () => {
+    setEditableHeader(!editableHeader);
+  };
+  const toggleEditableBody = () => {
+    setEditableBody(!editableBody);
+  };
 
   useEffect(() => {
     dispatch(getTrendingProjects());
@@ -99,17 +109,39 @@ export const ProjectOverview = ({ match }: any) => {
 
       {p && (
         <React.Fragment>
-          <ProjectHeader
-            project={p}
-            variant={variant}
-            showImageModal={toggleShowImageModal}
-          />
-          <ProjectBody
-            project={p}
-            variant={variant}
-            setPostModal={setPostModal}
-            recommended={trendingProjects}
-          />
+          {!editableHeader ? (
+            <ProjectHeader
+              project={p}
+              variant={variant}
+              showImageModal={toggleShowImageModal}
+              onToggle={toggleEditableHeader}
+            />
+          ) : (
+            <EditableProjectHeader
+              project={p}
+              variant={variant}
+              showImageModal={toggleShowImageModal}
+              onToggle={toggleEditableHeader}
+            />
+          )}
+          {!editableBody ? (
+            <ProjectBody
+              project={p}
+              variant={variant}
+              setPostModal={setPostModal}
+              recommended={trendingProjects}
+              onToggle={toggleEditableBody}
+            />
+          ) : (
+            <EditableProjectBody
+              project={p}
+              variant={variant}
+              setPostModal={setPostModal}
+              recommended={trendingProjects}
+              onToggle={toggleEditableBody}
+            />
+          )}
+
           <Container className={classes.featuredSection}>
             <FeaturedSection
               title={featuredTitle}
