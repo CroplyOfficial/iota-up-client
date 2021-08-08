@@ -24,6 +24,8 @@ import { BrandLogoOutlined } from "../../static/icons/brand-logo.outlined";
 import { Redirect } from "react-router-dom";
 import axios from "axios";
 import { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store";
 
 interface IProps {
   project: IProject;
@@ -127,11 +129,14 @@ export const Card = ({ project, history }: IProps) => {
 
   const { name, media, tags, upvotes, projectAuthor } = project;
   const [creator, setCreator] = useState<ICreator>();
+  const [liked, setLiked] = useState<boolean>(false);
   const fallbackImage = "";
   const fallbackTag = "community";
   const mainImage = media[0] || fallbackImage;
   const mainTag = (tags[0] || fallbackTag).toUpperCase();
 
+  const myInfoMeta = useSelector((state: RootState) => state.myInfo);
+  const { myInfo }: any = myInfoMeta;
   const handleOnClick = () => {
     history.push("/project/" + project._id);
   };

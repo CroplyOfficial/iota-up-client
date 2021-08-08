@@ -12,8 +12,12 @@ import { Flag, ArrowUpward, Share } from "@material-ui/icons";
 import { IProject } from "../../../interfaces/project.interface";
 import { ReactComponent as UpButton } from "../../../static/images/icons/up.svg";
 
+import { useState, useEffect } from "react";
+
 interface IProps {
   project: IProject;
+  handleUpvotes?: () => void;
+  isLiked: boolean;
 }
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -70,7 +74,7 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 export const HeaderCardHeader = (props: IProps) => {
   const classes = useStyles();
-  const { project } = props;
+  const { project, handleUpvotes, isLiked } = props;
 
   const media = project.media;
   const fallbackImage = "";
@@ -85,13 +89,11 @@ export const HeaderCardHeader = (props: IProps) => {
           alt={project.author && project.author.fullName}
         ></Avatar>
       }
-
       title={
         <span className={classes.header}>
           {project.author && project.author.fullName}
         </span>
       }
-
       subheader={
         <span>
           <span className={classes.subHeader}>
@@ -110,25 +112,6 @@ export const HeaderCardHeader = (props: IProps) => {
           </span>
         </span>
       }
-      /*title={
-        <span className={classes.headerWrapper}>
-          <Typography className={classes.header}>{fullName}</Typography>
-        </span>
-      }
-      subheader={
-        <div className={classes.subHeaderWrapper}>
-          <Typography color="primary" className={classes.subHeader}>
-            6Projects
-          </Typography>
-          <ul className={classes.ul}>
-            <li className={classes.li}>
-              <Typography className={classes.subHeader2}>
-                New York, USA
-              </Typography>
-            </li>
-          </ul>
-        </div>
-      }*/
       action={
         <div className={classes.action}>
           <IconButton>
@@ -139,8 +122,8 @@ export const HeaderCardHeader = (props: IProps) => {
           </IconButton>
           <IconButton>
             {/* <ArrowUpward fontSize="large" color="primary" /> */}
-            <SvgIcon fontSize="large" color="primary">
-              <UpButton />
+            <SvgIcon fontSize="large" color={isLiked ? "primary" : "disabled"}>
+              <UpButton onClick={handleUpvotes} />
             </SvgIcon>
           </IconButton>
         </div>

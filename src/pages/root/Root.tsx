@@ -19,6 +19,7 @@ import {
   getTrendingProjects,
   getLatestProjects,
 } from "../../actions/projectsActions";
+import { getMyInfo } from "../../actions/userActions";
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -51,6 +52,7 @@ export const Root = (props: IProps) => {
   useEffect(() => {
     dispatch(getTrendingProjects());
     dispatch(getLatestProjects());
+    dispatch(getMyInfo());
   }, []);
 
   useEffect(() => {
