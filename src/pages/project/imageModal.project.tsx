@@ -23,6 +23,8 @@ const useStyles = makeStyles((theme: Theme) =>
       height: "100vh",
       backgroundColor: "rgba(0,0,0,0.5)",
       position: "fixed",
+      top: 0,
+      left: 0,
       zIndex: 2,
     },
     background: {
@@ -186,7 +188,6 @@ export const ProjectImageModal = (props: IProps) => {
   const [url, setUrl] = useState<string>("");
   const [featuredImage, setFeaturedImage] = useState<string>(
     project?.media[0] ?? ""
-
   );
   const [images, setImages] = useState<string[]>(project?.media ?? []);
 
