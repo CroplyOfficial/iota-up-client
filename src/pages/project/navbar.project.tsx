@@ -1,9 +1,12 @@
 import { createStyles, makeStyles, Typography, Theme } from "@material-ui/core";
 import { useState } from "react";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store";
 import {
   BodyOption,
   BodyOptions,
 } from "../../interfaces/project.bodyOptions.intercace";
+import { IProject } from "../../interfaces/project.interface";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -45,12 +48,20 @@ const useStyles = makeStyles((theme: Theme) =>
 interface IProps {
   option: BodyOption;
   onClick: (options: BodyOption) => void;
+  project: IProject;
+  showCreatePostModal?: () => void;
 }
 export const ProjectNavbar = (props: IProps) => {
-  const { option, onClick } = props;
+  const { option, onClick, project, showCreatePostModal } = props;
   const classes = useStyles();
   const isInformation = option === BodyOptions.INFORMATION;
   const isUpdates = option === BodyOptions.UPDATES;
+
+  const selectedUser = useSelector((state: RootState) => state.userLogin);
+  //@ts-ignore
+  const userInfo = selectedUser.userInfo;
+  const isOwner = userInfo?._id === project?.projectAuthor;
+
   return (
     <div className={classes.root}>
       <Typography
@@ -65,8 +76,11 @@ export const ProjectNavbar = (props: IProps) => {
       >
         Updates
       </Typography>
-      {isUpdates ? (
-        <Typography className={`${classes.link} ${classes.justifyEnd}`}>
+      {isUpdates && isOwner ? (
+        <Typography
+          className={`${classes.link} ${classes.justifyEnd}`}
+          onClick={showCreatePostModal}
+        >
           Add
         </Typography>
       ) : (

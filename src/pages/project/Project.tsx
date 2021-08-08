@@ -17,6 +17,7 @@ import { getTrendingProjects } from "../../actions/projectsActions";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store";
 import axios from "axios";
+import { ProjectCreatePostModal } from "./createPostModal.project";
 
 interface IRouteParams {
   id: string;
@@ -54,10 +55,23 @@ export const ProjectOverview = ({ match }: any) => {
   const featuredOnClick = () => {};
 
   const [postModal, setPostModal] = useState<IPost | Record<never, never>>();
+
+  /* IMAGE MODAL */
   const [showImageModal, setShowImageModal] = useState<boolean>(false);
   const toggleShowImageModal = () => {
     setShowImageModal(!showImageModal);
   };
+  /* IMAGE MODAL */
+
+  /* CREATE POST MODAL */
+  const [showCreatePostModal, setShowCreatePostModal] = useState<
+    IPost | Record<never, never>
+  >(false);
+  const toggleShowCreatePostModal = () => {
+    setShowCreatePostModal(!showCreatePostModal);
+  };
+  /* CREATE POST MODAL */
+
   const [editableHeader, setEditableHeader] = useState<boolean>(false);
   const [editableBody, setEditableBody] = useState<boolean>(false);
   const toggleEditableHeader = () => {
@@ -101,6 +115,12 @@ export const ProjectOverview = ({ match }: any) => {
       ) : (
         ""
       )}
+      {showCreatePostModal ? (
+        <ProjectCreatePostModal onClick={toggleShowCreatePostModal} />
+      ) : (
+        ""
+      )}
+
       {showImageModal ? (
         <ProjectImageModal project={p} onClick={toggleShowImageModal} />
       ) : (
@@ -131,6 +151,7 @@ export const ProjectOverview = ({ match }: any) => {
               setPostModal={setPostModal}
               recommended={trendingProjects}
               onToggle={toggleEditableBody}
+              showCreatePostModal={toggleShowCreatePostModal}
             />
           ) : (
             <EditableProjectBody
@@ -139,6 +160,7 @@ export const ProjectOverview = ({ match }: any) => {
               setPostModal={setPostModal}
               recommended={trendingProjects}
               onToggle={toggleEditableBody}
+              showCreatePostModal={toggleShowCreatePostModal}
             />
           )}
 
