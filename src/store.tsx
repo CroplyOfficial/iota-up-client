@@ -7,6 +7,7 @@ import {
   loadLatestProjectsReducer,
   loadReccomendedProjectsReducer,
   loadTrendingProjectsReducer,
+  loadMyProjectsReducer,
 } from "./reducers/projectReducers";
 
 const reducer = combineReducers({
@@ -15,6 +16,7 @@ const reducer = combineReducers({
   loadTrending: loadTrendingProjectsReducer,
   loadRecommended: loadReccomendedProjectsReducer,
   loadLatest: loadLatestProjectsReducer,
+  loadMyProjects: loadMyProjectsReducer,
 });
 
 export type RootState = ReturnType<typeof reducer>;
