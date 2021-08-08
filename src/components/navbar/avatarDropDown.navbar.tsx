@@ -8,6 +8,9 @@ import {
 import { Add, Settings, MeetingRoom } from "@material-ui/icons";
 import { Avatar, MenuItem, Menu, MenuProps } from "@material-ui/core";
 import { useHistory } from "react-router";
+import { logout } from "../../actions/userActions";
+import { useDispatch } from "react-redux";
+
 interface IProps {
   userInfo: any;
 }
@@ -48,6 +51,7 @@ export const AvatarDropDown = (props: IProps) => {
   const { avatar, firstName, lastName } = userInfo;
   const history = useHistory();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const dispatch = useDispatch();
 
   const handleClick = (event: any | React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
@@ -68,7 +72,7 @@ export const AvatarDropDown = (props: IProps) => {
   };
   const handleLogout = () => {
     handleClose();
-    history.push("/logout");
+    dispatch(logout());
   };
 
   return (
