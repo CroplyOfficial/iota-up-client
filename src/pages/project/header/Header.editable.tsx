@@ -8,7 +8,7 @@ import {
   TextField,
 } from "@material-ui/core";
 import { FavoriteSharp, Money, CalendarToday } from "@material-ui/icons";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Container } from "../../../components/container/container";
 import { IProject } from "../../../interfaces/project.interface";
 import { HeaderTags } from "./tags.header";
@@ -39,6 +39,7 @@ interface IProps {
 export const EditableProjectHeader = (props: IProps) => {
   const { variant, project, showImageModal, onToggle } = props;
   const {
+    _id,
     created,
     projectAuthor,
     desc,
@@ -102,9 +103,10 @@ export const EditableProjectHeader = (props: IProps) => {
   /* Looking For Contributors */
 
   const dispatch = useDispatch();
-  const userInfo = useSelector((state: RootState) => state.userLogin);
+  const userInfoMeta = useSelector((state: RootState) => state.userLogin);
+  const { userInfo }: any = userInfoMeta;
   //@ts-ignore
-  const isProjectAuthor = userInfo?.userInfo?._id === project?.projectAuthor;
+  const isProjectAuthor = userInfo?._id === project?.projectAuthor;
   const handleSaveProject = () => {
     const editables = [title, description, tags];
     {
@@ -325,6 +327,33 @@ export const EditableProjectHeader = (props: IProps) => {
       },
     })
   );
+  const myInfoMeta = useSelector((state: RootState) => state.myInfo);
+  const { myInfo }: any = myInfoMeta;
+  const [upvotesCount, setUpvotesCount] = useState<number>(0);
+
+  const [isLiked, setIsLiked] = useState<boolean>(false);
+
+  useEffect(() => {
+    setUpvotesCount(upvotes);
+  }, [upvotes]);
+
+  const handleUpvotes = async () => {
+    const config = {
+      headers: {
+        "Content-Type": "Application/json",
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+    const { data } = await axios.get(
+      `/api/projects/${_id}/toggle-upvote`,
+      config
+    );
+    const isProjectUpvoted = data.includes(_id);
+    setIsLiked(isProjectUpvoted);
+    isProjectUpvoted
+      ? setUpvotesCount(upvotesCount + 1)
+      : setUpvotesCount(upvotesCount - 1);
+  };
 
   const classes = useStyles();
   return (
@@ -371,7 +400,11 @@ export const EditableProjectHeader = (props: IProps) => {
           </div>
         </div>
         <div className={classes.right}>
-          <HeaderCardHeader project={project} />
+          <HeaderCardHeader
+            project={project}
+            handleUpvotes={handleUpvotes}
+            isLiked={isLiked}
+          />
           <ContributorCheckBox
             project={project}
             checked={lookingForContributors}

@@ -7,7 +7,6 @@ import {
   Theme,
 } from "@material-ui/core";
 import { FavoriteSharp, Money, CalendarToday } from "@material-ui/icons";
-import { useState } from "react";
 import { Container } from "../../../components/container/container";
 import { IProject } from "../../../interfaces/project.interface";
 import { HeaderTags } from "./tags.header";
@@ -15,10 +14,12 @@ import { HeaderCardHeader } from "./cardHeader.header";
 import { ProjectPageVariants } from "../../../interfaces/project.variants.interface";
 import { ContributorPill } from "./contributor.pill";
 import { ContributorCheckBox } from "./contributor.checkbox";
-
+import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../../store";
 import { userLoginReducer } from "../../../reducers/userReducers";
+import axios from "axios";
+
 interface IProps {
   variant: ProjectPageVariants;
   project: IProject;
@@ -28,8 +29,7 @@ interface IProps {
 export const ProjectHeader = (props: IProps) => {
   const { variant, project, showImageModal, onToggle } = props;
   const {
-    created,
-    projectAuthor,
+    _id,
     desc,
     name,
     media,
@@ -44,16 +44,22 @@ export const ProjectHeader = (props: IProps) => {
   const [lookingForContributors, setLookingForContributors] = useState<boolean>(
     project.lookingForContributors ?? false
   );
+  const [upvotesCount, setUpvotesCount] = useState<number>(0);
 
   const onToggleCheckbox = () => {
     setLookingForContributors(!lookingForContributors);
   };
+  const [isLiked, setIsLiked] = useState<boolean>(false);
+
+  useEffect(() => {
+    setUpvotesCount(upvotes);
+  }, [upvotes]);
 
   const dispatch = useDispatch();
-  const userInfo = useSelector((state: RootState) => state.userLogin);
+  const userInfoMeta = useSelector((state: RootState) => state.userLogin);
+  const { userInfo }: any = userInfoMeta;
   //@ts-ignore
-  const isProjectAuthor = userInfo?.userInfo?._id === project?.projectAuthor;
-  console.log(userInfo, project, isProjectAuthor);
+  const isProjectAuthor = userInfo?._id === project?.projectAuthor;
 
   const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -258,6 +264,29 @@ export const ProjectHeader = (props: IProps) => {
   );
 
   const classes = useStyles();
+
+  const myInfoMeta = useSelector((state: RootState) => state.myInfo);
+  const { myInfo }: any = myInfoMeta;
+
+  const handleUpvotes = async () => {
+    const config = {
+      headers: {
+        "Content-Type": "Application/json",
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+    const { data } = await axios.get(
+      `/api/projects/${_id}/toggle-upvote`,
+      config
+    );
+    const isProjectUpvoted = data.includes(_id);
+    setIsLiked(isProjectUpvoted);
+    console.log(data);
+    isProjectUpvoted
+      ? setUpvotesCount(upvotesCount + 1)
+      : setUpvotesCount(upvotesCount - 1);
+  };
+
   return (
     <Container>
       <Card className={classes.root}>
@@ -294,7 +323,11 @@ export const ProjectHeader = (props: IProps) => {
           </div>
         </div>
         <div className={classes.right}>
-          <HeaderCardHeader project={project} />
+          <HeaderCardHeader
+            project={project}
+            handleUpvotes={handleUpvotes}
+            isLiked={isLiked}
+          />
           <ContributorPill project={project} />
           {/* <ContributorPill project={project} /> 
  <ContributorCheckBox
@@ -320,7 +353,7 @@ export const ProjectHeader = (props: IProps) => {
               <div>
                 <div className={classes.headerWrapper}>
                   <Typography variant="h4" className={classes.statsHeader}>
-                    {upvotes}
+                    {upvotesCount}
                   </Typography>
                 </div>
                 <Typography variant="h4" className={classes.statsSubHeader}>

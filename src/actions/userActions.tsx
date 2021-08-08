@@ -88,8 +88,6 @@ export const getMyInfo = () => async (dispatch: any, getState: any) => {
       type: GET_USER_SUCCESS,
       payload: data,
     });
-
-    window.location.href = "/";
   } catch (error) {
     dispatch({
       type: USER_LOGIN_FAIL,
