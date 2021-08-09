@@ -115,10 +115,10 @@ export const HeaderCardHeader = (props: IProps) => {
       action={
         <div className={classes.action}>
           <IconButton>
-            <Flag fontSize="large" />
+            <Flag fontSize="large" color="disabled" />
           </IconButton>
           <IconButton>
-            <Share fontSize="large" />
+            <Share fontSize="large" color="disabled" />
           </IconButton>
           <IconButton>
             {/* <ArrowUpward fontSize="large" color="primary" /> */}
