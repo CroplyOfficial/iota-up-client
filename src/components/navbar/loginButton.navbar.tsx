@@ -44,7 +44,6 @@ export const ActionButton = (props: ISignInButton) => {
   const initialState = {};
   const selectedUser = useSelector((root: RootState) => root.userLogin);
   const userInfo = (selectedUser as any).userInfo;
-  console.log("TEST", userInfo);
 
   return (
     <React.Fragment>
