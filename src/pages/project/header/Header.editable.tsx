@@ -188,8 +188,13 @@ export const EditableProjectHeader = (props: IProps) => {
         fontSize: "32px",
         lineHeight: "48px",
         paddingBottom: "20px",
-        border: "0px solid white",
+        border: "2px solid white",
         display: "block",
+        borderRadius: "10px",
+        "&:hover": {
+          border: `2px solid ${theme.palette.text.secondary}`,
+        },
+        marginBottom: "10px",
       },
       description: {
         fontFamily: "Open Sans",
@@ -197,11 +202,17 @@ export const EditableProjectHeader = (props: IProps) => {
         fontStyle: "normal",
         fontSize: "16px",
         lineHeight: "28px",
-        border: "0px solid white",
+        border: "2px solid white",
+        borderRadius: "10px",
+
+        "&:hover": {
+          border: `2px solid ${theme.palette.text.secondary}`,
+        },
         display: "block",
         width: "100%",
         minHeight: "150px",
         resize: "vertical",
+        marginBottom: "10px",
       },
       buttons: {
         display: "flex",
