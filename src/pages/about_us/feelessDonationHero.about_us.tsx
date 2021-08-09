@@ -1,10 +1,22 @@
-import { Typography, makeStyles, createStyles } from "@material-ui/core";
+import {
+  Typography,
+  makeStyles,
+  SvgIcon,
+  createStyles,
+} from "@material-ui/core";
 import { AboutUsHeroCard } from "./heroCard.about_us";
 import { Container } from "../../components/container/container";
 import { MyBook } from "../../static/icons/book";
 import { VrGlasses } from "../../static/icons/vrGlasses";
 import { Transformation } from "../../static/icons/transformation";
 import { DoctorBag } from "../../static/icons/doctorBag";
+import FireflyLogo from "../../static/images/firefly.png";
+import { useHistory, Redirect } from "react-router-dom";
+import { DashboardCreateProjectModal } from "../dashboard/createProjectModal.dashboard";
+import { useState } from "react";
+import { ReactComponent as Create } from "../../static/images/icons/create.svg";
+import { ReactComponent as Explore } from "../../static/images/icons/explore.svg";
+import { ReactComponent as UpButton } from "../../static/images/icons/up.svg";
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -92,34 +104,68 @@ export const AboutUsFeelessDonationsHero = () => {
       a project or not.
     </span>
   );
+  const history = useHistory();
+  const [redirect, setRedirect] = useState<string>("");
+  const [showingModal, setShowingModal] = useState<boolean>(false);
+  const toggleShowModal = () => {
+    setShowingModal(!showingModal);
+  };
   const cards = [
     {
       header: "Firefly Wallet",
-      icon: <MyBook color="primary" className={classes.icon} />,
+      icon: <img className={classes.icon} src={FireflyLogo} />,
       subHeader:
         "To send and receive donations, it is recommended to use the official IOTA Firefly Wallet. This can be downloaded here.",
+      onClick: () => {
+        window.location.href = "https://firefly.iota.org/";
+      },
     },
     {
       header: "Create Your Project",
       subHeader:
         "Sign up to the system. Create your profile. Create your project. Share. It’s that simple to start building UP.",
-      icon: <VrGlasses color="primary" className={classes.icon} />,
+      icon: (
+        <SvgIcon color="primary" className={classes.icon}>
+          <Create />
+        </SvgIcon>
+      ),
+      onClick: () => {
+        toggleShowModal();
+      },
     },
     {
       header: "Exploring Projects",
       subHeader:
         "All projects are open and visible to everyone. Explore the opportunities, challenges, and innitiatives that you feel warrant your support.",
-      icon: <Transformation color="primary" className={classes.icon} />,
+      icon: (
+        <SvgIcon color="primary" className={classes.icon}>
+          <Explore />
+        </SvgIcon>
+      ),
+      onClick: () => {
+        history.push("/projects");
+      },
     },
     {
       header: "UP & Donate",
       subHeader:
         "UP vote the projects you think are worthy of support. Click donate to send what you feel you can. All transfers go direct from you to the creator, no inbetweens.",
-      icon: <DoctorBag color="primary" className={classes.icon} />,
+      icon: (
+        <SvgIcon color="primary" className={classes.icon}>
+          <UpButton />
+        </SvgIcon>
+      ),
+      onClick: () => {
+        history.push("/projects");
+      },
     },
   ];
   return (
     <div className={classes.root}>
+      <DashboardCreateProjectModal
+        showing={showingModal}
+        onClick={toggleShowModal}
+      />
       <Container>
         <Typography variant="h6" className={classes.preHeader} color="primary">
           {preHeader}
@@ -139,6 +185,7 @@ export const AboutUsFeelessDonationsHero = () => {
               subHeader={c.subHeader}
               variant="outlined"
               icon={c.icon}
+              onClick={c.onClick}
             />
           ))}
         </div>
