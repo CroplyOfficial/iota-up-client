@@ -33,13 +33,20 @@ enum NavbarVariants {
   secondary = "secondary",
 }
 
+/* Secondary Variant */
+const SecondaryBlacklist = ["/dashboard"];
+const SecondaryWhitelist = ["/projects"];
+/* Secondary Variant */
+
 interface INavbarProps {
   variant?: keyof typeof NavbarVariants;
   toggleLoginModal: () => void;
 }
 export const Navbar = (props: INavbarProps) => {
   const { pathname } = useLocation();
-  const isSecondary = pathname.includes("/projects");
+  const isSecondary =
+    SecondaryWhitelist.some((p) => pathname.includes(p)) &&
+    SecondaryBlacklist.every((p) => !pathname.includes(p));
   const useStyles = makeStyles((theme: Theme) =>
     createStyles({
       root: {
