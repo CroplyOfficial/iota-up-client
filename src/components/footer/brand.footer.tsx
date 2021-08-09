@@ -1,9 +1,9 @@
-import { createStyles, makeStyles } from "@material-ui/core";
+import { createStyles, makeStyles, Theme } from "@material-ui/core";
 import { Typography } from "@material-ui/core";
-import { BrandLogo } from "../../static/icons/brand-logo";
+import { BrandLogoSalmon } from "../../static/icons/brand-logo.salmon";
 import { GetClasses } from "./classes.footer";
 
-const useStyles = makeStyles(() =>
+const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       display: "flex",
@@ -25,7 +25,7 @@ export const FooterBrand = () => {
   const spanStyle = { maxWidth: "470px" };
   return (
     <div className={classes.root}>
-      <BrandLogo className={classes.icon} />
+      <BrandLogoSalmon className={classes.icon} />
       <Typography
         variant="body1"
         component="span"
