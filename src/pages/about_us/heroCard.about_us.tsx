@@ -14,7 +14,7 @@ interface IProps {
 export const AboutUsHeroCard = (
   props: IProps & React.HTMLProps<HTMLElement>
 ) => {
-  const { header, subHeader, variant, icon } = props;
+  const { header, subHeader, variant, icon, onClick } = props;
   const isFlat = variant === AboutUsHeroCardVariants.flat;
   const hasShadow = variant === AboutUsHeroCardVariants.shadow;
   const isOutlined = variant === AboutUsHeroCardVariants.outlined;
@@ -25,6 +25,7 @@ export const AboutUsHeroCard = (
         width: "750px",
         height: "182.53px",
         borderRadius: "15px",
+        cursor: "pointer",
         WebkitBoxShadow: isFlat
           ? ""
           : "3px 3px 5px 6px #f5f5f5" /* Safari 3-4, iOS 4.0.2 - 4.2, Android 2.3+ */,
@@ -70,7 +71,7 @@ export const AboutUsHeroCard = (
   );
   const classes = useStyles();
   return (
-    <div className={props.className} style={props.style}>
+    <div className={props.className} style={props.style} onClick={onClick}>
       <div className={classes.root}>
         <div className={classes.iconWrapper}>{icon}</div>
         <div className={classes.column}>
