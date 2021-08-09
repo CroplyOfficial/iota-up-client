@@ -6,7 +6,12 @@ import { getCategoryPath } from "./utils/getCategoryPath";
 
 export const FooterWebsite = () => {
   const classes = GetClasses();
-  const entries = ["About Us", "UP Explorer", "Creators", "Contact"];
+  const paths = [
+    { title: "About Us", path: "/about" },
+    { title: "Projects", path: "/projects" },
+    //{ title: "Creators", path: "/creators" },
+    { title: "Contact", path: "/contact" },
+  ];
   return (
     <div className={classes.category}>
       <Link to="/website" className={classes.link}>
@@ -15,8 +20,8 @@ export const FooterWebsite = () => {
         </Typography>
       </Link>
 
-      {entries.map((c) => (
-        <MyLink classes={classes} path={getCategoryPath(c)} title={c} />
+      {paths.map((p) => (
+        <MyLink classes={classes} path={p.path} title={p.title} />
       ))}
     </div>
   );
