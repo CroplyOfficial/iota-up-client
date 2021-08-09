@@ -1,2 +1,2 @@
 export const getCategoryPath = (category: string) =>
-  `/categories?category=${category.toLowerCase()}`;
+  `/projects?filter=${encodeURIComponent(category.toLowerCase())}&order=newest`;
