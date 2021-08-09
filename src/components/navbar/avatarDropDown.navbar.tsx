@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   withStyles,
   Theme,
@@ -10,6 +10,7 @@ import { Avatar, MenuItem, Menu, MenuProps } from "@material-ui/core";
 import { useHistory } from "react-router";
 import { logout } from "../../actions/userActions";
 import { useDispatch } from "react-redux";
+import { DashboardCreateProjectModal } from "../../pages/dashboard/createProjectModal.dashboard";
 
 interface IProps {
   userInfo: any;
@@ -53,6 +54,11 @@ export const AvatarDropDown = (props: IProps) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const dispatch = useDispatch();
 
+  const [showingModal, setShowModal] = useState<boolean>(false);
+  const toggleShowModal = () => {
+    setShowModal(!showingModal);
+  };
+
   const handleClick = (event: any | React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
@@ -62,7 +68,7 @@ export const AvatarDropDown = (props: IProps) => {
   };
 
   const handleCreateNewProject = () => {
-    //TODO set CreateNewProject Modal
+    toggleShowModal();
     handleClose();
   };
   const handleDashboard = () => {
@@ -77,6 +83,10 @@ export const AvatarDropDown = (props: IProps) => {
 
   return (
     <>
+      <DashboardCreateProjectModal
+        onClick={toggleShowModal}
+        showing={showingModal}
+      />
       <Avatar
         alt={`${firstName} ${lastName}`}
         src={avatar}
