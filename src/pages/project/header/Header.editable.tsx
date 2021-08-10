@@ -511,6 +511,15 @@ export const EditableProjectHeader = (props: IProps) => {
             >
               Save Project
             </Button>
+            <Button
+              color="secondary"
+              variant="outlined"
+              className={classes.button}
+              style={{ marginRight: "15px" }}
+              onClick={onToggle}
+            >
+              Cancel
+            </Button>
           </div>
         </div>
       </Card>
