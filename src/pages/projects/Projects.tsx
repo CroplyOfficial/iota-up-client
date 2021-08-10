@@ -136,7 +136,6 @@ export const Projects = (props: IProps) => {
         ? sortProjects(queryParams.order)
         : (sortedProjects = filteredProjects);
 
-      sortedProjects = [...sortedProjects];
       setRenderedProjects(sortedProjects);
     };
 
