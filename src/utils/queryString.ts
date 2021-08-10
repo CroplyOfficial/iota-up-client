@@ -1,3 +1,11 @@
+/**
+ * Parse query String into object with key as the query and the value as the
+ * value
+ *
+ * @param querystring
+ * @returns {Object} QeuryString object with everything in key value pairs
+ */
+
 const parseQueryString = (querystring: string) => {
   if (querystring) {
     const queryObject = new Object();

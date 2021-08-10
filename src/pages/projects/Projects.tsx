@@ -46,12 +46,9 @@ export const Projects = (props: IProps) => {
   const [query, setQuery] = useState<string>();
   const [categories, setCategories] = useState<ICategory[]>(cats);
   const [filters, setFilters] = useState<string[]>([]);
+  const [sortMethod, setSortMethod] = useState<string>("newest");
 
   const [fetchedProjects, setProjects] = useState<
-    IProject[] | null | undefined
-  >([]);
-
-  const [matchedProjects, setMatchedProjects] = useState<
     IProject[] | null | undefined
   >([]);
 
@@ -59,34 +56,92 @@ export const Projects = (props: IProps) => {
     IProject[] | null | undefined
   >([]);
 
+  const [sorted, setSorted] = useState<IProject[] | null | undefined>([]);
+
   interface IQueryParams {
     query?: string;
     filter?: string;
-    order?: string;
+    order?: "newest" | "popular" | "!popular" | "oldest" | "";
   }
+  let matches: IProject[] = [];
+  let filteredProjects: IProject[] = [];
+  let sortedProjects: IProject[] = [];
+
   useEffect(() => {
     const setProjects = async (q: string) => {
       const projectsFound: IProject[] = await searchProjects(q);
-      setMatchedProjects(projectsFound);
-      setRenderedProjects(projectsFound);
+      matches = projectsFound;
     };
 
     const filterProjects = (f: string[]) => {
-      const filtered = matchedProjects?.filter((project) => {
+      const filtered = matches.filter((project) => {
         return compareArrays(project.tags, f).length > 0;
       });
-      setRenderedProjects(filtered);
+      filteredProjects = filtered;
     };
 
-    const queryParams: IQueryParams = parseQueryString(window.location.search);
+    const sortByLeastUpvotes = () => {
+      filteredProjects.sort((a: IProject, b: IProject) => {
+        return a.upvotes - b.upvotes;
+      });
+      sortedProjects = filteredProjects;
+    };
 
-    console.log(queryParams);
-    queryParams.query && setProjects(queryParams.query);
-    queryParams.filter && queryParams.filter !== ""
-      ? filterProjects(queryParams.filter.split(","))
-      : setRenderedProjects(matchedProjects);
+    const sortByNew = () => {
+      filteredProjects?.sort((a: IProject, b: IProject) => {
+        return new Date(b.created).valueOf() - new Date(a.created).valueOf();
+      });
+      sortedProjects = filteredProjects;
+    };
+
+    const sortByUpvotes = () => {
+      filteredProjects?.sort((a: IProject, b: IProject) => {
+        return b.upvotes - a.upvotes;
+      });
+      sortedProjects = filteredProjects;
+    };
+
+    const sortByOldest = () => {
+      filteredProjects?.sort((a: IProject, b: IProject) => {
+        return new Date(a.created).valueOf() - new Date(b.created).valueOf();
+      });
+      sortedProjects = filteredProjects;
+    };
+
+    const sortProjects = (o: string) => {
+      switch (o) {
+        case "newest":
+          return sortByNew();
+        case "oldest":
+          return sortByOldest();
+        case "popular":
+          return sortByUpvotes();
+        case "!popular":
+          return sortByLeastUpvotes();
+      }
+    };
+
+    const reRender = async () => {
+      const queryParams: IQueryParams = parseQueryString(
+        window.location.search
+      );
+
+      queryParams.query && queryParams.query !== ""
+        ? await setProjects(queryParams.query)
+        : (matches = projects);
+      queryParams.filter && queryParams.filter !== ""
+        ? filterProjects(queryParams.filter.split(","))
+        : (filteredProjects = matches);
+      queryParams.order
+        ? sortProjects(queryParams.order)
+        : (sortedProjects = filteredProjects);
+
+      sortedProjects = [...sortedProjects];
+      setRenderedProjects(sortedProjects);
+    };
+
+    reRender();
   }, [window.location.search]);
-
   const projectsMeta = useSelector((state: RootState) => state.loadProjects);
   const { projects }: any = projectsMeta;
 
@@ -97,7 +152,6 @@ export const Projects = (props: IProps) => {
 
   useEffect(() => {
     setProjects(projects);
-    setMatchedProjects(projects);
     setRenderedProjects(projects);
   }, [projects]);
 
@@ -113,8 +167,10 @@ export const Projects = (props: IProps) => {
   }, [categories]);
 
   useEffect(() => {
-    history.push(`/projects?query=${query ?? ""}&filter=${filters}`);
-  }, [filters]);
+    history.push(
+      `/projects?query=${query ?? ""}&filter=${filters}&order=${sortMethod}`
+    );
+  }, [filters, sortMethod]);
 
   const searchProjects = async (q?: string): Promise<IProject[]> => {
     const { data } = await axios.get(`/api/projects?q=${q}`, {
@@ -138,6 +194,8 @@ export const Projects = (props: IProps) => {
         projects={rendered_projects}
         categories={categories}
         setCategories={setCategories}
+        sortMethod={sortMethod}
+        setSortMethod={setSortMethod}
       />
       <DonateHero />
       <Footer />
