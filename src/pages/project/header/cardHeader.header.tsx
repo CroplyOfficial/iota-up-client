@@ -18,6 +18,7 @@ interface IProps {
   project: IProject;
   handleUpvotes?: () => void;
   isLiked: boolean;
+  showUserProjectsModal: () => void;
 }
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -79,7 +80,7 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 export const HeaderCardHeader = (props: IProps) => {
   const classes = useStyles();
-  const { project, handleUpvotes, isLiked } = props;
+  const { project, handleUpvotes, isLiked, showUserProjectsModal } = props;
 
   const media = project.media;
   const fallbackImage = "";
@@ -87,13 +88,11 @@ export const HeaderCardHeader = (props: IProps) => {
   const [showModal, setShowModal] = useState<boolean>(false);
 
   const toggleModal = (e: any) => {
-    if (e.currentTarget === e.target) {
-      setShowModal(!showModal);
-    }
+    console.log(e.target, e.currentTarget);
+    setShowModal(!showModal);
   };
   return (
     <>
-      <UserProjectsModal onClick={toggleModal} showing={showModal} />
       <CardHeader
         className={classes.root}
         avatar={
@@ -101,7 +100,7 @@ export const HeaderCardHeader = (props: IProps) => {
             src={project.author && project.author.avatar}
             className={classes.avatar}
             alt={project.author && project.author.fullName}
-            onClick={toggleModal}
+            onClick={showUserProjectsModal}
           ></Avatar>
         }
         title={

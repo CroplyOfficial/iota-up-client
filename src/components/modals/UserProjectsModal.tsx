@@ -11,13 +11,16 @@ import {
   InputLabel,
   MenuItem,
   Chip,
+  Avatar,
 } from "@material-ui/core";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import { RootState } from "../../store";
 import { useSelector } from "react-redux";
 import { Facebook, LinkedIn } from "@material-ui/icons";
 import { API } from "../../config";
+import { IProject } from "../../interfaces/project.interface";
+import { Card2 } from "../card/card2";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -25,25 +28,24 @@ const useStyles = makeStyles((theme: Theme) =>
       width: "100vw",
       minHeight: "100vh",
       overflowX: "hidden",
-      backgroundColor: "rgba(0,0,0,0.5)",
       position: "absolute",
       zIndex: 2,
       top: 0,
       left: 0,
     },
-    wrapper: {
-      position: "relative",
+    level2: {
       display: "flex",
-      flexDirection: "column",
-      width: "100vw",
       alignItems: "center",
-      zIndex: 3,
+      gap: "10px",
     },
     background: {
+      top: 0,
+      left: 0,
       width: "100%",
       height: "100%",
-      position: "absolute",
+      position: "fixed",
       zIndex: 2,
+      backgroundColor: "rgba(0,0,0,0.5)",
     },
     card: {
       width: "650px",
@@ -55,12 +57,14 @@ const useStyles = makeStyles((theme: Theme) =>
       display: "flex",
       flexDirection: "column",
       justifyContent: "space-between",
-      position: "relative",
+      position: "absolute",
+      transform: "translate(50%,50%)",
+      top: 0,
+      left: 0,
       borderRadius: "15px",
       padding: "15px",
       paddingBottom: "20px",
       paddingTop: "20px",
-      marginTop: "10%",
       click: "unset",
     },
     header: {
@@ -73,7 +77,6 @@ const useStyles = makeStyles((theme: Theme) =>
       paddingBottom: "15px",
     },
     body: {
-      minHeight: "400px",
       fontSize: "15px",
       lineHeight: "28px",
       fontFamily: "Poppins",
@@ -82,6 +85,7 @@ const useStyles = makeStyles((theme: Theme) =>
       display: "flex",
       flexDirection: "column",
       gap: "15px",
+      padding: "30px",
     },
     footer: {
       display: "flex",
@@ -105,7 +109,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     textArea: {
       width: "250px",
-      height: "100px",
+      height: "150px",
     },
     label: {
       fontFamily: "Poppins",
@@ -119,8 +123,9 @@ const useStyles = makeStyles((theme: Theme) =>
       width: "250px",
     },
     chips: {
+      marginTop: "15px",
       display: "flex",
-      gap: "10px",
+      gap: "15px",
     },
     chip: {},
     saveButton: {
@@ -140,13 +145,19 @@ const useStyles = makeStyles((theme: Theme) =>
     location: {},
     bio: {
       width: "100%",
-      minHeight: "100px",
+      paddingBottom: "5px",
     },
-    socials: {},
-    social: {
+    socials: {
+      display: "flex",
+      gap: "15px",
+    },
+    social: {},
+    skills: {
       marginTop: "15px",
+      display: "flex",
+      justifyContent: "space-around",
+      gap: "15px",
     },
-    skills: {},
     projects: {
       marginTop: "5rem",
       width: "80%",
@@ -182,81 +193,80 @@ export const UserProjectsModal = ({ showing, onClick }: IProps) => {
     avatar,
     projects,
     bio,
+    _id,
   } = userInfo;
   const fullName = `${firstName} ${lastName}`;
   const location = `${city}, ${country}`;
-  console.log("userInfo", userInfo);
   const classes = useStyles();
+  const [otherProjects, setOtherProjects] = useState<IProject[]>([]);
+
+  useEffect(() => {
+    const getProjects = async () => {
+      const response = await axios.get(`/api/projects/by-user/${_id}`);
+      const { data } = response;
+      setOtherProjects(data);
+    };
+    getProjects();
+  }, []);
 
   return (
     <div>
       {showing && (
-        <div className={classes.modal} onClick={onClick}>
+        <>
           <div className={classes.background} onClick={onClick}></div>
-          <div className={classes.wrapper} onClick={onClick}>
+          <div className={classes.modal}>
             <div className={classes.card}>
               <div className={classes.header}>About the creator</div>
               <div className={classes.body}>
-                <Typography className={classes.name}>{fullName}</Typography>
+                <div className={classes.level2}>
+                  <Avatar src={avatar} alt={fullName} />
+                  <Typography className={classes.name}>{fullName}</Typography>
+                </div>
                 <Typography className={classes.location}>{location}</Typography>
-                <Typography className={classes.bio}>{bio}</Typography>
+                <Typography className={classes.bio}>
+                  {bio ||
+                    `Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has`}
+                </Typography>
 
-                <div className={classes.level}>
-                  <div className={classes.half}>
-                    <div className={classes.socials}>
-                      <div className={classes.social}>
-                        <Chip
-                          label="Facebook"
-                          variant="outlined"
-                          icon={<Facebook className={classes.icon} />}
-                          className={classes.pointer}
-                          color={
-                            connections?.includes("facebook")
-                              ? "primary"
-                              : undefined
-                          }
-                        />
-                      </div>
-                      <div className={classes.social}>
-                        <Chip
-                          label="Google"
-                          variant="outlined"
-                          icon={<LinkedIn className={classes.icon} />}
-                          className={classes.pointer}
-                          color={
-                            connections?.includes("google")
-                              ? "primary"
-                              : undefined
-                          }
-                        />
-                      </div>
-                      <div className={classes.social}>
-                        <Chip
-                          label="Linked In"
-                          variant="outlined"
-                          icon={<LinkedIn className={classes.icon} />}
-                          className={classes.pointer}
-                          color={
-                            connections?.includes("linked in")
-                              ? "primary"
-                              : undefined
-                          }
-                        />
-                      </div>
-                    </div>
-                  </div>
-                  <div className={`${classes.half} ${classes.chips}`}>
-                    {skills.map((s: string) => (
-                      <Chip label={s} />
-                    ))}
-                  </div>
+                <div className={classes.socials}>
+                  <Chip
+                    label="Facebook"
+                    variant="outlined"
+                    icon={<Facebook className={classes.icon} />}
+                    className={classes.pointer}
+                    color={
+                      connections?.includes("facebook") ? "primary" : undefined
+                    }
+                  />
+                  <Chip
+                    label="Google"
+                    variant="outlined"
+                    icon={<LinkedIn className={classes.icon} />}
+                    className={classes.pointer}
+                    color={
+                      connections?.includes("google") ? "primary" : undefined
+                    }
+                  />
+                  <Chip
+                    label="Linked In"
+                    variant="outlined"
+                    icon={<LinkedIn className={classes.icon} />}
+                    className={classes.pointer}
+                    color={
+                      connections?.includes("linked in") ? "primary" : undefined
+                    }
+                  />
+                </div>
+                <div className={`${classes.half} ${classes.chips}`}>
+                  {skills.map((s: string) => (
+                    <Chip label={s} />
+                  ))}
                 </div>
               </div>
 
               <div className={classes.footer}>
                 <Button
                   variant="contained"
-                  onClick={onClick}
                   color="primary"
                   className={classes.saveButton}
                 >
@@ -264,7 +274,6 @@ export const UserProjectsModal = ({ showing, onClick }: IProps) => {
                 </Button>
                 <Button
                   variant="contained"
-                  onClick={onClick}
                   color="secondary"
                   className={classes.saveButton}
                 >
@@ -273,23 +282,12 @@ export const UserProjectsModal = ({ showing, onClick }: IProps) => {
               </div>
             </div>
             <div className={classes.projects}>
-              {projects.map((p: any) => {
-                return (
-                  <div
-                    style={{
-                      width: "200px",
-                      height: "200px",
-                      color: "green",
-                      backgroundColor: "white",
-                    }}
-                  >
-                    {p}
-                  </div>
-                );
+              {otherProjects.map((p: IProject) => {
+                return <Card2 project={p} />;
               })}
             </div>
           </div>
-        </div>
+        </>
       )}
     </div>
   );

@@ -18,6 +18,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store";
 import axios from "axios";
 import { ProjectCreatePostModal } from "./createPostModal.project";
+import { UserProjectsModal } from "../../components/modals/UserProjectsModal";
 
 interface IRouteParams {
   id: string;
@@ -105,9 +106,20 @@ export const ProjectOverview = ({ match }: any) => {
 
     setProject();
   }, []);
+  const [showUserProjectsModal, setShowUserProjectsModal] =
+    useState<boolean>(false);
+  const toggleShowUserProjectModal = () => {
+    setShowUserProjectsModal(!showUserProjectsModal);
+  };
 
   return (
     <div className={classes.root}>
+      {
+        <UserProjectsModal
+          onClick={toggleShowUserProjectModal}
+          showing={showUserProjectsModal}
+        />
+      }
       {postModal && Object.keys(postModal).length ? (
         <ProjectPostModal
           post={postModal as IPost}
@@ -139,6 +151,7 @@ export const ProjectOverview = ({ match }: any) => {
               variant={variant}
               showImageModal={toggleShowImageModal}
               onToggle={toggleEditableHeader}
+              showUserProjectsModal={toggleShowUserProjectModal}
             />
           ) : (
             <EditableProjectHeader
@@ -146,6 +159,7 @@ export const ProjectOverview = ({ match }: any) => {
               variant={variant}
               showImageModal={toggleShowImageModal}
               onToggle={toggleEditableHeader}
+              showUserProjectsModal={toggleShowUserProjectModal}
             />
           )}
           {!editableBody ? (

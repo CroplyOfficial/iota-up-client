@@ -26,9 +26,11 @@ interface IProps {
   project: IProject;
   showImageModal: () => void;
   onToggle: () => void;
+  showUserProjectsModal: () => void;
 }
 export const ProjectHeader = (props: IProps) => {
-  const { variant, project, showImageModal, onToggle } = props;
+  const { variant, project, showImageModal, onToggle, showUserProjectsModal } =
+    props;
   const {
     _id,
     desc,
@@ -329,6 +331,7 @@ export const ProjectHeader = (props: IProps) => {
             project={project}
             handleUpvotes={handleUpvotes}
             isLiked={isLiked}
+            showUserProjectsModal={showUserProjectsModal}
           />
           <ContributorPill project={project} />
           {/* <ContributorPill project={project} /> 

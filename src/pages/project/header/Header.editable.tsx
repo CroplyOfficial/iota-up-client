@@ -33,9 +33,11 @@ interface IProps {
   project: IProject;
   showImageModal: () => void;
   onToggle: () => void;
+  showUserProjectsModal: () => void;
 }
 export const EditableProjectHeader = (props: IProps) => {
-  const { variant, project, showImageModal, onToggle } = props;
+  const { variant, project, showImageModal, onToggle, showUserProjectsModal } =
+    props;
   const {
     _id,
     created,
@@ -419,6 +421,7 @@ export const EditableProjectHeader = (props: IProps) => {
             project={project}
             handleUpvotes={handleUpvotes}
             isLiked={isLiked}
+            showUserProjectsModal={showUserProjectsModal}
           />
           <ContributorCheckBox
             project={project}
