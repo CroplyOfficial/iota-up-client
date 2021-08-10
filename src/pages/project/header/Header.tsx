@@ -44,7 +44,7 @@ export const ProjectHeader = (props: IProps) => {
   const mainImage = media[0] || fallbackImage;
   const [tags, setTags] = useState<Array<string>>(initialTags || []);
   const [lookingForContributors, setLookingForContributors] = useState<boolean>(
-    project.lookingForContributors ?? false
+    project.needContributors ?? false
   );
   const [upvotesCount, setUpvotesCount] = useState<number>(0);
 

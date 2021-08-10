@@ -20,9 +20,7 @@ import { ContributorCheckBox } from "./contributor.checkbox";
 
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../../store";
-import { userLoginReducer } from "../../../reducers/userReducers";
 import axios from "axios";
-import { API } from "../../../config";
 
 const KeyCodes = {
   comma: [188],
@@ -94,7 +92,7 @@ export const EditableProjectHeader = (props: IProps) => {
 
   /* Looking For Contributors */
   const [lookingForContributors, setLookingForContributors] = useState<boolean>(
-    project.lookingForContributors ?? false
+    project.needContributors ?? false
   );
 
   const onToggleCheckbox = () => {
@@ -115,11 +113,12 @@ export const EditableProjectHeader = (props: IProps) => {
       },
     };
     await axios.put(
-      `/api/projects/${_id}`,
+      `/api/projects/by-id/${_id}`,
       {
         name: title,
-        dec: description,
+        desc: description,
         tags: tags,
+        needContributors: lookingForContributors,
       },
       config
     );
