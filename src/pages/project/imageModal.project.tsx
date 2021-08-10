@@ -190,6 +190,7 @@ export const ProjectImageModal = (props: IProps) => {
     project?.media[0] ?? ""
   );
   const [images, setImages] = useState<string[]>(project?.media ?? []);
+  const [file, setFile] = useState<any>();
 
   const handleUrlOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUrl(e.currentTarget.value);
@@ -234,25 +235,23 @@ export const ProjectImageModal = (props: IProps) => {
                     onChange={handleUrlOnChange}
                   />
                 )}
-                <Typography className={classes.label}>Main Image</Typography>
-                <Button
+                {/* <Typography className={classes.label}>Main Image</Typography> */}
+                {/* <Button
                   onClick={handlePrimaryImage}
                   color="primary"
                   variant="contained"
                   className={classes.button}
                 >
                   Set Featured Image
-                </Button>
-                <Typography className={classes.label}>
-                  Secondary Images
-                </Typography>
+                </Button> */}
+                <Typography className={classes.label}>Images</Typography>
                 <Button
                   onClick={handleSecondaryImages}
                   color="secondary"
                   className={classes.button}
                   variant="outlined"
                 >
-                  Add other images
+                  Add Image
                 </Button>
               </div>
               <div className={classes.right}>

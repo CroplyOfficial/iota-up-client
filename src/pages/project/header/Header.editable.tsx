@@ -107,17 +107,22 @@ export const EditableProjectHeader = (props: IProps) => {
   const { userInfo }: any = userInfoMeta;
   //@ts-ignore
   const isProjectAuthor = userInfo?._id === project?.projectAuthor;
-  const handleSaveProject = () => {
-    const editables = [title, description, tags];
-    {
-      /*
-    const options = {
-      headers: {},
-      body: {}
-    }
-    axios.put(`${API}/somewhere`, options);
-      */
-    }
+  const handleSaveProject = async () => {
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+    await axios.put(
+      `/api/projects/${_id}`,
+      {
+        name: title,
+        dec: description,
+        tags: tags,
+      },
+      config
+    );
     onToggle();
   };
 
