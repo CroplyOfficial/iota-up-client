@@ -20,5 +20,5 @@ export interface IProject {
     country?: string;
     projects?: string[];
   };
-  lookingForContributors?: boolean;
+  needContributors?: boolean;
 }

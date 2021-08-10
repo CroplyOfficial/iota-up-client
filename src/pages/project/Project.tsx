@@ -79,6 +79,7 @@ export const ProjectOverview = ({ match }: any) => {
   };
   const toggleEditableBody = () => {
     setEditableBody(!editableBody);
+    console.log(editableBody);
   };
 
   useEffect(() => {

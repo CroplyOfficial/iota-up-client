@@ -5,16 +5,13 @@ import {
   Button,
   TextField,
   Theme,
-  FormHelperText,
-  FormControl,
 } from "@material-ui/core";
-import { IPost } from "../../interfaces/post.interface";
-import htmlToDraft from "html-to-draftjs";
-import { EditorState, ContentState } from "draft-js";
-import { Editor } from "react-draft-wysiwyg";
 import { CloseSharp } from "@material-ui/icons";
 import { IProject } from "../../interfaces/project.interface";
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -190,17 +187,52 @@ export const ProjectImageModal = (props: IProps) => {
     project?.media[0] ?? ""
   );
   const [images, setImages] = useState<string[]>(project?.media ?? []);
+  const [file, setFile] = useState<any>();
+  const [progress, setProgress] = useState<number>(0);
+  const [video, setVideo] = useState<string>();
+  const [media, setMedia] = useState<string[]>([]);
 
   const handleUrlOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUrl(e.currentTarget.value);
   };
-  const handleSave = () => {
-    onClick();
+  const userInfoMeta = useSelector((state: RootState) => state.userLogin);
+  const { userInfo }: any = userInfoMeta;
+
+  const uploadHandler = async () => {
+    const formData: any = new FormData();
+    try {
+      formData.append("media", file.file);
+      const { data } = await axios.post("/api/uploads", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+        onUploadProgress: (data) => {
+          setProgress(Math.round((100 * data.loaded) / data.total));
+        },
+      });
+      setMedia([...media, data.url]);
+    } catch {}
   };
 
-  const handlePrimaryImage = () => {};
-  const handleSecondaryImages = () => {};
+  const handleSave = async () => {
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+    await axios.put(
+      `/api/projects/by-id/${project?._id}`,
+      { media, video },
+      config
+    );
+    window.location.reload();
+  };
 
+  useEffect(() => {
+    uploadHandler();
+  }, [file]);
   return (
     <div>
       <div className={classes.modal}>
@@ -234,26 +266,37 @@ export const ProjectImageModal = (props: IProps) => {
                     onChange={handleUrlOnChange}
                   />
                 )}
-                <Typography className={classes.label}>Main Image</Typography>
-                <Button
+                {/* <Typography className={classes.label}>Main Image</Typography> */}
+                {/* <Button
                   onClick={handlePrimaryImage}
                   color="primary"
                   variant="contained"
                   className={classes.button}
                 >
                   Set Featured Image
-                </Button>
-                <Typography className={classes.label}>
-                  Secondary Images
-                </Typography>
+                </Button> */}
+                <Typography className={classes.label}>Images</Typography>
                 <Button
-                  onClick={handleSecondaryImages}
+                  onClick={(e) =>
+                    document.getElementById("file-selector")?.click()
+                  }
                   color="secondary"
                   className={classes.button}
                   variant="outlined"
                 >
-                  Add other images
+                  Add Image
                 </Button>
+                <input
+                  type="file"
+                  onChange={(e: any) => {
+                    setFile({
+                      file: e.target.files[0],
+                    });
+                  }}
+                  id="file-selector"
+                  style={{ display: "none" }}
+                  accept=".jpg,.png,.jpeg,.gif"
+                />
               </div>
               <div className={classes.right}>
                 {featuredImage && (

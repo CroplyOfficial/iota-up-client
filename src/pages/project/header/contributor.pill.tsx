@@ -26,6 +26,6 @@ export const ContributorPill = (props: IProps) => {
   const { project } = props;
   const classes = useStyles();
   console.log("P:", project);
-  if (!project.lookingForContributors) return null;
+  if (!project.needContributors) return null;
   return <div className={classes.root}>Looking for Contributors</div>;
 };

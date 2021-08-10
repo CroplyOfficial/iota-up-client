@@ -20,9 +20,7 @@ import { ContributorCheckBox } from "./contributor.checkbox";
 
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../../store";
-import { userLoginReducer } from "../../../reducers/userReducers";
 import axios from "axios";
-import { API } from "../../../config";
 
 const KeyCodes = {
   comma: [188],
@@ -94,7 +92,7 @@ export const EditableProjectHeader = (props: IProps) => {
 
   /* Looking For Contributors */
   const [lookingForContributors, setLookingForContributors] = useState<boolean>(
-    project.lookingForContributors ?? false
+    project.needContributors ?? false
   );
 
   const onToggleCheckbox = () => {
@@ -107,17 +105,23 @@ export const EditableProjectHeader = (props: IProps) => {
   const { userInfo }: any = userInfoMeta;
   //@ts-ignore
   const isProjectAuthor = userInfo?._id === project?.projectAuthor;
-  const handleSaveProject = () => {
-    const editables = [title, description, tags];
-    {
-      /*
-    const options = {
-      headers: {},
-      body: {}
-    }
-    axios.put(`${API}/somewhere`, options);
-      */
-    }
+  const handleSaveProject = async () => {
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+    await axios.put(
+      `/api/projects/by-id/${_id}`,
+      {
+        name: title,
+        desc: description,
+        tags: tags,
+        needContributors: lookingForContributors,
+      },
+      config
+    );
     onToggle();
   };
 
