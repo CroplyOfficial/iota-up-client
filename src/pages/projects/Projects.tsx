@@ -12,6 +12,7 @@ import { useHistory } from "react-router";
 import axios from "axios";
 import { parseQueryString } from "../../utils/queryString";
 import { MainCategories } from "../../config";
+import { compareArrays } from "../../utils/matchArrays";
 
 interface IProps {}
 interface ICategory {
@@ -50,6 +51,10 @@ export const Projects = (props: IProps) => {
     IProject[] | null | undefined
   >([]);
 
+  const [matchedProjects, setMatchedProjects] = useState<
+    IProject[] | null | undefined
+  >([]);
+
   const [rendered_projects, setRenderedProjects] = useState<
     IProject[] | null | undefined
   >([]);
@@ -62,12 +67,24 @@ export const Projects = (props: IProps) => {
   useEffect(() => {
     const setProjects = async (q: string) => {
       const projectsFound: IProject[] = await searchProjects(q);
-      console.log(projectsFound);
+      setMatchedProjects(projectsFound);
       setRenderedProjects(projectsFound);
     };
 
+    const filterProjects = (f: string[]) => {
+      const filtered = matchedProjects?.filter((project) => {
+        return compareArrays(project.tags, f).length > 0;
+      });
+      setRenderedProjects(filtered);
+    };
+
     const queryParams: IQueryParams = parseQueryString(window.location.search);
+
+    console.log(queryParams);
     queryParams.query && setProjects(queryParams.query);
+    queryParams.filter && queryParams.filter !== ""
+      ? filterProjects(queryParams.filter.split(","))
+      : setRenderedProjects(matchedProjects);
   }, [window.location.search]);
 
   const projectsMeta = useSelector((state: RootState) => state.loadProjects);
@@ -80,6 +97,7 @@ export const Projects = (props: IProps) => {
 
   useEffect(() => {
     setProjects(projects);
+    setMatchedProjects(projects);
     setRenderedProjects(projects);
   }, [projects]);
 
@@ -95,7 +113,7 @@ export const Projects = (props: IProps) => {
   }, [categories]);
 
   useEffect(() => {
-    history.push(`/projects?query=${query ?? ""}?filter=${filters}`);
+    history.push(`/projects?query=${query ?? ""}&filter=${filters}`);
   }, [filters]);
 
   const searchProjects = async (q?: string): Promise<IProject[]> => {
