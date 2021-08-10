@@ -119,7 +119,6 @@ Quisque dictum libero ac ullamcorper vehicula. Duis semper erat non rhoncus sagi
             <ProjectBodyUpdates
               variant={variant}
               project={project}
-              posts={posts}
               setPostModal={setPostModal}
             />
           ) : (

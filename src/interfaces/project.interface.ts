@@ -1,3 +1,4 @@
+import { IPost } from "./post.interface";
 export interface IProject {
   name: string;
   desc: string;
@@ -21,4 +22,5 @@ export interface IProject {
     projects?: string[];
   };
   needContributors?: boolean;
+  posts?: IPost[];
 }

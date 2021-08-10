@@ -8,16 +8,15 @@ const useStyles = makeStyles(() => createStyles({ root: {} }));
 
 interface IProps {
   variant: ProjectPageVariants;
-  project: IProject | Record<never, never>;
-  posts: IPost[];
+  project: IProject;
   setPostModal: Function;
 }
 export const ProjectBodyUpdates = (props: IProps) => {
-  const { posts, setPostModal } = props;
+  const { project, setPostModal } = props;
   const classes = useStyles();
   return (
     <div className={classes.root}>
-      {posts.map((p, i) => (
+      {project?.posts?.map((p, i) => (
         <UpdatesCard
           post={p}
           key={"post#" + i++}
