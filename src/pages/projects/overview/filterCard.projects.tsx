@@ -9,6 +9,7 @@ import {
   Button,
 } from "@material-ui/core";
 import { ExpandLess, ExpandMore } from "@material-ui/icons";
+import { MainCategories } from "../../../config";
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -76,34 +77,16 @@ interface ICategory {
   onClick: (e: React.ChangeEvent<HTMLInputElement>) => void;
   checked: boolean;
 }
-export const ProjectsFilterCard = () => {
+export const ProjectsFilterCard = ({
+  categories,
+  setCategories,
+}: {
+  categories: ICategory[];
+  setCategories: (categories: ICategory[]) => void;
+}) => {
   const classes = useStyles();
 
-  /* HELPERS */
-  const onClick = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { value } = e.target;
-    const categoryIndex = categories.findIndex((c) => c.title === value);
-    if (categoryIndex < 0) return;
-    const newCategories = [...categories];
-    newCategories[categoryIndex].checked =
-      !newCategories[categoryIndex].checked;
-    setCategories([...categories]);
-  };
-  /* HELPERS */
-
   const initialThreshold = 5;
-  const [categories, setCategories] = useState<ICategory[]>([
-    {
-      title: "All Projects",
-      onClick,
-      checked: true,
-    },
-    { title: "Technology", onClick, checked: false },
-    { title: "Film", onClick, checked: false },
-    { title: "Business", onClick, checked: false },
-    { title: "Design", onClick, checked: false },
-    { title: "Design2", onClick, checked: false },
-  ]);
   const [visibleCategories, setVisibleCategories] = useState<ICategory[]>(
     categories.slice(0, initialThreshold)
   );

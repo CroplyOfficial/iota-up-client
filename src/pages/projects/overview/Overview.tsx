@@ -84,12 +84,18 @@ const useStyles = makeStyles((theme: Theme) =>
     },
   })
 );
-
+interface ICategory {
+  title: string;
+  onClick: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  checked: boolean;
+}
 interface IProps {
   projects: IProject[] | null | undefined;
+  categories: ICategory[];
+  setCategories: (categories: ICategory[]) => void;
 }
 export const ProjectsOverview = (props: IProps) => {
-  const { projects } = props;
+  const { projects, categories, setCategories } = props;
   const onClick = () => {
     // TODO lazy load
   };
@@ -114,7 +120,10 @@ export const ProjectsOverview = (props: IProps) => {
             >
               Filter
             </Typography>
-            <ProjectsFilterCard />
+            <ProjectsFilterCard
+              categories={categories}
+              setCategories={setCategories}
+            />
             <ProjectsDonateCard />
           </div>
           <div className={classes.right}>
