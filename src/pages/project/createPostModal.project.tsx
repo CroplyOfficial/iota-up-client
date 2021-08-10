@@ -12,6 +12,10 @@ import { Editor } from "react-draft-wysiwyg";
 import { CloseSharp } from "@material-ui/icons";
 import { useState } from "react";
 import draftToHtml from "draftjs-to-html";
+import { IProject } from "../../interfaces/project.interface";
+import { useSelector } from "react-redux";
+import axios from "axios";
+import { RootState } from "../../store";
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -115,6 +119,7 @@ const useStyles = makeStyles(() =>
 );
 
 interface IProps {
+  project: IProject;
   onClick: () => void;
 }
 export const ProjectCreatePostModal = (props: IProps) => {
@@ -130,6 +135,8 @@ export const ProjectCreatePostModal = (props: IProps) => {
   const onEditorStateChange = (editorState: EditorState) => {
     setEditorState(editorState);
   };
+  const userInfoMeta = useSelector((state: RootState) => state.userLogin);
+  const { userInfo }: any = userInfoMeta;
 
   const toolBar = {
     image: {
@@ -147,11 +154,22 @@ export const ProjectCreatePostModal = (props: IProps) => {
     },
   };
 
-  const handleCreatePost = () => {
-    //TODO Merul :P
-    // editorState as html,
+  const handleCreatePost = async () => {
     const html = draftToHtml(convertToRaw(editorState.getCurrentContent()));
-    const needed = [title, html];
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+    await axios.post(
+      `/api/posts/by-project/${props.project._id}`,
+      {
+        title,
+        body: html,
+      },
+      config
+    );
     onClick();
   };
 

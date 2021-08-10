@@ -4,6 +4,8 @@ import {
   Typography,
   Button,
   Theme,
+  Select,
+  MenuItem,
 } from "@material-ui/core";
 import { ExpandMore } from "@material-ui/icons";
 import { Card } from "../../../components/card/card";
@@ -84,12 +86,21 @@ const useStyles = makeStyles((theme: Theme) =>
     },
   })
 );
-
+interface ICategory {
+  title: string;
+  onClick: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  checked: boolean;
+}
 interface IProps {
   projects: IProject[] | null | undefined;
+  categories: ICategory[];
+  sortMethod: string;
+  setSortMethod: (method: string) => void;
+  setCategories: (categories: ICategory[]) => void;
 }
 export const ProjectsOverview = (props: IProps) => {
-  const { projects } = props;
+  const { projects, categories, setCategories, sortMethod, setSortMethod } =
+    props;
   const onClick = () => {
     // TODO lazy load
   };
@@ -114,7 +125,10 @@ export const ProjectsOverview = (props: IProps) => {
             >
               Filter
             </Typography>
-            <ProjectsFilterCard />
+            <ProjectsFilterCard
+              categories={categories}
+              setCategories={setCategories}
+            />
             <ProjectsDonateCard />
           </div>
           <div className={classes.right}>
@@ -123,13 +137,17 @@ export const ProjectsOverview = (props: IProps) => {
                 {projects && projects.length ? projects.length : "0"} Projects
                 found
               </Typography>
-              <Button
-                color="primary"
-                variant="outlined"
-                className={classes.button}
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                value={sortMethod}
+                onChange={(e: any) => setSortMethod(e.target.value)}
               >
-                Most Popular <ExpandMore style={{ marginLeft: "15px" }} />{" "}
-              </Button>
+                <MenuItem value="popular">Most Popular</MenuItem>
+                <MenuItem value="!popular">Least Popular</MenuItem>
+                <MenuItem value="newest">Newest</MenuItem>
+                <MenuItem value="oldest">Oldest</MenuItem>
+              </Select>
             </div>
             <div className={classes.projectsWrapper}>
               {projects &&

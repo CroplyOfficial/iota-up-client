@@ -20,9 +20,7 @@ import { ContributorCheckBox } from "./contributor.checkbox";
 
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../../store";
-import { userLoginReducer } from "../../../reducers/userReducers";
 import axios from "axios";
-import { API } from "../../../config";
 
 const KeyCodes = {
   comma: [188],
@@ -94,7 +92,7 @@ export const EditableProjectHeader = (props: IProps) => {
 
   /* Looking For Contributors */
   const [lookingForContributors, setLookingForContributors] = useState<boolean>(
-    project.lookingForContributors ?? false
+    project.needContributors ?? false
   );
 
   const onToggleCheckbox = () => {
@@ -107,17 +105,23 @@ export const EditableProjectHeader = (props: IProps) => {
   const { userInfo }: any = userInfoMeta;
   //@ts-ignore
   const isProjectAuthor = userInfo?._id === project?.projectAuthor;
-  const handleSaveProject = () => {
-    const editables = [title, description, tags];
-    {
-      /*
-    const options = {
-      headers: {},
-      body: {}
-    }
-    axios.put(`${API}/somewhere`, options);
-      */
-    }
+  const handleSaveProject = async () => {
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+    await axios.put(
+      `/api/projects/by-id/${_id}`,
+      {
+        name: title,
+        desc: description,
+        tags: tags,
+        needContributors: lookingForContributors,
+      },
+      config
+    );
     onToggle();
   };
 
@@ -188,8 +192,13 @@ export const EditableProjectHeader = (props: IProps) => {
         fontSize: "32px",
         lineHeight: "48px",
         paddingBottom: "20px",
-        border: "0px solid white",
+        border: "2px solid white",
         display: "block",
+        borderRadius: "10px",
+        "&:hover": {
+          border: `2px solid ${theme.palette.text.secondary}`,
+        },
+        marginBottom: "10px",
       },
       description: {
         fontFamily: "Open Sans",
@@ -197,11 +206,17 @@ export const EditableProjectHeader = (props: IProps) => {
         fontStyle: "normal",
         fontSize: "16px",
         lineHeight: "28px",
-        border: "0px solid white",
+        border: "2px solid white",
+        borderRadius: "10px",
+
+        "&:hover": {
+          border: `2px solid ${theme.palette.text.secondary}`,
+        },
         display: "block",
         width: "100%",
         minHeight: "150px",
         resize: "vertical",
+        marginBottom: "10px",
       },
       buttons: {
         display: "flex",

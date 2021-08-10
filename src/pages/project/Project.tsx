@@ -79,6 +79,7 @@ export const ProjectOverview = ({ match }: any) => {
   };
   const toggleEditableBody = () => {
     setEditableBody(!editableBody);
+    console.log(editableBody);
   };
 
   useEffect(() => {
@@ -116,7 +117,10 @@ export const ProjectOverview = ({ match }: any) => {
         ""
       )}
       {showCreatePostModal ? (
-        <ProjectCreatePostModal onClick={toggleShowCreatePostModal} />
+        <ProjectCreatePostModal
+          onClick={toggleShowCreatePostModal}
+          project={p}
+        />
       ) : (
         ""
       )}
