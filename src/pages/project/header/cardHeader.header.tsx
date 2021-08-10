@@ -11,7 +11,7 @@ import {
 import { Flag, ArrowUpward, Share } from "@material-ui/icons";
 import { IProject } from "../../../interfaces/project.interface";
 import { ReactComponent as UpButton } from "../../../static/images/icons/up.svg";
-
+import { UserProjectsModal } from "../../../components/modals/UserProjectsModal";
 import { useState, useEffect } from "react";
 
 interface IProps {
@@ -34,6 +34,7 @@ const useStyles = makeStyles((theme: Theme) =>
       fontStyle: "normal",
       fontSize: "18px",
       lineHeight: "27px",
+      cursor: "pointer",
     },
     subHeader: {
       fontFamily: "Open Sans",
@@ -43,6 +44,7 @@ const useStyles = makeStyles((theme: Theme) =>
       lineHeight: "19px",
       color: theme.palette.primary.main,
       paddingRight: "20px",
+      cursor: "pointer",
     },
     subHeader2: {
       fontFamily: "Open Sans",
@@ -50,6 +52,7 @@ const useStyles = makeStyles((theme: Theme) =>
       fontStyle: "normal",
       fontSize: "14px",
       lineHeight: "19px",
+      cursor: "pointer",
     },
     subHeaderWrapper: {
       display: "flex",
@@ -62,6 +65,7 @@ const useStyles = makeStyles((theme: Theme) =>
       width: "60px",
       height: "60px",
       backgroundColor: "orange",
+      cursor: "pointer",
     },
     action: {
       display: "flex",
@@ -69,6 +73,7 @@ const useStyles = makeStyles((theme: Theme) =>
       alignItems: "center",
       height: "100%",
       paddingTop: "8px",
+      zIndex: 2,
     },
   })
 );
@@ -79,55 +84,69 @@ export const HeaderCardHeader = (props: IProps) => {
   const media = project.media;
   const fallbackImage = "";
   const mainImage = media[0] || fallbackImage;
+  const [showModal, setShowModal] = useState<boolean>(false);
+
+  const toggleModal = (e: any) => {
+    if (e.currentTarget === e.target) {
+      setShowModal(!showModal);
+    }
+  };
   return (
-    <CardHeader
-      className={classes.root}
-      avatar={
-        <Avatar
-          src={project.author && project.author.avatar}
-          className={classes.avatar}
-          alt={project.author && project.author.fullName}
-        ></Avatar>
-      }
-      title={
-        <span className={classes.header}>
-          {project.author && project.author.fullName}
-        </span>
-      }
-      subheader={
-        <span>
-          <span className={classes.subHeader}>
-            {" "}
-            {`${
-              project.author &&
-              project.author.projects &&
-              project.author.projects.length
-            } Projects`}
+    <>
+      <UserProjectsModal onClick={toggleModal} showing={showModal} />
+      <CardHeader
+        className={classes.root}
+        avatar={
+          <Avatar
+            src={project.author && project.author.avatar}
+            className={classes.avatar}
+            alt={project.author && project.author.fullName}
+            onClick={toggleModal}
+          ></Avatar>
+        }
+        title={
+          <span className={classes.header} onClick={toggleModal}>
+            {project.author && project.author.fullName}
           </span>
-          <span className={classes.subHeader2}>
-            &bull;{" "}
-            {`${project.author && project.author.city}, ${
-              project.author && project.author.country
-            }`}
+        }
+        subheader={
+          <span onClick={toggleModal}>
+            <span className={classes.subHeader}>
+              {" "}
+              {`${
+                project.author &&
+                project.author.projects &&
+                project.author.projects.length
+              } Projects`}
+            </span>
+            <span className={classes.subHeader2}>
+              &bull;{" "}
+              {`${project.author && project.author.city}, ${
+                project.author && project.author.country
+              }`}
+            </span>
           </span>
-        </span>
-      }
-      action={
-        <div className={classes.action}>
-          <IconButton>
-            <Flag fontSize="large" color="disabled" />
-          </IconButton>
-          <IconButton>
-            <Share fontSize="large" color="disabled" />
-          </IconButton>
-          <IconButton>
-            {/* <ArrowUpward fontSize="large" color="primary" /> */}
-            <SvgIcon fontSize="large" color={isLiked ? "primary" : "disabled"}>
-              <UpButton onClick={handleUpvotes} />
-            </SvgIcon>
-          </IconButton>
-        </div>
-      }
-    />
+        }
+        action={
+          <div className={classes.action}>
+            <IconButton>
+              <Flag fontSize="large" color="disabled" />
+            </IconButton>
+            <IconButton>
+              <Share fontSize="large" color="disabled" />
+            </IconButton>
+            <IconButton>
+              {/* <ArrowUpward fontSize="large" color="primary" /> */}
+              <SvgIcon
+                fontSize="large"
+                color={isLiked ? "primary" : "disabled"}
+              >
+                <UpButton onClick={handleUpvotes} />
+              </SvgIcon>
+            </IconButton>
+          </div>
+        }
+      />
+    </>
   );
 };
