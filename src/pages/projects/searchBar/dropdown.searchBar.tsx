@@ -1,5 +1,6 @@
 import { makeStyles, createStyles, Theme } from "@material-ui/core";
 import { useState } from "react";
+import { MainCategories } from "../../../config";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -35,17 +36,28 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 export const ProjectsSearchBarDropdown = () => {
-  const [options, setOptions] = useState<Array<any>>([
+  const [options, setOptions] = useState<Array<any>>(
+    Object.values(MainCategories)
+      .reduce((arr: string[], cur: string[]) => {
+        return arr.concat(cur);
+      }, [])
+      .map((i) => {
+        return { value: i, tag: i };
+      })
+    /*[
     { value: "technology", tag: "Technology" },
     { value: "community", tag: "Community" },
     { value: "creative", tag: "Creative" },
-  ]);
+  ]*/
+  );
   const classes = useStyles();
   return (
     <select className={classes.root}>
       <option value="">All Categories</option>
       {options.map((o) => (
-        <option value={o.value}>{o.tag}</option>
+        <option value={o.value} style={{ textTransform: "capitalize" }}>
+          {o.tag}
+        </option>
       ))}
     </select>
   );
