@@ -50,6 +50,7 @@ const useStyles = makeStyles((theme: Theme) =>
       flexWrap: "wrap",
       gap: "25px",
       padding: "0",
+      width: "100%",
       justifyContent: "flex-start",
     },
     actionBarText: {
