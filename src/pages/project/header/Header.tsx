@@ -20,6 +20,7 @@ import { RootState } from "../../../store";
 import { userLoginReducer } from "../../../reducers/userReducers";
 import axios from "axios";
 import { DonateButton } from "../../../components/DonateButton/DonateButton";
+import { useFallbackImage } from "../../../config";
 
 interface IProps {
   variant: ProjectPageVariants;
@@ -42,7 +43,7 @@ export const ProjectHeader = (props: IProps) => {
     category,
     upvotes,
   } = project as IProject;
-  const fallbackImage = "https://source.unsplash.com/random";
+  const fallbackImage = useFallbackImage();
   const mainImage = media[0] || fallbackImage;
   const [tags, setTags] = useState<Array<string>>(initialTags || []);
   const [lookingForContributors, setLookingForContributors] = useState<boolean>(

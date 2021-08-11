@@ -17,6 +17,7 @@ import { HeaderCardHeader } from "./cardHeader.header";
 import { ProjectPageVariants } from "../../../interfaces/project.variants.interface";
 import { ContributorPill } from "./contributor.pill";
 import { ContributorCheckBox } from "./contributor.checkbox";
+import { useFallbackImage } from "../../../config";
 
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../../store";
@@ -50,7 +51,7 @@ export const EditableProjectHeader = (props: IProps) => {
     category,
     upvotes,
   } = project as IProject;
-  const fallbackImage = "https://source.unsplash.com/random";
+  const fallbackImage = useFallbackImage();
   const mainImage = media[0] || fallbackImage;
   /* Tags */
   const [tags, setTags] = useState<Array<string>>(initialTags || []);
