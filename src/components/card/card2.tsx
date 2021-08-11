@@ -9,6 +9,7 @@ import {
 import { IProject } from "../../interfaces/project.interface";
 import { MoneySharp, CalendarTodaySharp } from "@material-ui/icons";
 import { useHistory } from "react-router-dom";
+import { useFallbackImage } from "../../config";
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -68,7 +69,7 @@ export const Card2 = (props: IProps) => {
   const { media, name, backers, upvotes, _id } = project;
   const classes = useStyles();
   const mainTag = project?.tags[0];
-  const fallbackImage = "https://source.unsplash.com/random";
+  const fallbackImage = useFallbackImage();
   const history = useHistory();
 
   const mainImage = project?.media[0] || fallbackImage;

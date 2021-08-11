@@ -33,6 +33,7 @@ const useStyles = makeStyles(() =>
       lineHeight: "27px",
       fontWeight: 500,
       fontStyle: "normal",
+      textTransform: "capitalize",
     },
     showMoreCategoriesText: {
       fontFamily: "Open Sans",

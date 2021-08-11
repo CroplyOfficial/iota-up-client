@@ -5,6 +5,7 @@ import {
   Button,
 } from "@material-ui/core";
 import { Card } from "../../components/card/card";
+import { ProjectsCard } from "../../components/card/card3";
 import { IProject } from "../../interfaces/project.interface";
 
 const useStyles = makeStyles(() =>
@@ -78,11 +79,10 @@ export const FeaturedSection = (
       </div>
       <div className={classes.cards}>
         {projects &&
-          projects
-            .slice(0, 3)
-            .map((p, i) => (
-              <Card project={p} key={"featured-project-" + (i + 1)} />
-            ))}
+          projects.slice(0, 3).map((p, i) => (
+            //<Card project={p} key={"featured-project-" + (i + 1)} />
+            <ProjectsCard project={p} key={"featured-project-" + (i + 1)} />
+          ))}
       </div>
       <div className={classes.actionButtonContainer}>
         <Button

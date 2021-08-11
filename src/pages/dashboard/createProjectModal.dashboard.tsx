@@ -16,6 +16,7 @@ import { useState } from "react";
 import axios from "axios";
 import { RootState } from "../../store";
 import { useSelector } from "react-redux";
+import { MainCategories } from "../../config";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -24,7 +25,7 @@ const useStyles = makeStyles((theme: Theme) =>
       height: "100vh",
       backgroundColor: "rgba(0,0,0,0.5)",
       position: "fixed",
-      zIndex: 2,
+      zIndex: 10,
       top: 0,
       left: 0,
     },
@@ -57,6 +58,7 @@ const useStyles = makeStyles((theme: Theme) =>
       fontWeight: 600,
       fontStyle: "normal",
       paddingBottom: "15px",
+      color: "black",
     },
     body: {
       minHeight: "400px",
@@ -220,9 +222,18 @@ export const DashboardCreateProjectModal = ({ showing, onClick }: IProps) => {
                     console.log(e.target.value);
                   }}
                 >
-                  {allCategories.map((c) => (
-                    <MenuItem value={c.toLowerCase()}>{c}</MenuItem>
-                  ))}
+                  {Object.values(MainCategories)
+                    .reduce((arr: string[], cur: string[]) => {
+                      return arr.concat(cur);
+                    }, [])
+                    .map((c) => (
+                      <MenuItem
+                        style={{ textTransform: "capitalize" }}
+                        value={c.toLowerCase()}
+                      >
+                        {c}
+                      </MenuItem>
+                    ))}
                 </Select>
               </FormControl>
               <div className={classes.chips}>

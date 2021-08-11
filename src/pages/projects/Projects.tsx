@@ -190,7 +190,12 @@ export const Projects = (props: IProps) => {
     <div>
       <ProjectsNavbarHero />
       <ProjectsSearchBar
-        onKeyUp={(e: any) => setQuery(e.target.value)}
+        onKeyUp={(e: any) => {
+          setQuery(e.target.value);
+          if (e.code === "Enter") {
+            handleOnClick();
+          }
+        }}
         onClick={handleOnClick}
       />
       <ProjectsOverview

@@ -7,6 +7,7 @@ import { useHistory } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { ICreator } from "../../interfaces/creator.interface";
 import axios from "axios";
+import { useFallbackImage } from "../../config";
 
 interface IProps {
   project: IProject;
@@ -15,7 +16,8 @@ export const CreateProjectCard = (props: IProps, ctx: any) => {
   const { project } = props;
   const { name, media, desc } = project;
 
-  const mainImage = media[0];
+  const fallbackImage = useFallbackImage();
+  const mainImage = media[0] || fallbackImage;
   const history = useHistory();
 
   const useStyles = makeStyles((theme: Theme) =>
