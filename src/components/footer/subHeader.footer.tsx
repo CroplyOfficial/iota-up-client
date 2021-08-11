@@ -19,7 +19,7 @@ export const FooterSubHeader = () => {
   return (
     <div className={classes.root}>
       <Link to="/croply" className={genericClasses.link}>
-        © 2021 Croply -
+        © {new Date().getFullYear()} Croply -
       </Link>
       <Link to="/privacy" className={genericClasses.link}>
         {"\u200b"} Privacy {"\u200b"}
