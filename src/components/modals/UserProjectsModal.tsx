@@ -168,6 +168,7 @@ const useStyles = makeStyles((theme: Theme) =>
       display: "flex",
       flexDirection: "row",
       justifyContent: "flex-start",
+      marginBottom: "35vh",
     },
     level: {
       width: "100%",

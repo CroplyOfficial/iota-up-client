@@ -90,7 +90,7 @@ export const ProjectOverview = ({ match }: any) => {
   useEffect(() => {
     dispatch(getTrendingProjects());
     dispatch(getProject(match.params.id));
-  }, []);
+  }, [window.location.href]);
 
   useEffect(() => {
     setTrending(trendingProjects);
