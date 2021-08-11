@@ -3,6 +3,9 @@ import {
   PROJECTS_LOADING_REQUEST,
   PROJECTS_LOADING_SUCCESS,
   PROJECTS_LOADING_FAIL,
+  PROJECT_LOADING_REQUEST,
+  PROJECT_LOADING_SUCCESS,
+  PROJECT_LOADING_FAIL,
   GET_TRENDING_SUCCESS,
   GET_TRENDING_FAIL,
   GET_TRENDING_REQUEST,
@@ -16,6 +19,36 @@ import {
   GET_MY_PROJECTS_SUCCESS,
   GET_MY_PROJECTS_FAIL,
 } from "../constants/projectConstants";
+
+/**
+ * Get the project by ID and save them to the state 
+ * 
+ * @reducer  loadProject
+ */
+
+export const getProject = (id: string) => async (dispatch: any) => {
+  try {
+    dispatch({
+      type: PROJECT_LOADING_REQUEST
+    })
+    const {data } = await axios.get(`/api/projects/by-id/${id}`, {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+    dispatch({
+      type: PROJECT_LOADING_SUCCESS,
+      payload: data
+    })
+  } catch (error) {
+    dispatch({
+      type: PROJECT_LOADING_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+}
 
 /**
  * Get all the projects and set the state to the object
