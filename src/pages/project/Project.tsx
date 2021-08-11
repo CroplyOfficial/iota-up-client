@@ -16,9 +16,10 @@ import { IProject } from "../../interfaces/project.interface";
 import { getTrendingProjects } from "../../actions/projectsActions";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store";
-import axios from "axios";
 import { ProjectCreatePostModal } from "./createPostModal.project";
 import { UserProjectsModal } from "../../components/modals/UserProjectsModal";
+import { getProject } from "../../actions/projectsActions";
+import axios from "axios";
 
 interface IRouteParams {
   id: string;
@@ -45,6 +46,9 @@ export const ProjectOverview = ({ match }: any) => {
 
   const trendingMeta = useSelector((state: RootState) => state.loadTrending);
   const { trendingProjects }: any = trendingMeta;
+
+  const projectMeta = useSelector((state: RootState) => state.loadProject);
+  const { project }: any = projectMeta;
 
   const featuredTitle = "Recommended Projects";
   const featuredSubHeader = (
@@ -76,15 +80,16 @@ export const ProjectOverview = ({ match }: any) => {
   const [editableHeader, setEditableHeader] = useState<boolean>(false);
   const [editableBody, setEditableBody] = useState<boolean>(false);
   const toggleEditableHeader = () => {
+    dispatch(getProject(match.params.id));
     setEditableHeader(!editableHeader);
   };
   const toggleEditableBody = () => {
     setEditableBody(!editableBody);
-    console.log(editableBody);
   };
 
   useEffect(() => {
     dispatch(getTrendingProjects());
+    dispatch(getProject(match.params.id));
   }, []);
 
   useEffect(() => {
@@ -105,7 +110,7 @@ export const ProjectOverview = ({ match }: any) => {
     };
 
     setProject();
-  }, []);
+  }, [project]);
   const [showUserProjectsModal, setShowUserProjectsModal] =
     useState<boolean>(false);
   const toggleShowUserProjectModal = () => {

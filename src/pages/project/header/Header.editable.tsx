@@ -124,6 +124,7 @@ export const EditableProjectHeader = (props: IProps) => {
       },
       config
     );
+    console.log("testtttt");
     onToggle();
   };
 
@@ -513,6 +514,15 @@ export const EditableProjectHeader = (props: IProps) => {
               onClick={handleSaveProject}
             >
               Save Project
+            </Button>
+            <Button
+              color="secondary"
+              variant="outlined"
+              className={classes.button}
+              style={{ marginRight: "15px" }}
+              onClick={onToggle}
+            >
+              Cancel
             </Button>
           </div>
         </div>

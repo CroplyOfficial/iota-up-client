@@ -4,6 +4,7 @@ import { composeWithDevTools } from "redux-devtools-extension";
 import { userLoginReducer, userInfoReducer } from "./reducers/userReducers";
 import {
   loadProjectsReducer,
+  loadProjectReducer,
   loadLatestProjectsReducer,
   loadReccomendedProjectsReducer,
   loadTrendingProjectsReducer,
@@ -13,6 +14,7 @@ import {
 const reducer = combineReducers({
   userLogin: userLoginReducer,
   loadProjects: loadProjectsReducer,
+  loadProject: loadProjectReducer,
   loadTrending: loadTrendingProjectsReducer,
   loadRecommended: loadReccomendedProjectsReducer,
   loadLatest: loadLatestProjectsReducer,

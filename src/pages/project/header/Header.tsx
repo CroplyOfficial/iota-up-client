@@ -297,13 +297,16 @@ export const ProjectHeader = (props: IProps) => {
         <div className={classes.left}>
           <div
             className={classes.mainImageWrapper}
-            onClick={() => showImageModal()}
+            /* onClick={() => showImageModal()} */
           >
             <img src={mainImage} className={classes.objectFill} />
           </div>
           <div className={classes.imagesWrapper}>
             {media.slice(1, media.length).map((image, i) => (
-              <div className={"image-" + i++} onClick={showImageModal}>
+              <div
+                className={"image-" + i++}
+                /*  onClick={showImageModal} */
+              >
                 <img src={image} className={classes.objectFill} />
               </div>
             ))}

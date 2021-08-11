@@ -20,18 +20,22 @@ import { useSelector } from "react-redux";
 import { Facebook, LinkedIn } from "@material-ui/icons";
 import { API } from "../../config";
 import { IProject } from "../../interfaces/project.interface";
+import { CloseSharp } from "@material-ui/icons";
 import { Card2 } from "../card/card2";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     modal: {
       width: "100vw",
-      minHeight: "100vh",
+      height: "100vh",
       overflowX: "hidden",
-      position: "absolute",
+      position: "fixed",
       zIndex: 2,
       top: 0,
       left: 0,
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
     },
     level2: {
       display: "flex",
@@ -57,15 +61,13 @@ const useStyles = makeStyles((theme: Theme) =>
       display: "flex",
       flexDirection: "column",
       justifyContent: "space-between",
-      position: "absolute",
-      transform: "translate(50%,50%)",
-      top: 0,
-      left: 0,
+      position: "relative",
       borderRadius: "15px",
       padding: "15px",
       paddingBottom: "20px",
       paddingTop: "20px",
       click: "unset",
+      transform: "translate(0,35%)",
     },
     header: {
       textAlign: "center",
@@ -159,8 +161,13 @@ const useStyles = makeStyles((theme: Theme) =>
       gap: "15px",
     },
     projects: {
-      marginTop: "5rem",
-      width: "80%",
+      marginTop: "10rem",
+      width: "70%",
+      gap: "75px",
+      transform: "translate(0,35%)",
+      display: "flex",
+      flexDirection: "row",
+      justifyContent: "flex-start",
     },
     level: {
       width: "100%",
@@ -173,6 +180,12 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     pointer: {},
     icon: {},
+    justifyEnd: {
+      position: "absolute",
+      top: 0,
+      right: 0,
+      transform: "translate(0,0)",
+    },
   })
 );
 
@@ -216,7 +229,13 @@ export const UserProjectsModal = ({ showing, onClick }: IProps) => {
           <div className={classes.background} onClick={onClick}></div>
           <div className={classes.modal}>
             <div className={classes.card}>
-              <div className={classes.header}>About the creator</div>
+              <div className={classes.header}>
+                About the creator
+                <Button onClick={onClick} className={classes.justifyEnd}>
+                  <CloseSharp />
+                </Button>
+              </div>
+
               <div className={classes.body}>
                 <div className={classes.level2}>
                   <Avatar src={avatar} alt={fullName} />
@@ -283,7 +302,7 @@ export const UserProjectsModal = ({ showing, onClick }: IProps) => {
             </div>
             <div className={classes.projects}>
               {otherProjects.map((p: IProject) => {
-                return <Card2 project={p} />;
+                return <Card2 project={p} onClick={() => onClick("")} />;
               })}
             </div>
           </div>

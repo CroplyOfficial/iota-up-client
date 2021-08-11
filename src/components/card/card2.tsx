@@ -8,6 +8,7 @@ import {
 } from "@material-ui/core";
 import { IProject } from "../../interfaces/project.interface";
 import { MoneySharp, CalendarTodaySharp } from "@material-ui/icons";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -15,6 +16,7 @@ const useStyles = makeStyles(() =>
       width: "381px",
       height: "381px",
       borderRadius: ".8rem",
+      cursor: "pointer",
     },
     media: {
       height: "175px",
@@ -59,17 +61,23 @@ const useStyles = makeStyles(() =>
 );
 interface IProps {
   project: IProject;
+  onClick?: () => void;
 }
 export const Card2 = (props: IProps) => {
-  const { project } = props;
-  const { media, name, backers, upvotes } = project;
+  const { project, onClick } = props;
+  const { media, name, backers, upvotes, _id } = project;
   const classes = useStyles();
   const mainTag = project?.tags[0];
   const fallbackImage = "https://source.unsplash.com/random";
+  const history = useHistory();
 
   const mainImage = project?.media[0] || fallbackImage;
+  const handleOnClick = () => {
+    history.push("/project/" + _id);
+    onClick && onClick();
+  };
   return (
-    <MaterialCard className={classes.root}>
+    <MaterialCard className={classes.root} onClick={handleOnClick}>
       <CardMedia className={classes.media} image={mainImage} />
       <div className={classes.body}>
         <Typography color="primary" className={classes.header}>

@@ -2,6 +2,9 @@ import {
   PROJECTS_LOADING_REQUEST,
   PROJECTS_LOADING_SUCCESS,
   PROJECTS_LOADING_FAIL,
+  PROJECT_LOADING_REQUEST,
+  PROJECT_LOADING_SUCCESS,
+  PROJECT_LOADING_FAIL,
   GET_TRENDING_SUCCESS,
   GET_TRENDING_FAIL,
   GET_TRENDING_REQUEST,
@@ -23,6 +26,19 @@ export const loadProjectsReducer = (state = {}, action: any) => {
     case PROJECTS_LOADING_SUCCESS:
       return { loading: false, projects: action.payload };
     case PROJECTS_LOADING_FAIL:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const loadProjectReducer = (state = {}, action: any) => {
+  switch (action.type) {
+    case PROJECT_LOADING_REQUEST:
+      return { loading: true };
+    case PROJECT_LOADING_SUCCESS:
+      return { loading: false, project: action.payload };
+    case PROJECT_LOADING_FAIL:
       return { loading: false, error: action.payload };
     default:
       return state;

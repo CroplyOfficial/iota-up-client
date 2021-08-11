@@ -136,8 +136,11 @@ export const Projects = (props: IProps) => {
         ? sortProjects(queryParams.order)
         : (sortedProjects = filteredProjects);
 
-      sortedProjects = [...sortedProjects];
-      setRenderedProjects(sortedProjects);
+      if (sortedProjects) {
+        sortedProjects =
+          sortedProjects.length > 1 ? [...sortedProjects] : sortedProjects;
+        setRenderedProjects(sortedProjects);
+      }
     };
 
     reRender();

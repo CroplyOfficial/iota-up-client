@@ -12,6 +12,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
+import { CircularProgressWithLabel } from "./progressbar";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -231,6 +232,13 @@ export const ProjectImageModal = (props: IProps) => {
   };
 
   useEffect(() => {
+    if (progress !== 100) return;
+    setTimeout(() => {
+      setProgress(0);
+    }, 3000);
+  }, [progress]);
+
+  useEffect(() => {
     uploadHandler();
   }, [file]);
   return (
@@ -286,6 +294,8 @@ export const ProjectImageModal = (props: IProps) => {
                 >
                   Add Image
                 </Button>
+                <div style={{ paddingBottom: "10px" }}></div>
+                <CircularProgressWithLabel value={progress} />
                 <input
                   type="file"
                   onChange={(e: any) => {
