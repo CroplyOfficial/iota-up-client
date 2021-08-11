@@ -9,6 +9,7 @@ export const useFallbackImage = () =>
 export const API = "http://localhost:5000/api";
 export const fallbackProjectImage =
   "https://images.unsplash.com/photo-1604966795869-8df0b4517138?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1051&q=80";
+export const iotaWalletAdress = "iota:123123123";
 export const MainCategories = {
   community: [
     "business",
