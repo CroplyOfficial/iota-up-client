@@ -242,7 +242,7 @@ export const EditableProjectHeader = (props: IProps) => {
       statsWrapper: {
         display: "flex",
         justifyContent: "space-between",
-        alignItems: "center",
+        coveralignItems: "center",
         paddingBottom: "10px",
       },
       stats: {
@@ -335,7 +335,7 @@ export const EditableProjectHeader = (props: IProps) => {
       },
 
       objectFill: {
-        objectFit: "fill",
+        objectFit: "cover",
         width: "100%",
         height: "100%",
       },

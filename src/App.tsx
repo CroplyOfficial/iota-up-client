@@ -19,7 +19,6 @@ function App(props: any) {
   const toggleShowingLoginModal = () =>
     setShowingLoginModal(!showingLoginModal);
   console.log(window.location.pathname, window.location.href, props);
-
   return (
     <div className="App">
       <ThemeProvider theme={theme}>

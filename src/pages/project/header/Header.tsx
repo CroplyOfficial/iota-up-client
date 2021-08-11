@@ -256,7 +256,7 @@ export const ProjectHeader = (props: IProps) => {
       },
 
       objectFill: {
-        objectFit: "fill",
+        objectFit: "cover",
         width: "100%",
         height: "100%",
       },
