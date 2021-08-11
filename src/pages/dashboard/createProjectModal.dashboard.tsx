@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme: Theme) =>
       height: "100vh",
       backgroundColor: "rgba(0,0,0,0.5)",
       position: "fixed",
-      zIndex: 2,
+      zIndex: 10,
       top: 0,
       left: 0,
     },
@@ -57,6 +57,7 @@ const useStyles = makeStyles((theme: Theme) =>
       fontWeight: 600,
       fontStyle: "normal",
       paddingBottom: "15px",
+      color: "black",
     },
     body: {
       minHeight: "400px",
