@@ -13,6 +13,7 @@ import { IProject } from "../../../interfaces/project.interface";
 import { ReactComponent as UpButton } from "../../../static/images/icons/up.svg";
 import { UserProjectsModal } from "../../../components/modals/UserProjectsModal";
 import { useState, useEffect } from "react";
+import { RWebShare } from "react-web-share";
 
 interface IProps {
   project: IProject;
@@ -132,7 +133,16 @@ export const HeaderCardHeader = (props: IProps) => {
               <Flag fontSize="large" color="disabled" />
             </IconButton>
             <IconButton>
-              <Share fontSize="large" color="disabled" />
+              <RWebShare
+                data={{
+                  text: `Checkout this project on the UP! It's called ${project.name}. I think you'll like it!`,
+                  url: window.location.href,
+                  title: "Share this project on the UP.",
+                }}
+                onClick={() => console.log("shared it")}
+              >
+                <Share fontSize="large" color="disabled" />
+              </RWebShare>
             </IconButton>
             <IconButton>
               {/* <ArrowUpward fontSize="large" color="primary" /> */}
