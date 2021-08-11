@@ -1,4 +1,5 @@
 export const API = "http://localhost:5000/api";
+export const iotaWalletAdress = "iota:123123123";
 export const MainCategories = {
   community: [
     "business",
