@@ -152,6 +152,7 @@ const useStyles = makeStyles((theme: Theme) =>
       width: "200px",
       height: "200px",
       backgroundPosition: "center center",
+      objectFit: "cover",
       backgroundRepeat: "no-repeat",
     },
     imageMissing: {
@@ -309,26 +310,16 @@ export const ProjectImageModal = (props: IProps) => {
                 />
               </div>
               <div className={classes.right}>
-                {featuredImage && (
-                  <>
-                    <Typography className={classes.label}>
-                      Featured Image
-                    </Typography>
-                    <img
-                      src={featuredImage}
-                      className={classes.featuredImage}
-                    />
-                  </>
-                )}
-
                 {images.length ? (
                   <>
-                    <Typography className={classes.label}>
-                      Secondary Images
-                    </Typography>
+                    <Typography className={classes.label}>Images</Typography>
                     <div className={classes.images}>
-                      {images.map((i) => (
-                        <img src={i} className={classes.image} />
+                      {media.map((image, index) => (
+                        <img
+                          src={image}
+                          className={classes.image}
+                          alt={`projectpicture${index}`}
+                        />
                       ))}
                     </div>
                   </>
