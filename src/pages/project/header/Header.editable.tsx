@@ -122,6 +122,7 @@ export const EditableProjectHeader = (props: IProps) => {
       },
       config
     );
+    console.log("testtttt");
     onToggle();
   };
 

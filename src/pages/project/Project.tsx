@@ -78,11 +78,11 @@ export const ProjectOverview = ({ match }: any) => {
   const [editableHeader, setEditableHeader] = useState<boolean>(false);
   const [editableBody, setEditableBody] = useState<boolean>(false);
   const toggleEditableHeader = () => {
+    dispatch(getProject(match.params.id));
     setEditableHeader(!editableHeader);
   };
   const toggleEditableBody = () => {
     setEditableBody(!editableBody);
-    console.log(editableBody);
   };
 
   useEffect(() => {
