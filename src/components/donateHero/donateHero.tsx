@@ -6,6 +6,8 @@ import {
   Theme,
 } from "@material-ui/core";
 import { Favorite } from "@material-ui/icons";
+import { DonateButton } from "../DonateButton/DonateButton";
+import { iotaWalletAdress } from "../../config";
 
 interface IProps {
   onClick?: () => void;
@@ -64,17 +66,23 @@ export const DonateHero = (props: IProps) => {
         Help support our work.
       </Typography>
 
-      <Button
-        className={classes.button}
-        color="secondary"
-        variant="contained"
-        onClick={onClick}
+      <DonateButton
+        recipientName="Iota UP"
+        text="donation to up project"
+        wallet={iotaWalletAdress}
       >
-        <Typography variant="h6" className={classes.buttonText}>
-          Donate Now
-        </Typography>
-        <Favorite className={classes.icon} />
-      </Button>
+        <Button
+          className={classes.button}
+          color="secondary"
+          variant="contained"
+          onClick={onClick}
+        >
+          <Typography variant="h6" className={classes.buttonText}>
+            Donate Now
+          </Typography>
+          <Favorite className={classes.icon} />
+        </Button>
+      </DonateButton>
     </div>
   );
 };
