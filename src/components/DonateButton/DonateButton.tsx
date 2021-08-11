@@ -4,26 +4,26 @@ interface IProps {
   recipientName: string;
   wallet: string;
   text: string;
+  children: React.ReactNode;
 }
 
 const DonateButton = (props: IProps) => {
-  const { recipientName, wallet, text } = props;
+  const { recipientName, wallet, text, children } = props;
   const identifier: string = uuidv4();
 
   return (
-    <>
-      <button
-        onClick={(e: any) => {
-          // @ts-ignore
-          const iotaButton: any = document
-            .getElementById(identifier)
-            .shadowRoot.querySelector("ibtn-button-donation")
-            .shadowRoot.querySelector("button");
-          iotaButton.click();
-        }}
-      >
-        {text}
-      </button>
+    <div
+      onClick={(e: any) => {
+        // @ts-ignore
+        const iotaButton: any = document
+          .getElementById(identifier)
+          .shadowRoot.querySelector("ibtn-button-donation")
+          .shadowRoot.querySelector("button");
+        iotaButton.click();
+      }}
+    >
+      {children}
+
       <div style={{ display: "none" }}>
         {/* @ts-ignore */}
         <iota-button
@@ -37,7 +37,7 @@ const DonateButton = (props: IProps) => {
           {/* @ts-ignore */}
         </iota-button>
       </div>
-    </>
+    </div>
   );
 };
 

@@ -6,6 +6,8 @@ import {
 } from "@material-ui/core";
 import { FavoriteSharp } from "@material-ui/icons";
 import { Container } from "../../../components/container/container";
+import { DonateButton } from "../../../components/DonateButton/DonateButton";
+import { iotaWalletAdress } from "../../../config";
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -63,15 +65,21 @@ export const ProjectsDonateCard = () => {
         of independent creators.
       </Typography>
 
-      <Button
-        className={classes.button}
-        variant="contained"
-        color="secondary"
-        endIcon={<FavoriteSharp />}
-        onClick={onClick}
+      <DonateButton
+        recipientName="Iota UP"
+        text="donation to the UP"
+        wallet={iotaWalletAdress}
       >
-        Donate Now
-      </Button>
+        <Button
+          className={classes.button}
+          variant="contained"
+          color="secondary"
+          endIcon={<FavoriteSharp />}
+          onClick={onClick}
+        >
+          Donate Now
+        </Button>
+      </DonateButton>
     </div>
   );
 };

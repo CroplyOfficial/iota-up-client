@@ -382,20 +382,17 @@ export const ProjectHeader = (props: IProps) => {
             </div>
 
             <div className={classes.buttons}>
-              <DonateButton
-                wallet={wallet}
-                text="DONATE"
-                recipientName={name}
-              />
-              <Button
-                variant="contained"
-                color="secondary"
-                className={classes.button}
-                style={{ border: "none", color: "white" }}
-              >
-                Donate Now
-                <FavoriteSharp />
-              </Button>
+              <DonateButton wallet={wallet} text="DONATE" recipientName={name}>
+                <Button
+                  variant="contained"
+                  color="secondary"
+                  className={classes.button}
+                  style={{ border: "none", color: "white" }}
+                >
+                  Donate Now
+                  <FavoriteSharp />
+                </Button>
+              </DonateButton>
               <Button
                 variant="outlined"
                 color="primary"
