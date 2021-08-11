@@ -9,6 +9,7 @@ import {
 } from "@material-ui/core";
 import { ExpandMore } from "@material-ui/icons";
 import { Card } from "../../../components/card/card";
+import { ProjectsCard } from "../../../components/card/card3";
 import { Container } from "../../../components/container/container";
 import { IProject } from "../../../interfaces/project.interface";
 import { ProjectsDonateCard } from "./donateCard.projects";
@@ -152,7 +153,8 @@ export const ProjectsOverview = (props: IProps) => {
             <div className={classes.projectsWrapper}>
               {projects &&
                 projects.map((p, i) => (
-                  <Card project={p} key={"project-card#" + i++} />
+                  //<Card project={p} key={"project-card#" + i++} />
+                  <ProjectsCard project={p} key={"project-card#" + i++} />
                 ))}
             </div>
             {projects &&
