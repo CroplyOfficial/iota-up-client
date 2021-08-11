@@ -104,12 +104,12 @@ export const HeaderCardHeader = (props: IProps) => {
           ></Avatar>
         }
         title={
-          <span className={classes.header} onClick={toggleModal}>
+          <span className={classes.header} onClick={showUserProjectsModal}>
             {project.author && project.author.fullName}
           </span>
         }
         subheader={
-          <span onClick={toggleModal}>
+          <span onClick={showUserProjectsModal}>
             <span className={classes.subHeader}>
               {" "}
               {`${
