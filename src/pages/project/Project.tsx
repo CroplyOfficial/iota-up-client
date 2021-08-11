@@ -16,8 +16,8 @@ import { IProject } from "../../interfaces/project.interface";
 import { getTrendingProjects } from "../../actions/projectsActions";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store";
-import axios from "axios";
 import { ProjectCreatePostModal } from "./createPostModal.project";
+import { getProject } from "../../actions/projectsActions";
 
 interface IRouteParams {
   id: string;
@@ -44,6 +44,9 @@ export const ProjectOverview = ({ match }: any) => {
 
   const trendingMeta = useSelector((state: RootState) => state.loadTrending);
   const { trendingProjects }: any = trendingMeta;
+
+  const projectMeta = useSelector((state: RootState) => state.loadProject);
+  const { project }: any = projectMeta;
 
   const featuredTitle = "Recommended Projects";
   const featuredSubHeader = (
@@ -84,6 +87,7 @@ export const ProjectOverview = ({ match }: any) => {
 
   useEffect(() => {
     dispatch(getTrendingProjects());
+    dispatch(getProject(match.params.id));
   }, []);
 
   useEffect(() => {
@@ -91,20 +95,8 @@ export const ProjectOverview = ({ match }: any) => {
   }, [trendingProjects]);
 
   useEffect(() => {
-    const setProject = async () => {
-      const projectById = await axios.get(
-        `/api/projects/by-id/${match.params.id}`,
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-      setP(projectById.data);
-    };
-
-    setProject();
-  }, []);
+    setP(project);
+  }, [project]);
 
   return (
     <div className={classes.root}>

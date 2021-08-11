@@ -21,25 +21,25 @@ import {
 } from "../constants/projectConstants";
 
 /**
- * Get the project by ID and save them to the state 
- * 
+ * Get the project by ID and save them to the state
+ *
  * @reducer  loadProject
  */
 
 export const getProject = (id: string) => async (dispatch: any) => {
   try {
     dispatch({
-      type: PROJECT_LOADING_REQUEST
-    })
-    const {data } = await axios.get(`/api/projects/by-id/${id}`, {
+      type: PROJECT_LOADING_REQUEST,
+    });
+    const { data } = await axios.get(`/api/projects/by-id/${id}`, {
       headers: {
-        'Content-Type': 'application/json'
-      }
-    })
+        "Content-Type": "application/json",
+      },
+    });
     dispatch({
       type: PROJECT_LOADING_SUCCESS,
-      payload: data
-    })
+      payload: data,
+    });
   } catch (error) {
     dispatch({
       type: PROJECT_LOADING_FAIL,
@@ -48,7 +48,8 @@ export const getProject = (id: string) => async (dispatch: any) => {
           ? error.response.data.message
           : error.message,
     });
-}
+  }
+};
 
 /**
  * Get all the projects and set the state to the object
