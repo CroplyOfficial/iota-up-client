@@ -17,7 +17,9 @@ import { getTrendingProjects } from "../../actions/projectsActions";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store";
 import { ProjectCreatePostModal } from "./createPostModal.project";
+import { UserProjectsModal } from "../../components/modals/UserProjectsModal";
 import { getProject } from "../../actions/projectsActions";
+import axios from "axios";
 
 interface IRouteParams {
   id: string;
@@ -88,18 +90,41 @@ export const ProjectOverview = ({ match }: any) => {
   useEffect(() => {
     dispatch(getTrendingProjects());
     dispatch(getProject(match.params.id));
-  }, []);
+  }, [window.location.href]);
 
   useEffect(() => {
     setTrending(trendingProjects);
   }, [trendingProjects]);
 
   useEffect(() => {
-    setP(project);
+    const setProject = async () => {
+      const projectById = await axios.get(
+        `/api/projects/by-id/${match.params.id}`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      setP(projectById.data);
+    };
+
+    setProject();
   }, [project]);
+  const [showUserProjectsModal, setShowUserProjectsModal] =
+    useState<boolean>(false);
+  const toggleShowUserProjectModal = () => {
+    setShowUserProjectsModal(!showUserProjectsModal);
+  };
 
   return (
     <div className={classes.root}>
+      {
+        <UserProjectsModal
+          onClick={toggleShowUserProjectModal}
+          showing={showUserProjectsModal}
+        />
+      }
       {postModal && Object.keys(postModal).length ? (
         <ProjectPostModal
           post={postModal as IPost}
@@ -131,6 +156,7 @@ export const ProjectOverview = ({ match }: any) => {
               variant={variant}
               showImageModal={toggleShowImageModal}
               onToggle={toggleEditableHeader}
+              showUserProjectsModal={toggleShowUserProjectModal}
             />
           ) : (
             <EditableProjectHeader
@@ -138,6 +164,7 @@ export const ProjectOverview = ({ match }: any) => {
               variant={variant}
               showImageModal={toggleShowImageModal}
               onToggle={toggleEditableHeader}
+              showUserProjectsModal={toggleShowUserProjectModal}
             />
           )}
           {!editableBody ? (

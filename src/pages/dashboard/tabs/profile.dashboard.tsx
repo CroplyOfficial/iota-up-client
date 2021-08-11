@@ -214,7 +214,6 @@ export const DashboardProfile = (props: IProps) => {
   };
   const handleAddSkill = (e: React.KeyboardEvent<HTMLInputElement>) => {
     e.preventDefault();
-    console.log(newSkill);
     if (!newSkill.length) return;
     if (skills.includes(newSkill.toLowerCase())) return;
     if (skills.length >= 6) return;
@@ -248,6 +247,7 @@ export const DashboardProfile = (props: IProps) => {
               variant="outlined"
               icon={<Facebook className={classes.icon} />}
               className={classes.pointer}
+              color={connections?.includes("facebook") ? "primary" : undefined}
             />
           </div>
           <div
@@ -271,6 +271,7 @@ export const DashboardProfile = (props: IProps) => {
               variant="outlined"
               icon={<LinkedIn className={classes.icon} />}
               className={classes.pointer}
+              color={connections?.includes("linked in") ? "primary" : undefined}
             />
           </div>
         </div>
