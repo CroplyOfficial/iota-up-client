@@ -208,20 +208,8 @@ export const UserProjectsModal = ({ showing, onClick, project }: IProps) => {
     };
     tbd();
   }, [project]);
-  const userMeta = useSelector((state: RootState) => state.userLogin);
-  const { userInfo }: any = userMeta;
-  const {
-    firstName,
-    lastName,
-    city,
-    country,
-    skills,
-    connections,
-    avatar,
-    projects,
-    bio,
-    _id,
-  } = userInfo;
+  const connections = ["google"];
+
   const fullName = creator?.displayName;
   const location =
     creator?.city &&
@@ -232,7 +220,9 @@ export const UserProjectsModal = ({ showing, onClick, project }: IProps) => {
 
   useEffect(() => {
     const getProjects = async () => {
-      const response = await axios.get(`/api/projects/by-user/${_id}`);
+      const response = await axios.get(
+        `/api/projects/by-user/${project?.projectAuthor}`
+      );
       const { data } = response;
       setOtherProjects(data);
     };
@@ -301,7 +291,7 @@ export const UserProjectsModal = ({ showing, onClick, project }: IProps) => {
                   </div>
                 </div>
                 <div className={`${classes.half} ${classes.chips}`}>
-                  {skills.map((s: string) => (
+                  {creator?.skills?.map((s: string) => (
                     <Chip label={s} />
                   ))}
                 </div>

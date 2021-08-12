@@ -7,4 +7,5 @@ export interface ICreator {
   city?: string;
   country?: string;
   bio?: string;
+  skills: string[];
 }
