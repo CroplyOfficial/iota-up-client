@@ -220,6 +220,7 @@ export const UserProjectsModal = ({ showing, onClick, project }: IProps) => {
 
   useEffect(() => {
     const getProjects = async () => {
+      if (!project?.projectAuthor) return;
       const response = await axios.get(
         `/api/projects/by-user/${project?.projectAuthor}`
       );
@@ -227,8 +228,7 @@ export const UserProjectsModal = ({ showing, onClick, project }: IProps) => {
       setOtherProjects(data);
     };
     getProjects();
-  }, []);
-  console.log("creator:", creator, project?.projectAuthor);
+  }, [project]);
 
   return (
     <div>
