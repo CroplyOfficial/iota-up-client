@@ -121,6 +121,7 @@ export const ProjectOverview = ({ match }: any) => {
     <div className={classes.root}>
       {
         <UserProjectsModal
+          project={project}
           onClick={toggleShowUserProjectModal}
           showing={showUserProjectsModal}
         />
