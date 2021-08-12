@@ -236,43 +236,55 @@ export const DashboardProfile = (props: IProps) => {
 
       <div className={classes.container}>
         <Typography className={classes.header}>Profile Settings</Typography>
-        <Typography className={classes.label}>Verified with</Typography>
-        <div className={classes.socials}>
-          <div
-            className={classes.social}
-            onClick={() => (window.location.href = `${API}/users/authfacebook`)}
-          >
-            <Chip
-              label="Facebook"
-              variant="outlined"
-              icon={<Facebook className={classes.icon} />}
-              className={classes.pointer}
-              color={connections?.includes("facebook") ? "primary" : undefined}
-            />
-          </div>
-          <div
-            className={classes.social}
-            onClick={() => (window.location.href = `${API}/users/authgoogle`)}
-          >
-            <Chip
-              label="Google"
-              variant="outlined"
-              icon={<LinkedIn className={classes.icon} />}
-              className={classes.pointer}
-              color={connections?.includes("google") ? "primary" : undefined}
-            />
-          </div>
-          <div
-            className={classes.social}
-            onClick={() => (window.location.href = `${API}/users/authlinkedin`)}
-          >
-            <Chip
-              label="Linked In"
-              variant="outlined"
-              icon={<LinkedIn className={classes.icon} />}
-              className={classes.pointer}
-              color={connections?.includes("linked in") ? "primary" : undefined}
-            />
+        <Typography className={classes.label} style={{ display: "none" }}>
+          Verified with
+        </Typography>
+        <div style={{ display: "none" }}>
+          <div className={classes.socials}>
+            <div
+              className={classes.social}
+              onClick={() =>
+                (window.location.href = `${API}/users/authfacebook`)
+              }
+            >
+              <Chip
+                label="Facebook"
+                variant="outlined"
+                icon={<Facebook className={classes.icon} />}
+                className={classes.pointer}
+                color={
+                  connections?.includes("facebook") ? "primary" : undefined
+                }
+              />
+            </div>
+            <div
+              className={classes.social}
+              onClick={() => (window.location.href = `${API}/users/authgoogle`)}
+            >
+              <Chip
+                label="Google"
+                variant="outlined"
+                icon={<LinkedIn className={classes.icon} />}
+                className={classes.pointer}
+                color={connections?.includes("google") ? "primary" : undefined}
+              />
+            </div>
+            <div
+              className={classes.social}
+              onClick={() =>
+                (window.location.href = `${API}/users/authlinkedin`)
+              }
+            >
+              <Chip
+                label="Linked In"
+                variant="outlined"
+                icon={<LinkedIn className={classes.icon} />}
+                className={classes.pointer}
+                color={
+                  connections?.includes("linked in") ? "primary" : undefined
+                }
+              />
+            </div>
           </div>
         </div>
 
@@ -280,7 +292,7 @@ export const DashboardProfile = (props: IProps) => {
           type="text"
           onChange={(e: any) => setUsername(e.target.value)}
           value={username || null}
-          label="Username"
+          label="Display Name"
           className={classes.textField}
         />
         <br />

@@ -210,7 +210,8 @@ export const UserProjectsModal = ({ showing, onClick }: IProps) => {
     _id,
   } = userInfo;
   const fullName = `${firstName} ${lastName}`;
-  const location = `${city}, ${country}`;
+  const location = city && country && `${city}, ${country}`;
+  console.log(location);
   const classes = useStyles();
   const [otherProjects, setOtherProjects] = useState<IProject[]>([]);
 
@@ -248,34 +249,40 @@ export const UserProjectsModal = ({ showing, onClick }: IProps) => {
                     `Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has`}
                 </Typography>
 
-                <div className={classes.socials}>
-                  <Chip
-                    label="Facebook"
-                    variant="outlined"
-                    icon={<Facebook className={classes.icon} />}
-                    className={classes.pointer}
-                    color={
-                      connections?.includes("facebook") ? "primary" : undefined
-                    }
-                  />
-                  <Chip
-                    label="Google"
-                    variant="outlined"
-                    icon={<LinkedIn className={classes.icon} />}
-                    className={classes.pointer}
-                    color={
-                      connections?.includes("google") ? "primary" : undefined
-                    }
-                  />
-                  <Chip
-                    label="Linked In"
-                    variant="outlined"
-                    icon={<LinkedIn className={classes.icon} />}
-                    className={classes.pointer}
-                    color={
-                      connections?.includes("linked in") ? "primary" : undefined
-                    }
-                  />
+                <div style={{ display: "none" }}>
+                  <div className={classes.socials}>
+                    <Chip
+                      label="Facebook"
+                      variant="outlined"
+                      icon={<Facebook className={classes.icon} />}
+                      className={classes.pointer}
+                      color={
+                        connections?.includes("facebook")
+                          ? "primary"
+                          : undefined
+                      }
+                    />
+                    <Chip
+                      label="Google"
+                      variant="outlined"
+                      icon={<LinkedIn className={classes.icon} />}
+                      className={classes.pointer}
+                      color={
+                        connections?.includes("google") ? "primary" : undefined
+                      }
+                    />
+                    <Chip
+                      label="Linked In"
+                      variant="outlined"
+                      icon={<LinkedIn className={classes.icon} />}
+                      className={classes.pointer}
+                      color={
+                        connections?.includes("linked in")
+                          ? "primary"
+                          : undefined
+                      }
+                    />
+                  </div>
                 </div>
                 <div className={`${classes.half} ${classes.chips}`}>
                   {skills.map((s: string) => (
