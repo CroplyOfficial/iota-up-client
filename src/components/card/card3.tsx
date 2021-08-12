@@ -157,7 +157,11 @@ export function ProjectsCard(props: IProps) {
       <CardHeader
         className={classes.cardHeader}
         avatar={
-          <Avatar aria-label="avatar" className={classes.avatar}>
+          <Avatar
+            src={creator?.avatar}
+            aria-label="avatar"
+            className={classes.avatar}
+          >
             {creator?.fullName[0] || "R J"}
           </Avatar>
         }

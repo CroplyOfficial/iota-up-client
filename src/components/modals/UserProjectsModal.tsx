@@ -22,6 +22,7 @@ import { API } from "../../config";
 import { IProject } from "../../interfaces/project.interface";
 import { CloseSharp } from "@material-ui/icons";
 import { Card2 } from "../card/card2";
+import { ICreator } from "../../interfaces/creator.interface";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -193,8 +194,20 @@ const useStyles = makeStyles((theme: Theme) =>
 interface IProps {
   showing: boolean;
   onClick: (e: any) => void;
+  project: IProject;
 }
-export const UserProjectsModal = ({ showing, onClick }: IProps) => {
+export const UserProjectsModal = ({ showing, onClick, project }: IProps) => {
+  const [creator, setCreator] = useState<ICreator>();
+  console.log("", project);
+  useEffect(() => {
+    const tbd = async () => {
+      const { data } = await axios.get(
+        `/api/users/overview/${project?.projectAuthor}`
+      );
+      setCreator(data);
+    };
+    tbd();
+  }, [project]);
   const userMeta = useSelector((state: RootState) => state.userLogin);
   const { userInfo }: any = userMeta;
   const {
@@ -209,9 +222,11 @@ export const UserProjectsModal = ({ showing, onClick }: IProps) => {
     bio,
     _id,
   } = userInfo;
-  const fullName = `${firstName} ${lastName}`;
-  const location = city && country && `${city}, ${country}`;
-  console.log(location);
+  const fullName = creator?.displayName;
+  const location =
+    creator?.city &&
+    creator?.country &&
+    `${creator?.city}, ${creator?.country}`;
   const classes = useStyles();
   const [otherProjects, setOtherProjects] = useState<IProject[]>([]);
 
@@ -223,6 +238,7 @@ export const UserProjectsModal = ({ showing, onClick }: IProps) => {
     };
     getProjects();
   }, []);
+  console.log("creator:", creator, project?.projectAuthor);
 
   return (
     <div>
@@ -240,12 +256,12 @@ export const UserProjectsModal = ({ showing, onClick }: IProps) => {
 
               <div className={classes.body}>
                 <div className={classes.level2}>
-                  <Avatar src={avatar} alt={fullName} />
+                  <Avatar src={creator?.avatar} alt={fullName} />
                   <Typography className={classes.name}>{fullName}</Typography>
                 </div>
                 <Typography className={classes.location}>{location}</Typography>
                 <Typography className={classes.bio}>
-                  {bio ||
+                  {creator?.bio ||
                     `Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has`}
                 </Typography>
 
