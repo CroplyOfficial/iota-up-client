@@ -5,8 +5,6 @@ import {
   Button,
   TextField,
 } from "@material-ui/core";
-import { IPost } from "../../interfaces/post.interface";
-import htmlToDraft from "html-to-draftjs";
 import { EditorState, ContentState, convertToRaw } from "draft-js";
 import { Editor } from "react-draft-wysiwyg";
 import { CloseSharp } from "@material-ui/icons";
@@ -15,6 +13,8 @@ import draftToHtml from "draftjs-to-html";
 import { IProject } from "../../interfaces/project.interface";
 import { useSelector } from "react-redux";
 import axios from "axios";
+import { getProject } from "../../actions/projectsActions";
+import { useDispatch } from "react-redux";
 import { RootState } from "../../store";
 
 const useStyles = makeStyles(() =>
@@ -123,6 +123,7 @@ interface IProps {
   onClick: () => void;
 }
 export const ProjectCreatePostModal = (props: IProps) => {
+  const dispatch = useDispatch();
   const classes = useStyles();
   const { onClick } = props;
   const [title, setTitle] = useState<string>("");
@@ -170,6 +171,7 @@ export const ProjectCreatePostModal = (props: IProps) => {
       },
       config
     );
+    dispatch(getProject(props.project._id));
     onClick();
   };
 
