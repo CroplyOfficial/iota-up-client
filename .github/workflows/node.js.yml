@@ -19,12 +19,7 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: 10.x
-      - name: Install dependencies
-        run: npm i
-  build: 
-    runs-on: self-hosted
-    steps: 
-      - name: Generate build
-        run: npm run build
-      - name: restart prod server
-        run: pm2 restart deploy
+      - name: run real deployment script that hopefully, "hopefully" works
+        run: |
+           chmod +x ./deploy.sh
+           ./deploy.sh
