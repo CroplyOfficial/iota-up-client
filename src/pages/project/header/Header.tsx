@@ -277,13 +277,6 @@ export const ProjectHeader = (props: IProps) => {
   const [showError, setShowError] = useState<string>("");
   const [showSuccess, setShowSuccess] = useState<string>("");
 
-  const handleShowError = (text: string) => {
-    setShowError(text);
-  };
-  const handleShowSuccess = (text: string) => {
-    setShowSuccess(text);
-  };
-
   const handleCloseError = (event?: React.SyntheticEvent, reason?: string) => {
     if (reason === "clickaway") {
       return;
@@ -304,7 +297,7 @@ export const ProjectHeader = (props: IProps) => {
 
   const handleUpvotes = async () => {
     if (!userInfo?.token) {
-      return handleShowError("You are not logged in!");
+      return setShowError("You are not logged in!");
     }
     const config = {
       headers: {
@@ -321,10 +314,10 @@ export const ProjectHeader = (props: IProps) => {
     console.log(data);
     if (isProjectUpvoted) {
       setUpvotesCount(upvotesCount + 1);
-      handleShowSuccess("UP voted Project!");
+      setShowSuccess("UP voted Project!");
     } else {
       setUpvotesCount(upvotesCount - 1);
-      handleShowSuccess("Removed UP Vote!");
+      setShowSuccess("Removed UP Vote!");
     }
   };
 
