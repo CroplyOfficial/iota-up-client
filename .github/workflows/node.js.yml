@@ -10,7 +10,7 @@ on:
     branches: [ main ]
 
 jobs:
-  build:
+  install deps:
     runs-on: self-hosted
     steps:
       - name: Clone repository
@@ -18,9 +18,12 @@ jobs:
       - name: Use Node.js 10.x
         uses: actions/setup-node@v1
         with:
-          node-version: 12.x
+          node-version: 10.x
       - name: Install dependencies
         run: npm i
+  build: 
+    runs-on: self-hosted
+    steps: 
       - name: Generate build
         run: npm run build
       - name: restart prod server
