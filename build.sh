@@ -1,3 +1,3 @@
 npm i 
 npm run build
-pm2 restart deploy.sh
+pm2 restart deploy
