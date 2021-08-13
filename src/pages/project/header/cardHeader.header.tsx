@@ -144,13 +144,13 @@ export const HeaderCardHeader = (props: IProps) => {
                 <Share fontSize="large" color="disabled" />
               </RWebShare>
             </IconButton>
-            <IconButton>
+            <IconButton onClick={handleUpvotes}>
               {/* <ArrowUpward fontSize="large" color="primary" /> */}
               <SvgIcon
                 fontSize="large"
                 color={isLiked ? "primary" : "disabled"}
               >
-                <UpButton onClick={handleUpvotes} />
+                <UpButton />
               </SvgIcon>
             </IconButton>
           </div>
