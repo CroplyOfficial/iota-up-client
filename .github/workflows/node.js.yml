@@ -10,7 +10,7 @@ on:
     branches: [ main ]
 
 jobs:
-  install deps:
+  install_deps:
     runs-on: self-hosted
     steps:
       - name: Clone repository
