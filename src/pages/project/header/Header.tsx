@@ -82,7 +82,7 @@ export const ProjectHeader = (props: IProps) => {
         paddingRight: "20px",
       },
       mainImageWrapper: {
-        width: "756px",
+        width: "100%",
         height: "425px",
         borderRadius: "20px",
         backgroundColor: "#f5f5f5",
@@ -166,6 +166,8 @@ export const ProjectHeader = (props: IProps) => {
         alignItems: "center",
         paddingTop: "75px",
         paddingBottom: "10px",
+        paddingRight: "70px",
+        flexWrap: "wrap",
       },
       stats: {
         display: "flex",
@@ -291,6 +293,13 @@ export const ProjectHeader = (props: IProps) => {
       ? setUpvotesCount(upvotesCount + 1)
       : setUpvotesCount(upvotesCount - 1);
   };
+
+  useEffect(() => {
+    console.log(myInfo);
+    if (myInfo) {
+      setIsLiked(myInfo.likedProjects.includes(_id));
+    }
+  }, [myInfo, _id]);
 
   return (
     <Container>
