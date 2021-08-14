@@ -128,6 +128,8 @@ export const VerifyDeleteProjectModal = (props: IProps) => {
   const handleDelete = () => {
     const { name } = project;
     // TODO @Merul :p
+
+    onClick();
   };
 
   useEffect(() => {
