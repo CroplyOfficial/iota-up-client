@@ -10,6 +10,7 @@ import { useState } from "react";
 import { DashboardProjects } from "./tabs/projects.dashboard";
 import { DashboardFavorites } from "./tabs/favorites.dashboard";
 import { DashboardCreateProjectModal } from "./createProjectModal.dashboard";
+import { DashboardLogout } from "./tabs/logout.dashboard";
 import { Switch, Route } from "react-router-dom";
 const useStyles = makeStyles(() =>
   createStyles({
@@ -74,6 +75,7 @@ export const Dashboard = () => {
               render={() => <DashboardFavorites />}
             />
             <Route path="/dashboard/chat" render={() => <></>} />
+            <Route path="/dashboard/logout" component={DashboardLogout} />
           </Switch>
         </DashboardHeaderStripe>
       </div>

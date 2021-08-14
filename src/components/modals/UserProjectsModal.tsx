@@ -22,6 +22,7 @@ import { API } from "../../config";
 import { IProject } from "../../interfaces/project.interface";
 import { CloseSharp } from "@material-ui/icons";
 import { Card2 } from "../card/card2";
+import { ICreator } from "../../interfaces/creator.interface";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -193,35 +194,41 @@ const useStyles = makeStyles((theme: Theme) =>
 interface IProps {
   showing: boolean;
   onClick: (e: any) => void;
+  project: IProject;
 }
-export const UserProjectsModal = ({ showing, onClick }: IProps) => {
-  const userMeta = useSelector((state: RootState) => state.userLogin);
-  const { userInfo }: any = userMeta;
-  const {
-    firstName,
-    lastName,
-    city,
-    country,
-    skills,
-    connections,
-    avatar,
-    projects,
-    bio,
-    _id,
-  } = userInfo;
-  const fullName = `${firstName} ${lastName}`;
-  const location = `${city}, ${country}`;
+export const UserProjectsModal = ({ showing, onClick, project }: IProps) => {
+  const [creator, setCreator] = useState<ICreator>();
+  console.log("", project);
+  useEffect(() => {
+    const tbd = async () => {
+      const { data } = await axios.get(
+        `/api/users/overview/${project?.projectAuthor}`
+      );
+      setCreator(data);
+    };
+    tbd();
+  }, [project]);
+  const connections = ["google"];
+
+  const fullName = creator?.displayName;
+  const location =
+    creator?.city &&
+    creator?.country &&
+    `${creator?.city}, ${creator?.country}`;
   const classes = useStyles();
   const [otherProjects, setOtherProjects] = useState<IProject[]>([]);
 
   useEffect(() => {
     const getProjects = async () => {
-      const response = await axios.get(`/api/projects/by-user/${_id}`);
+      if (!project?.projectAuthor) return;
+      const response = await axios.get(
+        `/api/projects/by-user/${project?.projectAuthor}`
+      );
       const { data } = response;
       setOtherProjects(data);
     };
     getProjects();
-  }, []);
+  }, [project]);
 
   return (
     <div>
@@ -239,46 +246,52 @@ export const UserProjectsModal = ({ showing, onClick }: IProps) => {
 
               <div className={classes.body}>
                 <div className={classes.level2}>
-                  <Avatar src={avatar} alt={fullName} />
+                  <Avatar src={creator?.avatar} alt={fullName} />
                   <Typography className={classes.name}>{fullName}</Typography>
                 </div>
                 <Typography className={classes.location}>{location}</Typography>
                 <Typography className={classes.bio}>
-                  {bio ||
+                  {creator?.bio ||
                     `Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has`}
                 </Typography>
 
-                <div className={classes.socials}>
-                  <Chip
-                    label="Facebook"
-                    variant="outlined"
-                    icon={<Facebook className={classes.icon} />}
-                    className={classes.pointer}
-                    color={
-                      connections?.includes("facebook") ? "primary" : undefined
-                    }
-                  />
-                  <Chip
-                    label="Google"
-                    variant="outlined"
-                    icon={<LinkedIn className={classes.icon} />}
-                    className={classes.pointer}
-                    color={
-                      connections?.includes("google") ? "primary" : undefined
-                    }
-                  />
-                  <Chip
-                    label="Linked In"
-                    variant="outlined"
-                    icon={<LinkedIn className={classes.icon} />}
-                    className={classes.pointer}
-                    color={
-                      connections?.includes("linked in") ? "primary" : undefined
-                    }
-                  />
+                <div style={{ display: "none" }}>
+                  <div className={classes.socials}>
+                    <Chip
+                      label="Facebook"
+                      variant="outlined"
+                      icon={<Facebook className={classes.icon} />}
+                      className={classes.pointer}
+                      color={
+                        connections?.includes("facebook")
+                          ? "primary"
+                          : undefined
+                      }
+                    />
+                    <Chip
+                      label="Google"
+                      variant="outlined"
+                      icon={<LinkedIn className={classes.icon} />}
+                      className={classes.pointer}
+                      color={
+                        connections?.includes("google") ? "primary" : undefined
+                      }
+                    />
+                    <Chip
+                      label="Linked In"
+                      variant="outlined"
+                      icon={<LinkedIn className={classes.icon} />}
+                      className={classes.pointer}
+                      color={
+                        connections?.includes("linked in")
+                          ? "primary"
+                          : undefined
+                      }
+                    />
+                  </div>
                 </div>
                 <div className={`${classes.half} ${classes.chips}`}>
-                  {skills.map((s: string) => (
+                  {creator?.skills?.map((s: string) => (
                     <Chip label={s} />
                   ))}
                 </div>
