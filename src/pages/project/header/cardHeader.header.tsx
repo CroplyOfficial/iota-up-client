@@ -8,12 +8,21 @@ import {
   Theme,
   SvgIcon,
 } from "@material-ui/core";
-import { Flag, ArrowUpward, Share } from "@material-ui/icons";
+import {
+  Flag,
+  ArrowUpward,
+  Share,
+  Clear,
+  DeleteForever,
+} from "@material-ui/icons";
 import { IProject } from "../../../interfaces/project.interface";
 import { ReactComponent as UpButton } from "../../../static/images/icons/up.svg";
 import { UserProjectsModal } from "../../../components/modals/UserProjectsModal";
 import { useState, useEffect } from "react";
 import { RWebShare } from "react-web-share";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../store";
+import { VerifyDeleteProjectModal } from "../../../components/modals/verifyDeleteProjectModal";
 
 interface IProps {
   project: IProject;
@@ -92,8 +101,25 @@ export const HeaderCardHeader = (props: IProps) => {
     console.log(e.target, e.currentTarget);
     setShowModal(!showModal);
   };
+
+  const userInfoMeta = useSelector((state: RootState) => state.userLogin);
+  const { userInfo }: any = userInfoMeta;
+  //@ts-ignore
+  const isProjectAuthor = userInfo?._id === project?.projectAuthor;
+
+  const [showingDeleteModal, setShowingDeleteModal] = useState<boolean>(false);
+  const toggleShowDeleteModal = () => {
+    setShowingDeleteModal(!showingDeleteModal);
+  };
+
   return (
     <>
+      {showingDeleteModal && (
+        <VerifyDeleteProjectModal
+          onClick={toggleShowDeleteModal}
+          project={project}
+        />
+      )}
       <CardHeader
         className={classes.root}
         avatar={
@@ -129,9 +155,19 @@ export const HeaderCardHeader = (props: IProps) => {
         }
         action={
           <div className={classes.action}>
-            <IconButton>
-              <Flag fontSize="large" color="disabled" />
-            </IconButton>
+            {isProjectAuthor ? (
+              <IconButton>
+                <DeleteForever
+                  fontSize="large"
+                  color="disabled"
+                  onClick={toggleShowDeleteModal}
+                />
+              </IconButton>
+            ) : (
+              <IconButton>
+                <Flag fontSize="large" color="disabled" />
+              </IconButton>
+            )}
             <IconButton>
               <RWebShare
                 data={{
