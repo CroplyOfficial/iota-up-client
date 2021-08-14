@@ -206,7 +206,7 @@ export const Card = ({ project, history }: IProps) => {
             avatar={<Avatar alt="avatar" src={creator.avatar}></Avatar>}
             title={
               <span className={classes.statusBarHeader}>
-                {creator.fullName}
+                {creator.displayName}
               </span>
             }
             subheader={

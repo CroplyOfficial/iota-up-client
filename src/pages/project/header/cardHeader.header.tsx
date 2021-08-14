@@ -100,13 +100,13 @@ export const HeaderCardHeader = (props: IProps) => {
           <Avatar
             src={project.author && project.author.avatar}
             className={classes.avatar}
-            alt={project.author && project.author.fullName}
+            alt={project.author && project.author.displayName}
             onClick={showUserProjectsModal}
           ></Avatar>
         }
         title={
           <span className={classes.header} onClick={showUserProjectsModal}>
-            {project.author && project.author.fullName}
+            {project.author && project.author.displayName}
           </span>
         }
         subheader={
