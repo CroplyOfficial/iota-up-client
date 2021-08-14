@@ -1,5 +1,8 @@
 # iota-up-client
 
+![BUILD](https://github.com/CroplyOfficial/iota-up-client/actions/workflows/node.js.yml/badge.svg)
+
+
 This is the repository for the IOTA UP application
 
 ## Preface
