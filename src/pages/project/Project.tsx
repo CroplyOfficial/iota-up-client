@@ -168,15 +168,18 @@ export const ProjectOverview = ({ match }: any) => {
               showUserProjectsModal={toggleShowUserProjectModal}
             />
           )}
-          {!editableBody ? (
-            <ProjectBody
-              project={p}
-              variant={variant}
-              setPostModal={setPostModal}
-              recommended={trendingProjects}
-              onToggle={toggleEditableBody}
-              showCreatePostModal={toggleShowCreatePostModal}
-            />
+          {/*          {!editableBody ? ( */}
+          <ProjectBody
+            project={p}
+            variant={variant}
+            setPostModal={setPostModal}
+            recommended={trendingProjects}
+            onToggle={toggleEditableBody}
+            showCreatePostModal={toggleShowCreatePostModal}
+            isEditing={editableBody}
+            toggleIsEditing={toggleEditableBody}
+          />
+          {/*
           ) : (
             <EditableProjectBody
               project={p}
@@ -187,6 +190,7 @@ export const ProjectOverview = ({ match }: any) => {
               showCreatePostModal={toggleShowCreatePostModal}
             />
           )}
+            */}
 
           <Container className={classes.featuredSection}>
             <FeaturedSection

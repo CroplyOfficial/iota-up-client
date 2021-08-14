@@ -3,13 +3,14 @@ import {
   makeStyles,
   TextareaAutosize,
   Theme,
+  Button,
 } from "@material-ui/core";
 import {
   ProjectPageVariants,
   ProjectVariants,
 } from "../../../interfaces/project.variants.interface";
 import { IProject } from "../../../interfaces/project.interface";
-import { EditorState, convertToRaw } from "draft-js";
+import { EditorState, convertToRaw, ContentState } from "draft-js";
 import { Editor } from "react-draft-wysiwyg";
 import draftToHtml from "draftjs-to-html";
 import htmlToDraft from "html-to-draftjs";
@@ -35,19 +36,25 @@ const useStyles = makeStyles((theme: Theme) =>
 interface IProps {
   variant: ProjectPageVariants;
   project: IProject;
+  isEditing: boolean;
+  toggleIsEditing: () => void;
+  editorState: EditorState;
+  onEditorStateChange: (editorState: EditorState) => void;
 }
 
 export const ProjectBodyInformation = (props: IProps) => {
-  const { project, variant } = props;
-
+  const {
+    project,
+    variant,
+    isEditing,
+    toggleIsEditing,
+    editorState,
+    onEditorStateChange,
+  } = props;
   const { desc } = project as IProject;
-  const [editorState, setEditorState] = useState<EditorState>(
-    project.editorState as any
-  );
-  const onEditorStateChange = (editorState: EditorState) => {
-    setEditorState(editorState);
-  };
+
   const classes = useStyles();
+
   const selectedUser = useSelector((state: RootState) => state.userLogin);
   //@ts-ignore
   const userInfo = selectedUser.userInfo;
@@ -80,6 +87,9 @@ export const ProjectBodyInformation = (props: IProps) => {
               editorClassName="demo-editor"
               onEditorStateChange={onEditorStateChange}
               toolbar={toolBar}
+              {...(!isEditing ? { toolbarHidden: true } : {})}
+              readOnly={!isEditing}
+              toolbarClassName={"editor-toolbar"}
             />
           </>
         ) : (
@@ -88,6 +98,7 @@ export const ProjectBodyInformation = (props: IProps) => {
             wrapperClassName="demo-wrapper"
             editorClassName="demo-editor"
             onEditorStateChange={onEditorStateChange}
+            readOnly={true}
             toolbarHidden
           />
         )}
