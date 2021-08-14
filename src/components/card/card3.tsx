@@ -177,7 +177,7 @@ export function ProjectsCard(props: IProps) {
             className={`${classes.black} ${classes.poppins}`}
             style={{ fontWeight: 500 }}
           >
-            {creator?.fullName}
+            {creator?.displayName}
           </span>
         }
         subheader={
