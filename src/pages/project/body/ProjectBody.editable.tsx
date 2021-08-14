@@ -1,3 +1,4 @@
+import axios from "axios";
 import { createStyles, makeStyles } from "@material-ui/core";
 import { Container } from "../../../components/container/container";
 import { IProject } from "../../../interfaces/project.interface";
@@ -12,6 +13,10 @@ import {
 import { ProjectNavbar } from "../navbar.project";
 import { CreateProjectCard } from "../../../components/card/card.createProject";
 import { IPost } from "../../../interfaces/post.interface";
+import { EditorState, convertToRaw, ContentState } from "draft-js";
+import { Editor } from "react-draft-wysiwyg";
+import draftToHtml from "draftjs-to-html";
+import htmlToDraft from "html-to-draftjs";
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -65,11 +70,20 @@ interface IProps {
   setPostModal: Function;
   onToggle: () => void;
   showCreatePostModal: () => void;
+  isEditing: boolean;
+  toggleIsEditing: () => void;
 }
 
 export const EditableProjectBody = (props: IProps) => {
-  const { variant, project, setPostModal, recommended, showCreatePostModal } =
-    props;
+  const {
+    variant,
+    project,
+    setPostModal,
+    recommended,
+    showCreatePostModal,
+    isEditing,
+    toggleIsEditing,
+  } = props;
   const classes = useStyles();
   const [bodyOption, setBodyOption] = useState<BodyOption>(
     BodyOptions.INFORMATION
@@ -102,6 +116,30 @@ Quisque dictum libero ac ullamcorper vehicula. Duis semper erat non rhoncus sagi
   ];
   const isInformation = bodyOption === BodyOptions.INFORMATION;
   const isUpdates = bodyOption === BodyOptions.UPDATES;
+  const blocksFromHtml = htmlToDraft(project.editorState || "");
+  const { contentBlocks, entityMap } = blocksFromHtml;
+  const contentState = ContentState.createFromBlockArray(
+    contentBlocks,
+    entityMap
+  );
+  const initialEditorState = EditorState.createWithContent(contentState);
+
+  const [editorState, setEditorState] =
+    useState<EditorState>(initialEditorState);
+  const onEditorStateChange = (editorState: EditorState) => {
+    setEditorState(editorState);
+  };
+  const saveEditorState = () => {
+    const sendReq = async () => {
+      const options = {};
+      const response = await axios.put(
+        `/api/projects/by-id/${project._id}`,
+        options
+      );
+    };
+    sendReq();
+  };
+
   return (
     <Container>
       <div className={classes.root}>
@@ -112,9 +150,19 @@ Quisque dictum libero ac ullamcorper vehicula. Duis semper erat non rhoncus sagi
             option={bodyOption}
             project={project}
             showCreatePostModal={showCreatePostModal}
+            isEditing={isEditing}
+            saveEditorState={saveEditorState}
+            toggleIsEditing={toggleIsEditing}
           />
           {isInformation ? (
-            <ProjectBodyInformation variant={variant} project={project} />
+            <ProjectBodyInformation
+              variant={variant}
+              project={project}
+              isEditing={false}
+              toggleIsEditing={() => null}
+              editorState={editorState}
+              onEditorStateChange={onEditorStateChange}
+            />
           ) : isUpdates ? (
             <ProjectBodyUpdates
               variant={variant}

@@ -1,4 +1,10 @@
-import { createStyles, makeStyles, Typography, Theme } from "@material-ui/core";
+import {
+  createStyles,
+  makeStyles,
+  Typography,
+  Theme,
+  Button,
+} from "@material-ui/core";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
@@ -38,6 +44,14 @@ const useStyles = makeStyles((theme: Theme) =>
       color: theme.palette.text.secondary,
       width: "auto",
     },
+    link2: {
+      fontFamily: "Poppins",
+      fontWeight: 700,
+      fontSize: "20px",
+      lineHeight: "30px",
+      fontStyle: "normal",
+      width: "auto",
+    },
     justifyEnd: {
       marginLeft: "auto",
       paddingRight: "15px",
@@ -50,9 +64,20 @@ interface IProps {
   onClick: (options: BodyOption) => void;
   project: IProject;
   showCreatePostModal?: () => void;
+  toggleIsEditing: () => void;
+  isEditing: boolean;
+  saveEditorState: () => void;
 }
 export const ProjectNavbar = (props: IProps) => {
-  const { option, onClick, project, showCreatePostModal } = props;
+  const {
+    option,
+    onClick,
+    project,
+    showCreatePostModal,
+    toggleIsEditing,
+    isEditing,
+    saveEditorState,
+  } = props;
   const classes = useStyles();
   const isInformation = option === BodyOptions.INFORMATION;
   const isUpdates = option === BodyOptions.UPDATES;
@@ -77,12 +102,37 @@ export const ProjectNavbar = (props: IProps) => {
         Updates
       </Typography>
       {isUpdates && isOwner ? (
-        <Typography
-          className={`${classes.link} ${classes.justifyEnd}`}
+        <Button
+          className={`${classes.link2} ${classes.justifyEnd}`}
           onClick={showCreatePostModal}
+          color="primary"
+          variant="contained"
         >
           Add
-        </Typography>
+        </Button>
+      ) : isInformation && isOwner ? (
+        !isEditing ? (
+          <Button
+            className={`${classes.link2} ${classes.justifyEnd}`}
+            onClick={toggleIsEditing}
+            variant="contained"
+            color="primary"
+          >
+            Edit
+          </Button>
+        ) : (
+          <Button
+            onClick={() => {
+              saveEditorState();
+              toggleIsEditing();
+            }}
+            className={`${classes.link2} ${classes.justifyEnd}`}
+            color="secondary"
+            variant="outlined"
+          >
+            Save
+          </Button>
+        )
       ) : (
         ""
       )}
