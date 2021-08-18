@@ -1,7 +1,7 @@
 import { RootState } from "../../../store";
 import { IUser } from "../../../interfaces/user.interface";
 import axios from "axios";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { API } from "../../../config";
 import {
   createStyles,
@@ -14,7 +14,8 @@ import {
   TextareaAutosize,
 } from "@material-ui/core";
 import { Facebook, LinkedIn } from "@material-ui/icons";
-import { useState } from "react";
+import { getMyInfo } from "../../../actions/userActions";
+import { useState, useEffect } from "react";
 import { WithContext as ReactTags } from "react-tag-input";
 
 const KeyCodes = {
@@ -152,6 +153,8 @@ interface IProfile {
 }
 export const DashboardProfile = (props: IProps) => {
   const userMeta = useSelector((state: RootState) => state.userLogin);
+  const userInfoMeta = useSelector((state: RootState) => state.myInfo);
+  const { myInfo }: any = userInfoMeta;
   const { userInfo }: any = userMeta;
   const user = (userInfo as IUser) || {};
 
@@ -162,18 +165,27 @@ export const DashboardProfile = (props: IProps) => {
     country: userCountry,
     connections,
     bio: userBio,
-    username: _username,
   } = user;
   //
   const { verifyDelete } = props;
   const classes = useStyles();
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getMyInfo());
+  }, []);
+
+  useEffect(() => {
+    setUsername(myInfo?.username);
+  }, [myInfo?.username]);
 
   const [city, setCity] = useState<string>(userCity ?? "");
   const [country, setCountry] = useState<string>(userCountry ?? "");
   const [fireflyAdress, setFireflyAdress] = useState<string>(userWallet ?? "");
   const [skills, setSkills] = useState<string[]>(userSkills || []);
   const [newSkill, setNewSkill] = useState<string>("");
-  const [username, setUsername] = useState<string>(_username || "");
+  const [username, setUsername] = useState<string>(myInfo?.username || "");
   const [showingModal, setShowingModal] = useState<boolean>(false);
   const [bio, setBio] = useState<string>(userBio ?? "");
 
@@ -291,7 +303,7 @@ export const DashboardProfile = (props: IProps) => {
         <TextField
           type="text"
           onChange={(e: any) => setUsername(e.target.value)}
-          value={username || null}
+          value={username}
           label="Display Name"
           className={classes.textField}
         />
@@ -303,11 +315,7 @@ export const DashboardProfile = (props: IProps) => {
           rowsMax="10"
           className={classes.textarea}
           onChange={(e: any) => handleChangeBio(e)}
-          defaultValue="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-      ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-      ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-      ut labore et dolore magna aliqua.
-          "
+          defaultValue={myInfo?.bio}
         />
 
         <Typography className={classes.label}>Location </Typography>
