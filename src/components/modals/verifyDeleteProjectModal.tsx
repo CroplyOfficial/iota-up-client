@@ -13,8 +13,11 @@ import {
   LinkedInLoginButton,
   FacebookLoginButton,
 } from "react-social-login-buttons";
-import { API } from "../../config";
+import { RootState } from "../../store";
+import { useHistory } from "react-router-dom";
+import axios from "axios";
 import { IProject } from "../../interfaces/project.interface";
+import { useSelector } from "react-redux";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -125,11 +128,21 @@ export const VerifyDeleteProjectModal = (props: IProps) => {
     navigator.clipboard.writeText(project.name);
     setCopied(true);
   };
-  const handleDelete = () => {
-    const { name } = project;
-    // TODO @Merul :p
+  const history = useHistory();
+  const userLoginMeta = useSelector((state: RootState) => state.userLogin);
+  const { userInfo }: any = userLoginMeta;
 
+  const handleDelete = async () => {
+    const { _id } = project;
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+    await axios.delete(`/api/projects/by-id/${_id}`, config);
     onClick();
+    history.push("/dashboard/projects");
   };
 
   useEffect(() => {
