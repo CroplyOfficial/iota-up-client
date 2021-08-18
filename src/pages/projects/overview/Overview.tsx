@@ -109,16 +109,10 @@ export const ProjectsOverview = (props: IProps) => {
   const classes = useStyles();
   // TODO get popular Tags from API
   // TODO remove default popular tags in <ProjectsPopularSearch />
-  const popularTags = [
-    { title: "Technology Projects", onClick: () => null },
-    { title: "Charity Programs", onClick: () => null },
-    { title: "Community Website", onClick: () => null },
-  ];
   const loadMoreThreshold = 6;
   return (
     <div className={classes.root}>
       <Container maxWidth="md">
-        <ProjectsPopularSearch tags={popularTags} />
         <div className={classes.columns}>
           <div className={classes.left}>
             <Typography
