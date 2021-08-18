@@ -201,10 +201,12 @@ export const UserProjectsModal = ({ showing, onClick, project }: IProps) => {
   console.log("", project);
   useEffect(() => {
     const tbd = async () => {
-      const { data } = await axios.get(
-        `/api/users/overview/${project?.projectAuthor}`
-      );
-      setCreator(data);
+      if (project) {
+        const { data } = await axios.get(
+          `/api/users/overview/${project.projectAuthor}`
+        );
+        setCreator(data);
+      }
     };
     tbd();
   }, [project]);

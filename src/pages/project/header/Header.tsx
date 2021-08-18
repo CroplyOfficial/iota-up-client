@@ -19,6 +19,7 @@ import { ContributorCheckBox } from "./contributor.checkbox";
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../../store";
+import { getMyInfo } from "../../../actions/userActions";
 import { userLoginReducer } from "../../../reducers/userReducers";
 import axios from "axios";
 import { DonateButton } from "../../../components/DonateButton/DonateButton";
@@ -324,9 +325,12 @@ export const ProjectHeader = (props: IProps) => {
   };
 
   useEffect(() => {
-    console.log(myInfo);
+    dispatch(getMyInfo());
+  }, []);
+
+  useEffect(() => {
     if (myInfo) {
-      setIsLiked(myInfo.likedProjects.includes(_id));
+      setIsLiked(myInfo?.upvotedProjects?.includes(_id));
     }
   }, [myInfo, _id]);
 
