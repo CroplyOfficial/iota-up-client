@@ -13,6 +13,7 @@ import { Authorize } from "./pages/Authorize/Authorize";
 import { Settings } from "./pages/Settings/Settings";
 import { LoginModal } from "./components/loginModal/LoginModal";
 import { Navbar } from "./components/navbar/Navbar";
+import { Chat } from "./components/chat/Chat";
 
 function App(props: any) {
   const [showingLoginModal, setShowingLoginModal] = useState<boolean>(false);
@@ -29,6 +30,7 @@ function App(props: any) {
             <div></div>
           )}
           <Navbar toggleLoginModal={toggleShowingLoginModal} />
+          <Chat />
           <Switch>
             <Route path="/" exact component={Root} />
             <Route path="/about" exact component={AboutUs} />
