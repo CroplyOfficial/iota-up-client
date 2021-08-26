@@ -12,8 +12,11 @@ import { ChatMessageList } from "./messageList.chat";
 import { ChatSearchBar } from "./searchBar.chat";
 import { useFallbackImage } from "../../config";
 import { useState } from "react";
+
 export const Chat = () => {
   const [showMessages, setShowMessages] = useState<boolean>(false);
+  const [chat, setChat] = useState<string>();
+  const [showList, setShowList] = useState<boolean>(true);
   const useStyles = makeStyles(() =>
     createStyles({
       root: {
@@ -83,24 +86,16 @@ export const Chat = () => {
     <div className={classes.root}>
       <div className={classes.header}>
         <div onClick={handleExpand} className={classes.cardActionArea}>
-          <Avatar src={fallback} alt={"logo"} size="medium" type="circle" />
           <Typography variant="body2" component="span" className={classes.text}>
             Messages
           </Typography>
         </div>
         <div className={classes.end}>
-          <IconButton size="small" onClick={handleMoreOptions}>
-            <MoreHoriz />
-          </IconButton>
-          <IconButton size="small" onClick={handleNewMessage}>
-            <PostAdd />
-          </IconButton>
           <IconButton size="small" onClick={handleExpand}>
             <KeyboardArrowUp />
           </IconButton>
         </div>
       </div>
-      <ChatSearchBar />
       <ChatMessageList />
     </div>
   );
