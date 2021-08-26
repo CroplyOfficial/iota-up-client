@@ -10,6 +10,7 @@ import {
   loadTrendingProjectsReducer,
   loadMyProjectsReducer,
 } from "./reducers/projectReducers";
+import { loadMyChats, loadChatById } from "./reducers/chatReducers";
 
 const reducer = combineReducers({
   userLogin: userLoginReducer,
@@ -20,6 +21,8 @@ const reducer = combineReducers({
   loadLatest: loadLatestProjectsReducer,
   loadMyProjects: loadMyProjectsReducer,
   myInfo: userInfoReducer,
+  myChats: loadMyChats,
+  loadChat: loadChatById,
 });
 
 export type RootState = ReturnType<typeof reducer>;
