@@ -30,12 +30,26 @@ const useStyles = makeStyles((theme: Theme) =>
       OFilter: "drop-shadow(1px 10px 4px rgba(0,0,0,0.3))",
       filter: "drop-shadow(1px 10px 10px rgba(0,0,0,0.3))",
       overflow: "hidden",
+      [theme.breakpoints.down("sm")]: {
+        transform: "translateY(0)",
+      WebKitFilter: "drop-shadow(1px 10px 4px rgba(0,0,0,0))",
+      MozFilter: "drop-shadow(1px 10px 4px rgba(0,0,0,0))",
+      MsFilter: "drop-shadow(1px 10px 4px rgba(0,0,0,0))",
+      OFilter: "drop-shadow(1px 10px 4px rgba(0,0,0,0))",
+      filter: "drop-shadow(1px 10px 10px rgba(0,0,0,0))",
+      
+      }
     },
     left: {
       width: "75.5%",
       height: "100%",
       backgroundColor: "#ffffff",
       borderRadius: "20px 0 0 20px",
+      [theme.breakpoints.down("sm")]: {
+        backgroundColor: theme.palette.primary.main,
+        color: "#ffffff",
+        display: "none"
+      }
       /*
       maskImage: `url(${imageSource})`,
       WebKitMaskImage: `url(${imageSource})`,
@@ -47,6 +61,9 @@ const useStyles = makeStyles((theme: Theme) =>
       transform: "translate(-42%,-2%)",
       zIndex: 1,
       backgroundSize: "150%",
+      [theme.breakpoints.down("sm")]: {
+        display: "none",
+      }
     },
     right: {
       display: "flex",
@@ -59,6 +76,14 @@ const useStyles = makeStyles((theme: Theme) =>
       paddingTop: "10%",
       borderRadius: "0 20px 20px 0",
       textAlign: "end",
+      [theme.breakpoints.down("sm")]: {
+        backgroundColor: theme.palette.primary.main,
+        color: "#ffffff",
+        alignItems: "flex-start",
+        width: "100%",
+        paddingLeft: 0,
+        paddingRight: 0,
+      }
     },
     title: {
       fontFamily: "Poppins",
@@ -67,6 +92,11 @@ const useStyles = makeStyles((theme: Theme) =>
       fontSize: "50px",
       lineHeight: "75px",
       flexGrow: 0.4,
+      [theme.breakpoints.down("sm")]: {
+        textAlign: "start",
+        fontSize: "26px",
+        lineHeight: "32px",
+      }
     },
     description: {
       fontFamily: "Open Sans",
@@ -79,6 +109,10 @@ const useStyles = makeStyles((theme: Theme) =>
       textAlign: "start",
       width: "90%",
       paddingTop: "10px",
+      [theme.breakpoints.down("sm")]: {
+        color: "white",
+        lineHeight: "24px",
+      }
     },
     footer: {
       fontFamily: "Open Sans",
@@ -87,6 +121,10 @@ const useStyles = makeStyles((theme: Theme) =>
       fontSize: "16px",
       lineHeight: "28px",
       flexGrow: 0.5,
+      [theme.breakpoints.down("sm")]: {
+        textAlign: "start",
+        color: "white",
+      }
     },
     image: {
       WebKitMaskBoxImage: `url(${imageSource})`,
