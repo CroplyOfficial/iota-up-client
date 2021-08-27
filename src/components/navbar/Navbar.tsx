@@ -53,7 +53,7 @@ interface INavbarProps {
 export const Navbar = (props: INavbarProps) => {
   const dispatch = useDispatch();
   const [mobileView, setMobileView] = useState<boolean>(false);
-  const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(!false);
+  const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(false);
   const toggleDrawerOpen = () => { setIsDrawerOpen(!isDrawerOpen);}
 
   const [showingModal, setShowModal] = useState<boolean>(false);
