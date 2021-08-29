@@ -24,11 +24,19 @@ const useStyles = makeStyles((theme: Theme) =>
       flexDirection: "row",
       flexWrap: "nowrap",
       width: "100%",
+      [theme.breakpoints.down("sm")]: {
+        flexDirection: "column",
+        gap: "30px",
+      }
     },
     left: {
       width: "25%",
       padding: "20px",
       paddingTop: "0",
+      [theme.breakpoints.down("sm")]: {
+        width: "100%",
+        padding: "0px",
+      }
     },
     right: {
       width: "75%",
@@ -37,6 +45,11 @@ const useStyles = makeStyles((theme: Theme) =>
       display: "flex",
       flexDirection: "column",
       alignItems: "center",
+      [theme.breakpoints.down("sm")]: {
+        width: "100%",
+        padding: "0px",
+        paddingBottom: "30px",
+      }
     },
     actionBar: {
       display: "flex",
@@ -59,6 +72,10 @@ const useStyles = makeStyles((theme: Theme) =>
       fontStyle: "normal",
       fontSize: "32px",
       lineHeight: "48px",
+      [theme.breakpoints.down("sm")]: {
+        fontSize: "18px",
+        lineHeight: "26px",
+      }
     },
     filterHeader: {},
     button: {
@@ -112,7 +129,7 @@ export const ProjectsOverview = (props: IProps) => {
   const loadMoreThreshold = 6;
   return (
     <div className={classes.root}>
-      <Container maxWidth="md">
+      <Container >
         <div className={classes.columns}>
           <div className={classes.left}>
             <Typography

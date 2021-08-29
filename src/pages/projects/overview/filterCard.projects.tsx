@@ -7,15 +7,20 @@ import {
   Typography,
   Checkbox,
   Button,
+  Theme,
 } from "@material-ui/core";
 import { ExpandLess, ExpandMore } from "@material-ui/icons";
 import { MainCategories } from "../../../config";
+import { useIsMobile } from "../../../utils/isMobile";
 
-const useStyles = makeStyles(() =>
+const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       borderRadius: "10px",
       minHeight: "569px",
+      [theme.breakpoints.down("sm")]: {
+      minHeight: "200px",
+      }
     },
     header: {
       fontFamily: "Poppins",
@@ -85,9 +90,10 @@ export const ProjectsFilterCard = ({
   categories: ICategory[];
   setCategories: (categories: ICategory[]) => void;
 }) => {
+  const isMobile = useIsMobile();
   const classes = useStyles();
 
-  const initialThreshold = 5;
+  const initialThreshold = isMobile ? 3 : 5;
   const [visibleCategories, setVisibleCategories] = useState<ICategory[]>(
     categories.slice(0, initialThreshold)
   );

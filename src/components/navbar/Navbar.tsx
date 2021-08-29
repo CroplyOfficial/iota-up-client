@@ -297,16 +297,22 @@ export const Navbar = (props: INavbarProps) => {
   }
   function renderMobile() {
     return <Toolbar variant="dense">
+    {/* 
+      HELP!
+      hitbox of IconButton is shifted up but doesnt show in firefox dev tools
+      */}
      <IconButton
           {...{
             edge: "start",
             color: "inherit",
             "aria-label": "menu",
             "aria-haspopup": "true",
+            className: "TODO"
           }}
           onClick={toggleDrawerOpen}
         >
-          <MenuIcon />
+          <MenuIcon
+          />
         <Drawer 
           {...{
             anchor: "left",
