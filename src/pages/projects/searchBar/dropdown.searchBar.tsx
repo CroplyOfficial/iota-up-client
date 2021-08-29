@@ -97,11 +97,11 @@ export const ProjectsSearchBarDropdown = () => {
       onOpen={handleClickOpen}
       style={{display: "none"}}
      >
-      <option value="">{defaultOption}</option>
+      <MenuItem value="">{defaultOption}</MenuItem>
       {options.map((o) => (
-        <option value={o.value} style={{ textTransform: "capitalize" }}>
+        <MenuItem value={o.value} style={{ textTransform: "capitalize" }}>
           {o.tag}
-        </option>
+        </MenuItem>
       ))}
     </Select>            
       </div>
