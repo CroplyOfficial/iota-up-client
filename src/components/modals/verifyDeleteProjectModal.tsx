@@ -50,6 +50,9 @@ const useStyles = makeStyles((theme: Theme) =>
       display: "flex",
       flexDirection: "column",
       alignItems: "start",
+      [theme.breakpoints.down("sm")]: {
+        width: "80%",
+      }
     },
     button: {},
     header: {
@@ -91,6 +94,8 @@ const useStyles = makeStyles((theme: Theme) =>
       "&:hover  .MuiChip-root": {
         opacity: 1,
         animation: `$fade 500ms ${theme.transitions.easing.easeInOut}`,
+      [theme.breakpoints.down("sm")]:{
+      }
       },
     },
     copy: {},
@@ -104,6 +109,9 @@ const useStyles = makeStyles((theme: Theme) =>
         fontSize: "10px",
       },
       cursor: "pointer",
+      [theme.breakpoints.down("sm")]: {
+        transform: "translate(0,0)",
+      }
     },
     "@keyframes fade": {
       "0%": {
