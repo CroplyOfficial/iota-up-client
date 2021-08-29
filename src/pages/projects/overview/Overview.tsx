@@ -129,7 +129,7 @@ export const ProjectsOverview = (props: IProps) => {
   const loadMoreThreshold = 6;
   return (
     <div className={classes.root}>
-      <Container >
+      <Container maxWidth="md">
         <div className={classes.columns}>
           <div className={classes.left}>
             <Typography
