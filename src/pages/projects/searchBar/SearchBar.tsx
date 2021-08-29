@@ -23,6 +23,11 @@ const useStyles = makeStyles((theme: Theme) =>
       padding: "15px",
       paddingLeft: "50px",
       paddingRight: "50px",
+      [theme.breakpoints.down("sm")]: {
+        paddingLeft: "5px",
+        paddingRight: "5px",
+        width: "90%",
+      }
     },
   })
 );

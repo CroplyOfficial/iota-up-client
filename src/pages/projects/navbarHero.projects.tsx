@@ -25,6 +25,11 @@ const useStyles = makeStyles((theme: Theme) =>
       bottom: "50%",
       left: "50%",
       transform: "translate(-50%,40%)",
+      [theme.breakpoints.down("sm")]: {
+        fontSize: "35px",
+        lineHeight: "46px",
+        transform: "translate(-50%,0%)",
+      }
     },
     container: {
       width: "100%",
@@ -32,6 +37,11 @@ const useStyles = makeStyles((theme: Theme) =>
       textAlign: "center",
       position: "relative",
     },
+    worldMap: {
+      [theme.breakpoints.down("sm")]: {
+        transform: "translate(-50%,-30%)",
+      }
+    }
   })
 );
 
@@ -47,7 +57,7 @@ export const ProjectsNavbarHero = () => {
   return (
     <div className={classes.root}>
       <Container className={classes.container}>
-        <img src={worldMap} />
+        <img src={worldMap} className={classes.worldMap} />
 
         <Typography variant="h2" className={classes.header}>
           {header}
