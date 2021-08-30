@@ -8,6 +8,7 @@ import {
   Typography,
   Color,
   Drawer, 
+  SwipeableDrawer,
   MenuItem,
   Button
 } from "@material-ui/core";
@@ -229,14 +230,25 @@ export const Navbar = (props: INavbarProps) => {
           >Sign in</Button>
         : <>
           <hr style={{border: "0.03px solid rgba(0,0,0,0.05)"}}/>
+            <Link to="/dashboard" className={classes.link}>
+          <MenuItem className={classes.b}>
+            Profile
+          </MenuItem>
+            </Link>
+            <Link to="/dashboard/projects" className={classes.link}>
+          <MenuItem className={classes.b}>
+            My Projects
+          </MenuItem>
+            </Link>
+            <Link to="/dashboard/favorites" className={classes.link}>
+          <MenuItem className={classes.b}>
+            My Favorites 
+          </MenuItem>
+            </Link>
+          <hr style={{border: "0.03px solid rgba(0,0,0,0.05)"}}/>
             <Link to="#create-project" className={classes.link}>
           <MenuItem className={classes.b} onClick={handleCreateProject}>
             Create Project
-          </MenuItem>
-            </Link>
-            <Link to="/dashboard" className={classes.link}>
-          <MenuItem className={classes.b}>
-            Dashboard
           </MenuItem>
             </Link>
             <Link to="/logout" className={classes.link} onClick={handleLogout}>
@@ -313,7 +325,8 @@ export const Navbar = (props: INavbarProps) => {
         >
           <MenuIcon
           />
-        <Drawer 
+        <SwipeableDrawer 
+          onOpen={toggleDrawerOpen}
           {...{
             anchor: "left",
             open: isDrawerOpen,
@@ -321,7 +334,7 @@ export const Navbar = (props: INavbarProps) => {
           }}
         >
           {getDrawerChoices()}
-        </Drawer>
+        </SwipeableDrawer>
 
         </IconButton>
         
