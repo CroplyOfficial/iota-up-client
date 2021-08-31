@@ -30,14 +30,19 @@ const useStyles = makeStyles((theme: Theme) =>
 interface ISearchBarProps {
   onKeyUp: (e: any) => void;
   onClick: () => void;
+  category: string | undefined;
+  setCategory: (category: string) => void;
 }
 export const ProjectsSearchBar = (props: ISearchBarProps) => {
-  const { onKeyUp, onClick } = props;
+  const { onKeyUp, onClick, category, setCategory } = props;
   const classes = useStyles();
   return (
     <div className={classes.root}>
       <div className={classes.searchBar}>
-        <ProjectsSearchBarDropdown />
+        <ProjectsSearchBarDropdown
+          category={category}
+          setCategory={setCategory}
+        />
         <ProjectsSearchBarInput onKeyUp={onKeyUp} />
         <ProjectsSearchBarIcon onClick={onClick} />
       </div>

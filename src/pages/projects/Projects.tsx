@@ -48,6 +48,7 @@ export const Projects = (props: IProps) => {
   const [categories, setCategories] = useState<ICategory[]>(cats);
   const [filters, setFilters] = useState<string[]>([]);
   const [sortMethod, setSortMethod] = useState<string>("newest");
+  const [cat, setCat] = useState<string>();
 
   const [fetchedProjects, setProjects] = useState<
     IProject[] | null | undefined
@@ -179,7 +180,7 @@ export const Projects = (props: IProps) => {
   }, [filters, sortMethod]);
 
   const searchProjects = async (q?: string): Promise<IProject[]> => {
-    const { data } = await axios.get(`/api/projects?q=${q}`, {
+    const { data } = await axios.get(`/api/projects?q=${q}&category=${cat}`, {
       headers: {
         "Content-Type": "application/json",
       },
@@ -200,6 +201,8 @@ export const Projects = (props: IProps) => {
           }
         }}
         onClick={handleOnClick}
+        category={cat}
+        setCategory={setCat}
       />
       <ProjectsOverview
         projects={rendered_projects}

@@ -35,24 +35,24 @@ const useStyles = makeStyles((theme: Theme) =>
     },
   })
 );
-export const ProjectsSearchBarDropdown = () => {
-  const [options, setOptions] = useState<Array<any>>(
-    Object.values(MainCategories)
-      .reduce((arr: string[], cur: string[]) => {
-        return arr.concat(cur);
-      }, [])
-      .map((i) => {
-        return { value: i, tag: i };
-      })
-    /*[
+export const ProjectsSearchBarDropdown = ({
+  category,
+  setCategory,
+}: {
+  category: string | undefined;
+  setCategory: (category: string) => any;
+}) => {
+  const [options, setOptions] = useState<Array<any>>([
     { value: "technology", tag: "Technology" },
     { value: "community", tag: "Community" },
     { value: "creative", tag: "Creative" },
-  ]*/
-  );
+  ]);
   const classes = useStyles();
   return (
-    <select className={classes.root}>
+    <select
+      className={classes.root}
+      onChange={(e: any) => setCategory(e.target.value)}
+    >
       <option value="">All Categories</option>
       {options.map((o) => (
         <option value={o.value} style={{ textTransform: "capitalize" }}>

@@ -129,7 +129,6 @@ export function ProjectsCard(props: IProps) {
         `/api/projects/${project._id}/toggle-upvote`,
         config
       );
-      console.log(upvotes);
       setUpvotes(!upvoted ? upvotes + 1 : upvotes - 1);
       setUpvoted(!upvoted);
     }
