@@ -93,7 +93,7 @@ export const ChatMessageList = () => {
           }}
         />
       ) : !showList ? (
-        <MessageChatList id={id} />
+        <div className="message"></div>
       ) : (
         <div className="err">unable to load messages</div>
       )}

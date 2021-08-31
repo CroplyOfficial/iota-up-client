@@ -14,6 +14,7 @@ import { Settings } from "./pages/Settings/Settings";
 import { LoginModal } from "./components/loginModal/LoginModal";
 import { Navbar } from "./components/navbar/Navbar";
 import { Chat } from "./components/chat/Chat";
+import ScrollToTop from "./components/Scroll/ScrollToTop";
 
 function App(props: any) {
   const [showingLoginModal, setShowingLoginModal] = useState<boolean>(false);
@@ -31,6 +32,7 @@ function App(props: any) {
           )}
           <Navbar toggleLoginModal={toggleShowingLoginModal} />
           <Chat />
+          <ScrollToTop />
           <Switch>
             <Route path="/" exact component={Root} />
             <Route path="/about" exact component={AboutUs} />

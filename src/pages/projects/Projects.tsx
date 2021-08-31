@@ -11,6 +11,7 @@ import { RootState } from "../../store";
 import { useHistory } from "react-router";
 import axios from "axios";
 import { parseQueryString } from "../../utils/queryString";
+import { getMyInfo } from "../../actions/userActions";
 import { MainCategories } from "../../config";
 import { compareArrays } from "../../utils/matchArrays";
 
@@ -47,6 +48,7 @@ export const Projects = (props: IProps) => {
   const [categories, setCategories] = useState<ICategory[]>(cats);
   const [filters, setFilters] = useState<string[]>([]);
   const [sortMethod, setSortMethod] = useState<string>("newest");
+  const [cat, setCat] = useState<string>();
 
   const [fetchedProjects, setProjects] = useState<
     IProject[] | null | undefined
@@ -74,7 +76,7 @@ export const Projects = (props: IProps) => {
     };
 
     const filterProjects = (f: string[]) => {
-      const filtered = matches.filter((project) => {
+      const filtered = matches?.filter((project) => {
         console.log(project);
         return compareArrays(project.category, f).length > 0;
       });
@@ -152,6 +154,7 @@ export const Projects = (props: IProps) => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getProjects());
+    dispatch(getMyInfo());
   }, []);
 
   useEffect(() => {
@@ -177,7 +180,7 @@ export const Projects = (props: IProps) => {
   }, [filters, sortMethod]);
 
   const searchProjects = async (q?: string): Promise<IProject[]> => {
-    const { data } = await axios.get(`/api/projects?q=${q}`, {
+    const { data } = await axios.get(`/api/projects?q=${q}&category=${cat}`, {
       headers: {
         "Content-Type": "application/json",
       },
@@ -198,6 +201,8 @@ export const Projects = (props: IProps) => {
           }
         }}
         onClick={handleOnClick}
+        category={cat}
+        setCategory={setCat}
       />
       <ProjectsOverview
         projects={rendered_projects}

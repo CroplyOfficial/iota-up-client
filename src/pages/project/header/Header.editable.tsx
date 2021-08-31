@@ -66,7 +66,7 @@ export const EditableProjectHeader = (props: IProps) => {
     e.preventDefault();
     if (!newTag.length) return;
     if (tags.includes(newTag.toLowerCase())) return;
-    if (tags.length >= 6) return;
+    if (tags.length >= 10) return;
     setNewTag("");
     setTags([...tags, newTag]);
   };

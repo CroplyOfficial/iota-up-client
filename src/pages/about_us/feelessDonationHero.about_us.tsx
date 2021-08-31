@@ -90,6 +90,10 @@ const useStyles = makeStyles((theme: Theme) =>
       width: "50px",
       height: "50px",
     },
+    disclaimer: {
+      fontSize: "0.85rem",
+      color: "#515151",
+    },
     alignStart: {
       [theme.breakpoints.down("sm")]:{
         textAlign: "start",
@@ -152,7 +156,7 @@ export const AboutUsFeelessDonationsHero = () => {
       },
     },
     {
-      header: "Exploring Projects",
+      header: "Explore Projects",
       subHeader:
         "All projects are open and visible to everyone. Explore the opportunities, challenges, and innitiatives that you feel warrant your support.",
       icon: (
@@ -207,11 +211,12 @@ export const AboutUsFeelessDonationsHero = () => {
             />
           ))}
         </div>
-        <div
-          className={classes.openSans400Small}
-        >
+        <Typography
+          variant="h6"
+          component="span"
+          className={classes.disclaimer}
           {footer}
-        </div>
+        </Typography>
       </Container>
     </div>
   );

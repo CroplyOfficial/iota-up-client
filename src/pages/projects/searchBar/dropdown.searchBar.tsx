@@ -53,36 +53,19 @@ const useStyles = makeStyles((theme: Theme) =>
   }
   })
 );
-export const ProjectsSearchBarDropdown = () => {
-  const isMobile = useIsMobile();
-   const [open, setOpen] = useState(false);
-  const [age, setAge] = useState<number>();
 
-  const handleChange = (event: any) => {
-    setAge(parseInt(event.target.value))
-  };
-
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-  const [options, setOptions] = useState<Array<any>>(
-    Object.values(MainCategories)
-      .reduce((arr: string[], cur: string[]) => {
-        return arr.concat(cur);
-      }, [])
-      .map((i) => {
-        return { value: i, tag: i };
-      })
-    /*[
+export const ProjectsSearchBarDropdown = ({
+  category,
+  setCategory,
+}: {
+  category: string | undefined;
+  setCategory: (category: string) => any;
+}) => {
+  const [options, setOptions] = useState<Array<any>>([
     { value: "technology", tag: "Technology" },
     { value: "community", tag: "Community" },
     { value: "creative", tag: "Creative" },
-  ]*/
-  );
+  ]);
   const classes = useStyles();
   const defaultOption = isMobile ? "All Categories": "All Categories"
   return (
@@ -96,6 +79,7 @@ export const ProjectsSearchBarDropdown = () => {
       onClose={handleClose}
       onOpen={handleClickOpen}
       style={{display: "none"}}
+      onChange={(e: any) => setCategory(e.target.value)
      >
       <MenuItem value="">{defaultOption}</MenuItem>
       {options.map((o) => (

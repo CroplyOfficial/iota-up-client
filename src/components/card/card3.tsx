@@ -1,11 +1,9 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardActionArea from "@material-ui/core/CardActionArea";
-import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
-import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import {
   CardHeader,
@@ -14,7 +12,6 @@ import {
   IconButton,
   createStyles,
   Theme,
-  withStyles,
 } from "@material-ui/core";
 import { styled } from "@material-ui/core/styles";
 import { IProject } from "../../interfaces/project.interface";
@@ -23,6 +20,8 @@ import { ICreator } from "../../interfaces/creator.interface";
 import { ReactComponent as UpButton } from "../../static/images/icons/up.svg";
 import { useFallbackImage } from "../../config";
 import { FavoriteBorder } from "@material-ui/icons";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store";
 
 const StyledCardContent = styled(CardContent)({});
 const StyledCard = styled(Card)({
@@ -101,6 +100,8 @@ export function ProjectsCard(props: IProps) {
   const { projectAuthor, media, name, desc, category } = project;
   const classes = useStyles();
   const [creator, setCreator] = useState<ICreator>();
+  const [upvoted, setUpvoted] = useState<boolean>(false);
+  const [upvotes, setUpvotes] = useState<number>(project?.upvotes);
   const fallbackImage = useFallbackImage();
   const image = media[0] || fallbackImage;
 
@@ -115,6 +116,34 @@ export function ProjectsCard(props: IProps) {
     };
     getCreator(projectAuthor);
   }, []);
+
+  const userInfoMeta = useSelector((state: RootState) => state.userLogin);
+  const { userInfo }: any = userInfoMeta;
+  const myInfoMeta: any = useSelector((state: RootState) => state.myInfo);
+  const { myInfo }: any = myInfoMeta;
+
+  const handleUpvotes = async () => {
+    if (userInfo?.token) {
+      const config = {
+        headers: {
+          "Content-Type": "Application/json",
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      };
+      const { data } = await axios.get(
+        `/api/projects/${project._id}/toggle-upvote`,
+        config
+      );
+      setUpvotes(!upvoted ? upvotes + 1 : upvotes - 1);
+      setUpvoted(!upvoted);
+    }
+  };
+
+  useEffect(() => {
+    if (myInfoMeta !== {} && myInfoMeta) {
+      setUpvoted(myInfo?.upvotedProjects.includes(project._id));
+    }
+  }, [myInfo]);
 
   return (
     <StyledCard className={classes.root}>
@@ -154,7 +183,7 @@ export function ProjectsCard(props: IProps) {
             <Typography variant="h6" className={classes.stat}>
               <FavoriteBorder style={{ paddingRight: "20px" }} />
               UP Votes
-              <span style={{ paddingLeft: "20px" }}> {project?.upvotes} </span>
+              <span style={{ paddingLeft: "20px" }}> {upvotes} </span>
             </Typography>
           </div>
         </StyledCardContent>
@@ -172,7 +201,11 @@ export function ProjectsCard(props: IProps) {
         }
         action={
           <IconButton aria-label="settings">
-            <SvgIcon color="primary" style={{ width: "30px", height: "auto" }}>
+            <SvgIcon
+              onClick={handleUpvotes}
+              color={upvoted ? "primary" : "disabled"}
+              style={{ width: "30px", height: "auto" }}
+            >
               <UpButton />
             </SvgIcon>
           </IconButton>

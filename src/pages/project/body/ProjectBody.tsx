@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     left: {
       width: "1070px",
-      height: "1080px",
+      minHeight: "1080px",
       borderRadius: "15px",
       backgroundColor: "#ffffff",
       padding: "25px",
