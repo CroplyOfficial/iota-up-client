@@ -10,6 +10,8 @@ import { ArrowRight } from "@material-ui/icons";
 import { green } from "@material-ui/core/colors";
 import greenFairy from "../../static/images/green_fairy.png";
 import { Link } from "react-router-dom";
+import { DonateButton } from "../../components/DonateButton/DonateButton";
+import { iotaWalletAdress } from "../../config";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -57,6 +59,7 @@ const useStyles = makeStyles((theme: Theme) =>
       lineHeight: "28px",
     },
     buttons: {
+      display: "flex",
       "& > button": {
         marginRight: theme.spacing(5),
       },
@@ -158,9 +161,15 @@ export const Hero = () => {
               Learn More
             </Button>
           </Link>
-          <Button variant="outlined" className={classes.buttonRight}>
-            Donate
-          </Button>
+          <DonateButton
+            recipientName="IOTA UP"
+            wallet={iotaWalletAdress}
+            text="donate"
+          >
+            <Button variant="outlined" className={classes.buttonRight}>
+              Donate
+            </Button>
+          </DonateButton>
         </div>
       </div>
 

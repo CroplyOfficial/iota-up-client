@@ -74,7 +74,7 @@ export const Projects = (props: IProps) => {
     };
 
     const filterProjects = (f: string[]) => {
-      const filtered = matches.filter((project) => {
+      const filtered = matches?.filter((project) => {
         console.log(project);
         return compareArrays(project.category, f).length > 0;
       });

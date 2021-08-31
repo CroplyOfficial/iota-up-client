@@ -92,8 +92,10 @@ const useStyles = makeStyles((theme: Theme) =>
       width: "250px",
     },
     textArea: {
-      width: "250px",
+      width: "90%",
       height: "100px",
+      fontFamily: "Poppins",
+      resize: "none",
     },
     label: {
       fontFamily: "Poppins",
@@ -201,6 +203,7 @@ export const DashboardCreateProjectModal = ({ showing, onClick }: IProps) => {
               <TextareaAutosize
                 aria-label="empty textarea"
                 cols={4}
+                rows={10}
                 className={classes.textArea}
                 value={description}
                 onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => {

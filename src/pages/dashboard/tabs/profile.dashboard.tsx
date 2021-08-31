@@ -280,7 +280,6 @@ export const DashboardProfile = (props: IProps) => {
       };
 
       try {
-        setUploading(true);
         const { data } = await axios.post("/api/uploads", formData, {
           headers: {
             "Content-Type": "multipart/form-data",
@@ -372,11 +371,12 @@ export const DashboardProfile = (props: IProps) => {
             name="image"
             id="imgPicker"
             accept=".png,.jpg,.jpeg"
-            onChange={(e: any) =>
+            onChange={(e: any) => {
               setFile({
                 file: e.target.files[0],
-              })
-            }
+              });
+              setUploading(true);
+            }}
             style={{ display: "none" }}
           />
         </form>

@@ -77,6 +77,10 @@ const useStyles = makeStyles(() =>
       width: "50px",
       height: "50px",
     },
+    disclaimer: {
+      fontSize: "0.85rem",
+      color: "#515151",
+    },
   })
 );
 export const AboutUsFeelessDonationsHero = () => {
@@ -134,7 +138,7 @@ export const AboutUsFeelessDonationsHero = () => {
       },
     },
     {
-      header: "Exploring Projects",
+      header: "Explore Projects",
       subHeader:
         "All projects are open and visible to everyone. Explore the opportunities, challenges, and innitiatives that you feel warrant your support.",
       icon: (
@@ -192,7 +196,7 @@ export const AboutUsFeelessDonationsHero = () => {
         <Typography
           variant="h6"
           component="span"
-          className={classes.openSans400Small}
+          className={classes.disclaimer}
         >
           {footer}{" "}
         </Typography>

@@ -4,7 +4,7 @@ interface IProps {
   recipientName: string;
   wallet: string;
   text: string;
-  children: React.ReactNode;
+  children?: React.ReactNode;
 }
 
 const DonateButton = (props: IProps) => {
