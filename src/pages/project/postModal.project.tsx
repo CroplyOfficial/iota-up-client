@@ -137,7 +137,7 @@ export const ProjectPostModal = (props: IProps) => {
           <div className={classes.body}>
             <Typography className={classes.title}> {post.title} </Typography>
             <Editor
-              readOnly={true}
+              readOnly={false}
               editorState={editorState}
               onEditorStateChange={() => null}
               toolbarHidden

@@ -40,7 +40,7 @@ export const login = (type: string, code: string) => async (dispatch: any) => {
 
     localStorage.setItem("userInfo", JSON.stringify(data));
     window.location.href = "/";
-  } catch (error) {
+  } catch (error: any) {
     dispatch({
       type: USER_LOGIN_FAIL,
       payload:
@@ -90,7 +90,7 @@ export const getMyInfo = () => async (dispatch: any, getState: any) => {
     });
 
     localStorage.setItem("userInfo", JSON.stringify(data));
-  } catch (error) {
+  } catch (error: any) {
     dispatch({
       type: USER_LOGIN_FAIL,
       payload:

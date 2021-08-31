@@ -11,6 +11,7 @@ import { RootState } from "../../store";
 import { useHistory } from "react-router";
 import axios from "axios";
 import { parseQueryString } from "../../utils/queryString";
+import { getMyInfo } from "../../actions/userActions";
 import { MainCategories } from "../../config";
 import { compareArrays } from "../../utils/matchArrays";
 
@@ -152,6 +153,7 @@ export const Projects = (props: IProps) => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getProjects());
+    dispatch(getMyInfo());
   }, []);
 
   useEffect(() => {
