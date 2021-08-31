@@ -253,7 +253,7 @@ export const DashboardProfile = (props: IProps) => {
     e.preventDefault();
     if (!newSkill.length) return;
     if (skills.includes(newSkill.toLowerCase())) return;
-    if (skills.length >= 6) return;
+    if (skills.length >= 20) return;
     setNewSkill("");
     setSkills([...skills, newSkill]);
   };
