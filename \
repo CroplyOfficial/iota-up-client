@@ -12,6 +12,7 @@ import { ChatMessageList } from "./messageList.chat";
 import { ChatSearchBar } from "./searchBar.chat";
 import { useFallbackImage } from "../../config";
 import { useState } from "react";
+import { ChatList } from "./chatList";
 
 export const Chat = () => {
   const [showMessages, setShowMessages] = useState<boolean>(false);
@@ -91,6 +92,12 @@ export const Chat = () => {
           </Typography>
         </div>
         <div className={classes.end}>
+          <IconButton size="small" onClick={handleMoreOptions}>
+            <MoreHoriz />
+          </IconButton>
+          <IconButton size="small" onClick={handleNewMessage}>
+            <PostAdd />
+          </IconButton>
           <IconButton size="small" onClick={handleExpand}>
             <KeyboardArrowUp />
           </IconButton>
