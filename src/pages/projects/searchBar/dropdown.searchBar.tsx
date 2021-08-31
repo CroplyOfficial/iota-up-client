@@ -1,8 +1,6 @@
-import { makeStyles, createStyles, Theme, Dialog, DialogActions, DialogContent, DialogTitle, Button, MenuItem, Select, FormControl, Input, InputLabel} from "@material-ui/core";
-import {FilterList} from "@material-ui/icons";
+import { makeStyles, createStyles, Theme } from "@material-ui/core";
 import { useState } from "react";
 import { MainCategories } from "../../../config";
-import {useIsMobile} from "../../../utils/isMobile";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -33,27 +31,10 @@ const useStyles = makeStyles((theme: Theme) =>
         left: "0",
         height: "100%",
         width: "1.5px",
-        [theme.breakpoints.down("sm")]:{
-          display: "none",
-        }
       },
     },
-      container: {
-    display: 'flex',
-    flexWrap: 'wrap',
-  },
-  formControl: {
-    margin: theme.spacing(1),
-    minWidth: 120,
-  },
-  dialogContent: {
-    width: "65vw",
-    height: "auto",
-    overflow: "hidden",
-  }
   })
 );
-
 export const ProjectsSearchBarDropdown = ({
   category,
   setCategory,
@@ -67,36 +48,17 @@ export const ProjectsSearchBarDropdown = ({
     { value: "creative", tag: "Creative" },
   ]);
   const classes = useStyles();
-  const defaultOption = isMobile ? "All Categories": "All Categories"
   return (
-    isMobile ? 
-    <div>
-    <Button onClick={handleClickOpen}>
-      <FilterList />
-    </Button>
-     <Select 
-      open={open}
-      onClose={handleClose}
-      onOpen={handleClickOpen}
-      style={{display: "none"}}
-      onChange={(e: any) => setCategory(e.target.value)
-     >
-      <MenuItem value="">{defaultOption}</MenuItem>
-      {options.map((o) => (
-        <MenuItem value={o.value} style={{ textTransform: "capitalize" }}>
-          {o.tag}
-        </MenuItem>
-      ))}
-    </Select>            
-      </div>
-    :
-    (<select className={classes.root}>
-      <option value="">{defaultOption}</option>
+    <select
+      className={classes.root}
+      onChange={(e: any) => setCategory(e.target.value)}
+    >
+      <option value="">All Categories</option>
       {options.map((o) => (
         <option value={o.value} style={{ textTransform: "capitalize" }}>
           {o.tag}
         </option>
       ))}
-    </select>)
+    </select>
   );
 };

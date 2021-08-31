@@ -3,7 +3,7 @@ import {
   makeStyles,
   SvgIcon,
   createStyles,
-  Theme
+  Theme,
 } from "@material-ui/core";
 import { AboutUsHeroCard } from "./heroCard.about_us";
 import { Container } from "../../components/container/container";
@@ -27,9 +27,9 @@ const useStyles = makeStyles((theme: Theme) =>
       minHeight: "100vh",
       display: "block",
       textAlign: "center",
-      [theme.breakpoints.down("sm")]:{
+      [theme.breakpoints.down("sm")]: {
         paddingTop: "30px",
-      }
+      },
     },
     preHeader: {
       fontFamily: "Poppins",
@@ -48,10 +48,10 @@ const useStyles = makeStyles((theme: Theme) =>
       lineHeight: "75px",
       textAlign: "center",
       paddingBottom: "15px",
-      [theme.breakpoints.down("sm")]:{
+      [theme.breakpoints.down("sm")]: {
         fontSize: "24px",
         lineHeight: "30px",
-      }
+      },
     },
     poppins800Large: {
       fontFamily: "Poppins",
@@ -67,11 +67,11 @@ const useStyles = makeStyles((theme: Theme) =>
       fontSize: "16px",
       lineHeight: "28px",
       textAlign: "center",
-      [theme.breakpoints.down("sm")]:{
+      [theme.breakpoints.down("sm")]: {
         fontSize: "20px",
         lineHeight: "28px",
         textAlign: "start",
-      }
+      },
     },
     cards: {
       paddingTop: "35px",
@@ -95,10 +95,10 @@ const useStyles = makeStyles((theme: Theme) =>
       color: "#515151",
     },
     alignStart: {
-      [theme.breakpoints.down("sm")]:{
+      [theme.breakpoints.down("sm")]: {
         textAlign: "start",
-      }
-    }
+      },
+    },
   })
 );
 export const AboutUsFeelessDonationsHero = () => {
@@ -215,6 +215,7 @@ export const AboutUsFeelessDonationsHero = () => {
           variant="h6"
           component="span"
           className={classes.disclaimer}
+        >
           {footer}
         </Typography>
       </Container>
