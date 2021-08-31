@@ -7,6 +7,12 @@ import {
   Avatar,
   Theme,
   SvgIcon,
+  Menu,
+  MenuItem,
+  MenuProps,
+  withStyles,
+ListItemIcon,
+  ListItemText
 } from "@material-ui/core";
 import {
   Flag,
@@ -14,6 +20,7 @@ import {
   Share,
   Clear,
   DeleteForever,
+  MoreVert,
 } from "@material-ui/icons";
 import { IProject } from "../../../interfaces/project.interface";
 import { ReactComponent as UpButton } from "../../../static/images/icons/up.svg";
@@ -23,6 +30,7 @@ import { RWebShare } from "react-web-share";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../store";
 import { VerifyDeleteProjectModal } from "../../../components/modals/verifyDeleteProjectModal";
+import {useIsMobile} from "../../../utils/isMobile";
 
 interface IProps {
   project: IProject;
@@ -31,12 +39,49 @@ interface IProps {
   showUserProjectsModal: () => void;
 }
 
+const StyledMenu = withStyles({
+  paper: {
+    border: "1px solid #d3d4d5",
+  },
+})((props: MenuProps) => (
+  <Menu
+    elevation={0}
+    getContentAnchorEl={null}
+    anchorOrigin={{
+      vertical: "bottom",
+      horizontal: "center",
+    }}
+    transformOrigin={{
+      vertical: "top",
+      horizontal: "center",
+    }}
+    {...props}
+  />
+));
+
+const StyledMenuItem = withStyles((theme: Theme) => ({
+  root: {
+    "&:focus": {
+      backgroundColor: theme.palette.primary.main,
+      "& .MuiListItemIcon-root, & .MuiListItemText-primary": {
+        color: theme.palette.common.white,
+      },
+    },
+  },
+}))(MenuItem);
+
+
+
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       padding: 0,
       height: "60px",
       paddingBottom: "35px",
+      width: "100%",
+      [theme.breakpoints.down("sm")]: {
+        height: "40px",
+      }
     },
     headerWrapper: {},
     header: {
@@ -46,6 +91,10 @@ const useStyles = makeStyles((theme: Theme) =>
       fontSize: "18px",
       lineHeight: "27px",
       cursor: "pointer",
+      [theme.breakpoints.down("sm")]: {
+        fontSize: "0.875rem",
+        lineHeight: "1.43"
+      }
     },
     subHeader: {
       fontFamily: "Open Sans",
@@ -56,7 +105,12 @@ const useStyles = makeStyles((theme: Theme) =>
       color: theme.palette.primary.main,
       paddingRight: "20px",
       cursor: "pointer",
+      [theme.breakpoints.down("sm")]: {
+        fontSize: "0.875rem",
+        lineHeight: "1.43",
+      }
     },
+    
     subHeader2: {
       fontFamily: "Open Sans",
       fontWeight: 400,
@@ -64,6 +118,11 @@ const useStyles = makeStyles((theme: Theme) =>
       fontSize: "14px",
       lineHeight: "19px",
       cursor: "pointer",
+      [theme.breakpoints.down("sm")]: {
+        fontSize: "0.875rem",
+        lineHeight: "1.43",
+        display: "none"
+      }
     },
     subHeaderWrapper: {
       display: "flex",
@@ -77,6 +136,10 @@ const useStyles = makeStyles((theme: Theme) =>
       height: "60px",
       backgroundColor: "orange",
       cursor: "pointer",
+      [theme.breakpoints.down("sm")]: {
+        height: "40px",
+        width: "40px",
+      }
     },
     action: {
       display: "flex",
@@ -89,6 +152,14 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 export const HeaderCardHeader = (props: IProps) => {
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+  const handleClick = (event: any | React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+
   const classes = useStyles();
   const { project, handleUpvotes, isLiked, showUserProjectsModal } = props;
 
@@ -111,7 +182,7 @@ export const HeaderCardHeader = (props: IProps) => {
   const toggleShowDeleteModal = () => {
     setShowingDeleteModal(!showingDeleteModal);
   };
-
+  const isMobile = useIsMobile();
   return (
     <>
       {showingDeleteModal && (
@@ -155,7 +226,71 @@ export const HeaderCardHeader = (props: IProps) => {
         }
         action={
           <div className={classes.action}>
-            {isProjectAuthor ? (
+            {isMobile ? <>
+              <IconButton onClick={handleClick}>
+                <MoreVert  />
+              </IconButton>
+      <StyledMenu
+        id="simple-menu"
+        anchorEl={anchorEl}
+        keepMounted
+        open={Boolean(anchorEl)}
+        onClose={handleClose}
+      >
+        <MenuItem onClick={() => {
+        handleClose();
+        if(isProjectAuthor) {
+          toggleShowDeleteModal();
+        }
+        else {
+          // TODO flag
+        }
+        }
+        }>
+          <ListItemIcon>
+          {isProjectAuthor ?
+            <DeleteForever
+              color="disabled"
+                          />
+            : <Flag color="disabled" />
+          }
+          </ListItemIcon>
+          <ListItemText primary={!isProjectAuthor ? "Flag" : "Delete"} />
+        </MenuItem>
+        <MenuItem onClick={() => {handleClose();}}>
+          <ListItemIcon>
+            <RWebShare
+                data={{
+                  text: `Checkout this project on the UP! It's called ${project.name}. I think you'll like it!`,
+                  url: window.location.href,
+                  title: "Share this project on the UP.",
+                }}
+                onClick={() => console.log(document.querySelectorAll(".rwebshare"))}
+                className="rwebshare"
+              >
+                <Share color="disabled" />
+              </RWebShare>
+          </ListItemIcon>
+          <ListItemText primary="Share" />
+        </MenuItem>
+        <MenuItem onClick={() => {
+        handleClose();
+        //@ts-ignore
+        handleUpvotes();
+        }} >
+          <ListItemIcon>
+            <SvgIcon
+                color={isLiked ? "primary" : "disabled"}
+              >
+                <UpButton />
+              </SvgIcon>
+          </ListItemIcon>
+          <ListItemText primary={isLiked ? "Remove Vote" : "UP Vote"} />
+        </MenuItem>
+      </StyledMenu>
+  
+            </> : <>
+            {isProjectAuthor ? 
               <IconButton>
                 <DeleteForever
                   fontSize="large"
@@ -163,7 +298,7 @@ export const HeaderCardHeader = (props: IProps) => {
                   onClick={toggleShowDeleteModal}
                 />
               </IconButton>
-            ) : (
+             : (
               <IconButton>
                 <Flag fontSize="large" color="disabled" />
               </IconButton>
@@ -189,6 +324,9 @@ export const HeaderCardHeader = (props: IProps) => {
                 <UpButton />
               </SvgIcon>
             </IconButton>
+            
+            </>
+            }
           </div>
         }
       />

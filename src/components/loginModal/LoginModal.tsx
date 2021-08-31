@@ -1,4 +1,4 @@
-import { createStyles, makeStyles, Typography } from "@material-ui/core";
+import { createStyles, makeStyles, Typography, Theme} from "@material-ui/core";
 import {
   GoogleLoginButton,
   LinkedInLoginButton,
@@ -6,7 +6,7 @@ import {
 } from "react-social-login-buttons";
 import { API } from "../../config";
 
-const useStyles = makeStyles(() =>
+const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     modal: {
       width: "100vw",
@@ -29,11 +29,14 @@ const useStyles = makeStyles(() =>
       top: "50%",
       left: "50%",
       transform: "translate(-50%, -50%)",
-      width: "350px",
+      width: "20%",
       height: "400px",
       background: "white",
       borderRadius: "10px",
       padding: "15px",
+      [theme.breakpoints.down("sm")]: {
+        width: "80%",
+      }
     },
     button: {},
     header: {

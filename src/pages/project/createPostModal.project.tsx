@@ -4,6 +4,7 @@ import {
   Typography,
   Button,
   TextField,
+  Theme,
 } from "@material-ui/core";
 import { EditorState, ContentState, convertToRaw } from "draft-js";
 import { Editor } from "react-draft-wysiwyg";
@@ -17,7 +18,7 @@ import { getProject } from "../../actions/projectsActions";
 import { useDispatch } from "react-redux";
 import { RootState } from "../../store";
 
-const useStyles = makeStyles(() =>
+const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     modal: {
       width: "100vw",
@@ -49,6 +50,10 @@ const useStyles = makeStyles(() =>
       paddingRight: "25px",
       paddingBottom: "10px",
       paddingTop: "10px",
+      [theme.breakpoints.down("sm")]: {
+        width: "90%",
+        padding: "0px",
+      }
     },
     header: {
       display: "flex",
@@ -68,6 +73,9 @@ const useStyles = makeStyles(() =>
       top: 0,
       right: 0,
       transform: "translate(-25px,10px)",
+      [theme.breakpoints.down("sm")]: {
+        transform: "translate(-0px,10px)",
+      }
     },
     body: {
       height: "70%",
@@ -111,9 +119,16 @@ const useStyles = makeStyles(() =>
       paddingLeft: "30px",
       paddingRight: "30px",
       borderRadius: "10px",
+      [theme.breakpoints.down("sm")]: {
+        marginRight: "15px",
+        marginBottom: "15px",
+      }
     },
     textField: {
       paddingBottom: "15px",
+      [theme.breakpoints.down("sm")]: {
+        width: "100%",
+      }
     },
   })
 );

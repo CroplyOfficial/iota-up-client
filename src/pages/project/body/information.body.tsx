@@ -21,7 +21,7 @@ import { RootState } from "../../../store";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    root: {},
+    root: {padding: "20px",},
     text: {
       fontFamily: "Open Sans",
       fontWeight: 400,

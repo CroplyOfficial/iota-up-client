@@ -17,6 +17,10 @@ const useStyles = makeStyles((theme: Theme) =>
       display: "flex",
       paddingTop: "100px",
       paddingBottom: "100px",
+      [theme.breakpoints.down("sm")]: {
+        paddingTop: "0px",
+        paddingBottom: "30px",
+      }
     },
     left: {},
     right: {
@@ -32,6 +36,7 @@ const useStyles = makeStyles((theme: Theme) =>
       fontWeight: 700,
       fontStyle: "normal",
       paddingBottom: "16px",
+
     },
     header: {
       fontSize: "50px",
@@ -39,6 +44,12 @@ const useStyles = makeStyles((theme: Theme) =>
       fontFamily: "Poppins",
       fontWeight: 600,
       fontStyle: "normal",
+      [theme.breakpoints.down("sm")]: {
+        fontSize: "24px",
+        lineHeight: "30px",
+        overflowWrap: "normal",
+      }
+ 
     },
     subHeader: {
       fontSize: "50px",
@@ -46,15 +57,24 @@ const useStyles = makeStyles((theme: Theme) =>
       fontFamily: "Poppins",
       fontWeight: 600,
       fontStyle: "normal",
+      [theme.breakpoints.down("sm")]: {
+        fontSize: "24px",
+        lineHeight: "32px",
+      }
+ 
     },
     text: {
       paddingTop: "20px",
-      maxWidth: "30vw",
+      width: "30vw",
       fontFamily: "Open Sans",
       fontWeight: 400,
       fontStyle: "normal",
       fontSize: "16px",
       lineHeight: "28px",
+      [theme.breakpoints.down("sm")]: {
+        width: "90vw",
+
+      }
     },
     buttons: {
       paddingTop: "46px",
@@ -84,7 +104,7 @@ interface IOvalProps {
   color?: string;
 }
 const Oval = ({ image, color }: IOvalProps) => {
-  const useStyles = makeStyles(() =>
+  const useStyles = makeStyles((theme: Theme) =>
     createStyles({
       oval: {
         width: "1046px",
@@ -92,6 +112,12 @@ const Oval = ({ image, color }: IOvalProps) => {
         background: color || green[300],
         borderRadius: "50%",
         maskImage: `url(${image})`,
+        [theme.breakpoints.down("sm")]: {
+          width: "100vw",
+          maxWidth: "414px",
+          height: "auto",
+          display: "none",
+        }
       },
     })
   );

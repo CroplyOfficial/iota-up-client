@@ -8,6 +8,7 @@ import {
 import { Favorite } from "@material-ui/icons";
 import { DonateButton } from "../DonateButton/DonateButton";
 import { iotaWalletAdress } from "../../config";
+import {Container} from "../container/container";
 
 interface IProps {
   onClick?: () => void;
@@ -15,7 +16,7 @@ interface IProps {
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    root: {
+    wrapper: {
       maxHeight: "533px",
       minHeight: "300px",
       width: "100%",
@@ -28,6 +29,13 @@ const useStyles = makeStyles((theme: Theme) =>
       textAlign: "center",
       paddingTop: "100px",
       paddingBottom: "100px",
+      [theme.breakpoints.down("sm")]: {
+        maxHeight: "300px",
+        minHeight: "200px",
+        paddingTop: "30px",
+        paddingBottom: "30px",
+        paddingRight: "80px",
+      },
     },
     header: {
       fontFamily: "Poppins",
@@ -35,6 +43,10 @@ const useStyles = makeStyles((theme: Theme) =>
       fontStyle: "normal",
       fontSize: "50px",
       lineHeight: "75px",
+      [theme.breakpoints.down("sm")]: {
+        fontSize: "26px",
+        lineHeight: "31px",
+      },
     },
     button: {
       paddingLeft: "35px",
@@ -59,7 +71,7 @@ export const DonateHero = (props: IProps) => {
   const { onClick } = props;
   const classes = useStyles();
   return (
-    <div className={classes.root}>
+    <div className={classes.wrapper}>
       <Typography variant="h2" className={classes.header}>
         The only way is UP!
         <br />
@@ -83,6 +95,7 @@ export const DonateHero = (props: IProps) => {
           <Favorite className={classes.icon} />
         </Button>
       </DonateButton>
+
     </div>
   );
 };

@@ -1,4 +1,4 @@
-import { makeStyles, createStyles } from "@material-ui/core";
+import { makeStyles, createStyles, Theme } from "@material-ui/core";
 import React from "react";
 import { Container } from "../../components/container/container";
 import { Navbar } from "../../components/navbar/Navbar";
@@ -21,16 +21,22 @@ import {
 } from "../../actions/projectsActions";
 import { getMyInfo } from "../../actions/userActions";
 
-const useStyles = makeStyles(() =>
+const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     heroContainer: {
       paddingBottom: "30vh",
+      [theme.breakpoints.down("sm")]: {
+      paddingBottom: "0rem",
+      },
     },
     featuredSection: {
       paddingBottom: "107px",
     },
     lastSection: {
       paddingBottom: "107px",
+      [theme.breakpoints.down("sm")]: {
+        paddingBottom: "5rem",
+      },
     },
   })
 );

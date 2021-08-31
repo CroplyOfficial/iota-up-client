@@ -3,6 +3,7 @@ import {
   makeStyles,
   Typography,
   Button,
+  Theme,
 } from "@material-ui/core";
 import { IPost } from "../../interfaces/post.interface";
 import htmlToDraft from "html-to-draftjs";
@@ -10,7 +11,7 @@ import { EditorState, ContentState } from "draft-js";
 import { Editor } from "react-draft-wysiwyg";
 import { CloseSharp } from "@material-ui/icons";
 
-const useStyles = makeStyles(() =>
+const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     modal: {
       width: "100vw",
@@ -19,7 +20,6 @@ const useStyles = makeStyles(() =>
       position: "fixed",
       top: 0,
       left: 0,
-
       zIndex: 2,
     },
     background: {
@@ -43,6 +43,10 @@ const useStyles = makeStyles(() =>
       paddingRight: "25px",
       paddingBottom: "10px",
       paddingTop: "10px",
+      [theme.breakpoints.down("sm")]: {
+        width: "90%",
+        padding: "0px",
+      }
     },
     header: {
       display: "flex",
@@ -62,6 +66,9 @@ const useStyles = makeStyles(() =>
       top: 0,
       right: 0,
       transform: "translate(-25px,10px)",
+      [theme.breakpoints.down("sm")]: {
+        transform: "translate(0px,10px)",
+      }
     },
     body: {
       height: "70%",

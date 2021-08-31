@@ -40,6 +40,10 @@ const useStyles = makeStyles((theme: Theme) =>
       paddingTop: "15px",
       transform: "translate(50px,-350px)",
       backgroundColor: "white",
+      [theme.breakpoints.down("sm")]: {
+        transform: "translate(0px,-400px)",
+        
+      }
     },
     container: {
       width: "100%",
@@ -129,6 +133,11 @@ const useStyles = makeStyles((theme: Theme) =>
     textField: {
       marginRight: "15px",
       marginBottom: "15px",
+      [theme.breakpoints.down("sm")]: {
+        marginRight: "0px",
+        marginBottom: "0px",
+        width: "100%",
+      }
     },
     skills: {},
     chip: {
@@ -146,6 +155,10 @@ const useStyles = makeStyles((theme: Theme) =>
       fontSize: "18px",
       lineHeight: "27px",
       marginBottom: "10px",
+      [theme.breakpoints.down("sm")]: {
+        width: "100%",
+        marginRight: "0px",
+      }
     },
     uploadContainer: {
       width: "250px",
@@ -158,6 +171,17 @@ const useStyles = makeStyles((theme: Theme) =>
       borderRadius: "3px",
       background: "#1b8271",
     },
+    buttons: {
+     display: "flex", 
+      [theme.breakpoints.down("sm")]: {
+        flexDirection: "column",
+        gap: "15px",
+        "& > button": {
+          width: "100%",
+        }
+      }
+
+    }
   })
 );
 
@@ -465,6 +489,7 @@ export const DashboardProfile = (props: IProps) => {
 
         <br />
 
+        <div className={classes.buttons}>
         <Button
           onClick={(e: any) => handleOnSave(e)}
           className={classes.buttonSave}
@@ -481,6 +506,7 @@ export const DashboardProfile = (props: IProps) => {
         >
           Delete Account
         </Button>
+        </div>
       </div>
     </div>
   );

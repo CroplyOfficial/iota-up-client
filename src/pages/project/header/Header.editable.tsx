@@ -138,19 +138,29 @@ export const EditableProjectHeader = (props: IProps) => {
         minheight: "750px",
         display: "flex",
         borderRadius: "20px",
+        [theme.breakpoints.down("sm")]: {
+          flexDirection: "column-reverse",
+        }
       },
       left: {
         maxWidth: "48.5%",
         padding: "30px",
         paddingRight: "20px",
+        [theme.breakpoints.down("sm")]: {
+          width: "calc(100% - 60px)",
+          maxWidth: "unset",
+        }
       },
       mainImageWrapper: {
-        width: "756px",
+        width: "100%",
         height: "425px",
         borderRadius: "20px",
         backgroundColor: "#f5f5f5",
         marginBottom: "20px",
         overflow: "hidden",
+        [theme.breakpoints.down("sm")]: {
+          height: "20%",
+        }
       },
       imagesWrapper: {
         display: "flex",
@@ -227,6 +237,8 @@ export const EditableProjectHeader = (props: IProps) => {
         flexDirection: "column",
         justifyContent: "space-around",
         gap: "1rem",
+        [theme.breakpoints.down("sm")]: {
+        }
       },
       button: {
         fontFamily: "Poppins",
@@ -245,6 +257,10 @@ export const EditableProjectHeader = (props: IProps) => {
         justifyContent: "space-between",
         coveralignItems: "center",
         paddingBottom: "10px",
+        [theme.breakpoints.down("sm")]: {
+          flexDirection: "column",
+          gap: "15px",
+        }
       },
       stats: {
         display: "flex",
@@ -311,6 +327,10 @@ export const EditableProjectHeader = (props: IProps) => {
           fontSize: "16px",
           lineHeight: "28px",
         },
+        [theme.breakpoints.down("sm")]:{
+          minWidth:"unset",
+          width: "100%",
+        }
       },
       categories: {
         fontFamily: "Open Sans",
@@ -343,6 +363,10 @@ export const EditableProjectHeader = (props: IProps) => {
       editButton: {
         display: "flex",
         flexDirection: "row-reverse",
+        [theme.breakpoints.down("sm")]: {
+          flexDirection: "column",
+          gap: "15px",
+        }
       },
     })
   );

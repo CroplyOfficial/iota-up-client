@@ -46,6 +46,10 @@ const useStyles = makeStyles((theme: Theme) =>
       paddingRight: "25px",
       paddingBottom: "10px",
       paddingTop: "10px",
+      [theme.breakpoints.down("sm")]: {
+        padding: "0px",
+        width: "90%",
+      }
     },
     header: {
       display: "flex",
@@ -53,6 +57,9 @@ const useStyles = makeStyles((theme: Theme) =>
       height: "30px",
       paddingBottom: "15px",
       paddingTop: "15px",
+      [theme.breakpoints.down("sm")]: {
+        padding: "15px",
+      }
     },
     title: {
       fontSize: "32px",
@@ -192,7 +199,7 @@ export const ProjectImageModal = (props: IProps) => {
   const [file, setFile] = useState<any>();
   const [progress, setProgress] = useState<number>(0);
   const [video, setVideo] = useState<string>();
-  const [media, setMedia] = useState<string[]>([]);
+  const [media, setMedia] = useState<string[]>(project?.media ?? []);
 
   const handleUrlOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUrl(e.currentTarget.value);

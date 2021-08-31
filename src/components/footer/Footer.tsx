@@ -17,8 +17,18 @@ const useStyles = makeStyles((theme: Theme) =>
       display: "flex",
       flexGrow: 1,
       justifyContent: "space-around",
-      height: "350px",
+      maxHeight: "350px",
       paddingTop: "75px",
+      [theme.breakpoints.down("sm")]: {
+      flexDirection: "column",
+      maxHeight: "1200px",
+      [theme.breakpoints.down("sm")]: {
+        flexDirection: "row",
+        flexWrap: "wrap",
+        justifyContent: "flex-start",
+        gap: "3rem",
+      }
+      },
     },
   })
 );

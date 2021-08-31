@@ -3,6 +3,7 @@ import {
   makeStyles,
   SvgIcon,
   createStyles,
+  Theme
 } from "@material-ui/core";
 import { AboutUsHeroCard } from "./heroCard.about_us";
 import { Container } from "../../components/container/container";
@@ -18,14 +19,17 @@ import { ReactComponent as Create } from "../../static/images/icons/create.svg";
 import { ReactComponent as Explore } from "../../static/images/icons/explore.svg";
 import { ReactComponent as UpButton } from "../../static/images/icons/up.svg";
 
-const useStyles = makeStyles(() =>
+const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       paddingTop: "400px",
       width: "100%",
-      height: "100vh",
+      minHeight: "100vh",
       display: "block",
       textAlign: "center",
+      [theme.breakpoints.down("sm")]:{
+        paddingTop: "30px",
+      }
     },
     preHeader: {
       fontFamily: "Poppins",
@@ -44,6 +48,10 @@ const useStyles = makeStyles(() =>
       lineHeight: "75px",
       textAlign: "center",
       paddingBottom: "15px",
+      [theme.breakpoints.down("sm")]:{
+        fontSize: "24px",
+        lineHeight: "30px",
+      }
     },
     poppins800Large: {
       fontFamily: "Poppins",
@@ -59,6 +67,11 @@ const useStyles = makeStyles(() =>
       fontSize: "16px",
       lineHeight: "28px",
       textAlign: "center",
+      [theme.breakpoints.down("sm")]:{
+        fontSize: "20px",
+        lineHeight: "28px",
+        textAlign: "start",
+      }
     },
     cards: {
       paddingTop: "35px",
@@ -81,6 +94,11 @@ const useStyles = makeStyles(() =>
       fontSize: "0.85rem",
       color: "#515151",
     },
+    alignStart: {
+      [theme.breakpoints.down("sm")]:{
+        textAlign: "start",
+      }
+    }
   })
 );
 export const AboutUsFeelessDonationsHero = () => {
@@ -99,7 +117,7 @@ export const AboutUsFeelessDonationsHero = () => {
     </span>
   );
   const footer = (
-    <span>
+    <span className={classes.alignStart}>
       It is important to be aware that this is an open platform, built for
       community support and development. <br />
       It is the responsibility of all creators to provide honest projects and
@@ -197,8 +215,7 @@ export const AboutUsFeelessDonationsHero = () => {
           variant="h6"
           component="span"
           className={classes.disclaimer}
-        >
-          {footer}{" "}
+          {footer}
         </Typography>
       </Container>
     </div>

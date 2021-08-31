@@ -1,4 +1,4 @@
-import { makeStyles, createStyles, Typography } from "@material-ui/core";
+import { makeStyles, createStyles, Typography, Theme } from "@material-ui/core";
 
 enum AboutUsHeroCardVariants {
   "flat" = "flat",
@@ -19,7 +19,7 @@ export const AboutUsHeroCard = (
   const hasShadow = variant === AboutUsHeroCardVariants.shadow;
   const isOutlined = variant === AboutUsHeroCardVariants.outlined;
 
-  const useStyles = makeStyles(() =>
+  const useStyles = makeStyles((theme: Theme) =>
     createStyles({
       root: {
         width: "750px",
@@ -39,6 +39,9 @@ export const AboutUsHeroCard = (
         flexDirection: "row",
         justifyContent: "space-around",
         alignItems: "center",
+      [theme.breakpoints.down("sm")]: {
+        width: "100%",
+      }
       },
 
       column: {
@@ -54,6 +57,10 @@ export const AboutUsHeroCard = (
         fontSize: "24px",
         lineHeight: "36px",
         paddingBottom: "10px",
+      [theme.breakpoints.down("sm")]: {
+        fontSize: "18px",
+        lineHeight: "26px",
+      }
       },
       subHeader: {
         fontFamily: "Open Sans",
@@ -61,6 +68,10 @@ export const AboutUsHeroCard = (
         fontStyle: "normal",
         fontSize: "16px",
         lineHeight: "28px",
+      [theme.breakpoints.down("sm")]: {
+        fontSize: "12px",
+        lineHeight: "20px",
+        }
       },
       iconWrapper: {},
       icon: {

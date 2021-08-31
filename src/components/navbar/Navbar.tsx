@@ -7,15 +7,24 @@ import {
   IconButton,
   Typography,
   Color,
+  Drawer, 
+  SwipeableDrawer,
+  MenuItem,
+  Button
 } from "@material-ui/core";
-import { Link, useLocation } from "react-router-dom";
+import MenuIcon from "@material-ui/icons/Menu";
+import Person from "@material-ui/icons/Person";
+import { Link, useLocation} from "react-router-dom";
 import { BrandLogo } from "../../static/icons/brand-logo";
 import { BrandLogoSecondary } from "../../static/icons/brand-logo.secondary";
-import { useState } from "react";
+import { useState, useEffect} from "react";
 import { ActionButton } from "./loginButton.navbar";
 import { Container } from "../container/container";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
+import { DashboardCreateProjectModal } from "../../pages/dashboard/createProjectModal.dashboard";
+import { logout} from "../../actions/userActions";
+import { useDispatch } from "react-redux";
 
 const paths = {
   root: "/",
@@ -43,6 +52,40 @@ interface INavbarProps {
   toggleLoginModal: () => void;
 }
 export const Navbar = (props: INavbarProps) => {
+  const dispatch = useDispatch();
+  const [mobileView, setMobileView] = useState<boolean>(false);
+  const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(false);
+  const toggleDrawerOpen = () => { setIsDrawerOpen(!isDrawerOpen);}
+
+  const [showingModal, setShowModal] = useState<boolean>(false);
+  const toggleShowModal = () => {
+    setShowModal(!showingModal);
+  };
+
+  const handleLogout = () => {
+    dispatch(logout());
+    toggleDrawerOpen();
+  }
+  const handleCreateProject = () => {
+    toggleShowModal();
+    toggleDrawerOpen();
+  }
+
+  useEffect(() => {
+    const setResponsiveness = () => {
+      return window.innerWidth < 900
+        ? setMobileView(true)
+        : setMobileView(false);
+    };
+
+    setResponsiveness();
+    window.addEventListener("resize", () => setResponsiveness());
+
+    return () => {
+      window.removeEventListener("resize", () => setResponsiveness());
+    }
+  }, []);
+
   const { pathname } = useLocation();
   const isSecondary =
     SecondaryWhitelist.some((p) => pathname.includes(p)) &&
@@ -64,6 +107,9 @@ export const Navbar = (props: INavbarProps) => {
         color: "inherit",
         marginLeft: "0.7rem",
         marginRight: "0.7rem",
+        [theme.breakpoints.down("sm")]: {
+          margin: 0,
+        }
       },
       a: {
         "&:hover": {
@@ -75,6 +121,25 @@ export const Navbar = (props: INavbarProps) => {
         fontStyle: "normal",
         fontWeight: 500,
         color: isSecondary ? "#ffffff" : "#717579",
+        [theme.breakpoints.down("sm")]: {
+          paddingLeft: "20px",
+        color:  "#717579",
+        },
+      },
+      b: {
+        "&:hover": {
+          color: isSecondary ? theme.palette.text.secondary : "#121E31",
+        },
+        lineHeight: "21px",
+        fontSize: "16px",
+        fontFamily: "Poppins",
+        fontStyle: "normal",
+        fontWeight: 500,
+        color: isSecondary ? "#ffffff" : "#717579",
+        [theme.breakpoints.down("sm")]: {
+          paddingLeft: "20px",
+        color:  theme.palette.text.secondary
+        },
       },
       loginButton: {
         lineHeight: "27px",
@@ -85,6 +150,21 @@ export const Navbar = (props: INavbarProps) => {
       },
       iconButton: {
         paddingLeft: 0,
+        [theme.breakpoints.down("sm")]:{
+          paddingLeft: "30px",
+        }
+      },
+      drawer: {
+        minWidth: "175px",
+      },
+      loginButtonMobile: {
+        lineHeight: "27px",
+        fontSize: "18px",
+        font: "Poppins",
+        fontWeight: 700,
+        fontStyle: "normal",
+        marginLeft: "20px",
+ 
       },
     })
   );
@@ -98,17 +178,93 @@ export const Navbar = (props: INavbarProps) => {
   const isLoggedIn = userInfo !== null;
 
   const actionButtonVariant = isSecondary ? "contained" : "outlined";
-  const brandLogo = isSecondary ? <BrandLogoSecondary /> : <BrandLogo />;
-  return (
-    <div>
-      <AppBar
-        position="static"
-        color={isSecondary ? "primary" : "transparent"}
-        elevation={0}
-        className={classes.root}
-      >
-        <Container>
-          <Toolbar variant="dense">
+  const brandLogo = isSecondary && !mobileView ? <BrandLogoSecondary /> : <BrandLogo />;
+
+  function getDrawerChoices() {
+      return (
+      <div className={classes.drawer}>
+             {/* Brand */}
+            <Link to={paths.root}>
+              <IconButton
+                className={classes.iconButton}
+                edge="start"
+                aria-label="logo"
+                color="inherit"
+              >
+                {brandLogo}
+              </IconButton>
+            </Link>
+            {/* Brand */}
+         <Link
+            to="/"
+            className={classes.link}
+        >
+          <MenuItem className={classes.a}>Home</MenuItem>
+        </Link>
+         <Link
+            to={paths.howItWorks}
+            className={classes.link}
+        >
+          <MenuItem className={classes.a}>About Us</MenuItem>
+        </Link>
+         <Link
+            to={paths.projects}
+            className={classes.link}
+        >
+          <MenuItem className={classes.a}>Projects</MenuItem>
+        </Link>
+         <Link
+            to={paths.contactUs}
+            className={classes.link}
+        >
+          <MenuItem className={classes.a}>Contact Us</MenuItem>
+        </Link>
+
+      {!isLoggedIn ?
+        <Button
+          className={classes.loginButtonMobile}
+          color="secondary"
+          variant="outlined"
+          disableElevation
+          startIcon={<Person />}
+          onClick={props.toggleLoginModal}
+          >Sign in</Button>
+        : <>
+          <hr style={{border: "0.03px solid rgba(0,0,0,0.05)"}}/>
+            <Link to="/dashboard" className={classes.link}>
+          <MenuItem className={classes.b}>
+            Profile
+          </MenuItem>
+            </Link>
+            <Link to="/dashboard/projects" className={classes.link}>
+          <MenuItem className={classes.b}>
+            My Projects
+          </MenuItem>
+            </Link>
+            <Link to="/dashboard/favorites" className={classes.link}>
+          <MenuItem className={classes.b}>
+            My Favorites 
+          </MenuItem>
+            </Link>
+          <hr style={{border: "0.03px solid rgba(0,0,0,0.05)"}}/>
+            <Link to="#create-project" className={classes.link}>
+          <MenuItem className={classes.b} onClick={handleCreateProject}>
+            Create Project
+          </MenuItem>
+            </Link>
+            <Link to="/logout" className={classes.link} onClick={handleLogout}>
+          <MenuItem className={classes.b}>
+            Logout 
+          </MenuItem>
+            </Link>
+        </>}
+        </div>
+      );
+  }
+
+  function renderDesktop() {
+    return(
+       <Toolbar variant="dense">
             {/* Brand */}
             <Link to={paths.root}>
               <IconButton
@@ -149,7 +305,55 @@ export const Navbar = (props: INavbarProps) => {
               toggleLoginModal={props.toggleLoginModal}
             />
           </Toolbar>
-        </Container>
+
+    );
+  }
+  function renderMobile() {
+    return <Toolbar variant="dense">
+    {/* 
+      HELP!
+      hitbox of IconButton is shifted up but doesnt show in firefox dev tools
+      */}
+     <IconButton
+          {...{
+            edge: "start",
+            color: "inherit",
+            "aria-label": "menu",
+            "aria-haspopup": "true",
+            className: "TODO"
+          }}
+          onClick={toggleDrawerOpen}
+        >
+          <MenuIcon
+          />
+        <SwipeableDrawer 
+          onOpen={toggleDrawerOpen}
+          {...{
+            anchor: "left",
+            open: isDrawerOpen,
+            onClose: toggleDrawerOpen,
+          }}
+        >
+          {getDrawerChoices()}
+        </SwipeableDrawer>
+
+        </IconButton>
+        
+    </Toolbar>;
+  }
+
+  return (
+    <div>
+    <DashboardCreateProjectModal showing={showingModal} onClick={toggleShowModal}/>
+      <AppBar
+        position="static"
+        color={isSecondary ? "primary" : "transparent"}
+        elevation={0}
+        className={classes.root}
+      >
+        <Container>
+        {mobileView && renderMobile() || renderDesktop()}
+                 </Container>
       </AppBar>
     </div>
   );
