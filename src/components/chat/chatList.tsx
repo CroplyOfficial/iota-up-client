@@ -52,16 +52,13 @@ const MessageChatList = (props: IProps) => {
       );
 
       setMsg("");
-      dispatch(chatById(id));
     }
   };
 
-  updateChat()
   setInterval(() => {
-    if (id) {
-      updateChat();
-    }
-  }, 2000);
+    updateChat() 
+  }, 3000)
+
 
   return (
     <div>
@@ -83,7 +80,10 @@ const MessageChatList = (props: IProps) => {
                     }
                 `}
               >
-                <div className="message">{message.content}</div>
+                <div className="message">
+                  <div className="date">{String(new Date(message.date).toString()).substring(4, 15)}</div>
+                  <div className="content">{message.content}</div> 
+               </div>
               </div>
             ))}
           </div>

@@ -91,7 +91,14 @@ const useStyles = makeStyles((theme: Theme) =>
       color: theme.palette.text.secondary,
       paddingTop: "10px",
     },
-    avatar: {},
+    avatar: {
+      height: "100px",
+      width: "100px",
+      borderRadius: "50px",
+      marginTop: "30px",
+      marginBottom: "30px",
+      cursor: "pointer",
+    },
     tags: {},
     socials: {
       display: "flex",
@@ -140,6 +147,17 @@ const useStyles = makeStyles((theme: Theme) =>
       lineHeight: "27px",
       marginBottom: "10px",
     },
+    uploadContainer: {
+      width: "250px",
+      height: "20px",
+      background: "gray",
+      borderRadius: "3px",
+    },
+    uploadBar: {
+      height: "20px",
+      borderRadius: "3px",
+      background: "#1b8271",
+    },
   })
 );
 
@@ -164,6 +182,7 @@ export const DashboardProfile = (props: IProps) => {
     city: userCity,
     country: userCountry,
     connections,
+    avatar,
     bio: userBio,
   } = user;
   //
@@ -188,6 +207,12 @@ export const DashboardProfile = (props: IProps) => {
   const [username, setUsername] = useState<string>(myInfo?.username || "");
   const [showingModal, setShowingModal] = useState<boolean>(false);
   const [bio, setBio] = useState<string>(userBio ?? "");
+  const [userAvatar, setUserAvatar] = useState<string>(avatar ? avatar : "");
+  const [tags, setTags]: any = useState<string[]>([]);
+  const [file, setFile] = useState<any>({ file: { size: 0 } });
+  const [progress, setProgress] = useState<number>(0);
+  const [uploading, setUploading] = useState<boolean>(false);
+  const [uploadError, setUploadError] = useState<string>("");
 
   const handleOnChange = (e: React.FormEvent<HTMLInputElement>) => {
     setFireflyAdress(e.currentTarget.value);
@@ -242,6 +267,47 @@ export const DashboardProfile = (props: IProps) => {
     setBio(e.currentTarget.value);
   };
 
+  const handleAvatarChange = async () => {
+    if (file) {
+      const formData: any = new FormData();
+      formData.append("media", file.file);
+
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      };
+
+      try {
+        setUploading(true);
+        const { data } = await axios.post("/api/uploads", formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${userInfo.token}`,
+          },
+          onUploadProgress: (data) => {
+            setProgress(Math.round((100 * data.loaded) / data.total));
+          },
+        });
+        const userUpdated = await axios.put(
+          "/api/users/me",
+          {
+            avatar: data.url,
+          },
+          config
+        );
+        setUserAvatar(userUpdated.data.avatar);
+        setUploading(false);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+  };
+
+  useEffect(() => {
+    handleAvatarChange();
+  }, [file]);
   return (
     <div className={classes.root}>
       {showingModal ? <DashboardDeleteModal /> : ""}
@@ -299,6 +365,40 @@ export const DashboardProfile = (props: IProps) => {
             </div>
           </div>
         </div>
+
+        <form>
+          <input
+            type="file"
+            name="image"
+            id="imgPicker"
+            accept=".png,.jpg,.jpeg"
+            onChange={(e: any) =>
+              setFile({
+                file: e.target.files[0],
+              })
+            }
+            style={{ display: "none" }}
+          />
+        </form>
+        <img
+          src={userAvatar}
+          onClick={() => {
+            // @ts-ignore
+            document.getElementById("imgPicker")?.click();
+          }}
+          className={classes.avatar}
+        />
+
+        {uploading && (
+          <div className={classes.uploadContainer}>
+            <div
+              className={classes.uploadBar}
+              style={{ width: `${progress}%` }}
+            ></div>
+          </div>
+        )}
+
+        <br />
 
         <TextField
           type="text"
