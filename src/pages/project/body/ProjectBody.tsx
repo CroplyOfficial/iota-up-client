@@ -1,4 +1,4 @@
-import { createStyles, makeStyles } from "@material-ui/core";
+import { createStyles, makeStyles, Theme } from "@material-ui/core";
 import { Container } from "../../../components/container/container";
 import { IProject } from "../../../interfaces/project.interface";
 import { ProjectPageVariants } from "../../../interfaces/project.variants.interface";
@@ -20,11 +20,15 @@ import axios from "axios";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../store";
 
-const useStyles = makeStyles(() =>
+const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       marginTop: "15px",
       display: "flex",
+      [theme.breakpoints.down("sm")]: {
+        flexDirection: "column",
+        gap: "15px",
+      }
     },
     left: {
       width: "1070px",
@@ -33,6 +37,11 @@ const useStyles = makeStyles(() =>
       backgroundColor: "#ffffff",
       padding: "25px",
       boxShadow: "rgba(0,0,0,0.10) 0 0 10px",
+      [theme.breakpoints.down("sm")]: {
+        width: "100%",
+        padding: "0px",
+        height: "auto",
+      }
     },
     right: {
       padding: "25px",
@@ -44,6 +53,11 @@ const useStyles = makeStyles(() =>
       backgroundColor: "#ffffff",
       boxShadow: "rgba(0,0,0,0.10) 0 0 10px",
       borderRadius: "15px",
+      [theme.breakpoints.down("sm")]: {
+        width: "calc(100% - 40px)",
+        margin: "0px",
+        padding: "20px",
+      }
     },
     rightHeader: {
       fontFamily: "Poppins",
@@ -52,6 +66,9 @@ const useStyles = makeStyles(() =>
       fontSize: "32px",
       lineHeight: "48px",
       paddingBottom: "15px",
+      [theme.breakpoints.down("sm")]: {
+        maxWidth: "100%",
+      }
     },
     "*::-webkit-scrollbar": {
       width: "0.4em",

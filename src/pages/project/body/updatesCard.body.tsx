@@ -6,6 +6,7 @@ import {
   Theme,
 } from "@material-ui/core";
 import { IPost } from "../../../interfaces/post.interface";
+import {useIsMobile} from "../../../utils/isMobile";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -13,7 +14,7 @@ const useStyles = makeStyles((theme: Theme) =>
       display: "flex",
       justifyContent: "space-between",
       alignItems: "center",
-      padding: "15px",
+      padding: "20px",
     },
     header: {
       fontFamily: "Poppins",
@@ -21,6 +22,10 @@ const useStyles = makeStyles((theme: Theme) =>
       lineHeight: "48px",
       fontWeight: 700,
       fontStyle: "normal",
+      [theme.breakpoints.down("sm")]: {
+        fontSize: "20px", 
+        lineHeight: "32px",
+      }
     },
     subHeader: {
       fontFamily: "Poppins",
@@ -29,6 +34,10 @@ const useStyles = makeStyles((theme: Theme) =>
       fontWeight: 700,
       fontStyle: "normal",
       color: theme.palette.text.secondary,
+      [theme.breakpoints.down("sm")]: {
+        fontSize: "14px", 
+        lineHeight: "22px",
+      }
     },
     button: {
       width: "230px",
@@ -38,6 +47,9 @@ const useStyles = makeStyles((theme: Theme) =>
       lineHeight: "27px",
       fontWeight: 700,
       fontStyle: "normal",
+      [theme.breakpoints.down("sm")]: {
+        width: "100px",
+      }
     },
   })
 );
@@ -47,6 +59,7 @@ interface IProps {
   onClick: () => void;
 }
 export const UpdatesCard = (props: IProps) => {
+  const isMobile = useIsMobile();
   const { post, onClick } = props;
   const classes = useStyles();
   return (
@@ -64,7 +77,7 @@ export const UpdatesCard = (props: IProps) => {
         variant="contained"
         color="primary"
       >
-        View Post
+        {!isMobile ? "View Post" : "View" }
       </Button>
     </div>
   );
