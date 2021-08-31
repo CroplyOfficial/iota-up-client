@@ -3,16 +3,23 @@ import {
   makeStyles,
   Typography,
   Button,
+  Theme,
 } from "@material-ui/core";
 import { Card } from "../../components/card/card";
 import { ProjectsCard } from "../../components/card/card3";
 import { IProject } from "../../interfaces/project.interface";
 
-const useStyles = makeStyles(() =>
+const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {},
-    text: {
+    textAlign: {
       textAlign: "center",
+      [theme.breakpoints.down("sm")]: {
+      textAlign: "start",
+      }
+    },
+    text: {
+    textAlign: "center",
     },
     header: {
       fontFamily: "Poppins",
@@ -20,6 +27,10 @@ const useStyles = makeStyles(() =>
       fontStyle: "standard",
       fontSize: "50px",
       lineHeight: "75px",
+      [theme.breakpoints.down("sm")]: {
+        fontSize: "26px",
+        lineHeight: "32px",
+      },
     },
     subHeader: {
       paddingTop: "25px",
@@ -29,11 +40,18 @@ const useStyles = makeStyles(() =>
       fontStyle: "standard",
       fontSize: "16px",
       lineHeight: "28px",
+      [theme.breakpoints.down("sm")]: {
+        paddingBottom: "1.5rem",
+      },
     },
     cards: {
       display: "flex",
       flexGrow: 1,
       justifyContent: "space-around",
+      [theme.breakpoints.down("sm")]: {
+      flexDirection: "column",
+      gap: "2.5rem",
+      },
     },
     actionButton: {},
     actionButtonContainer: {
@@ -73,9 +91,11 @@ export const FeaturedSection = (
         <Typography variant="h2" className={classes.header}>
           {title}
         </Typography>
+      <div className={classes.textAlign}> 
         <Typography variant="h4" className={classes.subHeader}>
           {subHeader}
         </Typography>
+      </div>
       </div>
       <div className={classes.cards}>
         {projects &&

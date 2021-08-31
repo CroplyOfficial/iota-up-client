@@ -1,4 +1,6 @@
-import { createStyles, makeStyles, Theme } from "@material-ui/core";
+import { createStyles, makeStyles, Theme, Grid, TextField,  } from "@material-ui/core";
+import {AccountCircle} from "@material-ui/icons";
+import {useIsMobile} from "../../../utils/isMobile";
 
 interface IProps {
   onKeyUp: (e: any) => void;
@@ -20,6 +22,7 @@ const useStyles = makeStyles((theme: Theme) =>
       color: "#000000",
       paddingLeft: "20px",
       transition: ".1s ease-in all",
+      width: "100%",
 
       "&:focus": {
         outline: "none",
@@ -27,6 +30,9 @@ const useStyles = makeStyles((theme: Theme) =>
         fontSize: "20px",
       },
     },
+    grid: {
+      display: "flex",
+    }
   })
 );
 export const ProjectsSearchBarInput = (props: IProps) => {

@@ -16,6 +16,9 @@ const useStyles = makeStyles((theme: Theme) =>
       fontSize: "16px",
       lineHeight: "24px",
       textAlign: "center",
+      [theme.breakpoints.down("sm")]: {
+        width: "100%",
+      }
     },
   })
 );

@@ -32,6 +32,7 @@ const useStyles = makeStyles((theme: Theme) =>
       fontWeight: 700,
       fontStyle: "normal",
       paddingBottom: "16px",
+      paddingTop: "180px",
     },
     header: {
       fontSize: "60px",
@@ -39,6 +40,10 @@ const useStyles = makeStyles((theme: Theme) =>
       fontFamily: "Poppins",
       fontWeight: 700,
       fontStyle: "normal",
+      [theme.breakpoints.down("sm")]: {
+        fontSize: "26px",
+        lineHeight: "32px",
+      }
     },
     subHeader: {
       fontSize: "44px",
@@ -46,6 +51,10 @@ const useStyles = makeStyles((theme: Theme) =>
       fontFamily: "Poppins",
       fontWeight: 600,
       fontStyle: "normal",
+      [theme.breakpoints.down("sm")]: {
+        fontSize: "26px",
+        lineHeight: "32px",
+      }
     },
     text: {
       paddingTop: "51px",
@@ -55,10 +64,16 @@ const useStyles = makeStyles((theme: Theme) =>
       fontStyle: "normal",
       fontSize: "16px",
       lineHeight: "28px",
+      [theme.breakpoints.down("sm")]: {
+      maxWidth: "100vw",
+      }
     },
     buttons: {
       "& > button": {
         marginRight: theme.spacing(5),
+        [theme.breakpoints.down("sm")]: {
+        marginRight: theme.spacing(1),
+        },
       },
       paddingTop: "46px",
     },
@@ -92,17 +107,30 @@ interface IOvalProps {
   color?: string;
 }
 const Oval = ({ image, color }: IOvalProps) => {
-  const useStyles = makeStyles(() =>
+  const useStyles = makeStyles((theme: Theme) =>
     createStyles({
       oval: {
         width: "1046px",
         height: "678px",
+        [theme.breakpoints.down("sm")]: {
+          height: "100%",
+        },
         background: !image ? color || green[300] : "",
         borderRadius: "50%",
+      [theme.breakpoints.down("sm")]: {
+      width: "100vw",
+      height: "100vh",
+      }
       },
       image: {
         height: "100%",
         transform: "translate(0, -50px)",
+      [theme.breakpoints.down("sm")]: {
+        height: "auto",
+        width: "90%",
+        maxWidth: "414px",
+        transform: "translate(0, 150px)",
+      }
       },
     })
   );

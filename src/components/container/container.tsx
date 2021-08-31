@@ -1,4 +1,4 @@
-import {makeStyles, createStyles, useMediaQuery } from "@material-ui/core";
+import {makeStyles, createStyles, useMediaQuery, Theme } from "@material-ui/core";
 import React from "react";
 
 interface IProps {
@@ -20,10 +20,14 @@ export const Container = (props: IProps & React.HTMLAttributes<HTMLDivElement>) 
   const marginLeft = matches ? "0.3rem" : `${width}vw`;
   const marginRight = matches ? "0.3rem" : `${width}vw`;
 
-  const useStyles = makeStyles(() => createStyles({
+  const useStyles = makeStyles((theme: Theme) => createStyles({
     root: {
       marginLeft,
-      marginRight
+      marginRight,
+      [theme.breakpoints.down("sm")]: {
+        marginLeft: "20px",
+        marginRight: "20px",
+      }
     }
   }));
   const classes = useStyles();

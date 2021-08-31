@@ -3,6 +3,7 @@ import {
   createStyles,
   makeStyles,
   Typography,
+  Theme,
   Card as MaterialCard,
 } from "@material-ui/core";
 import { ICard } from "../../../interfaces/categoriesCard.interface";
@@ -16,7 +17,7 @@ interface IProps {
   cards: Array<ICard>;
 }
 
-const useStyles = makeStyles(() =>
+const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       display: "flex",
@@ -25,6 +26,11 @@ const useStyles = makeStyles(() =>
       alignItems: "center",
       paddingTop: "150px",
       paddingBottom: "150px",
+      [theme.breakpoints.down("sm")]: {
+      paddingTop: "0rem",
+      paddingBottom: "0rem",
+      },
+
     },
     categoriesPreHeader: {
       fontFamily: "Poppins",
@@ -42,6 +48,10 @@ const useStyles = makeStyles(() =>
       lineHeight: "75px",
       paddingTop: "24px",
       textAlign: "center",
+      [theme.breakpoints.down("sm")]:{
+        fontSize: "26px",
+        lineHeight: "32px",
+      },
     },
     categoriesSubHeader: {
       fontFamily: "Open Sans",
@@ -51,6 +61,12 @@ const useStyles = makeStyles(() =>
       lineHeight: "28px",
       paddingTop: "24px",
       textAlign: "center",
+      [theme.breakpoints.down("sm")]:{
+        fontSize: "16px",
+        lineHeight: "28px",
+        textAlign:"start",
+        width: "100%",
+      },
     },
     cards: {
       width: "100%",
@@ -76,6 +92,8 @@ const useStyles = makeStyles(() =>
         WebkitTransition: "all 5s ease",
         OTransition: "all 5s ease",
       },
+      [theme.breakpoints.down("sm")]: {
+      },
     },
     card: {
       width: "243.33px",
@@ -99,8 +117,19 @@ const useStyles = makeStyles(() =>
         boxShadow:
           "3px 3px 5px 6px rgba(0, 0, 0, .1)" /* Opera 10.5, IE 9, Firefox 4+, Chrome 6+, iOS 5 */,
       },
+      [theme.breakpoints.down("sm")]: {
+        width: "25vw",
+        height: "25vw",
+      },
     },
-    cardIcon: {},
+    cardIcon: {
+    [theme.breakpoints.down("sm")]:{
+      "& > svg": {
+        width: "32px",
+        height: "32px",
+      },
+      }
+    },
     cardTitle: {
       paddingTop: "18px",
       fontFamily: "Poppins",
@@ -108,6 +137,12 @@ const useStyles = makeStyles(() =>
       fontStyle: "normal",
       fontSize: "18px",
       lineHeight: "27px",
+      [theme.breakpoints.down("sm")]: {
+        paddingTop: "0px",
+        overflowWrap: "anywhere",
+        fontSize: "12px",
+        lineHeight: "21px",
+      }
     },
   })
 );
