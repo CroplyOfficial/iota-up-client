@@ -14,6 +14,7 @@ import { parseQueryString } from "../../utils/queryString";
 import { getMyInfo } from "../../actions/userActions";
 import { MainCategories } from "../../config";
 import { compareArrays } from "../../utils/matchArrays";
+import {useIsMobile} from "../../utils/isMobile";
 
 interface IProps {}
 interface ICategory {
@@ -190,9 +191,10 @@ export const Projects = (props: IProps) => {
   const handleOnClick = async () => {
     history.push(`/projects?query=${query}`);
   };
+  const isMobile = useIsMobile();
   return (
     <div>
-      <ProjectsNavbarHero />
+      {!isMobile ? <ProjectsNavbarHero /> : <></>}
       <ProjectsSearchBar
         onKeyUp={(e: any) => {
           setQuery(e.target.value);
@@ -211,7 +213,7 @@ export const Projects = (props: IProps) => {
         sortMethod={sortMethod}
         setSortMethod={setSortMethod}
       />
-      <DonateHero />
+      <DonateHero /> 
       <Footer />
     </div>
   );
