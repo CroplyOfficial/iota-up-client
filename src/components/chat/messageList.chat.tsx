@@ -11,6 +11,9 @@ import { useSelector, useDispatch } from "react-redux";
 import { getMyChats } from "../../actions/chatActions";
 import { RootState } from "../../store";
 import { MessageChatList } from "./chatList";
+import { io } from "socket.io-client";
+import { IChat } from "../../interfaces/chat.interface";
+
 const useStyles = makeStyles(() =>
   createStyles({
     root: {
@@ -29,20 +32,29 @@ export const ChatMessageList = () => {
   const [chatsLoaded, setChatsLoaded] = useState<any[]>();
   const [chatsData, setChatsData] = useState<any[]>();
   const [showList, setShowList] = useState<boolean>(true);
+  const [chats, setChats] = useState<any>();
 
-  useEffect(() => {
-    dispatch(getMyChats());
-  }, []);
-
-  const chatsMeta: any = useSelector((state: RootState) => state.myChats);
   const usersMeta: any = useSelector((state: RootState) => state.userLogin);
   const { userInfo } = usersMeta;
-  const { chats, error, loading } = chatsMeta;
 
   useEffect(() => {
+    const socket = io("http://localhost:5000");
+
+    socket.on("connect", () => {
+      if (!userInfo) return;
+      socket.emit("myChats", { token: userInfo.token });
+    });
+
+    socket.on("chat", (chat) => {
+      setChats(chat);
+    });
+  }, []);
+
+  useEffect(() => {
+    console.log(chats);
     setChatsLoaded(chats?.chats);
-    if (chats?.chats) {
-      const handleDataSources = chats?.chats?.map((c: any) => {
+    if (chats) {
+      const handleDataSources = chats?.map((c: any) => {
         const otherMember = c?.members.filter(
           (member: any) => String(member._id) !== String(userInfo._id)
         )[0];
