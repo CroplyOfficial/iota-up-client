@@ -5,60 +5,37 @@ import { RootState } from "../../store";
 import { chatById } from "../../actions/chatActions";
 import axios from "axios";
 import "./messages.css";
+import { io } from "socket.io-client";
+import { BARE_API } from "../../config";
+import useChat from "./useChat";
 
 interface IProps {
-  id?: string;
+  id: string;
 }
 const MessageChatList = (props: IProps) => {
   const { id } = props;
   const dispatch = useDispatch();
 
   const [msg, setMsg] = useState<string>();
-  const [chat, setChat] = useState<any>();
 
   const userMeta: any = useSelector((state: RootState) => state.userLogin);
   const { userInfo } = userMeta;
 
-  const updateChat = async () => {
-    if (id) {
-      const config = {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${userInfo.token}`,
-        },
-      };
-      const chat_from_api = await axios.get(`/api/chats/by-id/${id}`, config);
-      setChat(chat_from_api.data);
-    }
-  };
+  const {
+    chat,
+    sendMessage,
+  }: { chat: any; sendMessage: (message: string) => any } = useChat({
+    chatId: id,
+    token: userInfo.token,
+  });
 
-  const handleSendMessage = async (e: any) => {
-    if (id && msg) {
-      e.preventDefault();
-      const config = {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${userInfo.token}`,
-        },
-      };
-
-      await axios.post(
-        `/api/chats/message`,
-        {
-          chatId: id,
-          content: msg,
-        },
-        config
-      );
-
+  const handleSendMessage = (e: any) => {
+    e.preventDefault();
+    if (msg) {
+      sendMessage(msg);
       setMsg("");
     }
   };
-
-  setInterval(() => {
-    updateChat() 
-  }, 3000)
-
 
   return (
     <div>
@@ -81,9 +58,11 @@ const MessageChatList = (props: IProps) => {
                 `}
               >
                 <div className="message">
-                  <div className="date">{String(new Date(message.date).toString()).substring(4, 15)}</div>
-                  <div className="content">{message.content}</div> 
-               </div>
+                  <div className="date">
+                    {String(new Date(message.date).toString()).substring(4, 15)}
+                  </div>
+                  <div className="content">{message.content}</div>
+                </div>
               </div>
             ))}
           </div>

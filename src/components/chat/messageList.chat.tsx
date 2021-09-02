@@ -13,6 +13,7 @@ import { RootState } from "../../store";
 import { MessageChatList } from "./chatList";
 import { io } from "socket.io-client";
 import { IChat } from "../../interfaces/chat.interface";
+import { BARE_API } from "../../config";
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -24,6 +25,8 @@ const useStyles = makeStyles(() =>
     chatList: {},
   })
 );
+
+let socket: any;
 
 export const ChatMessageList = () => {
   const classes = useStyles();
@@ -38,14 +41,14 @@ export const ChatMessageList = () => {
   const { userInfo } = usersMeta;
 
   useEffect(() => {
-    const socket = io("http://localhost:5000");
+    socket = io(BARE_API);
 
     socket.on("connect", () => {
       if (!userInfo) return;
       socket.emit("myChats", { token: userInfo.token });
     });
 
-    socket.on("chat", (chat) => {
+    socket.on("chat", (chat: any) => {
       setChats(chat);
     });
   }, []);
@@ -104,8 +107,8 @@ export const ChatMessageList = () => {
             handleChatClick(e.id);
           }}
         />
-      ) : !showList ? (
-        <div className="message"></div>
+      ) : !showList && id ? (
+        <MessageChatList id={id} />
       ) : (
         <div className="err">unable to load messages</div>
       )}
