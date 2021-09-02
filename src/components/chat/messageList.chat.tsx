@@ -28,13 +28,17 @@ const useStyles = makeStyles(() =>
 
 let socket: any;
 
-export const ChatMessageList = () => {
+interface IProps {
+  showList: boolean;
+  setShowList: (value: boolean) => void;
+}
+export const ChatMessageList = (props: IProps) => {
+  const { showList, setShowList } = props;
   const classes = useStyles();
   const dispatch = useDispatch();
   const [id, setId] = useState<string>();
   const [chatsLoaded, setChatsLoaded] = useState<any[]>();
   const [chatsData, setChatsData] = useState<any[]>();
-  const [showList, setShowList] = useState<boolean>(true);
   const [chats, setChats] = useState<any>();
 
   const usersMeta: any = useSelector((state: RootState) => state.userLogin);

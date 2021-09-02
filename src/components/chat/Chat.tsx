@@ -2,12 +2,12 @@ import {
   makeStyles,
   createStyles,
   Typography,
-  SvgIcon,
   IconButton,
-  CardActionArea,
+  MenuItem,
+  Menu,
 } from "@material-ui/core";
 import { MessageBox, Avatar } from "react-chat-elements-typescript";
-import { KeyboardArrowUp, PostAdd, MoreHoriz } from "@material-ui/icons";
+import { KeyboardArrowUp, MoreVert, ArrowBack } from "@material-ui/icons";
 import { ChatMessageList } from "./messageList.chat";
 import { ChatSearchBar } from "./searchBar.chat";
 import { useFallbackImage } from "../../config";
@@ -17,6 +17,7 @@ export const Chat = () => {
   const [showMessages, setShowMessages] = useState<boolean>(false);
   const [chat, setChat] = useState<string>();
   const [showList, setShowList] = useState<boolean>(true);
+
   const useStyles = makeStyles(() =>
     createStyles({
       root: {
@@ -76,16 +77,20 @@ export const Chat = () => {
   );
 
   const classes = useStyles();
-  const fallback = useFallbackImage();
   const handleExpand = () => {
     setShowMessages(!showMessages);
   };
-  const handleMoreOptions = () => null;
-  const handleNewMessage = () => null;
+  const handleBack = () => {
+    setShowList(true);
+  };
+
   return (
     <div className={classes.root}>
       <div className={classes.header}>
-        <div onClick={handleExpand} className={classes.cardActionArea}>
+        <div className={classes.cardActionArea}>
+          <IconButton size="small" onClick={handleBack}>
+            <ArrowBack />
+          </IconButton>
           <Typography variant="body2" component="span" className={classes.text}>
             Messages
           </Typography>
@@ -96,7 +101,7 @@ export const Chat = () => {
           </IconButton>
         </div>
       </div>
-      <ChatMessageList />
+      <ChatMessageList setShowList={setShowList} showList={showList} />
     </div>
   );
 };

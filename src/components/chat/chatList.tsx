@@ -1,13 +1,10 @@
-import { useEffect, useState } from "react";
-import { MessageList } from "react-chat-elements-typescript";
+import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../store";
-import { chatById } from "../../actions/chatActions";
-import axios from "axios";
 import "./messages.css";
-import { io } from "socket.io-client";
-import { BARE_API } from "../../config";
 import useChat from "./useChat";
+import { IconButton, MenuItem, Menu } from "@material-ui/core";
+import { MoreVert } from "@material-ui/icons";
 
 interface IProps {
   id: string;
@@ -23,12 +20,32 @@ const MessageChatList = (props: IProps) => {
 
   const {
     chat,
+    messages,
+    isBlocked,
+    canUnblock,
     sendMessage,
-  }: { chat: any; sendMessage: (message: string) => any } = useChat({
+    toggleBlock,
+  }: {
+    chat: any;
+    messages: any;
+    isBlocked: boolean;
+    canUnblock: boolean;
+    sendMessage: (message: string) => void;
+    toggleBlock: () => void;
+  } = useChat({
     chatId: id,
     token: userInfo.token,
   });
+  const [anchorEl, setAnchorEl] = useState<any>(null);
+  const open = Boolean(anchorEl);
 
+  const handleClick = (event: any) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
   const handleSendMessage = (e: any) => {
     e.preventDefault();
     if (msg) {
@@ -36,6 +53,7 @@ const MessageChatList = (props: IProps) => {
       setMsg("");
     }
   };
+  const handleDeleteConversation = () => {};
 
   return (
     <div>
@@ -44,9 +62,53 @@ const MessageChatList = (props: IProps) => {
           <div className="message-top">
             <img src={chat?.partner?.avatar} className="avatar" />
             <h2>{chat?.partner?.username || chat?.partner?.firstName}</h2>
+            <div>
+              <IconButton
+                aria-label="more"
+                aria-controls="long-menu"
+                aria-haspopup="true"
+                onClick={handleClick}
+                style={{
+                  position: "absolute",
+                  right: 0,
+                  top: "50px",
+                }}
+              >
+                <MoreVert />
+              </IconButton>
+              <Menu
+                id="long-menu"
+                anchorEl={anchorEl}
+                keepMounted
+                open={open}
+                onClose={handleClose}
+                PaperProps={{
+                  style: {
+                    maxHeight: 48 * 4.5,
+                    width: "20ch",
+                  },
+                }}
+              >
+                {((isBlocked && canUnblock) || !isBlocked) && (
+                  <MenuItem
+                    onClick={(e: any) => {
+                      toggleBlock();
+                      setAnchorEl(null);
+                    }}
+                  >
+                    {isBlocked && canUnblock
+                      ? "Unblock Contact"
+                      : "Block Contact"}
+                  </MenuItem>
+                )}
+                <MenuItem onClick={handleDeleteConversation}>
+                  Delete Conversation
+                </MenuItem>
+              </Menu>
+            </div>
           </div>
           <div className="chat-section">
-            {chat?.messages?.map((message: any) => (
+            {messages?.map((message: any) => (
               <div
                 key={message?._id}
                 className={`message-container
@@ -70,6 +132,7 @@ const MessageChatList = (props: IProps) => {
             <form className="chat-form" onSubmit={handleSendMessage}>
               <input
                 type="text"
+                disabled={isBlocked}
                 className="chat-entry"
                 value={msg}
                 onChange={(e: any) => {
