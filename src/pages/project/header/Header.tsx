@@ -46,6 +46,7 @@ export const ProjectHeader = (props: IProps) => {
     tags: initialTags,
     category,
     upvotes,
+    author,
   } = project as IProject;
   const fallbackImage = useFallbackImage();
   const mainImage = media[0] || fallbackImage;
@@ -342,8 +343,10 @@ export const ProjectHeader = (props: IProps) => {
   const socket = io(BARE_API);
 
   const contactCreator = async () => {
+    console.log(author);
     socket.emit("startChat", {
-      partner: "6120c3fb6e9afc394cb1ed9c",
+      // @ts-ignore
+      partner: author?.id,
       token: userInfo?.token,
     });
   };

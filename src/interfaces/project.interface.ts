@@ -15,6 +15,7 @@ export interface IProject {
   editorState: string;
   wallet: string;
   author?: {
+    _id?: string;
     fullName?: string;
     displayName?: string;
     username?: string;
