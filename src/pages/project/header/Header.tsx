@@ -23,7 +23,8 @@ import { getMyInfo } from "../../../actions/userActions";
 import { userLoginReducer } from "../../../reducers/userReducers";
 import axios from "axios";
 import { DonateButton } from "../../../components/DonateButton/DonateButton";
-import { useFallbackImage } from "../../../config";
+import { BARE_API, useFallbackImage } from "../../../config";
+import { io } from "socket.io-client";
 
 interface IProps {
   variant: ProjectPageVariants;
@@ -80,7 +81,7 @@ export const ProjectHeader = (props: IProps) => {
         borderRadius: "20px",
         [theme.breakpoints.down("sm")]: {
           flexDirection: "column-reverse",
-        }
+        },
       },
       left: {
         maxWidth: "48.5%",
@@ -89,7 +90,7 @@ export const ProjectHeader = (props: IProps) => {
         [theme.breakpoints.down("sm")]: {
           width: "calc(100% - 60px)",
           maxWidth: "unset",
-        }
+        },
       },
       mainImageWrapper: {
         width: "100%",
@@ -100,8 +101,7 @@ export const ProjectHeader = (props: IProps) => {
         overflow: "hidden",
         [theme.breakpoints.down("sm")]: {
           height: "20%",
-        }
-
+        },
       },
       imagesWrapper: {
         display: "flex",
@@ -248,10 +248,10 @@ export const ProjectHeader = (props: IProps) => {
           fontSize: "16px",
           lineHeight: "28px",
         },
-        [theme.breakpoints.down("sm")]:{
-          minWidth:"unset",
+        [theme.breakpoints.down("sm")]: {
+          minWidth: "unset",
           width: "100%",
-        }
+        },
       },
       categories: {
         fontFamily: "Open Sans",
@@ -337,6 +337,15 @@ export const ProjectHeader = (props: IProps) => {
       setUpvotesCount(upvotesCount - 1);
       setShowSuccess("Removed UP Vote!");
     }
+  };
+
+  const socket = io(BARE_API);
+
+  const contactCreator = async () => {
+    socket.emit("startChat", {
+      partner: "6120c3fb6e9afc394cb1ed9c",
+      token: userInfo?.token,
+    });
   };
 
   useEffect(() => {
@@ -478,6 +487,7 @@ export const ProjectHeader = (props: IProps) => {
                   variant="outlined"
                   color="primary"
                   className={classes.button}
+                  onClick={contactCreator}
                 >
                   Contact Creator
                 </Button>
