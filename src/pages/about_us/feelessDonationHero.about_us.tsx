@@ -18,6 +18,7 @@ import { useState } from "react";
 import { ReactComponent as Create } from "../../static/images/icons/create.svg";
 import { ReactComponent as Explore } from "../../static/images/icons/explore.svg";
 import { ReactComponent as UpButton } from "../../static/images/icons/up.svg";
+import {useIsMobile} from "../../utils/isMobile";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -68,7 +69,7 @@ const useStyles = makeStyles((theme: Theme) =>
       lineHeight: "28px",
       textAlign: "center",
       [theme.breakpoints.down("sm")]: {
-        fontSize: "20px",
+        fontSize: "16px",
         lineHeight: "28px",
         textAlign: "start",
       },
@@ -97,12 +98,17 @@ const useStyles = makeStyles((theme: Theme) =>
     alignStart: {
       [theme.breakpoints.down("sm")]: {
         textAlign: "start",
+        fontSize: "12px",
+        lineHeight: "20px",
+        fontStyle: "italic",
+        paddingBottom: "15px",
       },
     },
   })
 );
 export const AboutUsFeelessDonationsHero = () => {
   const classes = useStyles();
+  const isMobile = useIsMobile();
 
   const preHeader = "THE SYSTEM";
   const header = "Feeless Donations. Direct.";
@@ -116,15 +122,31 @@ export const AboutUsFeelessDonationsHero = () => {
       who need it.
     </span>
   );
+  const subHeaderMobile = (
+    <span>
+      Our platform makes use of the IOTA network. Allowing donors to make
+      payments direct to project creators.
+      <br/><br/>
+      Making use of IOTA as a payment allows feeless, near instant transactions,
+      so you can be safe in the
+      knowledge that your support gets delivered direct to the hands of those
+      who need it.
+    </span>
+  );
   const footer = (
-    <span className={classes.alignStart}>
+    <div className={classes.alignStart}>
       It is important to be aware that this is an open platform, built for
       community support and development. <br />
       It is the responsibility of all creators to provide honest projects and
       updates, and it is the responsibility of <br />
       the donors to make their own judgements on whether they choose to support
       a project or not.
-    </span>
+    </div>
+  );
+  const footerMobile = (
+    <div className={classes.alignStart}>
+      It is important to be aware that this is an open platform, built community support and development. It is the responsibility of all creators to provide honest projects and updates, and it is the responsibility of the donors to make their own judgements on whether they choose to support a project or not.
+    </div>
   );
   const history = useHistory();
   const [redirect, setRedirect] = useState<string>("");
@@ -196,7 +218,7 @@ export const AboutUsFeelessDonationsHero = () => {
           {header}
         </Typography>
         <Typography variant="h6" className={classes.openSans400Small}>
-          {subHeader}
+          {!isMobile ? subHeader: subHeaderMobile}
         </Typography>
 
         <div className={classes.cards}>
@@ -216,7 +238,7 @@ export const AboutUsFeelessDonationsHero = () => {
           component="span"
           className={classes.disclaimer}
         >
-          {footer}
+          {isMobile ? footerMobile : footer}
         </Typography>
       </Container>
     </div>

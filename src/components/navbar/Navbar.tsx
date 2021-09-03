@@ -155,7 +155,7 @@ export const Navbar = (props: INavbarProps) => {
         }
       },
       drawer: {
-        minWidth: "175px",
+        minWidth: "60vw",
       },
       loginButtonMobile: {
         lineHeight: "27px",
