@@ -129,6 +129,7 @@ export const ProjectOverview = ({ match }: any) => {
       {postModal && Object.keys(postModal).length ? (
         <ProjectPostModal
           post={postModal as IPost}
+          project={project}
           onClick={() => setPostModal({})}
         />
       ) : (

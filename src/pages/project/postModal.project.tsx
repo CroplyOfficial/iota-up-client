@@ -4,12 +4,21 @@ import {
   Typography,
   Button,
   Theme,
+  Menu,
+  MenuItem,
+  IconButton,
 } from "@material-ui/core";
 import { IPost } from "../../interfaces/post.interface";
 import htmlToDraft from "html-to-draftjs";
-import { EditorState, ContentState } from "draft-js";
+import { EditorState, ContentState, convertToRaw } from "draft-js";
 import { Editor } from "react-draft-wysiwyg";
-import { CloseSharp } from "@material-ui/icons";
+import { MoreVert, CloseSharp, Save } from "@material-ui/icons";
+import { useState } from "react";
+import axios from "axios";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store";
+import draftToHtml from "draftjs-to-html";
+import { IProject } from "../../interfaces/project.interface";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -46,7 +55,7 @@ const useStyles = makeStyles((theme: Theme) =>
       [theme.breakpoints.down("sm")]: {
         width: "90%",
         padding: "0px",
-      }
+      },
     },
     header: {
       display: "flex",
@@ -68,7 +77,7 @@ const useStyles = makeStyles((theme: Theme) =>
       transform: "translate(-25px,10px)",
       [theme.breakpoints.down("sm")]: {
         transform: "translate(0px,10px)",
-      }
+      },
     },
     body: {
       height: "70%",
@@ -118,25 +127,142 @@ const useStyles = makeStyles((theme: Theme) =>
 
 interface IProps {
   post: IPost;
+  project: IProject;
   onClick: () => void;
 }
 export const ProjectPostModal = (props: IProps) => {
+  const [editing, setEditing] = useState<boolean>(false);
   const classes = useStyles();
-  const { post, onClick } = props;
+  const { post, onClick, project } = props;
+
   const blocksFromHtml = htmlToDraft(post.body);
   const { contentBlocks, entityMap } = blocksFromHtml;
   const contentState = ContentState.createFromBlockArray(
     contentBlocks,
     entityMap
   );
-  const editorState = EditorState.createWithContent(contentState);
+  const initialEditorState = EditorState.createWithContent(contentState);
 
+  const userLoginMeta = useSelector((state: RootState) => state.userLogin);
+  const { userInfo }: any = userLoginMeta;
+
+  const handleDeletePost = async () => {
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+    await axios.delete(`/api/posts/modify/${post._id}`, config);
+    window.location.reload();
+  };
+
+  const isOwner = String(userInfo?._id) === String(project?.author?.id);
+
+  const handleEditPost = async () => {
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+    const editedPost = await axios.post(
+      `/api/posts/modify/${post._id}`,
+      {
+        body: draftToHtml(convertToRaw(editorState.getCurrentContent())),
+      },
+      config
+    );
+    setEditing(false);
+  };
+  const [editorState, setEditorState] =
+    useState<EditorState>(initialEditorState);
+  const onEditorStateChange = (editorState: EditorState) => {
+    setEditorState(editorState);
+  };
+  const toolBar = {
+    image: {
+      uploadEnabled: true,
+      inputAccept: "image/gif,image/jpeg,image/jpg,image/png,image/svg",
+      urlEnabled: false,
+      uploadCallback: async function (...params: any[]) {
+        console.log(params);
+        return {
+          data: {
+            link: "https://images.unsplash.com/photo-1485550409059-9afb054cada4?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=701&q=80",
+          },
+        };
+      },
+    },
+  };
+  const [anchorEl, setAnchorEl] = useState<any>(null);
+  const open = Boolean(anchorEl);
+
+  const handleClick = (event: any) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
   return (
     <div>
       <div className={classes.modal}>
         <div className={classes.background} onClick={onClick}></div>
         <div className={classes.card}>
           <div className={classes.header}>
+            {editing && (
+              <Button onClick={handleEditPost}>
+                <Save color="primary" />
+              </Button>
+            )}
+            {isOwner && (
+              <>
+                <IconButton
+                  aria-label="more"
+                  aria-controls="long-menu"
+                  aria-haspopup="true"
+                  onClick={handleClick}
+                  style={{
+                    position: "absolute",
+                    right: "70px",
+                    top: "3px",
+                  }}
+                >
+                  <MoreVert />
+                </IconButton>
+                <Menu
+                  id="long-menu"
+                  anchorEl={anchorEl}
+                  keepMounted
+                  open={open}
+                  onClose={handleClose}
+                  PaperProps={{
+                    style: {
+                      maxHeight: 48 * 4.5,
+                      width: "20ch",
+                    },
+                  }}
+                >
+                  <MenuItem
+                    onClick={(e: any) => {
+                      setEditing(true);
+                      setAnchorEl(null);
+                    }}
+                  >
+                    Edit Post
+                  </MenuItem>
+                  <MenuItem
+                    onClick={() => {
+                      handleDeletePost();
+                      setAnchorEl(null);
+                    }}
+                  >
+                    Delete Post
+                  </MenuItem>
+                </Menu>
+              </>
+            )}
             <Button onClick={onClick} className={classes.justifyEnd}>
               <CloseSharp />
             </Button>
@@ -144,10 +270,14 @@ export const ProjectPostModal = (props: IProps) => {
           <div className={classes.body}>
             <Typography className={classes.title}> {post.title} </Typography>
             <Editor
-              readOnly={false}
               editorState={editorState}
-              onEditorStateChange={() => null}
-              toolbarHidden
+              wrapperClassName="demo-wrapper"
+              editorClassName="demo-editor"
+              onEditorStateChange={onEditorStateChange}
+              toolbar={toolBar}
+              {...(!editing ? { toolbarHidden: true } : {})}
+              readOnly={!editing}
+              toolbarClassName={"editor-toolbar"}
             />
             <Typography color="textPrimary"></Typography>
           </div>

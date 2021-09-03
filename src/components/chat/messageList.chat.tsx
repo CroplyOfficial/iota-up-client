@@ -11,6 +11,10 @@ import { useSelector, useDispatch } from "react-redux";
 import { getMyChats } from "../../actions/chatActions";
 import { RootState } from "../../store";
 import { MessageChatList } from "./chatList";
+import { io } from "socket.io-client";
+import { IChat } from "../../interfaces/chat.interface";
+import { BARE_API } from "../../config";
+
 const useStyles = makeStyles(() =>
   createStyles({
     root: {
@@ -22,27 +26,42 @@ const useStyles = makeStyles(() =>
   })
 );
 
-export const ChatMessageList = () => {
+let socket: any;
+
+interface IProps {
+  showList: boolean;
+  setShowList: (value: boolean) => void;
+}
+export const ChatMessageList = (props: IProps) => {
+  const { showList, setShowList } = props;
   const classes = useStyles();
   const dispatch = useDispatch();
   const [id, setId] = useState<string>();
   const [chatsLoaded, setChatsLoaded] = useState<any[]>();
   const [chatsData, setChatsData] = useState<any[]>();
-  const [showList, setShowList] = useState<boolean>(true);
+  const [chats, setChats] = useState<any>();
 
-  useEffect(() => {
-    dispatch(getMyChats());
-  }, []);
-
-  const chatsMeta: any = useSelector((state: RootState) => state.myChats);
   const usersMeta: any = useSelector((state: RootState) => state.userLogin);
   const { userInfo } = usersMeta;
-  const { chats, error, loading } = chatsMeta;
 
   useEffect(() => {
+    socket = io(BARE_API);
+
+    socket.on("connect", () => {
+      if (!userInfo) return;
+      socket.emit("myChats", { token: userInfo.token });
+    });
+
+    socket.on("chat", (chat: any) => {
+      setChats(chat);
+    });
+  }, []);
+
+  useEffect(() => {
+    console.log(chats);
     setChatsLoaded(chats?.chats);
-    if (chats?.chats) {
-      const handleDataSources = chats?.chats?.map((c: any) => {
+    if (chats) {
+      const handleDataSources = chats?.map((c: any) => {
         const otherMember = c?.members.filter(
           (member: any) => String(member._id) !== String(userInfo._id)
         )[0];
@@ -51,9 +70,8 @@ export const ChatMessageList = () => {
           avatar: otherMember.avatar,
           alt: otherName,
           title: otherName,
-          subtitle: "asdf",
+          subtitle: c?.messages[0] ? c.messages[0].content : "",
           date: new Date(c?.sent || new Date().getTime()),
-          unread: c?.unread || 1,
           id: c?._id,
         };
       });
@@ -92,8 +110,8 @@ export const ChatMessageList = () => {
             handleChatClick(e.id);
           }}
         />
-      ) : !showList ? (
-        <div className="message"></div>
+      ) : !showList && id ? (
+        <MessageChatList id={id} />
       ) : (
         <div className="err">unable to load messages</div>
       )}
