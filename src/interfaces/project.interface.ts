@@ -16,6 +16,7 @@ export interface IProject {
   wallet: string;
   author?: {
     _id?: string;
+    id?: string;
     fullName?: string;
     displayName?: string;
     username?: string;

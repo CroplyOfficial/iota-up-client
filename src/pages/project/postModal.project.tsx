@@ -4,17 +4,21 @@ import {
   Typography,
   Button,
   Theme,
+  Menu,
+  MenuItem,
+  IconButton,
 } from "@material-ui/core";
 import { IPost } from "../../interfaces/post.interface";
 import htmlToDraft from "html-to-draftjs";
 import { EditorState, ContentState, convertToRaw } from "draft-js";
 import { Editor } from "react-draft-wysiwyg";
-import { CloseSharp, Edit, Save, Delete } from "@material-ui/icons";
+import { MoreVert, CloseSharp, Save } from "@material-ui/icons";
 import { useState } from "react";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
 import draftToHtml from "draftjs-to-html";
+import { IProject } from "../../interfaces/project.interface";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -123,12 +127,13 @@ const useStyles = makeStyles((theme: Theme) =>
 
 interface IProps {
   post: IPost;
+  project: IProject;
   onClick: () => void;
 }
 export const ProjectPostModal = (props: IProps) => {
   const [editing, setEditing] = useState<boolean>(false);
   const classes = useStyles();
-  const { post, onClick } = props;
+  const { post, onClick, project } = props;
 
   const blocksFromHtml = htmlToDraft(post.body);
   const { contentBlocks, entityMap } = blocksFromHtml;
@@ -151,6 +156,8 @@ export const ProjectPostModal = (props: IProps) => {
     await axios.delete(`/api/posts/modify/${post._id}`, config);
     window.location.reload();
   };
+
+  const isOwner = String(userInfo?._id) === String(project?.author?.id);
 
   const handleEditPost = async () => {
     const config = {
@@ -188,24 +195,74 @@ export const ProjectPostModal = (props: IProps) => {
       },
     },
   };
+  const [anchorEl, setAnchorEl] = useState<any>(null);
+  const open = Boolean(anchorEl);
+
+  const handleClick = (event: any) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
   return (
     <div>
       <div className={classes.modal}>
         <div className={classes.background} onClick={onClick}></div>
         <div className={classes.card}>
           <div className={classes.header}>
-            {!editing ? (
-              <Button onClick={(e) => setEditing(true)}>
-                <Edit color="primary" />
-              </Button>
-            ) : (
+            {editing && (
               <Button onClick={handleEditPost}>
                 <Save color="primary" />
               </Button>
             )}
-            <Button onClick={handleDeletePost}>
-              <Delete color="secondary" />
-            </Button>
+            {isOwner && (
+              <>
+                <IconButton
+                  aria-label="more"
+                  aria-controls="long-menu"
+                  aria-haspopup="true"
+                  onClick={handleClick}
+                  style={{
+                    position: "absolute",
+                    right: "70px",
+                    top: "3px",
+                  }}
+                >
+                  <MoreVert />
+                </IconButton>
+                <Menu
+                  id="long-menu"
+                  anchorEl={anchorEl}
+                  keepMounted
+                  open={open}
+                  onClose={handleClose}
+                  PaperProps={{
+                    style: {
+                      maxHeight: 48 * 4.5,
+                      width: "20ch",
+                    },
+                  }}
+                >
+                  <MenuItem
+                    onClick={(e: any) => {
+                      setEditing(true);
+                      setAnchorEl(null);
+                    }}
+                  >
+                    Edit Post
+                  </MenuItem>
+                  <MenuItem
+                    onClick={() => {
+                      handleDeletePost();
+                      setAnchorEl(null);
+                    }}
+                  >
+                    Delete Post
+                  </MenuItem>
+                </Menu>
+              </>
+            )}
             <Button onClick={onClick} className={classes.justifyEnd}>
               <CloseSharp />
             </Button>
