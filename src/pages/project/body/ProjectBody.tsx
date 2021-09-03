@@ -41,6 +41,7 @@ const useStyles = makeStyles((theme: Theme) =>
         width: "100%",
         padding: "0px",
         height: "auto",
+        minHeight: "unset",
       }
     },
     right: {

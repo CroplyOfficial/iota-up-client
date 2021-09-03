@@ -11,22 +11,24 @@ enum IMaxWidth {
   "md" = "md",
   "lg" = "lg",
   "xl" = "xl",
+  "null" = "null",
 }
 
 export const Container = (props: IProps & React.HTMLAttributes<HTMLDivElement>) => {
   const { maxWidth } = props;
-  const width = maxWidth === "xl" ? 10 : maxWidth === "lg" ? 8 : maxWidth === "md" ? 5 : maxWidth === "sm" ? 2.5 : 8;
+  const width = maxWidth === "xl" ? 10 : maxWidth === "lg" ? 8 : maxWidth === "md" ? 5 : maxWidth === "sm" ? 2.5 : maxWidth === "null" ? 0 : 8;
   const matches = useMediaQuery('(max-width: 600px)');
-  const marginLeft = matches ? "0.3rem" : `${width}vw`;
-  const marginRight = matches ? "0.3rem" : `${width}vw`;
+  const notNull = maxWidth !== IMaxWidth.null;
+  const marginLeft = matches && notNull ? "0.3rem" : `${width}vw`;
+  const marginRight = matches && notNull ? "0.3rem" : `${width}vw`;
 
   const useStyles = makeStyles((theme: Theme) => createStyles({
     root: {
       marginLeft,
       marginRight,
       [theme.breakpoints.down("sm")]: {
-        marginLeft: "20px",
-        marginRight: "20px",
+        marginLeft: notNull ? "20px" : "0px",
+        marginRight: notNull ? "20px" : "0px",
       }
     }
   }));

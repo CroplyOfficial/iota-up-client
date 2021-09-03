@@ -69,7 +69,7 @@ const useStyles = makeStyles((theme: Theme) =>
       lineHeight: "28px",
       textAlign: "center",
       [theme.breakpoints.down("sm")]: {
-        fontSize: "20px",
+        fontSize: "16px",
         lineHeight: "28px",
         textAlign: "start",
       },
@@ -145,7 +145,7 @@ export const AboutUsFeelessDonationsHero = () => {
   );
   const footerMobile = (
     <div className={classes.alignStart}>
-      It is important to be aware that this is an open platform, built community support and development. <br /> It is the responsibility of all creators to provide honest projects and updates, and it is the responsibility of the donors to make their own judgements on whether they choose to support a project or not.
+      It is important to be aware that this is an open platform, built community support and development. It is the responsibility of all creators to provide honest projects and updates, and it is the responsibility of the donors to make their own judgements on whether they choose to support a project or not.
     </div>
   );
   const history = useHistory();

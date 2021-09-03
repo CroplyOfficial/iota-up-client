@@ -24,6 +24,7 @@ import { userLoginReducer } from "../../../reducers/userReducers";
 import axios from "axios";
 import { DonateButton } from "../../../components/DonateButton/DonateButton";
 import { useFallbackImage } from "../../../config";
+import {useIsMobile} from "../../../utils/isMobile";
 
 interface IProps {
   variant: ProjectPageVariants;
@@ -348,6 +349,7 @@ export const ProjectHeader = (props: IProps) => {
       setIsLiked(myInfo?.upvotedProjects?.includes(_id));
     }
   }, [myInfo, _id]);
+  const isMobile = useIsMobile();
 
   return (
     <>
@@ -369,7 +371,8 @@ export const ProjectHeader = (props: IProps) => {
           {showSuccess}
         </Alert>
       </Snackbar>
-      <Container>
+     <Container maxWidth={isMobile ? "xl" : "sm"}>
+
         <Card className={classes.root}>
           <div className={classes.left}>
             <div

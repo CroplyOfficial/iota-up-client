@@ -181,7 +181,6 @@ export const AboutUsHero = () => {
           <AboutUsHeroCard
             header={heroCard2.header}
             subHeader={heroCard2.subHeader}
-            variant="flat"
             icon={
               <VerifiedUser
                 color="primary"
