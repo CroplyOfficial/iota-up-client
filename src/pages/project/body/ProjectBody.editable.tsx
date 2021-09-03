@@ -91,29 +91,7 @@ export const EditableProjectBody = (props: IProps) => {
   const toggleBodyOption = (option: BodyOption) => {
     setBodyOption(option);
   };
-  const posts: IPost[] = [
-    {
-      project: "",
-      title: "THIS WEEKS UPDATE HEADER",
-      body: "lorem ipsum dolor sit amet,",
-      created: new Date().getTime(),
-    },
-    {
-      project: "",
-      title: "THIS WEEKS UPDATE HEADER",
-      body: `
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent non mattis libero. Suspendisse mauris eros, aliquet quis bibendum vitae, blandit ac elit. Etiam non nibh et arcu laoreet vehicula et ac lorem. Sed gravida et elit non pulvinar. Cras ullamcorper mauris ultricies lacus commodo efficitur. Donec ultricies euismod elit quis tincidunt. Quisque vitae orci hendrerit mauris pellentesque bibendum at id sem. Nulla ut dictum purus. Duis in arcu sit amet risus sagittis aliquam. Cras vel orci non lectus varius consectetur. Maecenas orci neque, congue vitae mi vitae, malesuada ultrices erat. Suspendisse accumsan lacus eget arcu pulvinar maximus.
 
-Aenean tempus malesuada consectetur. Vestibulum porttitor magna magna, et fringilla ipsum laoreet in. Phasellus suscipit lacinia risus, et fermentum ligula tincidunt in. Cras id nulla justo. Maecenas quis suscipit massa. Praesent id ipsum accumsan, pretium tellus eget, malesuada velit. Sed et leo rhoncus, tempus risus sed, tempus mauris. Phasellus efficitur quis ligula sed placerat. Pellentesque pellentesque est sit amet tempor elementum. Nullam vitae sem urna. Quisque pharetra neque vitae ante ullamcorper feugiat. Cras tincidunt urna eget dolor feugiat efficitur. Nulla elementum blandit eros, quis eleifend quam. Aliquam posuere pharetra condimentum. Aliquam libero leo, dapibus et ex ut, cursus posuere sapien.
-
-Sed feugiat nunc sapien, quis cursus magna porta congue. Nulla in leo a elit mattis posuere vel quis dolor. Vestibulum a sodales lacus. Nam euismod urna erat, et rhoncus mi vulputate in. Etiam quis fermentum leo, sed porttitor tortor. Sed tempus ante ut faucibus varius. Proin ultrices, augue vitae tincidunt aliquam, risus erat luctus elit, a consectetur tortor nunc sed risus. Etiam consectetur mollis eleifend. Suspendisse potenti. Aliquam erat volutpat.
-
-Vivamus nec tortor quis leo tristique cursus id non dolor. Nulla eros elit, molestie vel lacus id, efficitur consequat ipsum. Duis posuere, nulla eu efficitur ullamcorper, enim tellus laoreet enim, id pharetra ex nulla in nisi. Vestibulum et purus at nisi mattis accumsan. Aenean maximus a purus nec gravida. Quisque lacinia, purus id viverra rhoncus, dui libero ultricies est, lacinia lobortis urna nulla vitae ante. In vulputate finibus tellus, vel faucibus magna tristique vitae.
-
-Quisque dictum libero ac ullamcorper vehicula. Duis semper erat non rhoncus sagittis. Nunc varius, ipsum imperdiet egestas viverra, ex sapien viverra lacus, sed placerat sem ligula et nunc. Nullam nec nulla et ante bibendum molestie id ac ex. Morbi convallis nec purus quis tempor. Ut vulputate quam turpis, eu molestie nunc imperdiet eget. Morbi tempor purus augue, nec elementum ligula lacinia sit amet. Nulla eros nulla, condimentum a orci eu, efficitur laoreet nibh. Interdum et malesuada fames ac ante ipsum primis in faucibus.`,
-      created: new Date().getTime(),
-    },
-  ];
   const isInformation = bodyOption === BodyOptions.INFORMATION;
   const isUpdates = bodyOption === BodyOptions.UPDATES;
   const blocksFromHtml = htmlToDraft(project.editorState || "");
@@ -139,7 +117,21 @@ Quisque dictum libero ac ullamcorper vehicula. Duis semper erat non rhoncus sagi
     };
     sendReq();
   };
-
+  const toolBar = {
+    image: {
+      uploadEnabled: true,
+      inputAccept: "image/gif,image/jpeg,image/jpg,image/png,image/svg",
+      urlEnabled: false,
+      uploadCallback: async function (...params: any[]) {
+        console.log(params);
+        return {
+          data: {
+            link: "https://images.unsplash.com/photo-1485550409059-9afb054cada4?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=701&q=80",
+          },
+        };
+      },
+    },
+  };
   return (
     <Container>
       <div className={classes.root}>
