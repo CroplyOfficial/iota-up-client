@@ -61,7 +61,22 @@ const useChat = ({ token, chatId }: { token: string; chatId: string }) => {
     });
   };
 
-  return { chat, messages, isBlocked, canUnblock, sendMessage, toggleBlock };
+  const deleteChat = () => {
+    socketRef.current.emit("delete", {
+      token,
+      chatId,
+    });
+  };
+
+  return {
+    chat,
+    messages,
+    isBlocked,
+    canUnblock,
+    sendMessage,
+    toggleBlock,
+    deleteChat,
+  };
 };
 
 export default useChat;

@@ -25,6 +25,7 @@ const MessageChatList = (props: IProps) => {
     canUnblock,
     sendMessage,
     toggleBlock,
+    deleteChat,
   }: {
     chat: any;
     messages: any;
@@ -32,6 +33,7 @@ const MessageChatList = (props: IProps) => {
     canUnblock: boolean;
     sendMessage: (message: string) => void;
     toggleBlock: () => void;
+    deleteChat: () => void;
   } = useChat({
     chatId: id,
     token: userInfo.token,
@@ -53,7 +55,6 @@ const MessageChatList = (props: IProps) => {
       setMsg("");
     }
   };
-  const handleDeleteConversation = () => {};
 
   return (
     <div>
@@ -101,7 +102,12 @@ const MessageChatList = (props: IProps) => {
                       : "Block Contact"}
                   </MenuItem>
                 )}
-                <MenuItem onClick={handleDeleteConversation}>
+                <MenuItem
+                  onClick={() => {
+                    deleteChat();
+                    setAnchorEl(null);
+                  }}
+                >
                   Delete Conversation
                 </MenuItem>
               </Menu>

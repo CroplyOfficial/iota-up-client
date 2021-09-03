@@ -70,9 +70,8 @@ export const ChatMessageList = (props: IProps) => {
           avatar: otherMember.avatar,
           alt: otherName,
           title: otherName,
-          subtitle: "asdf",
+          subtitle: c?.messages[0] ? c.messages[0].content : "",
           date: new Date(c?.sent || new Date().getTime()),
-          unread: c?.unread || 1,
           id: c?._id,
         };
       });
