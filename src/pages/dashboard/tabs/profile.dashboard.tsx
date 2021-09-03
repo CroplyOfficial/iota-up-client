@@ -38,12 +38,11 @@ const useStyles = makeStyles((theme: Theme) =>
     root: {
       padding: "25px",
       paddingTop: "15px",
-      transform: "translate(50px,-350px)",
+      transform: "translate(50px,-175px)",
       backgroundColor: "white",
       [theme.breakpoints.down("sm")]: {
         transform: "translate(0px,-400px)",
-        
-      }
+      },
     },
     container: {
       width: "100%",
@@ -137,7 +136,7 @@ const useStyles = makeStyles((theme: Theme) =>
         marginRight: "0px",
         marginBottom: "0px",
         width: "100%",
-      }
+      },
     },
     skills: {},
     chip: {
@@ -154,11 +153,12 @@ const useStyles = makeStyles((theme: Theme) =>
       fontStyle: "normal",
       fontSize: "18px",
       lineHeight: "27px",
+      resize: "none",
       marginBottom: "10px",
       [theme.breakpoints.down("sm")]: {
         width: "100%",
         marginRight: "0px",
-      }
+      },
     },
     uploadContainer: {
       width: "250px",
@@ -172,16 +172,15 @@ const useStyles = makeStyles((theme: Theme) =>
       background: "#1b8271",
     },
     buttons: {
-     display: "flex", 
+      display: "flex",
       [theme.breakpoints.down("sm")]: {
         flexDirection: "column",
         gap: "15px",
         "& > button": {
           width: "100%",
-        }
-      }
-
-    }
+        },
+      },
+    },
   })
 );
 
@@ -436,7 +435,7 @@ export const DashboardProfile = (props: IProps) => {
         <TextareaAutosize
           aria-label="Bio"
           placeholder="Your bio here..."
-          rowsMax="10"
+          rows="6"
           className={classes.textarea}
           onChange={(e: any) => handleChangeBio(e)}
           defaultValue={myInfo?.bio}
@@ -490,22 +489,22 @@ export const DashboardProfile = (props: IProps) => {
         <br />
 
         <div className={classes.buttons}>
-        <Button
-          onClick={(e: any) => handleOnSave(e)}
-          className={classes.buttonSave}
-          color="primary"
-          variant="outlined"
-        >
-          Save
-        </Button>
-        <Button
-          className={classes.buttonDelete}
-          onClick={verifyDelete}
-          color="secondary"
-          variant="contained"
-        >
-          Delete Account
-        </Button>
+          <Button
+            onClick={(e: any) => handleOnSave(e)}
+            className={classes.buttonSave}
+            color="primary"
+            variant="outlined"
+          >
+            Save
+          </Button>
+          <Button
+            className={classes.buttonDelete}
+            onClick={verifyDelete}
+            color="secondary"
+            variant="contained"
+          >
+            Delete Account
+          </Button>
         </div>
       </div>
     </div>

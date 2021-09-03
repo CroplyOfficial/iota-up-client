@@ -52,6 +52,7 @@ const useStyles = makeStyles((theme: Theme) =>
       paddingRight: "25px",
       paddingBottom: "10px",
       paddingTop: "10px",
+      height: "80vh",
       [theme.breakpoints.down("sm")]: {
         width: "90%",
         padding: "0px",
@@ -80,7 +81,7 @@ const useStyles = makeStyles((theme: Theme) =>
       },
     },
     body: {
-      height: "70%",
+      height: "100%",
       fontSize: "15px",
       lineHeight: "28px",
       fontFamily: "Poppins",

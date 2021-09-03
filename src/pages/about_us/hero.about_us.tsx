@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme: Theme) =>
       [theme.breakpoints.down("sm")]: {
         paddingTop: "0px",
         paddingBottom: "30px",
-      }
+      },
     },
     left: {},
     right: {
@@ -36,7 +36,6 @@ const useStyles = makeStyles((theme: Theme) =>
       fontWeight: 700,
       fontStyle: "normal",
       paddingBottom: "16px",
-
     },
     header: {
       fontSize: "50px",
@@ -48,8 +47,7 @@ const useStyles = makeStyles((theme: Theme) =>
         fontSize: "24px",
         lineHeight: "30px",
         overflowWrap: "normal",
-      }
- 
+      },
     },
     subHeader: {
       fontSize: "50px",
@@ -60,8 +58,7 @@ const useStyles = makeStyles((theme: Theme) =>
       [theme.breakpoints.down("sm")]: {
         fontSize: "24px",
         lineHeight: "32px",
-      }
- 
+      },
     },
     text: {
       paddingTop: "20px",
@@ -73,8 +70,7 @@ const useStyles = makeStyles((theme: Theme) =>
       lineHeight: "28px",
       [theme.breakpoints.down("sm")]: {
         width: "90vw",
-
-      }
+      },
     },
     buttons: {
       paddingTop: "46px",
@@ -117,7 +113,7 @@ const Oval = ({ image, color }: IOvalProps) => {
           maxWidth: "414px",
           height: "auto",
           display: "none",
-        }
+        },
       },
     })
   );
@@ -181,7 +177,6 @@ export const AboutUsHero = () => {
           <AboutUsHeroCard
             header={heroCard2.header}
             subHeader={heroCard2.subHeader}
-            variant="flat"
             icon={
               <VerifiedUser
                 color="primary"
