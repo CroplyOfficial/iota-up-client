@@ -23,7 +23,6 @@ import { getMyInfo } from "../../../actions/userActions";
 import { userLoginReducer } from "../../../reducers/userReducers";
 import axios from "axios";
 import { DonateButton } from "../../../components/DonateButton/DonateButton";
-import { useFallbackImage } from "../../../config";
 import {useIsMobile} from "../../../utils/isMobile";
 import { BARE_API, useFallbackImage } from "../../../config";
 import { io } from "socket.io-client";
