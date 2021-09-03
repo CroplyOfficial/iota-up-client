@@ -50,10 +50,11 @@ const useStyles = makeStyles((theme: Theme) =>
       paddingRight: "25px",
       paddingBottom: "10px",
       paddingTop: "10px",
+      height: "80vh",
       [theme.breakpoints.down("sm")]: {
         width: "90%",
         padding: "0px",
-      }
+      },
     },
     header: {
       display: "flex",
@@ -75,10 +76,10 @@ const useStyles = makeStyles((theme: Theme) =>
       transform: "translate(-25px,10px)",
       [theme.breakpoints.down("sm")]: {
         transform: "translate(-0px,10px)",
-      }
+      },
     },
     body: {
-      height: "70%",
+      height: "100%",
       fontSize: "15px",
       lineHeight: "28px",
       fontFamily: "Poppins",
@@ -122,13 +123,13 @@ const useStyles = makeStyles((theme: Theme) =>
       [theme.breakpoints.down("sm")]: {
         marginRight: "15px",
         marginBottom: "15px",
-      }
+      },
     },
     textField: {
       paddingBottom: "15px",
       [theme.breakpoints.down("sm")]: {
         width: "100%",
-      }
+      },
     },
   })
 );

@@ -185,7 +185,6 @@ export const ProjectHeader = (props: IProps) => {
         alignItems: "center",
         paddingTop: "75px",
         paddingBottom: "10px",
-        paddingRight: "70px",
         flexWrap: "wrap",
       },
       stats: {
@@ -417,7 +416,7 @@ export const ProjectHeader = (props: IProps) => {
                   className={classes.categories}
                 />
                 <HeaderTags
-                  tags={tags}
+                  tags={project.tags}
                   variant={variant}
                   className={classes.tags}
                 />

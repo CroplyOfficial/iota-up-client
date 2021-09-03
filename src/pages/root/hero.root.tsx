@@ -45,7 +45,7 @@ const useStyles = makeStyles((theme: Theme) =>
       [theme.breakpoints.down("sm")]: {
         fontSize: "26px",
         lineHeight: "32px",
-      }
+      },
     },
     subHeader: {
       fontSize: "44px",
@@ -56,7 +56,7 @@ const useStyles = makeStyles((theme: Theme) =>
       [theme.breakpoints.down("sm")]: {
         fontSize: "26px",
         lineHeight: "32px",
-      }
+      },
     },
     text: {
       paddingTop: "51px",
@@ -67,15 +67,15 @@ const useStyles = makeStyles((theme: Theme) =>
       fontSize: "16px",
       lineHeight: "28px",
       [theme.breakpoints.down("sm")]: {
-      maxWidth: "100vw",
-      }
+        maxWidth: "100vw",
+      },
     },
     buttons: {
       display: "flex",
       "& > button": {
         marginRight: theme.spacing(5),
         [theme.breakpoints.down("sm")]: {
-        marginRight: theme.spacing(1),
+          marginRight: theme.spacing(1),
         },
       },
       paddingTop: "46px",
@@ -120,20 +120,20 @@ const Oval = ({ image, color }: IOvalProps) => {
         },
         background: !image ? color || green[300] : "",
         borderRadius: "50%",
-      [theme.breakpoints.down("sm")]: {
-      width: "100vw",
-      height: "100vh",
-      }
+        [theme.breakpoints.down("sm")]: {
+          width: "100vw",
+          height: "100vh",
+        },
       },
       image: {
         height: "100%",
         transform: "translate(0, -50px)",
-      [theme.breakpoints.down("sm")]: {
-        height: "auto",
-        width: "90%",
-        maxWidth: "414px",
-        transform: "translate(0, 150px)",
-      }
+        [theme.breakpoints.down("sm")]: {
+          height: "auto",
+          width: "90%",
+          maxWidth: "414px",
+          transform: "translate(0, 150px)",
+        },
       },
     })
   );
@@ -194,7 +194,11 @@ export const Hero = () => {
             wallet={iotaWalletAdress}
             text="donate"
           >
-            <Button variant="outlined" className={classes.buttonRight}>
+            <Button
+              color="primary"
+              variant="contained"
+              className={classes.buttonRight}
+            >
               Donate
             </Button>
           </DonateButton>

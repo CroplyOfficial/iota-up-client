@@ -10,7 +10,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     headerStripe: {
       width: "100%",
-      height: "400px",
+      height: "225px",
       background: theme.palette.primary.main,
     },
   })
