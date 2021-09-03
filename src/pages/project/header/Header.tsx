@@ -6,6 +6,7 @@ import {
   Button,
   Theme,
   Snackbar,
+  SvgIcon
 } from "@material-ui/core";
 import { Alert } from "../../../components/alert";
 import { FavoriteSharp, Money, CalendarToday } from "@material-ui/icons";
@@ -26,6 +27,8 @@ import { DonateButton } from "../../../components/DonateButton/DonateButton";
 import {useIsMobile} from "../../../utils/isMobile";
 import { BARE_API, useFallbackImage } from "../../../config";
 import { io } from "socket.io-client";
+import {ReactComponent as LikeDonate} from "../../../static/images/icons/likedonate.svg";
+import {ReactComponent as UpVote} from "../../../static/images/icons/up.svg";
 
 interface IProps {
   variant: ProjectPageVariants;
@@ -449,7 +452,9 @@ export const ProjectHeader = (props: IProps) => {
             </Typography>
             <div className={classes.statsWrapper}>
               <div className={classes.stats}>
-                <Money fontSize="large" className={classes.statsIcon} />
+                <SvgIcon className={classes.statsIcon} fontSize="large">
+                  <UpVote   />
+                </SvgIcon>
                 <div>
                   <div className={classes.headerWrapper}>
                     <Typography variant="h4" className={classes.statsHeader}>
@@ -462,7 +467,9 @@ export const ProjectHeader = (props: IProps) => {
                 </div>
               </div>
               <div className={classes.stats}>
-                <CalendarToday fontSize="large" className={classes.statsIcon} />
+                <SvgIcon className={classes.statsIcon} fontSize="large" >
+                  <LikeDonate  />
+                </SvgIcon>
                 <div>
                   <Typography variant="h4" className={classes.statsHeader}>
                     {backers}
