@@ -75,6 +75,11 @@ const MessageChatList = (props: IProps) => {
     setMsg(message.content);
     setAnchorChat(null);
   };
+  const handleCopyMessage = () => {
+    const message: any = messages.find((message: any) => message._id === msgId);
+    navigator.clipboard.writeText(message?.content);
+    setAnchorChat(null);
+  };
   const handleDeleteMessage = () => {
     if (msgId) {
       deleteMessage(msgId);
@@ -156,6 +161,7 @@ const MessageChatList = (props: IProps) => {
                 }}
               >
                 <MenuItem onClick={handleEditMessage}>Edit Message</MenuItem>
+                <MenuItem onClick={handleCopyMessage}>Copy Message</MenuItem>
                 <MenuItem onClick={handleDeleteMessage}>
                   Delete Message
                 </MenuItem>

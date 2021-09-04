@@ -24,6 +24,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../store";
 import draftToHtml from "draftjs-to-html";
 import { IProject } from "../../interfaces/project.interface";
+import { uploadFile } from "../../utils/handleFileUpload";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -192,7 +193,7 @@ export const ProjectPostModal = (props: IProps) => {
       inputAccept: "image/gif,image/jpeg,image/jpg,image/png,image/svg",
       urlEnabled: false,
       uploadCallback: async function (...params: any[]) {
-        console.log(params);
+        const link = await uploadFile(params[0], userInfo.token);
         return {
           data: {
             link: "https://images.unsplash.com/photo-1485550409059-9afb054cada4?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=701&q=80",
