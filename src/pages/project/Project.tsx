@@ -117,6 +117,25 @@ export const ProjectOverview = ({ match }: any) => {
     setShowUserProjectsModal(!showUserProjectsModal);
   };
 
+  const userInfoMeta = useSelector((state: RootState) => state.userLogin);
+  const { userInfo }: any = userInfoMeta;
+
+  const handleSaveModal = async (media: string[], video?: string) => {
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+    await axios.put(
+      `/api/projects/by-id/${project?._id}`,
+      { media, video },
+      config
+    );
+    dispatch(getProject(project?._id));
+    setShowImageModal(false);
+  };
+
   return (
     <div className={classes.root}>
       {
@@ -145,7 +164,11 @@ export const ProjectOverview = ({ match }: any) => {
       )}
 
       {showImageModal ? (
-        <ProjectImageModal project={p} onClick={toggleShowImageModal} />
+        <ProjectImageModal
+          project={p}
+          onClick={toggleShowImageModal}
+          onSave={handleSaveModal}
+        />
       ) : (
         ""
       )}

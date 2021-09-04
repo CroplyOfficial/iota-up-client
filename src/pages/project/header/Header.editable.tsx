@@ -125,7 +125,6 @@ export const EditableProjectHeader = (props: IProps) => {
       },
       config
     );
-    console.log("testtttt");
     onToggle();
   };
 
@@ -140,7 +139,7 @@ export const EditableProjectHeader = (props: IProps) => {
         borderRadius: "20px",
         [theme.breakpoints.down("sm")]: {
           flexDirection: "column-reverse",
-        }
+        },
       },
       left: {
         maxWidth: "48.5%",
@@ -149,7 +148,7 @@ export const EditableProjectHeader = (props: IProps) => {
         [theme.breakpoints.down("sm")]: {
           width: "calc(100% - 60px)",
           maxWidth: "unset",
-        }
+        },
       },
       mainImageWrapper: {
         width: "100%",
@@ -158,9 +157,10 @@ export const EditableProjectHeader = (props: IProps) => {
         backgroundColor: "#f5f5f5",
         marginBottom: "20px",
         overflow: "hidden",
+        position: "relative",
         [theme.breakpoints.down("sm")]: {
           height: "20%",
-        }
+        },
       },
       imagesWrapper: {
         display: "flex",
@@ -237,8 +237,7 @@ export const EditableProjectHeader = (props: IProps) => {
         flexDirection: "column",
         justifyContent: "space-around",
         gap: "1rem",
-        [theme.breakpoints.down("sm")]: {
-        }
+        [theme.breakpoints.down("sm")]: {},
       },
       button: {
         fontFamily: "Poppins",
@@ -260,7 +259,7 @@ export const EditableProjectHeader = (props: IProps) => {
         [theme.breakpoints.down("sm")]: {
           flexDirection: "column",
           gap: "15px",
-        }
+        },
       },
       stats: {
         display: "flex",
@@ -327,10 +326,10 @@ export const EditableProjectHeader = (props: IProps) => {
           fontSize: "16px",
           lineHeight: "28px",
         },
-        [theme.breakpoints.down("sm")]:{
-          minWidth:"unset",
+        [theme.breakpoints.down("sm")]: {
+          minWidth: "unset",
           width: "100%",
-        }
+        },
       },
       categories: {
         fontFamily: "Open Sans",
@@ -366,7 +365,24 @@ export const EditableProjectHeader = (props: IProps) => {
         [theme.breakpoints.down("sm")]: {
           flexDirection: "column",
           gap: "15px",
-        }
+        },
+      },
+      editOverlay: {
+        height: "100%",
+        width: "100%",
+        background: "rgba(0, 0, 0, 0.5)",
+        position: "absolute",
+        zIndex: 1,
+        cursor: "pointer",
+      },
+      editOverlayTitle: {
+        fontSize: "2.25rem",
+        color: "white",
+        position: "absolute",
+        left: "50%",
+        top: "50%",
+        transform: "translate(-50%, -50%)",
+        margin: 0,
       },
     })
   );
@@ -407,6 +423,9 @@ export const EditableProjectHeader = (props: IProps) => {
             className={classes.mainImageWrapper}
             onClick={() => showImageModal()}
           >
+            <div className={classes.editOverlay}>
+              <h2 className={classes.editOverlayTitle}>EDIT</h2>
+            </div>
             <img src={mainImage} className={classes.objectFill} />
           </div>
           <div className={classes.imagesWrapper}>

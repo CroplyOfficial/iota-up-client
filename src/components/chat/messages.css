@@ -38,6 +38,11 @@
   padding-bottom: 5px;
 }
 
+.message .deleted {
+  font-style: italic;
+  font-size: 0.8rem;
+}
+
 .msg-left {
   padding-right: 50px;
   display: flex;

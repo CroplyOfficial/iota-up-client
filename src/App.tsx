@@ -15,7 +15,6 @@ import { LoginModal } from "./components/loginModal/LoginModal";
 import { Navbar } from "./components/navbar/Navbar";
 import { Chat } from "./components/chat/Chat";
 import { useSelector } from "react-redux";
-import ScrollToTop from "./components/Scroll/ScrollToTop";
 import { RootState } from "./store";
 import { Privacy } from "./pages/Privacy/Privacy";
 import { Terms } from "./pages/Terms/Terms";
@@ -39,7 +38,6 @@ function App(props: any) {
           )}
           <Navbar toggleLoginModal={toggleShowingLoginModal} />
           {userInfo && <Chat />}
-          <ScrollToTop />
           <Switch>
             <Route path="/" exact component={Root} />
             <Route path="/about" exact component={AboutUs} />

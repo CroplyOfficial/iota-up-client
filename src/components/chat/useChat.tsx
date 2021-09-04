@@ -14,6 +14,8 @@ const useChat = ({ token, chatId }: { token: string; chatId: string }) => {
   const userLoginMeta = useSelector((state: RootState) => state.userLogin);
   const { userInfo }: any = userLoginMeta;
 
+  const deleteMessageContent = "this message was deleted";
+
   useEffect(() => {
     if (socketRef) {
       socketRef.current = socketIOClient(BARE_API, {
@@ -53,6 +55,15 @@ const useChat = ({ token, chatId }: { token: string; chatId: string }) => {
     });
   };
 
+  const editMessage = (msgId: string, content: string) => {
+    socketRef.current.emit("editMessage", {
+      content,
+      chatId,
+      token,
+      msgId,
+    });
+  };
+
   const toggleBlock = () => {
     socketRef.current.emit("toggleBlock", {
       token,
@@ -67,6 +78,15 @@ const useChat = ({ token, chatId }: { token: string; chatId: string }) => {
     });
   };
 
+  const deleteMessage = (msgId: string) => {
+    socketRef.current.emit("editMessage", {
+      content: deleteMessageContent,
+      chatId,
+      token,
+      msgId,
+    });
+  };
+
   return {
     chat,
     messages,
@@ -75,6 +95,8 @@ const useChat = ({ token, chatId }: { token: string; chatId: string }) => {
     sendMessage,
     toggleBlock,
     deleteChat,
+    editMessage,
+    deleteMessage,
   };
 };
 

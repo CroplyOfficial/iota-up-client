@@ -14,6 +14,8 @@ const MessageChatList = (props: IProps) => {
   const dispatch = useDispatch();
 
   const [msg, setMsg] = useState<string>();
+  const [msgId, setMsgId] = useState<string>();
+  const [editing, setEditing] = useState<boolean>(false);
 
   const userMeta: any = useSelector((state: RootState) => state.userLogin);
   const { userInfo } = userMeta;
@@ -26,6 +28,8 @@ const MessageChatList = (props: IProps) => {
     sendMessage,
     toggleBlock,
     deleteChat,
+    editMessage,
+    deleteMessage,
   }: {
     chat: any;
     messages: any;
@@ -34,26 +38,58 @@ const MessageChatList = (props: IProps) => {
     sendMessage: (message: string) => void;
     toggleBlock: () => void;
     deleteChat: () => void;
+    editMessage: (msgId: string, msg: string) => void;
+    deleteMessage: (msgId: string) => void;
   } = useChat({
     chatId: id,
     token: userInfo.token,
   });
   const [anchorEl, setAnchorEl] = useState<any>(null);
   const open = Boolean(anchorEl);
+  const [anchorChat, setAnchorChat] = useState<any>(null);
+  const openChatContext = Boolean(anchorChat);
 
   const handleClick = (event: any) => {
     setAnchorEl(event.currentTarget);
   };
-
   const handleClose = () => {
     setAnchorEl(null);
   };
+  const handleCloseChatContext = () => {
+    setAnchorChat(null);
+  };
   const handleSendMessage = (e: any) => {
     e.preventDefault();
-    if (msg) {
+    if (editing && msgId && msg) {
+      editMessage(msgId, msg);
+      setEditing(false);
+      setMsg("");
+    } else if (msg) {
       sendMessage(msg);
       setMsg("");
     }
+  };
+  const handleEditMessage = () => {
+    setEditing(true);
+    const message: any = messages.find((message: any) => message._id === msgId);
+    setMsg(message.content);
+    setAnchorChat(null);
+  };
+  const handleCopyMessage = () => {
+    const message: any = messages.find((message: any) => message._id === msgId);
+    navigator.clipboard.writeText(message?.content);
+    setAnchorChat(null);
+  };
+  const handleDeleteMessage = () => {
+    if (msgId) {
+      deleteMessage(msgId);
+      setAnchorChat(null);
+    }
+  };
+  const handleMessageRightClick = (e: any, id: string) => {
+    e.preventDefault();
+    setMsgId(id);
+    setAnchorChat(e.currentTarget);
   };
 
   return (
@@ -111,6 +147,25 @@ const MessageChatList = (props: IProps) => {
                   Delete Conversation
                 </MenuItem>
               </Menu>
+              <Menu
+                id="long-menu"
+                anchorEl={anchorChat}
+                keepMounted
+                open={openChatContext}
+                onClose={handleCloseChatContext}
+                PaperProps={{
+                  style: {
+                    maxHeight: 48 * 4.5,
+                    width: "20ch",
+                  },
+                }}
+              >
+                <MenuItem onClick={handleEditMessage}>Edit Message</MenuItem>
+                <MenuItem onClick={handleCopyMessage}>Copy Message</MenuItem>
+                <MenuItem onClick={handleDeleteMessage}>
+                  Delete Message
+                </MenuItem>
+              </Menu>
             </div>
           </div>
           <div className="chat-section">
@@ -124,12 +179,24 @@ const MessageChatList = (props: IProps) => {
                         : "msg-left"
                     }
                 `}
+                onContextMenu={(e) => {
+                  if (String(userInfo._id) === String(message.sender))
+                    handleMessageRightClick(e, message?._id);
+                }}
               >
                 <div className="message">
                   <div className="date">
                     {String(new Date(message.date).toString()).substring(4, 15)}
                   </div>
-                  <div className="content">{message.content}</div>
+                  <div
+                    className={
+                      message.content !== "this message was deleted"
+                        ? "content"
+                        : "deleted"
+                    }
+                  >
+                    {message.content}
+                  </div>
                 </div>
               </div>
             ))}

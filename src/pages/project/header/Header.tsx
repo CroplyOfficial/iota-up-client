@@ -6,7 +6,7 @@ import {
   Button,
   Theme,
   Snackbar,
-  SvgIcon
+  SvgIcon,
 } from "@material-ui/core";
 import { Alert } from "../../../components/alert";
 import { FavoriteSharp, Money, CalendarToday } from "@material-ui/icons";
@@ -24,11 +24,13 @@ import { getMyInfo } from "../../../actions/userActions";
 import { userLoginReducer } from "../../../reducers/userReducers";
 import axios from "axios";
 import { DonateButton } from "../../../components/DonateButton/DonateButton";
-import {useIsMobile} from "../../../utils/isMobile";
+import { useIsMobile } from "../../../utils/isMobile";
 import { BARE_API, useFallbackImage } from "../../../config";
 import { io } from "socket.io-client";
-import {ReactComponent as LikeDonate} from "../../../static/images/icons/likedonate.svg";
-import {ReactComponent as UpVote} from "../../../static/images/icons/up.svg";
+import Lightbox from "react-image-lightbox";
+import "react-image-lightbox/style.css";
+import { ReactComponent as LikeDonate } from "../../../static/images/icons/likedonate.svg";
+import { ReactComponent as UpVote } from "../../../static/images/icons/up.svg";
 
 interface IProps {
   variant: ProjectPageVariants;
@@ -363,10 +365,26 @@ export const ProjectHeader = (props: IProps) => {
       setIsLiked(myInfo?.upvotedProjects?.includes(_id));
     }
   }, [myInfo, _id]);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [photoIndex, setPhotoIndex] = useState<number>(0);
   const isMobile = useIsMobile();
 
   return (
     <>
+      {isOpen && (
+        <Lightbox
+          mainSrc={media[photoIndex]}
+          nextSrc={media[(photoIndex + 1) % media.length]}
+          prevSrc={media[(photoIndex + media.length - 1) % media.length]}
+          onCloseRequest={() => setIsOpen(false)}
+          onMovePrevRequest={() => {
+            setPhotoIndex((photoIndex + media.length - 1) % media.length);
+          }}
+          onMoveNextRequest={() => {
+            setPhotoIndex((photoIndex + 1) % media.length);
+          }}
+        />
+      )}
       <Snackbar
         open={showError.length ? true : false}
         autoHideDuration={6000}
@@ -385,15 +403,18 @@ export const ProjectHeader = (props: IProps) => {
           {showSuccess}
         </Alert>
       </Snackbar>
-     <Container maxWidth={isMobile ? "xl" : "sm"}>
-
+      <Container maxWidth={isMobile ? "xl" : "sm"}>
         <Card className={classes.root}>
           <div className={classes.left}>
             <div
               className={classes.mainImageWrapper}
               /* onClick={() => showImageModal()} */
             >
-              <img src={mainImage} className={classes.objectFill} />
+              <img
+                src={mainImage}
+                onClick={() => setIsOpen(true)}
+                className={classes.objectFill}
+              />
             </div>
             <div className={classes.imagesWrapper}>
               {media.slice(1, media.length).map((image, i) => (
@@ -401,7 +422,11 @@ export const ProjectHeader = (props: IProps) => {
                   className={"image-" + i++}
                   /*  onClick={showImageModal} */
                 >
-                  <img src={image} className={classes.objectFill} />
+                  <img
+                    src={image}
+                    className={classes.objectFill}
+                    onClick={() => setIsOpen(true)}
+                  />
                 </div>
               ))}
             </div>
@@ -452,7 +477,7 @@ export const ProjectHeader = (props: IProps) => {
             <div className={classes.statsWrapper}>
               <div className={classes.stats}>
                 <SvgIcon className={classes.statsIcon} fontSize="large">
-                  <UpVote   />
+                  <UpVote />
                 </SvgIcon>
                 <div>
                   <div className={classes.headerWrapper}>
@@ -466,8 +491,8 @@ export const ProjectHeader = (props: IProps) => {
                 </div>
               </div>
               <div className={classes.stats}>
-                <SvgIcon className={classes.statsIcon} fontSize="large" >
-                  <LikeDonate  />
+                <SvgIcon className={classes.statsIcon} fontSize="large">
+                  <LikeDonate />
                 </SvgIcon>
                 <div>
                   <Typography variant="h4" className={classes.statsHeader}>
