@@ -12,6 +12,7 @@ import { Card } from "../../../components/card/card";
 import { ProjectsCard } from "../../../components/card/card3";
 import { Container } from "../../../components/container/container";
 import { IProject } from "../../../interfaces/project.interface";
+import { useIsMobile } from "../../../utils/isMobile";
 import { ProjectsDonateCard } from "./donateCard.projects";
 import { ProjectsFilterCard } from "./filterCard.projects";
 import { ProjectsPopularSearch } from "./popularSearch.projects";
@@ -27,7 +28,7 @@ const useStyles = makeStyles((theme: Theme) =>
       [theme.breakpoints.down("sm")]: {
         flexDirection: "column",
         gap: "30px",
-      }
+      },
     },
     left: {
       width: "25%",
@@ -36,7 +37,7 @@ const useStyles = makeStyles((theme: Theme) =>
       [theme.breakpoints.down("sm")]: {
         width: "100%",
         padding: "0px",
-      }
+      },
     },
     right: {
       width: "75%",
@@ -49,7 +50,7 @@ const useStyles = makeStyles((theme: Theme) =>
         width: "100%",
         padding: "0px",
         paddingBottom: "30px",
-      }
+      },
     },
     actionBar: {
       display: "flex",
@@ -75,7 +76,7 @@ const useStyles = makeStyles((theme: Theme) =>
       [theme.breakpoints.down("sm")]: {
         fontSize: "18px",
         lineHeight: "26px",
-      }
+      },
     },
     filterHeader: {},
     button: {
@@ -127,17 +128,22 @@ export const ProjectsOverview = (props: IProps) => {
   // TODO get popular Tags from API
   // TODO remove default popular tags in <ProjectsPopularSearch />
   const loadMoreThreshold = 6;
+  const isMobile = useIsMobile();
   return (
     <div className={classes.root}>
       <Container maxWidth="md">
         <div className={classes.columns}>
           <div className={classes.left}>
-            <Typography
-              className={classes.actionBarText}
-              style={{ paddingBottom: "25px" }}
-            >
-              Filter
-            </Typography>
+            {isMobile ? (
+              <div></div>
+            ) : (
+              <Typography
+                className={classes.actionBarText}
+                style={{ paddingBottom: "25px" }}
+              >
+                Filter
+              </Typography>
+            )}
             <ProjectsFilterCard
               categories={categories}
               setCategories={setCategories}

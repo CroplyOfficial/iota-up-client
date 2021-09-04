@@ -21,7 +21,7 @@ export const Chat = () => {
   const useStyles = makeStyles(() =>
     createStyles({
       root: {
-        zIndex: 10,
+        zIndex: 10000,
         display: "flex",
         flexDirection: "column",
         position: "fixed",

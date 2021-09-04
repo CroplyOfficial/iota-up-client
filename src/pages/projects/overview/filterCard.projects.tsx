@@ -19,8 +19,8 @@ const useStyles = makeStyles((theme: Theme) =>
       borderRadius: "10px",
       minHeight: "569px",
       [theme.breakpoints.down("sm")]: {
-      minHeight: "200px",
-      }
+        minHeight: "200px",
+      },
     },
     header: {
       fontFamily: "Poppins",
@@ -103,6 +103,7 @@ export const ProjectsFilterCard = ({
       : setVisibleCategories(categories.slice(0, initialThreshold));
   };
   const onClickButton2 = () => null;
+  if (isMobile) return null;
   return (
     <Card className={classes.root} variant="outlined">
       <CardContent>

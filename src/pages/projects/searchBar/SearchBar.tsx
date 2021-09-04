@@ -9,6 +9,9 @@ const useStyles = makeStyles((theme: Theme) =>
       height: "100%",
       display: "flex",
       justifyContent: "center",
+      [theme.breakpoints.down("sm")]: {
+        maxHeight: "150px",
+      },
     },
     searchBar: {
       width: "50%",
@@ -28,7 +31,7 @@ const useStyles = makeStyles((theme: Theme) =>
         paddingRight: "5px",
         width: "90%",
         marginTop: "70px",
-      }
+      },
     },
   })
 );
@@ -38,9 +41,10 @@ interface ISearchBarProps {
   onClick: () => void;
   category: string | undefined;
   setCategory: (category: string) => void;
+  openModal: () => void;
 }
 export const ProjectsSearchBar = (props: ISearchBarProps) => {
-  const { onKeyUp, onClick, category, setCategory } = props;
+  const { onKeyUp, onClick, category, setCategory, openModal } = props;
   const classes = useStyles();
   return (
     <div className={classes.root}>
@@ -48,6 +52,7 @@ export const ProjectsSearchBar = (props: ISearchBarProps) => {
         <ProjectsSearchBarDropdown
           category={category}
           setCategory={setCategory}
+          openModal={openModal}
         />
         <ProjectsSearchBarInput onKeyUp={onKeyUp} />
         <ProjectsSearchBarIcon onClick={onClick} />

@@ -1,6 +1,16 @@
-import { makeStyles, createStyles, Theme } from "@material-ui/core";
+import {
+  makeStyles,
+  createStyles,
+  Theme,
+  Button,
+  Select,
+  MenuItem,
+} from "@material-ui/core";
 import { useState } from "react";
 import { MainCategories } from "../../../config";
+import { useIsMobile } from "../../../utils/isMobile";
+import { FilterList } from "@material-ui/icons";
+import { FilterCardModal } from "./filterCard.modal";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -38,22 +48,32 @@ const useStyles = makeStyles((theme: Theme) =>
 export const ProjectsSearchBarDropdown = ({
   category,
   setCategory,
+  openModal,
 }: {
   category: string | undefined;
   setCategory: (category: string) => any;
+  openModal: () => void;
 }) => {
-  const [options, setOptions] = useState<Array<any>>([
+  const isMobile = useIsMobile();
+  const defaultOptions = [
     { value: "technology", tag: "Technology" },
     { value: "community", tag: "Community" },
     { value: "creative", tag: "Creative" },
-  ]);
+  ];
+  const [options, setOptions] = useState(defaultOptions);
+  const [open, setOpen] = useState<boolean>(false);
   const classes = useStyles();
-  return (
-    <select
-      className={classes.root}
-      onChange={(e: any) => setCategory(e.target.value)}
-    >
-      <option value="">All Categories</option>
+  const defaultOption = isMobile ? "All Categories" : "All Categories";
+
+  return isMobile ? (
+    <div>
+      <Button onClick={openModal}>
+        <FilterList />
+      </Button>
+    </div>
+  ) : (
+    <select className={classes.root}>
+      <option value="">{defaultOption}</option>
       {options.map((o) => (
         <option value={o.value} style={{ textTransform: "capitalize" }}>
           {o.tag}
