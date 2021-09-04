@@ -31,12 +31,13 @@ let socket: any;
 interface IProps {
   showList: boolean;
   setShowList: (value: boolean) => void;
+  id: string;
+  setId: (id: string) => void;
 }
 export const ChatMessageList = (props: IProps) => {
-  const { showList, setShowList } = props;
+  const { showList, setShowList, id, setId } = props;
   const classes = useStyles();
   const dispatch = useDispatch();
-  const [id, setId] = useState<string>();
   const [chatsLoaded, setChatsLoaded] = useState<any[]>();
   const [chatsData, setChatsData] = useState<any[]>();
   const [chats, setChats] = useState<any>();
@@ -71,7 +72,9 @@ export const ChatMessageList = (props: IProps) => {
           alt: otherName,
           title: otherName,
           subtitle: c?.messages[0] ? c.messages[0].content : "",
-          date: new Date(c?.sent || new Date().getTime()),
+          date: new Date(
+            (c?.messages[0] && c?.messages[0].date) || new Date().getTime()
+          ),
           id: c?._id,
         };
       });
@@ -80,7 +83,6 @@ export const ChatMessageList = (props: IProps) => {
   }, [chats]);
 
   const handleChatClick = (chatId: string) => {
-    console.log(`ChatID ${chatId}`);
     setShowList(false);
     setId(chatId);
   };
@@ -111,7 +113,10 @@ export const ChatMessageList = (props: IProps) => {
           }}
         />
       ) : !showList && id ? (
-        <MessageChatList id={id} />
+        <>
+          {console.log("id", id)}
+          <MessageChatList id={id} />
+        </>
       ) : (
         <div className="err">unable to load messages</div>
       )}

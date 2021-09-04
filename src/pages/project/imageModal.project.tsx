@@ -355,7 +355,7 @@ export const ProjectImageModal = (props: IProps) => {
           <div className={classes.footer}>
             <Button
               onClick={() => {
-                onSave(media, video);
+                onSave(media, url);
               }}
               color="primary"
               className={classes.button}

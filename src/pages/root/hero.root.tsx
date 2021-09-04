@@ -189,19 +189,6 @@ export const Hero = () => {
               Learn More
             </Button>
           </Link>
-          <DonateButton
-            recipientName="IOTA UP"
-            wallet={iotaWalletAdress}
-            text="donate"
-          >
-            <Button
-              color="primary"
-              variant="contained"
-              className={classes.buttonRight}
-            >
-              Donate
-            </Button>
-          </DonateButton>
         </div>
       </div>
 

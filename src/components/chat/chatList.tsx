@@ -119,6 +119,7 @@ const MessageChatList = (props: IProps) => {
                 keepMounted
                 open={open}
                 onClose={handleClose}
+                style={{ zIndex: 100000 }}
                 PaperProps={{
                   style: {
                     maxHeight: 48 * 4.5,
@@ -152,6 +153,7 @@ const MessageChatList = (props: IProps) => {
                 anchorEl={anchorChat}
                 keepMounted
                 open={openChatContext}
+                style={{ zIndex: 100000 }}
                 onClose={handleCloseChatContext}
                 PaperProps={{
                   style: {
