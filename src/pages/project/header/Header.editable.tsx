@@ -157,6 +157,7 @@ export const EditableProjectHeader = (props: IProps) => {
         backgroundColor: "#f5f5f5",
         marginBottom: "20px",
         overflow: "hidden",
+        position: "relative",
         [theme.breakpoints.down("sm")]: {
           height: "20%",
         },
@@ -366,6 +367,23 @@ export const EditableProjectHeader = (props: IProps) => {
           gap: "15px",
         },
       },
+      editOverlay: {
+        height: "100%",
+        width: "100%",
+        background: "rgba(0, 0, 0, 0.5)",
+        position: "absolute",
+        zIndex: 1,
+        cursor: "pointer",
+      },
+      editOverlayTitle: {
+        fontSize: "2.25rem",
+        color: "white",
+        position: "absolute",
+        left: "50%",
+        top: "50%",
+        transform: "translate(-50%, -50%)",
+        margin: 0,
+      },
     })
   );
   const myInfoMeta = useSelector((state: RootState) => state.myInfo);
@@ -405,6 +423,9 @@ export const EditableProjectHeader = (props: IProps) => {
             className={classes.mainImageWrapper}
             onClick={() => showImageModal()}
           >
+            <div className={classes.editOverlay}>
+              <h2 className={classes.editOverlayTitle}>EDIT</h2>
+            </div>
             <img src={mainImage} className={classes.objectFill} />
           </div>
           <div className={classes.imagesWrapper}>
