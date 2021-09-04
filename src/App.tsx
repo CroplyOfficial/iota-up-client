@@ -14,13 +14,20 @@ import { Settings } from "./pages/Settings/Settings";
 import { LoginModal } from "./components/loginModal/LoginModal";
 import { Navbar } from "./components/navbar/Navbar";
 import { Chat } from "./components/chat/Chat";
+import { useSelector } from "react-redux";
 import ScrollToTop from "./components/Scroll/ScrollToTop";
+import { RootState } from "./store";
+import { Privacy } from "./pages/Privacy/Privacy";
+import { Terms } from "./pages/Terms/Terms";
 
 function App(props: any) {
   const [showingLoginModal, setShowingLoginModal] = useState<boolean>(false);
   const toggleShowingLoginModal = () =>
     setShowingLoginModal(!showingLoginModal);
   console.log(window.location.pathname, window.location.href, props);
+  const userInfoMeta = useSelector((state: RootState) => state.userLogin);
+  const { userInfo }: any = userInfoMeta;
+
   return (
     <div className="App">
       <ThemeProvider theme={theme}>
@@ -31,7 +38,7 @@ function App(props: any) {
             <div></div>
           )}
           <Navbar toggleLoginModal={toggleShowingLoginModal} />
-          <Chat />
+          {userInfo && <Chat />}
           <ScrollToTop />
           <Switch>
             <Route path="/" exact component={Root} />
@@ -45,6 +52,8 @@ function App(props: any) {
             <Route path="/login" exact component={Login} />
             <Route path="/authorize" exact component={Authorize} />
             <Route path="/settings" exact component={Settings} />
+            <Route path="/privacy" exact component={Privacy} />
+            <Route path="/terms" exact component={Terms} />
           </Switch>
         </Router>
       </ThemeProvider>

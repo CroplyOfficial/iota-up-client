@@ -24,9 +24,9 @@ export const FooterSubHeader = () => {
       <Link to="/privacy" className={genericClasses.link}>
         {"\u200b"} Privacy {"\u200b"}
       </Link>
-      <Link to="/tos" className={genericClasses.link}>
+      <Link to="/terms" className={genericClasses.link}>
         {" "}
-        - Tems of Service
+        - Terms of Service
       </Link>
     </div>
   );

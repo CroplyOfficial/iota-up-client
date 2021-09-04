@@ -6,7 +6,7 @@ import {
   Typography,
 } from "@material-ui/core";
 import { Link } from "react-router-dom";
-import {useIsMobile} from "../../utils/isMobile";
+import { useIsMobile } from "../../utils/isMobile";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -80,10 +80,11 @@ export const DashboardSideNavbar = () => {
     { title: "My Profile", path: "/dashboard/profile", classes: [] },
     { title: "My Projects", path: "/dashboard/projects", classes: [] },
     { title: "My Favorites", path: "/dashboard/favorites", classes: [] },
-    { title: "Chat", path: "/dashboard/chat", classes: [] },
     { title: "Logout", path: "/dashboard/logout", classes: [classes.logout] },
   ];
-  return isMobile ? <div></div> : (
+  return isMobile ? (
+    <div></div>
+  ) : (
     <nav className={classes.root}>
       <ul className={classes.ul}>
         {links.map((link) => (

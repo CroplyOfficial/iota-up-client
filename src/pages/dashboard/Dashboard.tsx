@@ -74,7 +74,6 @@ export const Dashboard = () => {
               path="/dashboard/favorites"
               render={() => <DashboardFavorites />}
             />
-            <Route path="/dashboard/chat" render={() => <></>} />
             <Route path="/dashboard/logout" component={DashboardLogout} />
           </Switch>
         </DashboardHeaderStripe>

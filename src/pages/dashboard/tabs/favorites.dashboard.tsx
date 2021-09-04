@@ -11,9 +11,9 @@ const useStyles = makeStyles(() =>
   createStyles({
     root: {
       display: "flex",
-      gap: "5rem",
-      paddingLeft: "5rem",
+      gap: "50px",
       flexWrap: "wrap",
+      justifyContent: "center",
       transform: "translate(0,-175px)",
       position: "relative",
     },
@@ -28,8 +28,8 @@ const useStyles = makeStyles(() =>
       borderRadius: "10px",
       position: "absolute",
       bottom: 0,
-      right: 0,
-      transform: "translate(-14rem,125px)",
+      left: "50%",
+      transform: "translate(-50%,125px)",
     },
   })
 );
