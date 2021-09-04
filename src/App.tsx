@@ -28,6 +28,9 @@ function App(props: any) {
   const userInfoMeta = useSelector((state: RootState) => state.userLogin);
   const { userInfo }: any = userInfoMeta;
 
+  // Chat
+  const [showMessages, setShowMessages] = useState<boolean>(false);
+  const [showList, setShowList] = useState<boolean>(true);
   return (
     <div className="App">
       <ThemeProvider theme={theme}>
@@ -37,8 +40,21 @@ function App(props: any) {
           ) : (
             <div></div>
           )}
-          <Navbar toggleLoginModal={toggleShowingLoginModal} />
-          {userInfo && <Chat />}
+          <Navbar
+            toggleLoginModal={toggleShowingLoginModal}
+            showMessages={showMessages}
+            setShowMessages={setShowMessages}
+            showList={showList}
+            setShowList={setShowList}
+          />
+          {userInfo && (
+            <Chat
+              showMessages={showMessages}
+              setShowMessages={setShowMessages}
+              showList={showList}
+              setShowList={setShowList}
+            />
+          )}
           <ScrollToTop />
           <Switch>
             <Route path="/" exact component={Root} />

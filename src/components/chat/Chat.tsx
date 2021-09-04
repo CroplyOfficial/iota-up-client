@@ -5,6 +5,7 @@ import {
   IconButton,
   MenuItem,
   Menu,
+  Theme,
 } from "@material-ui/core";
 import { MessageBox, Avatar } from "react-chat-elements-typescript";
 import { KeyboardArrowUp, MoreVert, ArrowBack } from "@material-ui/icons";
@@ -12,13 +13,20 @@ import { ChatMessageList } from "./messageList.chat";
 import { ChatSearchBar } from "./searchBar.chat";
 import { useFallbackImage } from "../../config";
 import { useState } from "react";
+import { useIsMobile } from "../../utils/isMobile";
+import { useEffect } from "react";
 
-export const Chat = () => {
-  const [showMessages, setShowMessages] = useState<boolean>(false);
-  const [chat, setChat] = useState<string>();
-  const [showList, setShowList] = useState<boolean>(true);
+interface IProps {
+  showMessages: boolean;
+  setShowMessages: Function;
+  showList: boolean;
+  setShowList: Function;
+}
+export const Chat = (props: IProps) => {
+  const { showMessages, setShowMessages, showList, setShowList } = props;
+  const isMobile = useIsMobile();
 
-  const useStyles = makeStyles(() =>
+  const useStyles = makeStyles((theme: Theme) =>
     createStyles({
       root: {
         zIndex: 10000,
@@ -31,6 +39,10 @@ export const Chat = () => {
         maxHeight: showMessages ? "700px" : "40px",
         transition: "max-height 0.3s ease-out",
         boxShadow: "0 3px 10px rgb(0 0 0 / 0.2)",
+        [theme.breakpoints.down("sm")]: {
+          width: showMessages ? "100vw" : "0px",
+          height: showMessages ? "calc(100vh - 74px)" : "0px",
+        },
       },
       header: {
         width: "100%",
@@ -101,7 +113,7 @@ export const Chat = () => {
           </IconButton>
         </div>
       </div>
-      <ChatMessageList setShowList={setShowList} showList={showList} />
+      <ChatMessageList setShowList={setShowList as any} showList={showList} />
     </div>
   );
 };

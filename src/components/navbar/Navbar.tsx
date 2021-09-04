@@ -55,8 +55,13 @@ const SecondaryWhitelist = ["/projects"];
 interface INavbarProps {
   variant?: keyof typeof NavbarVariants;
   toggleLoginModal: () => void;
+  showMessages: boolean;
+  setShowMessages: Function;
+  showList: boolean;
+  setShowList: Function;
 }
 export const Navbar = (props: INavbarProps) => {
+  const { showList, setShowList, setShowMessages, showMessages } = props;
   const dispatch = useDispatch();
   const [mobileView, setMobileView] = useState<boolean>(false);
   const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(false);
@@ -348,7 +353,11 @@ export const Navbar = (props: INavbarProps) => {
             {brandLogo}
           </IconButton>
         </Link>
-        <IconButton>
+        <IconButton
+          onClick={() => {
+            setShowMessages(!showMessages);
+          }}
+        >
           <SvgIcon
             style={{
               color: isSecondary ? "white" : "black",
