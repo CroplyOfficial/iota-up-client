@@ -54,7 +54,6 @@ function App(props: any) {
               setShowList={setShowList}
             />
           )}
-          <ScrollToTop />
           <Switch>
             <Route path="/" exact component={Root} />
             <Route path="/about" exact component={AboutUs} />
