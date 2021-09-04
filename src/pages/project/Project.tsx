@@ -36,7 +36,18 @@ const useStyles = makeStyles(() =>
   })
 );
 
-export const ProjectOverview = ({ match }: any) => {
+interface IProps {
+  match: any;
+  setShowMessages: (show: boolean) => void;
+  setShowList: (show: boolean) => void;
+  setChatId: (id: string) => void;
+}
+export const ProjectOverview = ({
+  match,
+  setShowMessages,
+  setShowList,
+  setChatId,
+}: IProps) => {
   const { id } = useParams<IRouteParams>();
   const [p, setP] = useState<any>();
   const variant = "static";
@@ -182,6 +193,9 @@ export const ProjectOverview = ({ match }: any) => {
               showImageModal={toggleShowImageModal}
               onToggle={toggleEditableHeader}
               showUserProjectsModal={toggleShowUserProjectModal}
+              setShowList={setShowList}
+              setShowMessages={setShowMessages}
+              setChatId={setChatId}
             />
           ) : (
             <EditableProjectHeader

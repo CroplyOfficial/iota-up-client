@@ -30,6 +30,8 @@ function App(props: any) {
   // Chat
   const [showMessages, setShowMessages] = useState<boolean>(false);
   const [showList, setShowList] = useState<boolean>(true);
+  const [chatId, setChatId] = useState<string>("");
+
   return (
     <div className="App">
       <ThemeProvider theme={theme}>
@@ -52,6 +54,8 @@ function App(props: any) {
               setShowMessages={setShowMessages}
               showList={showList}
               setShowList={setShowList}
+              chatId={chatId}
+              setChatId={setChatId}
             />
           )}
           <Switch>
@@ -60,7 +64,14 @@ function App(props: any) {
             <Route path="/projects" exact component={Projects} />
             <Route
               path="/project/:id"
-              render={(props: any) => <ProjectOverview {...props} />}
+              render={(props: any) => (
+                <ProjectOverview
+                  {...props}
+                  setShowMessages={setShowMessages}
+                  setShowList={setShowList}
+                  setChatId={setChatId}
+                />
+              )}
             />
             <Route path="/dashboard" render={() => <Dashboard />} />
             <Route path="/login" exact component={Login} />

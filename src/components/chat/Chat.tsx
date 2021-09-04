@@ -21,9 +21,18 @@ interface IProps {
   setShowMessages: Function;
   showList: boolean;
   setShowList: Function;
+  setChatId: (id: string) => void;
+  chatId: string;
 }
 export const Chat = (props: IProps) => {
-  const { showMessages, setShowMessages, showList, setShowList } = props;
+  const {
+    showMessages,
+    setShowMessages,
+    showList,
+    setShowList,
+    chatId,
+    setChatId,
+  } = props;
   const isMobile = useIsMobile();
 
   const useStyles = makeStyles((theme: Theme) =>
@@ -113,7 +122,12 @@ export const Chat = (props: IProps) => {
           </IconButton>
         </div>
       </div>
-      <ChatMessageList setShowList={setShowList as any} showList={showList} />
+      <ChatMessageList
+        setShowList={setShowList as any}
+        showList={showList}
+        setId={setChatId}
+        id={chatId}
+      />
     </div>
   );
 };

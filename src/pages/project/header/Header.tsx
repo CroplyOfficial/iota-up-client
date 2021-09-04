@@ -27,12 +27,12 @@ import { DonateButton } from "../../../components/DonateButton/DonateButton";
 import { useIsMobile } from "../../../utils/isMobile";
 import { BARE_API, useFallbackImage } from "../../../config";
 import { io } from "socket.io-client";
-import {ReactComponent as UpVote2} from "../../../static/images/icons/up2.svg";
+import { ReactComponent as UpVote2 } from "../../../static/images/icons/up2.svg";
 import Lightbox from "react-image-lightbox";
 import "react-image-lightbox/style.css";
 import { ReactComponent as LikeDonate } from "../../../static/images/icons/likedonate.svg";
 import { ReactComponent as UpVote } from "../../../static/images/icons/up.svg";
-
+import { YTEmbed } from "../../../components/YoutubeEmbed/YoutubeEmbed";
 
 interface IProps {
   variant: ProjectPageVariants;
@@ -40,10 +40,21 @@ interface IProps {
   showImageModal: () => void;
   onToggle: () => void;
   showUserProjectsModal: () => void;
+  setShowMessages: (show: boolean) => void;
+  setShowList: (show: boolean) => void;
+  setChatId: (id: string) => void;
 }
 export const ProjectHeader = (props: IProps) => {
-  const { variant, project, showImageModal, onToggle, showUserProjectsModal } =
-    props;
+  const {
+    variant,
+    project,
+    showImageModal,
+    onToggle,
+    showUserProjectsModal,
+    setShowMessages,
+    setShowList,
+    setChatId,
+  } = props;
   const {
     _id,
     desc,
@@ -55,6 +66,7 @@ export const ProjectHeader = (props: IProps) => {
     category,
     upvotes,
     author,
+    video,
   } = project as IProject;
   const fallbackImage = useFallbackImage();
   const mainImage = media[0] || fallbackImage;
@@ -84,6 +96,7 @@ export const ProjectHeader = (props: IProps) => {
       root: {
         paddingTop: "15px",
         paddingBottom: "15px",
+        margin: "0 5.5vw",
         marginTop: "50px",
         minheight: "750px",
         display: "flex",
@@ -356,6 +369,11 @@ export const ProjectHeader = (props: IProps) => {
       partner: author?.id,
       token: userInfo?.token,
     });
+    socket.on("chat", (chat) => {
+      setShowMessages(true);
+      setShowList(false);
+      setChatId(chat._id);
+    });
   };
 
   useEffect(() => {
@@ -412,14 +430,21 @@ export const ProjectHeader = (props: IProps) => {
               className={classes.mainImageWrapper}
               /* onClick={() => showImageModal()} */
             >
-              <img
-                src={mainImage}
-                onClick={() => setIsOpen(true)}
-                className={classes.objectFill}
-              />
+              {video ? (
+                <YTEmbed url={video} height="425px" width="100%" />
+              ) : (
+                <img
+                  src={mainImage}
+                  onClick={() => {
+                    setPhotoIndex(0);
+                    setIsOpen(true);
+                  }}
+                  className={classes.objectFill}
+                />
+              )}
             </div>
             <div className={classes.imagesWrapper}>
-              {media.slice(1, media.length).map((image, i) => (
+              {media.map((image, i) => (
                 <div
                   className={"image-" + i++}
                   /*  onClick={showImageModal} */
@@ -427,7 +452,10 @@ export const ProjectHeader = (props: IProps) => {
                   <img
                     src={image}
                     className={classes.objectFill}
-                    onClick={() => setIsOpen(true)}
+                    onClick={() => {
+                      setPhotoIndex(i);
+                      setIsOpen(true);
+                    }}
                   />
                 </div>
               ))}
@@ -479,7 +507,7 @@ export const ProjectHeader = (props: IProps) => {
             <div className={classes.statsWrapper}>
               <div className={classes.stats}>
                 <SvgIcon className={classes.statsIcon} fontSize="large">
-                  <UpVote2   />
+                  <UpVote2 />
                 </SvgIcon>
                 <div>
                   <div className={classes.headerWrapper}>
