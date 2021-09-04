@@ -109,9 +109,10 @@ const Oval = ({ image, color }: IOvalProps) => {
         borderRadius: "50%",
         maskImage: `url(${image})`,
         [theme.breakpoints.down("sm")]: {
-          width: "100vw",
-          maxWidth: "414px",
+          width: "100%",
+          maxWidth: "90vw",
           height: "auto",
+          overflow: "hidden !important",
           display: "none",
         },
       },

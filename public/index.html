@@ -29,9 +29,11 @@
     -->
     <title>Iota Up</title>
   </head>
-  <body style="overflow-x: hidden; scroll-behaviour: smooth">
+  <body style="overflow-x: hidden !important; scroll-behaviour: smooth">
+    <div style="overflow-x: hidden !important; width: 100vw !important;">
+
     <noscript>You need to enable JavaScript to run this app.</noscript>
-    <div id="root" style="overflow-x: hidden; scroll-behaviour: smooth"></div>
+    <div id="root" style="overflow-x: hidden !important; scroll-behaviour: smooth"></div>
     <!--
       This HTML file is a template.
       If you open it directly in the browser, you will see an empty page.
@@ -47,5 +49,6 @@
       src="//iota-button.org/build/iota-button.esm.js"
     ></script>
     <script nomodule src="//iota-button.org/build/iota-button.js"></script>
+    </div>
   </body>
 </html>

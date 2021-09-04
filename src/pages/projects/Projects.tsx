@@ -14,7 +14,8 @@ import { parseQueryString } from "../../utils/queryString";
 import { getMyInfo } from "../../actions/userActions";
 import { MainCategories } from "../../config";
 import { compareArrays } from "../../utils/matchArrays";
-import {useIsMobile} from "../../utils/isMobile";
+import { useIsMobile } from "../../utils/isMobile";
+import { FilterCardModal } from "./searchBar/filterCard.modal";
 
 interface IProps {}
 interface ICategory {
@@ -192,9 +193,30 @@ export const Projects = (props: IProps) => {
     history.push(`/projects?query=${query}`);
   };
   const isMobile = useIsMobile();
+  const [open, setOpen] = useState<boolean>(false);
+  const handleToggleOpen = () => {
+    setOpen(!open);
+  };
   return (
-    <div>
+    <div
+      {...(!isMobile
+        ? {}
+        : {
+            style: {
+              width: "100vw",
+              height: "calc(100vh - 74px)",
+              overflow: open ? "hidden" : "scroll",
+              overflowX: "hidden",
+            },
+          })}
+    >
       {!isMobile ? <ProjectsNavbarHero /> : <></>}
+      <FilterCardModal
+        open={open}
+        onClick={handleToggleOpen}
+        categories={categories}
+        setCategories={setCategories}
+      />
       <ProjectsSearchBar
         onKeyUp={(e: any) => {
           setQuery(e.target.value);
@@ -205,6 +227,7 @@ export const Projects = (props: IProps) => {
         onClick={handleOnClick}
         category={cat}
         setCategory={setCat}
+        openModal={handleToggleOpen}
       />
       <ProjectsOverview
         projects={rendered_projects}
@@ -213,7 +236,7 @@ export const Projects = (props: IProps) => {
         sortMethod={sortMethod}
         setSortMethod={setSortMethod}
       />
-      <DonateHero /> 
+      <DonateHero />
       <Footer />
     </div>
   );

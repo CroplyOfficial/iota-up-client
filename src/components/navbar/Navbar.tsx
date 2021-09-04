@@ -11,7 +11,11 @@ import {
   SwipeableDrawer,
   MenuItem,
   Button,
+  SvgIcon,
 } from "@material-ui/core";
+import { ReactComponent as UpLogo } from "../../static/images/icons/up.svg";
+import { ReactComponent as ChatIcon } from "../../static/images/icons/chat.svg";
+import { ReactComponent as ChatOutlinedIcon } from "../../static/images/icons/chat.outlined.svg";
 import MenuIcon from "@material-ui/icons/Menu";
 import Person from "@material-ui/icons/Person";
 import { Link, useLocation } from "react-router-dom";
@@ -25,6 +29,7 @@ import { RootState } from "../../store";
 import { DashboardCreateProjectModal } from "../../pages/dashboard/createProjectModal.dashboard";
 import { logout } from "../../actions/userActions";
 import { useDispatch } from "react-redux";
+import { BrandLogoOutlined } from "../../static/icons/brand-logo.outlined";
 
 const paths = {
   root: "/",
@@ -50,8 +55,13 @@ const SecondaryWhitelist = ["/projects"];
 interface INavbarProps {
   variant?: keyof typeof NavbarVariants;
   toggleLoginModal: () => void;
+  showMessages: boolean;
+  setShowMessages: Function;
+  showList: boolean;
+  setShowList: Function;
 }
 export const Navbar = (props: INavbarProps) => {
+  const { showList, setShowList, setShowMessages, showMessages } = props;
   const dispatch = useDispatch();
   const [mobileView, setMobileView] = useState<boolean>(false);
   const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(false);
@@ -97,6 +107,17 @@ export const Navbar = (props: INavbarProps) => {
       root: {
         paddingTop: "20px",
         paddingBottom: "20px",
+        [theme.breakpoints.down("sm")]: {
+          padding: "0px",
+          paddingTop: "5px",
+          paddingBottom: "5px",
+        },
+      },
+      toolbar: {
+        display: "flex",
+        justifyContent: "space-between",
+        alignItems: "center",
+        width: "90%",
       },
       menuButton: {
         marginRight: theme.spacing(2),
@@ -110,7 +131,7 @@ export const Navbar = (props: INavbarProps) => {
         marginLeft: "0.7rem",
         marginRight: "0.7rem",
         [theme.breakpoints.down("sm")]: {
-          marginRight: "10px",
+          margin: 0,
         },
       },
       a: {
@@ -124,6 +145,7 @@ export const Navbar = (props: INavbarProps) => {
         fontWeight: 500,
         color: isSecondary ? "#ffffff" : "#717579",
         [theme.breakpoints.down("sm")]: {
+          paddingLeft: "20px",
           color: "#717579",
         },
       },
@@ -178,9 +200,7 @@ export const Navbar = (props: INavbarProps) => {
   const isLoggedIn = userInfo !== null;
 
   const actionButtonVariant = isSecondary ? "contained" : "outlined";
-  const brandLogo =
-    isSecondary && !mobileView ? <BrandLogoSecondary /> : <BrandLogo />;
-
+  const brandLogo = isSecondary ? <BrandLogoSecondary /> : <BrandLogo />;
   function getDrawerChoices() {
     return (
       <div className={classes.drawer}>
@@ -294,7 +314,7 @@ export const Navbar = (props: INavbarProps) => {
   }
   function renderMobile() {
     return (
-      <Toolbar variant="dense">
+      <Toolbar variant="dense" className={classes.toolbar}>
         {/* 
       HELP!
       hitbox of IconButton is shifted up but doesnt show in firefox dev tools
@@ -321,6 +341,31 @@ export const Navbar = (props: INavbarProps) => {
             {getDrawerChoices()}
           </SwipeableDrawer>
         </IconButton>
+
+        <Link to="/">
+          <IconButton
+            className={classes.iconButton}
+            edge="start"
+            aria-label="logo"
+            color="inherit"
+          >
+            {brandLogo}
+          </IconButton>
+        </Link>
+        <IconButton
+          onClick={() => {
+            setShowMessages(!showMessages);
+          }}
+        >
+          <SvgIcon
+            style={{
+              color: isSecondary ? "white" : "black",
+              paddingTop: "3px",
+            }}
+          >
+            <ChatOutlinedIcon />
+          </SvgIcon>
+        </IconButton>
       </Toolbar>
     );
   }
@@ -332,8 +377,8 @@ export const Navbar = (props: INavbarProps) => {
         onClick={toggleShowModal}
       />
       <AppBar
-        position="static"
-        color={isSecondary ? "primary" : "transparent"}
+        position={mobileView ? "fixed" : "static"}
+        color={isSecondary ? "primary" : "inherit"}
         elevation={0}
         className={classes.root}
       >
@@ -341,6 +386,7 @@ export const Navbar = (props: INavbarProps) => {
           {(mobileView && renderMobile()) || renderDesktop()}
         </Container>
       </AppBar>
+      {mobileView && <div style={{ height: "74px" }}></div>}
     </div>
   );
 };

@@ -27,10 +27,12 @@ import { DonateButton } from "../../../components/DonateButton/DonateButton";
 import { useIsMobile } from "../../../utils/isMobile";
 import { BARE_API, useFallbackImage } from "../../../config";
 import { io } from "socket.io-client";
+import {ReactComponent as UpVote2} from "../../../static/images/icons/up2.svg";
 import Lightbox from "react-image-lightbox";
 import "react-image-lightbox/style.css";
 import { ReactComponent as LikeDonate } from "../../../static/images/icons/likedonate.svg";
 import { ReactComponent as UpVote } from "../../../static/images/icons/up.svg";
+
 
 interface IProps {
   variant: ProjectPageVariants;
@@ -477,7 +479,7 @@ export const ProjectHeader = (props: IProps) => {
             <div className={classes.statsWrapper}>
               <div className={classes.stats}>
                 <SvgIcon className={classes.statsIcon} fontSize="large">
-                  <UpVote />
+                  <UpVote2   />
                 </SvgIcon>
                 <div>
                   <div className={classes.headerWrapper}>

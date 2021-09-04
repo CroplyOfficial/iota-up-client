@@ -20,14 +20,14 @@ import {
   getLatestProjects,
 } from "../../actions/projectsActions";
 import { getMyInfo } from "../../actions/userActions";
-import {useIsMobile} from "../../utils/isMobile";
+import { useIsMobile } from "../../utils/isMobile";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     heroContainer: {
       paddingBottom: "30vh",
       [theme.breakpoints.down("sm")]: {
-      paddingBottom: "0rem",
+        paddingBottom: "0rem",
       },
     },
     featuredSection: {
@@ -79,9 +79,11 @@ export const Root = (props: IProps) => {
       accross all categories from the UP community
       <br />
       creators, designers, and developers
-    </div>)
-    : (<div>
-      Some of the top voted for and supported projects accross all categories from the UP community creators, designers, and developers
+    </div>
+  ) : (
+    <div>
+      Some of the top voted for and supported projects accross all categories
+      from the UP community creators, designers, and developers
     </div>
   );
   // const featuredProjects = [...SampleProjects].sort(() => Math.random() - 0.5);
