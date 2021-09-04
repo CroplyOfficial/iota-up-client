@@ -25,6 +25,8 @@ import axios from "axios";
 import { DonateButton } from "../../../components/DonateButton/DonateButton";
 import { BARE_API, useFallbackImage } from "../../../config";
 import { io } from "socket.io-client";
+import Lightbox from "react-image-lightbox";
+import "react-image-lightbox/style.css";
 
 interface IProps {
   variant: ProjectPageVariants;
@@ -359,9 +361,25 @@ export const ProjectHeader = (props: IProps) => {
       setIsLiked(myInfo?.upvotedProjects?.includes(_id));
     }
   }, [myInfo, _id]);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [photoIndex, setPhotoIndex] = useState<number>(0);
 
   return (
     <>
+      {isOpen && (
+        <Lightbox
+          mainSrc={media[photoIndex]}
+          nextSrc={media[(photoIndex + 1) % media.length]}
+          prevSrc={media[(photoIndex + media.length - 1) % media.length]}
+          onCloseRequest={() => setIsOpen(false)}
+          onMovePrevRequest={() => {
+            setPhotoIndex((photoIndex + media.length - 1) % media.length);
+          }}
+          onMoveNextRequest={() => {
+            setPhotoIndex((photoIndex + 1) % media.length);
+          }}
+        />
+      )}
       <Snackbar
         open={showError.length ? true : false}
         autoHideDuration={6000}
@@ -387,7 +405,11 @@ export const ProjectHeader = (props: IProps) => {
               className={classes.mainImageWrapper}
               /* onClick={() => showImageModal()} */
             >
-              <img src={mainImage} className={classes.objectFill} />
+              <img
+                src={mainImage}
+                onClick={() => setIsOpen(true)}
+                className={classes.objectFill}
+              />
             </div>
             <div className={classes.imagesWrapper}>
               {media.slice(1, media.length).map((image, i) => (
@@ -395,7 +417,11 @@ export const ProjectHeader = (props: IProps) => {
                   className={"image-" + i++}
                   /*  onClick={showImageModal} */
                 >
-                  <img src={image} className={classes.objectFill} />
+                  <img
+                    src={image}
+                    className={classes.objectFill}
+                    onClick={() => setIsOpen(true)}
+                  />
                 </div>
               ))}
             </div>

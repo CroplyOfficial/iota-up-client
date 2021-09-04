@@ -4,9 +4,10 @@ import {
   Typography,
   Button,
   TextField,
+  IconButton,
   Theme,
 } from "@material-ui/core";
-import { CloseSharp } from "@material-ui/icons";
+import { CloseSharp, Cancel } from "@material-ui/icons";
 import { IProject } from "../../interfaces/project.interface";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
@@ -49,7 +50,7 @@ const useStyles = makeStyles((theme: Theme) =>
       [theme.breakpoints.down("sm")]: {
         padding: "0px",
         width: "90%",
-      }
+      },
     },
     header: {
       display: "flex",
@@ -59,7 +60,7 @@ const useStyles = makeStyles((theme: Theme) =>
       paddingTop: "15px",
       [theme.breakpoints.down("sm")]: {
         padding: "15px",
-      }
+      },
     },
     title: {
       fontSize: "32px",
@@ -129,6 +130,17 @@ const useStyles = makeStyles((theme: Theme) =>
       color: theme.palette.text.secondary,
       paddingTop: "10px",
     },
+    imgContainer: {
+      position: "relative",
+    },
+    removeImage: {
+      position: "absolute",
+      top: "-10px",
+      right: "-10px",
+      height: "20px",
+      width: "20px",
+      background: "white",
+    },
     hint: {
       fontFamily: "Poppins",
       fontWeight: 400,
@@ -187,10 +199,11 @@ const useStyles = makeStyles((theme: Theme) =>
 interface IProps {
   project?: IProject;
   onClick: () => void;
+  onSave: (media: string[], video?: string) => void;
 }
 export const ProjectImageModal = (props: IProps) => {
   const classes = useStyles();
-  const { onClick, project } = props;
+  const { onClick, onSave, project } = props;
   const [url, setUrl] = useState<string>("");
   const [featuredImage, setFeaturedImage] = useState<string>(
     project?.media[0] ?? ""
@@ -224,19 +237,11 @@ export const ProjectImageModal = (props: IProps) => {
     } catch {}
   };
 
-  const handleSave = async () => {
-    const config = {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${userInfo.token}`,
-      },
-    };
-    await axios.put(
-      `/api/projects/by-id/${project?._id}`,
-      { media, video },
-      config
-    );
-    window.location.reload();
+  const handleRemoveImage = (image: string) => {
+    if (media.length > 1) {
+      const images = media.filter((img: string) => img !== image);
+      setMedia(images);
+    }
   };
 
   useEffect(() => {
@@ -322,11 +327,22 @@ export const ProjectImageModal = (props: IProps) => {
                     <Typography className={classes.label}>Images</Typography>
                     <div className={classes.images}>
                       {media.map((image, index) => (
-                        <img
-                          src={image}
-                          className={classes.image}
-                          alt={`projectpicture${index}`}
-                        />
+                        <span className={classes.imgContainer}>
+                          {media.length > 1 && (
+                            <IconButton
+                              className={classes.removeImage}
+                              color="secondary"
+                              onClick={() => handleRemoveImage(image)}
+                            >
+                              <Cancel />
+                            </IconButton>
+                          )}
+                          <img
+                            src={image}
+                            className={classes.image}
+                            alt={`projectpicture${index}`}
+                          />
+                        </span>
                       ))}
                     </div>
                   </>
@@ -338,7 +354,9 @@ export const ProjectImageModal = (props: IProps) => {
           </div>
           <div className={classes.footer}>
             <Button
-              onClick={handleSave}
+              onClick={() => {
+                onSave(media, video);
+              }}
               color="primary"
               className={classes.button}
               variant="contained"
