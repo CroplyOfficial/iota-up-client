@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { LinkToTop } from "../LinkToTop/LinkToTop";
 import { Typography } from "@material-ui/core";
 interface IMyLinkProps {
   classes: any;
@@ -6,7 +6,7 @@ interface IMyLinkProps {
   title: string;
 }
 export const MyLink = (props: IMyLinkProps) => (
-  <Link
+  <LinkToTop
     to={props.path}
     className={props.classes.link}
     style={{ paddingBottom: "10px" }}
@@ -14,5 +14,5 @@ export const MyLink = (props: IMyLinkProps) => (
     <Typography variant="body1" component="span" className={props.classes.span}>
       {props.title}
     </Typography>
-  </Link>
+  </LinkToTop>
 );

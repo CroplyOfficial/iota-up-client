@@ -41,7 +41,7 @@ const useStyles = makeStyles((theme: Theme) =>
       transform: "translate(50px,-175px)",
       backgroundColor: "white",
       [theme.breakpoints.down("sm")]: {
-        transform: "translate(0px,-400px)",
+        transform: "translate(0px,-225px)",
       },
     },
     container: {

@@ -201,7 +201,6 @@ export const Navbar = (props: INavbarProps) => {
 
   const actionButtonVariant = isSecondary ? "contained" : "outlined";
   const brandLogo = isSecondary ? <BrandLogoSecondary /> : <BrandLogo />;
-
   function getDrawerChoices() {
     return (
       <div className={classes.drawer}>
