@@ -20,6 +20,7 @@ import {
   getLatestProjects,
 } from "../../actions/projectsActions";
 import { getMyInfo } from "../../actions/userActions";
+import {useIsMobile} from "../../utils/isMobile";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -69,14 +70,18 @@ export const Root = (props: IProps) => {
     setFeatured(trendingProjects);
   }, [trendingProjects]);
   /* FEATURED */
+  const isMobile = useIsMobile();
   const featuredTitle = "Projects on the UP";
-  const featuredSubHeader = (
+  const featuredSubHeader = !isMobile ? (
     <div>
       Some of the top voted for and supported projects
       <br />
       accross all categories from the UP community
       <br />
       creators, designers, and developers
+    </div>)
+    : (<div>
+      Some of the top voted for and supported projects accross all categories from the UP community creators, designers, and developers
     </div>
   );
   // const featuredProjects = [...SampleProjects].sort(() => Math.random() - 0.5);

@@ -7,6 +7,7 @@ import {
 } from "@material-ui/core";
 import { Container } from "../../components/container/container";
 import BlueGreenGuru from "../../static/images/green_floating_guru.png";
+import {useIsMobile} from "../../utils/isMobile";
 
 const imageSource = "https://source.unsplash.com/random";
 const useStyles = makeStyles((theme: Theme) =>
@@ -111,7 +112,8 @@ const useStyles = makeStyles((theme: Theme) =>
       [theme.breakpoints.down("sm")]: {
         color: "white",
         lineHeight: "24px",
-      },
+        fontStyle: "italic"
+      }
     },
     footer: {
       fontFamily: "Open Sans",
@@ -123,7 +125,8 @@ const useStyles = makeStyles((theme: Theme) =>
       [theme.breakpoints.down("sm")]: {
         textAlign: "start",
         color: "white",
-      },
+        fontWeight: 700
+      }
     },
     image: {
       WebKitMaskBoxImage: `url(${imageSource})`,
@@ -133,16 +136,21 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 export const AboutUsDonateHero = () => {
+  const isMobile = useIsMobile();
   const classes = useStyles();
   const title = (
     <span>
-      {" "}
       Donating is the gentle art of
-      <br /> learning the joy of giving
+      learning the joy of giving
     </span>
   );
   const description = `Giving is not just about making a donation, it’s about making a difference. Working in technology and agriculture, focusing on the bottom billion, we regularly see that one of the biggest challenges facing creators and innovators around the world is the lack of support in the early stages of creation. Whether it’s building a website, concept, or community development, access to support can be hard to establish.
 UP is all about providing a platform for change. Providing the opportunity for individuals, groups, communities, and everyone in between to share their work on an open, feeless platform. that can allow community supporters the ability to decide if they wish to support and make a change. `;
+
+
+  const descriptionMobile = <div><span>Giving is not just about making a donation, it’s about making a difference. Working in technology and agriculture, focusing on the bottom billion, we regularly see that one of the biggest challenges facing creators and innovators around the world is the lack of support in the early stages of creation. Whether it’s building a website, concept, or community development, access to support can be hard to establish.</span><br/><br/><span>
+UP is all about providing a platform for change. Providing the opportunity for individuals, groups, communities, and everyone in between to share their work on an open, feeless platform. that can allow community supporters the ability to decide if they wish to support and make a change.
+  </span></div>;
   const footer = (
     <span>
       Adam Eunson <br />
@@ -166,7 +174,7 @@ UP is all about providing a platform for change. Providing the opportunity for i
               {title}
             </Typography>
             <Typography variant="h2" className={classes.description}>
-              {description}
+              {isMobile ? descriptionMobile : description}
             </Typography>
             <Typography variant="h2" className={classes.footer}>
               {footer}
