@@ -12,7 +12,12 @@ import { IPost } from "../../interfaces/post.interface";
 import htmlToDraft from "html-to-draftjs";
 import { EditorState, ContentState, convertToRaw } from "draft-js";
 import { Editor } from "react-draft-wysiwyg";
-import { MoreVert, CloseSharp, Save } from "@material-ui/icons";
+import {
+  MoreVert,
+  Menu as MenuIcon,
+  CloseSharp,
+  Save,
+} from "@material-ui/icons";
 import { useState } from "react";
 import axios from "axios";
 import { useSelector } from "react-redux";
@@ -226,11 +231,11 @@ export const ProjectPostModal = (props: IProps) => {
                   onClick={handleClick}
                   style={{
                     position: "absolute",
-                    right: "70px",
+                    left: "15px",
                     top: "3px",
                   }}
                 >
-                  <MoreVert />
+                  <MenuIcon />
                 </IconButton>
                 <Menu
                   id="long-menu"

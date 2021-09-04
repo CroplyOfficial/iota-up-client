@@ -125,7 +125,6 @@ export const EditableProjectHeader = (props: IProps) => {
       },
       config
     );
-    console.log("testtttt");
     onToggle();
   };
 
@@ -140,7 +139,7 @@ export const EditableProjectHeader = (props: IProps) => {
         borderRadius: "20px",
         [theme.breakpoints.down("sm")]: {
           flexDirection: "column-reverse",
-        }
+        },
       },
       left: {
         maxWidth: "48.5%",
@@ -149,7 +148,7 @@ export const EditableProjectHeader = (props: IProps) => {
         [theme.breakpoints.down("sm")]: {
           width: "calc(100% - 60px)",
           maxWidth: "unset",
-        }
+        },
       },
       mainImageWrapper: {
         width: "100%",
@@ -160,7 +159,7 @@ export const EditableProjectHeader = (props: IProps) => {
         overflow: "hidden",
         [theme.breakpoints.down("sm")]: {
           height: "20%",
-        }
+        },
       },
       imagesWrapper: {
         display: "flex",
@@ -237,8 +236,7 @@ export const EditableProjectHeader = (props: IProps) => {
         flexDirection: "column",
         justifyContent: "space-around",
         gap: "1rem",
-        [theme.breakpoints.down("sm")]: {
-        }
+        [theme.breakpoints.down("sm")]: {},
       },
       button: {
         fontFamily: "Poppins",
@@ -260,7 +258,7 @@ export const EditableProjectHeader = (props: IProps) => {
         [theme.breakpoints.down("sm")]: {
           flexDirection: "column",
           gap: "15px",
-        }
+        },
       },
       stats: {
         display: "flex",
@@ -327,10 +325,10 @@ export const EditableProjectHeader = (props: IProps) => {
           fontSize: "16px",
           lineHeight: "28px",
         },
-        [theme.breakpoints.down("sm")]:{
-          minWidth:"unset",
+        [theme.breakpoints.down("sm")]: {
+          minWidth: "unset",
           width: "100%",
-        }
+        },
       },
       categories: {
         fontFamily: "Open Sans",
@@ -366,7 +364,7 @@ export const EditableProjectHeader = (props: IProps) => {
         [theme.breakpoints.down("sm")]: {
           flexDirection: "column",
           gap: "15px",
-        }
+        },
       },
     })
   );
