@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme: Theme) =>
       [theme.breakpoints.down("sm")]: {
         flexDirection: "column",
         gap: "15px",
-      }
+      },
     },
     left: {
       width: "1070px",
@@ -42,7 +42,7 @@ const useStyles = makeStyles((theme: Theme) =>
         padding: "0px",
         height: "auto",
         minHeight: "unset",
-      }
+      },
     },
     right: {
       padding: "25px",
@@ -58,7 +58,7 @@ const useStyles = makeStyles((theme: Theme) =>
         width: "calc(100% - 40px)",
         margin: "0px",
         padding: "20px",
-      }
+      },
     },
     rightHeader: {
       fontFamily: "Poppins",
@@ -69,7 +69,7 @@ const useStyles = makeStyles((theme: Theme) =>
       paddingBottom: "15px",
       [theme.breakpoints.down("sm")]: {
         maxWidth: "100%",
-      }
+      },
     },
     "*::-webkit-scrollbar": {
       width: "0.4em",
@@ -190,7 +190,7 @@ export const ProjectBody = (props: IProps) => {
           )}
         </div>
         <div className={classes.right}>
-          <div className={classes.rightHeader}>Creator’s Other Projects</div>
+          <div className={classes.rightHeader}>Other Projects</div>
           {recommended &&
             recommended.slice(0, 2).map((p, i) => (
               <div>
