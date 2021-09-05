@@ -11,6 +11,7 @@ export const FooterWebsite = () => {
     { title: "Projects", path: "/projects" },
     //{ title: "Creators", path: "/creators" },
     { title: "Contact", path: "/contact" },
+    { title: "Discord Server", path: "https://discord.gg/XPtqt8KA9Y" },
   ];
   return (
     <div className={classes.category}>

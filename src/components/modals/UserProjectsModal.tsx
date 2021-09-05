@@ -126,9 +126,11 @@ const useStyles = makeStyles((theme: Theme) =>
       width: "250px",
     },
     chips: {
+      width: "100%",
       marginTop: "15px",
       display: "flex",
       gap: "15px",
+      flexWrap: "wrap",
     },
     chip: {},
     saveButton: {
@@ -158,6 +160,8 @@ const useStyles = makeStyles((theme: Theme) =>
     skills: {
       marginTop: "15px",
       display: "flex",
+      flexWrap: "wrap",
+      width: "100%",
       justifyContent: "space-around",
       gap: "15px",
     },
@@ -165,8 +169,9 @@ const useStyles = makeStyles((theme: Theme) =>
       marginTop: "10rem",
       width: "70%",
       gap: "75px",
-      transform: "translate(0,35%)",
+      transform: "translate(0,75px)",
       display: "flex",
+      flexWrap: "wrap",
       flexDirection: "row",
       justifyContent: "flex-start",
       marginBottom: "35vh",
@@ -178,7 +183,7 @@ const useStyles = makeStyles((theme: Theme) =>
       alignItems: "flex-end",
     },
     half: {
-      width: "50%",
+      width: "100%",
     },
     pointer: {},
     icon: {},

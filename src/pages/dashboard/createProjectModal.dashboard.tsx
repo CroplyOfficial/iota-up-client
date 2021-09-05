@@ -49,9 +49,9 @@ const useStyles = makeStyles((theme: Theme) =>
       padding: "15px",
       paddingBottom: "20px",
       paddingTop: "20px",
-      [theme.breakpoints.down("sm")]:{
+      [theme.breakpoints.down("sm")]: {
         width: "80%",
-      }
+      },
     },
     header: {
       textAlign: "center",
@@ -62,10 +62,10 @@ const useStyles = makeStyles((theme: Theme) =>
       fontStyle: "normal",
       paddingBottom: "15px",
       color: "black",
-      [theme.breakpoints.down("sm")]:{
+      [theme.breakpoints.down("sm")]: {
         fontSize: "32px",
         lineHeight: "40px",
-      }
+      },
     },
     body: {
       minHeight: "400px",

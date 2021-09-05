@@ -66,7 +66,7 @@
 }
 
 .chat-section {
-  height: calc(100vh - 235px);
+  height: calc(700px - 180px);
   width: 100%;
   overflow-y: scroll;
   display: flex;
@@ -86,8 +86,6 @@
   width: 70%;
   border-bottom-left-radius: 5px;
   border-top-left-radius: 5px;
-  position: absolute;
-  bottom: 20px;
   outline: none;
 }
 
@@ -100,9 +98,6 @@
   border-bottom-right-radius: 5px;
   border-top-right-radius: 5px;
   color: white;
-  position: absolute;
-  bottom: 20px;
-  right: 10px;
 }
 
 @media only screen and (max-width: 900px) {
@@ -110,11 +105,6 @@
     -moz-user-select: none;
     -khtml-user-select: none;
     -webkit-user-select: none;
-
-    /*
-     Introduced in Internet Explorer 10.
-     See http://ie.microsoft.com/testdrive/HTML5/msUserSelect/
-   */
     -ms-user-select: none;
     user-select: none;
   }

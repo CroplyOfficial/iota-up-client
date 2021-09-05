@@ -18,7 +18,7 @@ import { useState } from "react";
 import { ReactComponent as Create } from "../../static/images/icons/create.svg";
 import { ReactComponent as Explore } from "../../static/images/icons/explore.svg";
 import { ReactComponent as UpButton } from "../../static/images/icons/up.svg";
-import {useIsMobile} from "../../utils/isMobile";
+import { useIsMobile } from "../../utils/isMobile";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -126,11 +126,11 @@ export const AboutUsFeelessDonationsHero = () => {
     <span>
       Our platform makes use of the IOTA network. Allowing donors to make
       payments direct to project creators.
-      <br/><br/>
+      <br />
+      <br />
       Making use of IOTA as a payment allows feeless, near instant transactions,
-      so you can be safe in the
-      knowledge that your support gets delivered direct to the hands of those
-      who need it.
+      so you can be safe in the knowledge that your support gets delivered
+      direct to the hands of those who need it.
     </span>
   );
   const footer = (
@@ -145,7 +145,11 @@ export const AboutUsFeelessDonationsHero = () => {
   );
   const footerMobile = (
     <div className={classes.alignStart}>
-      It is important to be aware that this is an open platform, built community support and development. It is the responsibility of all creators to provide honest projects and updates, and it is the responsibility of the donors to make their own judgements on whether they choose to support a project or not.
+      It is important to be aware that this is an open platform, built community
+      support and development. It is the responsibility of all creators to
+      provide honest projects and updates, and it is the responsibility of the
+      donors to make their own judgements on whether they choose to support a
+      project or not.
     </div>
   );
   const history = useHistory();
@@ -161,6 +165,7 @@ export const AboutUsFeelessDonationsHero = () => {
       subHeader:
         "To send and receive donations, it is recommended to use the official IOTA Firefly Wallet. This can be downloaded here.",
       onClick: () => {
+        window.scrollTo(0, 0);
         window.location.href = "https://firefly.iota.org/";
       },
     },
@@ -187,6 +192,7 @@ export const AboutUsFeelessDonationsHero = () => {
         </SvgIcon>
       ),
       onClick: () => {
+        window.scrollTo(0, 0);
         history.push("/projects");
       },
     },
@@ -200,6 +206,7 @@ export const AboutUsFeelessDonationsHero = () => {
         </SvgIcon>
       ),
       onClick: () => {
+        window.scrollTo(0, 0);
         history.push("/projects");
       },
     },
@@ -218,7 +225,7 @@ export const AboutUsFeelessDonationsHero = () => {
           {header}
         </Typography>
         <Typography variant="h6" className={classes.openSans400Small}>
-          {!isMobile ? subHeader: subHeaderMobile}
+          {!isMobile ? subHeader : subHeaderMobile}
         </Typography>
 
         <div className={classes.cards}>
