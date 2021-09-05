@@ -156,6 +156,9 @@ export const ProjectOverview = ({
           project={project}
           onClick={toggleShowUserProjectModal}
           showing={showUserProjectsModal}
+          setShowList={setShowList}
+          setShowMessages={setShowMessages}
+          setChatId={setChatId}
         />
       }
       {postModal && Object.keys(postModal).length ? (
