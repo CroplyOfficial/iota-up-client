@@ -8,4 +8,5 @@ export interface ICreator {
   country?: string;
   bio?: string;
   skills: string[];
+  wallet?: string;
 }

@@ -18,11 +18,13 @@ import axios from "axios";
 import { RootState } from "../../store";
 import { useSelector } from "react-redux";
 import { Facebook, LinkedIn } from "@material-ui/icons";
-import { API } from "../../config";
+import { API, BARE_API } from "../../config";
 import { IProject } from "../../interfaces/project.interface";
 import { CloseSharp } from "@material-ui/icons";
 import { Card2 } from "../card/card2";
 import { ICreator } from "../../interfaces/creator.interface";
+import { DonateButton } from "../DonateButton/DonateButton";
+import { io } from "socket.io-client";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -69,6 +71,9 @@ const useStyles = makeStyles((theme: Theme) =>
       paddingTop: "20px",
       click: "unset",
       transform: "translate(0,35%)",
+      [theme.breakpoints.down("sm")]: {
+        width: "80vw",
+      },
     },
     header: {
       textAlign: "center",
@@ -94,6 +99,7 @@ const useStyles = makeStyles((theme: Theme) =>
       display: "flex",
       width: "100%",
       flexDirection: "row",
+      flexWrap: "wrap",
       justifyContent: "space-around",
     },
     button: {
@@ -143,8 +149,12 @@ const useStyles = makeStyles((theme: Theme) =>
       paddingLeft: "30px",
       paddingRight: "30px",
       borderRadius: "10px",
-
       color: "white",
+      [theme.breakpoints.down("sm")]: {
+        width: "250px",
+        fontSize: "1rem",
+        margin: "5px",
+      },
     },
     name: {},
     location: {},
@@ -200,8 +210,18 @@ interface IProps {
   showing: boolean;
   onClick: (e: any) => void;
   project: IProject;
+  setShowMessages: (show: boolean) => void;
+  setShowList: (show: boolean) => void;
+  setChatId: (id: string) => void;
 }
-export const UserProjectsModal = ({ showing, onClick, project }: IProps) => {
+export const UserProjectsModal = ({
+  showing,
+  onClick,
+  project,
+  setShowMessages,
+  setShowList,
+  setChatId,
+}: IProps) => {
   const [creator, setCreator] = useState<ICreator>();
   console.log("", project);
   useEffect(() => {
@@ -216,7 +236,8 @@ export const UserProjectsModal = ({ showing, onClick, project }: IProps) => {
     tbd();
   }, [project]);
   const connections = ["google"];
-
+  const userInfoMeta = useSelector((state: RootState) => state.userLogin);
+  const { userInfo }: any = userInfoMeta;
   const fullName = creator?.displayName;
   const location =
     creator?.city &&
@@ -224,6 +245,20 @@ export const UserProjectsModal = ({ showing, onClick, project }: IProps) => {
     `${creator?.city}, ${creator?.country}`;
   const classes = useStyles();
   const [otherProjects, setOtherProjects] = useState<IProject[]>([]);
+
+  const handleContactCreator = () => {
+    console.log("asdf");
+    const socket = io(BARE_API);
+    socket.emit("startChat", {
+      partner: project?.author?.id,
+      token: userInfo?.token,
+    });
+    socket.on("chat", (chat: any) => {
+      setShowMessages(true);
+      setShowList(false);
+      setChatId(chat._id);
+    });
+  };
 
   useEffect(() => {
     const getProjects = async () => {
@@ -309,16 +344,27 @@ export const UserProjectsModal = ({ showing, onClick, project }: IProps) => {
                   variant="contained"
                   color="primary"
                   className={classes.saveButton}
+                  onClick={handleContactCreator}
                 >
                   Contact Creator
                 </Button>
-                <Button
-                  variant="contained"
-                  color="secondary"
-                  className={classes.saveButton}
-                >
-                  Donate To Creator
-                </Button>
+                {creator?.wallet && (
+                  // @ts-ignore
+                  <DonateButton
+                    wallet={creator?.wallet}
+                    // @ts-ignore
+                    to={creator.displayName || creator.fullName}
+                    text="donatw"
+                  >
+                    <Button
+                      variant="contained"
+                      color="secondary"
+                      className={classes.saveButton}
+                    >
+                      Donate To Creator
+                    </Button>
+                  </DonateButton>
+                )}
               </div>
             </div>
             <div className={classes.projects}>

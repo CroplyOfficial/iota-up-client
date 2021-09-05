@@ -22,6 +22,7 @@ import { useFallbackImage } from "../../config";
 import { FavoriteBorder } from "@material-ui/icons";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
+import { UserProjectsModal } from "../modals/UserProjectsModal";
 
 const StyledCardContent = styled(CardContent)({});
 const StyledCard = styled(Card)({
