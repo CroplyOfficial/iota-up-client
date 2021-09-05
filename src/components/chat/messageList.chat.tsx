@@ -56,7 +56,7 @@ export const ChatMessageList = (props: IProps) => {
     socket.on("chat", (chat: any) => {
       setChats(chat);
     });
-  }, []);
+  }, [showList]);
 
   useEffect(() => {
     console.log(chats);

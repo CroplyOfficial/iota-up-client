@@ -193,7 +193,10 @@ const MessageChatList = (props: IProps) => {
                   }}
                 >
                   <div className="date">
-                    {String(new Date(message.date).toString()).substring(4, 15)}
+                    {`${String(new Date(message.date).toString()).substring(
+                      4,
+                      10
+                    )} ${String(new Date(message.date).toLocaleTimeString())}`}
                   </div>
                   <div
                     className={
