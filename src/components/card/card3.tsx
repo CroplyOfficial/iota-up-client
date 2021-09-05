@@ -152,14 +152,16 @@ export function ProjectsCard(props: IProps) {
 
   return (
     <>
-      <UserProjectsModal
-        onClick={toggleShowingModal}
-        project={project}
-        showing={showingModal}
-        setChatId={() => null}
-        setShowList={() => null}
-        setShowMessages={() => null}
-      />
+      {showingModal && (
+        <UserProjectsModal
+          onClick={toggleShowingModal}
+          project={project}
+          showing={showingModal}
+          setChatId={() => null}
+          setShowList={() => null}
+          setShowMessages={() => null}
+        />
+      )}
       <StyledCard className={classes.root}>
         <CardActionArea
           onClick={(e) => (window.location.href = `/project/${project._id}`)}
