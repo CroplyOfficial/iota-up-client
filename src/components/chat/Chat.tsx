@@ -42,16 +42,15 @@ export const Chat = (props: IProps) => {
         display: "flex",
         flexDirection: "column",
         position: "fixed",
+        bottom: 0,
         right: 0,
-        bottom: "0px",
         width: "288px",
         maxHeight: showMessages ? "700px" : "40px",
         transition: "max-height 0.3s ease-out",
         boxShadow: "0 3px 10px rgb(0 0 0 / 0.2)",
         [theme.breakpoints.down("sm")]: {
           width: showMessages ? "100vw" : "0px",
-          height: showMessages ? "calc(100vh - 70px)" : "0px",
-          top: "70px",
+          height: showMessages ? "100%" : "0px",
         },
       },
       header: {
