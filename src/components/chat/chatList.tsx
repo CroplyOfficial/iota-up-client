@@ -185,7 +185,10 @@ const MessageChatList = (props: IProps) => {
                 <div
                   className="message"
                   onContextMenu={(e) => {
-                    if (String(userInfo._id) === String(message.sender))
+                    if (
+                      String(userInfo._id) === String(message.sender) &&
+                      message?.content !== "this message was deleted"
+                    )
                       handleMessageRightClick(e, message?._id);
                   }}
                 >

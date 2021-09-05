@@ -16,6 +16,8 @@ const useStyles = makeStyles(() =>
       justifyContent: "center",
       transform: "translate(0,-175px)",
       position: "relative",
+      boxSizing: "border-box",
+      padding: "0 20px",
     },
     button: {
       padding: "16px",

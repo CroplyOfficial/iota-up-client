@@ -121,7 +121,7 @@ export const ProjectOverview = ({
     };
 
     setProject();
-  }, [project]);
+  }, [project, window.location.href]);
   const [showUserProjectsModal, setShowUserProjectsModal] =
     useState<boolean>(false);
   const toggleShowUserProjectModal = () => {

@@ -10,7 +10,7 @@ const useStyles = makeStyles((theme: Theme) =>
       width: "100%",
       height: "489px",
       position: "relative",
-      paddingTop: "100px",
+      paddingTop: "0px",
     },
     header: {
       fontFamily: "Poppins",
@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme: Theme) =>
         fontSize: "35px",
         lineHeight: "46px",
         transform: "translate(-50%,0%)",
-      }
+      },
     },
     container: {
       width: "100%",
@@ -40,8 +40,8 @@ const useStyles = makeStyles((theme: Theme) =>
     worldMap: {
       [theme.breakpoints.down("sm")]: {
         transform: "translate(-50%,-30%)",
-      }
-    }
+      },
+    },
   })
 );
 
