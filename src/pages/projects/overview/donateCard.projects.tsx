@@ -8,7 +8,7 @@ import { FavoriteSharp } from "@material-ui/icons";
 import { Container } from "../../../components/container/container";
 import { DonateButton } from "../../../components/DonateButton/DonateButton";
 import { iotaWalletAdress } from "../../../config";
-import {useIsMobile} from "../../../utils/isMobile";
+import { useIsMobile } from "../../../utils/isMobile";
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -57,7 +57,7 @@ export const ProjectsDonateCard = () => {
   const classes = useStyles();
   const onClick = () => null;
   const isMobile = useIsMobile();
-  if(isMobile) return null;
+  if (isMobile) return null;
 
   return (
     <div className={classes.root}>

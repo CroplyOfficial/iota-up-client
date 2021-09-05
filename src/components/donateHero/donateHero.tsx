@@ -8,7 +8,7 @@ import {
 import { Favorite } from "@material-ui/icons";
 import { DonateButton } from "../DonateButton/DonateButton";
 import { iotaWalletAdress } from "../../config";
-import {Container} from "../container/container";
+import { Container } from "../container/container";
 
 interface IProps {
   onClick?: () => void;
@@ -95,7 +95,6 @@ export const DonateHero = (props: IProps) => {
           <Favorite className={classes.icon} />
         </Button>
       </DonateButton>
-
     </div>
   );
 };

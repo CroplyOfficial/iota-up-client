@@ -1,4 +1,4 @@
-import { createStyles, makeStyles, Typography, Theme} from "@material-ui/core";
+import { createStyles, makeStyles, Typography, Theme } from "@material-ui/core";
 import {
   GoogleLoginButton,
   LinkedInLoginButton,
@@ -36,7 +36,7 @@ const useStyles = makeStyles((theme: Theme) =>
       padding: "15px",
       [theme.breakpoints.down("sm")]: {
         width: "80%",
-      }
+      },
     },
     button: {},
     header: {
