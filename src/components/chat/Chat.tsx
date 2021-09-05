@@ -41,9 +41,9 @@ export const Chat = (props: IProps) => {
         zIndex: 10000,
         display: "flex",
         flexDirection: "column",
-        position: "absolute",
+        position: "fixed",
         right: 0,
-        bottom: 0,
+        bottom: "0px",
         width: "288px",
         maxHeight: showMessages ? "700px" : "40px",
         transition: "max-height 0.3s ease-out",
@@ -51,6 +51,7 @@ export const Chat = (props: IProps) => {
         [theme.breakpoints.down("sm")]: {
           width: showMessages ? "100vw" : "0px",
           height: showMessages ? "calc(100vh - 70px)" : "0px",
+          top: "70px",
         },
       },
       header: {
