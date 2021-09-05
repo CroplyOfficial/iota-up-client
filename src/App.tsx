@@ -46,6 +46,7 @@ function App(props: any) {
             showMessages={showMessages}
             setShowMessages={setShowMessages}
             showList={showList}
+            setChatId={setChatId}
             setShowList={setShowList}
           />
           {userInfo && (

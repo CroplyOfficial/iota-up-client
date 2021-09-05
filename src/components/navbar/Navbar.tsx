@@ -31,6 +31,8 @@ import { DashboardCreateProjectModal } from "../../pages/dashboard/createProject
 import { logout } from "../../actions/userActions";
 import { useDispatch } from "react-redux";
 import { BrandLogoOutlined } from "../../static/icons/brand-logo.outlined";
+import { ADMIN, BARE_API } from "../../config";
+import { io } from "socket.io-client";
 
 const paths = {
   root: "/",
@@ -60,9 +62,11 @@ interface INavbarProps {
   setShowMessages: Function;
   showList: boolean;
   setShowList: Function;
+  setChatId: (id: string) => void;
 }
 export const Navbar = (props: INavbarProps) => {
-  const { showList, setShowList, setShowMessages, showMessages } = props;
+  const { showList, setShowList, setShowMessages, showMessages, setChatId } =
+    props;
   const dispatch = useDispatch();
   const [mobileView, setMobileView] = useState<boolean>(false);
   const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(false);
@@ -82,6 +86,20 @@ export const Navbar = (props: INavbarProps) => {
   const handleCreateProject = () => {
     toggleShowModal();
     toggleDrawerOpen();
+  };
+  const handleContactAdmin = () => {
+    const socket = io(BARE_API);
+
+    socket.emit("startChat", {
+      // @ts-ignore
+      partner: ADMIN,
+      token: userInfo?.token,
+    });
+    socket.on("chat", (chat: any) => {
+      setShowMessages(true);
+      setShowList(false);
+      setChatId(chat._id);
+    });
   };
 
   useEffect(() => {
@@ -226,8 +244,10 @@ export const Navbar = (props: INavbarProps) => {
         <Link to={paths.projects} className={classes.link}>
           <MenuItem className={classes.a}>Projects</MenuItem>
         </Link>
-        <Link to={paths.contactUs} className={classes.link}>
-          <MenuItem className={classes.a}>Contact Us</MenuItem>
+        <Link to="#" className={classes.link}>
+          <MenuItem className={classes.a} onClick={handleContactAdmin}>
+            Contact Us
+          </MenuItem>
         </Link>
 
         {!isLoggedIn ? (
@@ -301,8 +321,12 @@ export const Navbar = (props: INavbarProps) => {
             Projects
           </Typography>
         </Link>
-        <Link to={paths.contactUs} className={classes.link}>
-          <Typography variant="h5" className={classes.a}>
+        <Link to="#" className={classes.link}>
+          <Typography
+            variant="h5"
+            className={classes.a}
+            onClick={handleContactAdmin}
+          >
             Contact Us
           </Typography>
         </Link>
