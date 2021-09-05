@@ -7,7 +7,7 @@ import {
   Card as MaterialCard,
 } from "@material-ui/core";
 import { ICard } from "../../../interfaces/categoriesCard.interface";
-import { Link } from "react-router-dom";
+import { LinkToTop } from "../../../components/LinkToTop/LinkToTop";
 
 type stringOrHtml = string | React.ReactNode;
 interface IProps {
@@ -27,10 +27,9 @@ const useStyles = makeStyles((theme: Theme) =>
       paddingTop: "150px",
       paddingBottom: "150px",
       [theme.breakpoints.down("sm")]: {
-      paddingTop: "0rem",
-      paddingBottom: "0rem",
+        paddingTop: "0rem",
+        paddingBottom: "0rem",
       },
-
     },
     categoriesPreHeader: {
       fontFamily: "Poppins",
@@ -48,7 +47,7 @@ const useStyles = makeStyles((theme: Theme) =>
       lineHeight: "75px",
       paddingTop: "24px",
       textAlign: "center",
-      [theme.breakpoints.down("sm")]:{
+      [theme.breakpoints.down("sm")]: {
         fontSize: "26px",
         lineHeight: "32px",
       },
@@ -61,10 +60,10 @@ const useStyles = makeStyles((theme: Theme) =>
       lineHeight: "28px",
       paddingTop: "24px",
       textAlign: "center",
-      [theme.breakpoints.down("sm")]:{
+      [theme.breakpoints.down("sm")]: {
         fontSize: "16px",
         lineHeight: "28px",
-        textAlign:"start",
+        textAlign: "start",
         width: "100%",
       },
     },
@@ -92,8 +91,7 @@ const useStyles = makeStyles((theme: Theme) =>
         WebkitTransition: "all 5s ease",
         OTransition: "all 5s ease",
       },
-      [theme.breakpoints.down("sm")]: {
-      },
+      [theme.breakpoints.down("sm")]: {},
     },
     card: {
       width: "243.33px",
@@ -123,12 +121,12 @@ const useStyles = makeStyles((theme: Theme) =>
       },
     },
     cardIcon: {
-    [theme.breakpoints.down("sm")]:{
-      "& > svg": {
-        width: "32px",
-        height: "32px",
+      [theme.breakpoints.down("sm")]: {
+        "& > svg": {
+          width: "32px",
+          height: "32px",
+        },
       },
-      }
     },
     cardTitle: {
       paddingTop: "18px",
@@ -142,7 +140,7 @@ const useStyles = makeStyles((theme: Theme) =>
         overflowWrap: "anywhere",
         fontSize: "12px",
         lineHeight: "21px",
-      }
+      },
     },
   })
 );
@@ -186,7 +184,7 @@ const Card = (props: ICardProps) => {
   const { title, icon } = card;
   const classes = useStyles();
   return (
-    <Link
+    <LinkToTop
       to={`/projects?filter=${encodeURIComponent(
         title.toLowerCase()
       )}&order=newest`}
@@ -202,6 +200,6 @@ const Card = (props: ICardProps) => {
           {title}
         </Typography>
       </MaterialCard>
-    </Link>
+    </LinkToTop>
   );
 };

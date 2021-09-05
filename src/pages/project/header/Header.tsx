@@ -28,9 +28,9 @@ import { useIsMobile } from "../../../utils/isMobile";
 import { BARE_API, useFallbackImage } from "../../../config";
 import { io } from "socket.io-client";
 import { ReactComponent as UpVote2 } from "../../../static/images/icons/up2.svg";
+import { ReactComponent as LikeDonate } from "../../../static/images/icons/likedonate.svg";
 import Lightbox from "react-image-lightbox";
 import "react-image-lightbox/style.css";
-import { ReactComponent as LikeDonate } from "../../../static/images/icons/likedonate.svg";
 import { ReactComponent as UpVote } from "../../../static/images/icons/up.svg";
 import { YTEmbed } from "../../../components/YoutubeEmbed/YoutubeEmbed";
 
@@ -453,7 +453,7 @@ export const ProjectHeader = (props: IProps) => {
                     src={image}
                     className={classes.objectFill}
                     onClick={() => {
-                      setPhotoIndex(i);
+                      setPhotoIndex(i - 1);
                       setIsOpen(true);
                     }}
                   />

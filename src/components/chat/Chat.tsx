@@ -50,7 +50,7 @@ export const Chat = (props: IProps) => {
         boxShadow: "0 3px 10px rgb(0 0 0 / 0.2)",
         [theme.breakpoints.down("sm")]: {
           width: showMessages ? "100vw" : "0px",
-          height: showMessages ? "calc(100vh - 74px)" : "0px",
+          height: showMessages ? "100%" : "0px",
         },
       },
       header: {

@@ -166,7 +166,7 @@ export const EditableProjectBody = (props: IProps) => {
           )}
         </div>
         <div className={classes.right}>
-          <div className={classes.rightHeader}>Creator’s Other Projects</div>
+          <div className={classes.rightHeader}>Other Projects</div>
           {recommended &&
             recommended.slice(0, 2).map((p, i) => (
               <div>

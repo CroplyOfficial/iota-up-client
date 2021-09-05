@@ -181,12 +181,17 @@ const MessageChatList = (props: IProps) => {
                         : "msg-left"
                     }
                 `}
-                onContextMenu={(e) => {
-                  if (String(userInfo._id) === String(message.sender))
-                    handleMessageRightClick(e, message?._id);
-                }}
               >
-                <div className="message">
+                <div
+                  className="message"
+                  onContextMenu={(e) => {
+                    if (
+                      String(userInfo._id) === String(message.sender) &&
+                      message?.content !== "this message was deleted"
+                    )
+                      handleMessageRightClick(e, message?._id);
+                  }}
+                >
                   <div className="date">
                     {String(new Date(message.date).toString()).substring(4, 15)}
                   </div>

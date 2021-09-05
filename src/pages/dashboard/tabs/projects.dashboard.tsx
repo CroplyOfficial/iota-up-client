@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme: Theme) =>
       transform: "translate(0,-175px)",
       position: "relative",
       [theme.breakpoints.down("sm")]: {
-        transform: "translate(0,-350px)",
+        transform: "translate(0,-175px)",
         paddingLeft: "0rem",
       },
     },

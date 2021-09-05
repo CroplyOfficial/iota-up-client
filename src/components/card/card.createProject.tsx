@@ -84,7 +84,9 @@ export const CreateProjectCard = (props: IProps, ctx: any) => {
         color="primary"
         variant="contained"
         className={classes.button}
-        onClick={() => history.push("/project/" + project._id)}
+        onClick={() => {
+          window.location.href = "/project/" + project._id;
+        }}
       >
         View Project
       </Button>

@@ -204,14 +204,10 @@ interface IProps {
 export const ProjectImageModal = (props: IProps) => {
   const classes = useStyles();
   const { onClick, onSave, project } = props;
-  const [url, setUrl] = useState<string>("");
-  const [featuredImage, setFeaturedImage] = useState<string>(
-    project?.media[0] ?? ""
-  );
+  const [url, setUrl] = useState<string>(project?.video ?? "");
   const [images, setImages] = useState<string[]>(project?.media ?? []);
   const [file, setFile] = useState<any>();
   const [progress, setProgress] = useState<number>(0);
-  const [video, setVideo] = useState<string>();
   const [media, setMedia] = useState<string[]>(project?.media ?? []);
 
   const handleUrlOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -274,6 +270,7 @@ export const ProjectImageModal = (props: IProps) => {
                   url.includes(domain)
                 ) ? (
                   <TextField
+                    value={url}
                     label="Video Url"
                     className={classes.textField}
                     onChange={handleUrlOnChange}
@@ -298,12 +295,16 @@ export const ProjectImageModal = (props: IProps) => {
                 </Button> */}
                 <Typography className={classes.label}>Images</Typography>
                 <Button
-                  onClick={(e) =>
-                    document.getElementById("file-selector")?.click()
-                  }
-                  color="secondary"
+                  onClick={() => {
+                    if (media.length < 4) {
+                      document.getElementById("file-selector")?.click();
+                    }
+                  }}
+                  // @ts-ignore
+                  color={media.length >= 4 ? "disabled" : "secondary"}
                   className={classes.button}
                   variant="outlined"
+                  disableRipple={media.length >= 4}
                 >
                   Add Image
                 </Button>
