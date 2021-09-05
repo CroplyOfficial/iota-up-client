@@ -74,8 +74,7 @@ export const Card2 = (props: IProps) => {
 
   const mainImage = project?.media[0] || fallbackImage;
   const handleOnClick = () => {
-    history.push("/project/" + _id);
-    onClick && onClick();
+    window.location.href = "/project/" + _id;
   };
   return (
     <MaterialCard className={classes.root} onClick={handleOnClick}>
