@@ -9,6 +9,10 @@ const palette = {
     main: "#FF7468",
     contrastText: "#ffffff",
   },
+  disabled: {
+    main: "#9d9d9d",
+    contrastText: "#9d9d9d",
+  },
 };
 const _theme = createMuiTheme({ palette });
 export const theme = responsiveFontSizes(_theme);

@@ -5,6 +5,7 @@ import {
   Typography,
   Button,
   Theme,
+  SvgIcon,
   TextField,
 } from "@material-ui/core";
 import { FavoriteSharp, Money, CalendarToday } from "@material-ui/icons";
@@ -18,10 +19,12 @@ import { ProjectPageVariants } from "../../../interfaces/project.variants.interf
 import { ContributorPill } from "./contributor.pill";
 import { ContributorCheckBox } from "./contributor.checkbox";
 import { useFallbackImage } from "../../../config";
-
+import { ReactComponent as UpVote2 } from "../../../static/images/icons/up2.svg";
+import { ReactComponent as LikeDonate } from "../../../static/images/icons/likedonate.svg";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../../store";
 import axios from "axios";
+import { YTEmbed } from "../../../components/YoutubeEmbed/YoutubeEmbed";
 
 const KeyCodes = {
   comma: [188],
@@ -47,6 +50,7 @@ export const EditableProjectHeader = (props: IProps) => {
     name,
     media,
     backers,
+    video,
     tags: initialTags,
     category,
     upvotes,
@@ -426,10 +430,14 @@ export const EditableProjectHeader = (props: IProps) => {
             <div className={classes.editOverlay}>
               <h2 className={classes.editOverlayTitle}>EDIT</h2>
             </div>
-            <img src={mainImage} className={classes.objectFill} />
+            {video ? (
+              <YTEmbed height="425px" width="100%" url={video} />
+            ) : (
+              <img src={mainImage} className={classes.objectFill} />
+            )}
           </div>
           <div className={classes.imagesWrapper}>
-            {media.slice(1, media.length).map((image, i) => (
+            {media.map((image, i) => (
               <div className={"image-" + i++} onClick={showImageModal}>
                 <img src={image} className={classes.objectFill} />
               </div>
@@ -506,11 +514,13 @@ export const EditableProjectHeader = (props: IProps) => {
             */}
           <div className={classes.statsWrapper}>
             <div className={classes.stats}>
-              <Money fontSize="large" className={classes.statsIcon} />
+              <SvgIcon className={classes.statsIcon} fontSize="large">
+                <UpVote2 />
+              </SvgIcon>
               <div>
                 <div className={classes.headerWrapper}>
                   <Typography variant="h4" className={classes.statsHeader}>
-                    {upvotes}
+                    {upvotesCount}
                   </Typography>
                 </div>
                 <Typography variant="h4" className={classes.statsSubHeader}>
@@ -519,7 +529,9 @@ export const EditableProjectHeader = (props: IProps) => {
               </div>
             </div>
             <div className={classes.stats}>
-              <CalendarToday fontSize="large" className={classes.statsIcon} />
+              <SvgIcon className={classes.statsIcon} fontSize="large">
+                <LikeDonate />
+              </SvgIcon>
               <div>
                 <Typography variant="h4" className={classes.statsHeader}>
                   {backers}
