@@ -15,11 +15,11 @@ const useStyles = makeStyles((theme: Theme) =>
     textAlign: {
       textAlign: "center",
       [theme.breakpoints.down("sm")]: {
-      textAlign: "start",
-      }
+        textAlign: "start",
+      },
     },
     text: {
-    textAlign: "center",
+      textAlign: "center",
     },
     header: {
       fontFamily: "Poppins",
@@ -49,8 +49,8 @@ const useStyles = makeStyles((theme: Theme) =>
       flexGrow: 1,
       justifyContent: "space-around",
       [theme.breakpoints.down("sm")]: {
-      flexDirection: "column",
-      gap: "2.5rem",
+        flexDirection: "column",
+        gap: "2.5rem",
       },
     },
     actionButton: {},
@@ -77,12 +77,14 @@ interface IProps {
   subHeader: string | React.ReactNode;
   projects: IProject[] | undefined | null;
   onClick: () => void;
+  onClickButton: () => void;
 }
 
 export const FeaturedSection = (
   props: IProps & React.HTMLProps<HTMLElement>
 ) => {
-  const { title, subHeader, projects, onClick, className } = props;
+  const { title, subHeader, projects, onClick, onClickButton, className } =
+    props;
 
   const classes = useStyles();
   return (
@@ -91,11 +93,11 @@ export const FeaturedSection = (
         <Typography variant="h2" className={classes.header}>
           {title}
         </Typography>
-      <div className={classes.textAlign}> 
-        <Typography variant="h4" className={classes.subHeader}>
-          {subHeader}
-        </Typography>
-      </div>
+        <div className={classes.textAlign}>
+          <Typography variant="h4" className={classes.subHeader}>
+            {subHeader}
+          </Typography>
+        </div>
       </div>
       <div className={classes.cards}>
         {projects &&
@@ -109,7 +111,7 @@ export const FeaturedSection = (
           variant="contained"
           className={classes.actionButton}
           color="secondary"
-          onClick={onClick}
+          onClick={onClickButton}
         >
           <span className={classes.actionButtonSpan}> View More </span>
         </Button>

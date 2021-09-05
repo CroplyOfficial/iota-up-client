@@ -19,6 +19,7 @@ import { RootState } from "../../store";
 import { ProjectCreatePostModal } from "./createPostModal.project";
 import { UserProjectsModal } from "../../components/modals/UserProjectsModal";
 import { getProject } from "../../actions/projectsActions";
+import { useHistory } from "react-router";
 import axios from "axios";
 
 interface IRouteParams {
@@ -54,6 +55,7 @@ export const ProjectOverview = ({
   const classes = useStyles();
   const [trending, setTrending] = useState<IProject[] | undefined | null>();
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const trendingMeta = useSelector((state: RootState) => state.loadTrending);
   const { trendingProjects }: any = trendingMeta;
@@ -236,6 +238,10 @@ export const ProjectOverview = ({
               subHeader={featuredSubHeader}
               projects={trending}
               onClick={featuredOnClick}
+              onClickButton={() => {
+                window.scrollTo(0, 0);
+                history.push(`/projects?query=&filter=&order=popular`);
+              }}
             />
           </Container>
           <DonateHero />

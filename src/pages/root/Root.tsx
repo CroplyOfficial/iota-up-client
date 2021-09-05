@@ -15,6 +15,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useState, useEffect } from "react";
 import { RootState } from "../../store";
 import { IProject } from "../../interfaces/project.interface";
+import { useHistory } from "react-router";
 import {
   getTrendingProjects,
   getLatestProjects,
@@ -45,6 +46,7 @@ const useStyles = makeStyles((theme: Theme) =>
 interface IProps {}
 export const Root = (props: IProps) => {
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const [featured, setFeatured] = useState<IProject[] | undefined | null>();
   const [latest, setLatest] = useState<IProject[] | undefined | null>();
@@ -139,6 +141,10 @@ export const Root = (props: IProps) => {
           subHeader={featuredSubHeader}
           projects={featured}
           onClick={featuredOnClick}
+          onClickButton={() => {
+            window.scrollTo(0, 0);
+            history.push(`/projects?query=&filter=&order=popular`);
+          }}
         />
         <FeaturedSection
           className={classes.lastSection}
@@ -146,6 +152,10 @@ export const Root = (props: IProps) => {
           subHeader={latestSubHeader}
           projects={latest}
           onClick={latestOnClick}
+          onClickButton={() => {
+            window.scrollTo(0, 0);
+            history.push(`/projects?query=&filter=&order=newest`);
+          }}
         />
       </Container>
       {/*
