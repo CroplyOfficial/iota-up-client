@@ -1,0 +1,23 @@
+.infractions {
+  width: 90vw;
+  padding: 15px;
+  border-collapse: collapse;
+  box-sizing: border-box;
+  margin-left: 5vw;
+}
+
+.infractions th,
+.infractions td {
+  padding: 15px;
+  border: 1px solid gray;
+  width: 25%;
+}
+
+.infractions button {
+  padding: 10px;
+  border: none;
+  margin: 3px;
+  color: white;
+  background: gray;
+  border-radius: 3px;
+}

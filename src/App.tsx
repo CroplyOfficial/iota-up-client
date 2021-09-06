@@ -18,6 +18,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "./store";
 import { Privacy } from "./pages/Privacy/Privacy";
 import { Terms } from "./pages/Terms/Terms";
+import { Infractions } from "./pages/infractions/infractions";
 
 function App(props: any) {
   const [showingLoginModal, setShowingLoginModal] = useState<boolean>(false);
@@ -80,6 +81,7 @@ function App(props: any) {
             <Route path="/settings" exact component={Settings} />
             <Route path="/privacy" exact component={Privacy} />
             <Route path="/terms" exact component={Terms} />
+            <Route path="/infractions" exact component={Infractions} />
           </Switch>
         </Router>
       </ThemeProvider>
