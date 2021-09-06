@@ -550,14 +550,19 @@ export const ProjectHeader = (props: IProps) => {
                     <FavoriteSharp />
                   </Button>
                 </DonateButton>
-                <Button
-                  variant="outlined"
-                  color="primary"
-                  className={classes.button}
-                  onClick={contactCreator}
-                >
-                  Contact Creator
-                </Button>
+                {!userInfo ||
+                String(project?.author?.id) !== String(userInfo?._id) ? (
+                  <Button
+                    variant="outlined"
+                    color="primary"
+                    className={classes.button}
+                    onClick={contactCreator}
+                  >
+                    Contact Creator
+                  </Button>
+                ) : (
+                  <span></span>
+                )}
               </div>
             </div>
             <hr className={classes.hr} />

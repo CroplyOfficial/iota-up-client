@@ -139,7 +139,7 @@ export const ProjectsOverview = (props: IProps) => {
   const classes = useStyles();
   // TODO get popular Tags from API
   // TODO remove default popular tags in <ProjectsPopularSearch />
-  const loadMoreThreshold = 6;
+  const loadMoreThreshold = 100;
   const isMobile = useIsMobile();
   return (
     <div className={classes.root}>
