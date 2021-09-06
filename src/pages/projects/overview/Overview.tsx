@@ -6,8 +6,10 @@ import {
   Theme,
   Select,
   MenuItem,
+  CircularProgress,
 } from "@material-ui/core";
 import { ExpandMore } from "@material-ui/icons";
+import { useEffect, useState } from "react";
 import { Card } from "../../../components/card/card";
 import { ProjectsCard } from "../../../components/card/card3";
 import { Container } from "../../../components/container/container";
@@ -15,7 +17,6 @@ import { IProject } from "../../../interfaces/project.interface";
 import { useIsMobile } from "../../../utils/isMobile";
 import { ProjectsDonateCard } from "./donateCard.projects";
 import { ProjectsFilterCard } from "./filterCard.projects";
-import { ProjectsPopularSearch } from "./popularSearch.projects";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -115,15 +116,26 @@ interface IProps {
   projects: IProject[] | null | undefined;
   categories: ICategory[];
   sortMethod: string;
+  isLoading: boolean;
   setSortMethod: (method: string) => void;
   setCategories: (categories: ICategory[]) => void;
 }
 export const ProjectsOverview = (props: IProps) => {
-  const { projects, categories, setCategories, sortMethod, setSortMethod } =
-    props;
+  const {
+    projects,
+    categories,
+    setCategories,
+    sortMethod,
+    setSortMethod,
+    isLoading,
+  } = props;
   const onClick = () => {
     // TODO lazy load
   };
+  const [p, setP] = useState<IProject[] | undefined | null>();
+  useEffect(() => {
+    console.log("projecc", projects);
+  }, [projects]);
   const classes = useStyles();
   // TODO get popular Tags from API
   // TODO remove default popular tags in <ProjectsPopularSearch />
@@ -169,11 +181,14 @@ export const ProjectsOverview = (props: IProps) => {
               </Select>
             </div>
             <div className={classes.projectsWrapper}>
-              {projects &&
-                projects.map((p, i) => (
+              {isLoading ? (
+                <CircularProgress></CircularProgress>
+              ) : (
+                projects?.map((p, i) => (
                   //<Card project={p} key={"project-card#" + i++} />
                   <ProjectsCard project={p} key={"project-card#" + i++} />
-                ))}
+                ))
+              )}
             </div>
             {projects &&
             projects.length &&

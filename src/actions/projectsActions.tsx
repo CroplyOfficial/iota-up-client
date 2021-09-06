@@ -58,29 +58,34 @@ export const getProject = (id: string) => async (dispatch: any) => {
  * @reducer  loadProjects
  */
 
-export const getProjects = () => async (dispatch: any) => {
-  try {
-    dispatch({
-      type: PROJECTS_LOADING_REQUEST,
-    });
+export const getProjects =
+  (query?: string, filters?: string, order?: string) =>
+  async (dispatch: any) => {
+    try {
+      dispatch({
+        type: PROJECTS_LOADING_REQUEST,
+      });
 
-    const config = {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    };
-    const { data }: any = await axios.get("/api/projects", config);
-    dispatch({ type: PROJECTS_LOADING_SUCCESS, payload: data });
-  } catch (error) {
-    dispatch({
-      type: PROJECTS_LOADING_FAIL,
-      payload:
-        error.response && error.response.data.message
-          ? error.response.data.message
-          : error.message,
-    });
-  }
-};
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      };
+      const { data }: any = await axios.get(
+        `/api/projects?q=${query}&filters=${filters}&order=${order}`,
+        config
+      );
+      dispatch({ type: PROJECTS_LOADING_SUCCESS, payload: data });
+    } catch (error) {
+      dispatch({
+        type: PROJECTS_LOADING_FAIL,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      });
+    }
+  };
 
 /**
  * Get all the trending projects from the backend route
