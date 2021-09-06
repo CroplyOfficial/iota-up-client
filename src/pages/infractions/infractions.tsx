@@ -4,12 +4,14 @@ import { useSelector } from "react-redux";
 import { IInfraction } from "../../interfaces/infraction.interface";
 import { RootState } from "../../store";
 import { Link } from "react-router-dom";
+import { Modal, Button } from "@material-ui/core";
 import "./infractions.css";
 
 export const Infractions = () => {
   const [infractions, setInfractions] = useState<IInfraction[]>([]);
   const userInfoMeta = useSelector((state: RootState) => state.userLogin);
   const { userInfo }: any = userInfoMeta;
+  const [open, setOpen] = useState<boolean>(false);
 
   const getInfractions = async () => {
     const config = {
@@ -44,6 +46,34 @@ export const Infractions = () => {
     await getInfractions();
   };
 
+  const [action, setAction] = useState<string>();
+  const [id, setId] = useState<string>();
+
+  const commitAction = (act: string, id: string) => {
+    switch (act) {
+      case "delete":
+        handleDeleteProject(id);
+        setId("");
+        setAction("");
+        setOpen(false);
+        return;
+      case "ban":
+        handleBanUser(id);
+        setId("");
+        setAction("");
+        setOpen(false);
+        return;
+      case "ignore":
+        handleIgnoreInfraction(id);
+        setId("");
+        setAction("");
+        setOpen(false);
+        return;
+      default:
+        return;
+    }
+  };
+
   const handleIgnoreInfraction = async (id: string) => {
     const config = {
       headers: {
@@ -60,6 +90,27 @@ export const Infractions = () => {
 
   return (
     <div>
+      <Modal
+        open={open}
+        onClose={() => {
+          setOpen(false);
+        }}
+      >
+        <div className="modal">
+          <h1>Confirm {action}</h1>
+          <p>are you sure you want to go forward?</p>
+          <Button
+            variant="outlined"
+            color="secondary"
+            onClick={() => {
+              if (!(action && id)) return;
+              commitAction(action, id);
+            }}
+          >
+            CONFIRM
+          </Button>
+        </div>
+      </Modal>
       <table className="infractions">
         <tr>
           <th>User</th>
@@ -80,21 +131,27 @@ export const Infractions = () => {
               <td>
                 <button
                   onClick={() => {
-                    handleDeleteProject(infraction._id);
+                    setId(infraction._id);
+                    setAction("delete");
+                    setOpen(true);
                   }}
                 >
                   Delete Project
                 </button>
                 <button
                   onClick={() => {
-                    handleBanUser(infraction._id);
+                    setId(infraction._id);
+                    setAction("ban");
+                    setOpen(true);
                   }}
                 >
                   Ban User
                 </button>
                 <button
                   onClick={() => {
-                    handleIgnoreInfraction(infraction._id);
+                    setId(infraction._id);
+                    setAction("ignore");
+                    setOpen(true);
                   }}
                 >
                   Ignore Infraction
