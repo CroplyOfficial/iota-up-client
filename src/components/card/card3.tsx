@@ -116,7 +116,7 @@ export function ProjectsCard(props: IProps) {
       setCreator(data);
     };
     getCreator(projectAuthor);
-  }, []);
+  }, [project, projectAuthor]);
 
   const userInfoMeta = useSelector((state: RootState) => state.userLogin);
   const { userInfo }: any = userInfoMeta;

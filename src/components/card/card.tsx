@@ -143,6 +143,7 @@ export const Card = ({ project, history }: IProps) => {
 
   useEffect(() => {
     const getCreator = async (userId: string) => {
+      console.log("asdf");
       const { data }: any = await axios.get(`/api/users/overview/${userId}`, {
         headers: {
           "Content-Type": "application/json",

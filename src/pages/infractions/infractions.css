@@ -1,0 +1,32 @@
+.infractions {
+  width: 90vw;
+  padding: 15px;
+  border-collapse: collapse;
+  box-sizing: border-box;
+  margin-left: 5vw;
+}
+
+.infractions th,
+.infractions td {
+  padding: 15px;
+  border: 1px solid gray;
+  width: 25%;
+}
+
+.infractions button {
+  padding: 10px;
+  border: none;
+  margin: 3px;
+  color: white;
+  background: gray;
+  border-radius: 3px;
+}
+
+.modal {
+  background: white;
+  padding: 30px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
