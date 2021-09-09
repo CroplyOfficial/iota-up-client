@@ -102,7 +102,7 @@ export const ProjectHeader = (props: IProps) => {
         display: "flex",
         borderRadius: "20px",
         [theme.breakpoints.down("sm")]: {
-          flexDirection: "column-reverse",
+          flexDirection: "column",
         },
       },
       left: {
@@ -112,6 +112,7 @@ export const ProjectHeader = (props: IProps) => {
         [theme.breakpoints.down("sm")]: {
           width: "calc(100% - 60px)",
           maxWidth: "unset",
+          padding: "25px",
         },
       },
       mainImageWrapper: {
@@ -389,104 +390,292 @@ export const ProjectHeader = (props: IProps) => {
   const [photoIndex, setPhotoIndex] = useState<number>(0);
   const isMobile = useIsMobile();
 
-  return (
-    <>
-      {isOpen && (
-        <Lightbox
-          mainSrc={media[photoIndex]}
-          nextSrc={media[(photoIndex + 1) % media.length]}
-          prevSrc={media[(photoIndex + media.length - 1) % media.length]}
-          onCloseRequest={() => setIsOpen(false)}
-          onMovePrevRequest={() => {
-            setPhotoIndex((photoIndex + media.length - 1) % media.length);
-          }}
-          onMoveNextRequest={() => {
-            setPhotoIndex((photoIndex + 1) % media.length);
-          }}
-        />
-      )}
-      <Snackbar
-        open={showError.length ? true : false}
-        autoHideDuration={6000}
-        onClose={handleCloseError}
-      >
-        <Alert onClose={handleCloseError} severity="error">
-          {showError}
-        </Alert>
-      </Snackbar>
-      <Snackbar
-        open={showSuccess.length ? true : false}
-        autoHideDuration={6000}
-        onClose={handleCloseSuccess}
-      >
-        <Alert onClose={handleCloseSuccess} severity="success">
-          {showSuccess}
-        </Alert>
-      </Snackbar>
-      <Container maxWidth={isMobile ? "xl" : "sm"}>
-        <Card className={classes.root}>
-          <div className={classes.left}>
-            <div
-              className={classes.mainImageWrapper}
-              /* onClick={() => showImageModal()} */
-            >
-              {video ? (
-                <YTEmbed url={video} height="425px" width="100%" />
-              ) : (
-                <img
-                  src={mainImage}
-                  onClick={() => {
-                    setPhotoIndex(0);
-                    setIsOpen(true);
-                  }}
-                  className={classes.objectFill}
-                />
-              )}
-            </div>
-            <div className={classes.imagesWrapper}>
-              {media.map((image, i) => (
-                <div
-                  className={"image-" + i++}
-                  /*  onClick={showImageModal} */
-                >
+  function renderMobile() {
+    return (
+      <>
+        {isOpen && (
+          <Lightbox
+            mainSrc={media[photoIndex]}
+            nextSrc={media[(photoIndex + 1) % media.length]}
+            prevSrc={media[(photoIndex + media.length - 1) % media.length]}
+            onCloseRequest={() => setIsOpen(false)}
+            onMovePrevRequest={() => {
+              setPhotoIndex((photoIndex + media.length - 1) % media.length);
+            }}
+            onMoveNextRequest={() => {
+              setPhotoIndex((photoIndex + 1) % media.length);
+            }}
+          />
+        )}
+        <Snackbar
+          open={showError.length ? true : false}
+          autoHideDuration={6000}
+          onClose={handleCloseError}
+        >
+          <Alert onClose={handleCloseError} severity="error">
+            {showError}
+          </Alert>
+        </Snackbar>
+        <Snackbar
+          open={showSuccess.length ? true : false}
+          autoHideDuration={6000}
+          onClose={handleCloseSuccess}
+        >
+          <Alert onClose={handleCloseSuccess} severity="success">
+            {showSuccess}
+          </Alert>
+        </Snackbar>
+        <Container maxWidth={isMobile ? "xl" : "sm"}>
+          <Card className={classes.root}>
+            <div className={classes.left}>
+              <div
+                className={classes.mainImageWrapper}
+                /* onClick={() => showImageModal()} */
+              >
+                {video ? (
+                  <YTEmbed url={video} height="425px" width="100%" />
+                ) : (
                   <img
-                    src={image}
-                    className={classes.objectFill}
+                    src={mainImage}
                     onClick={() => {
-                      setPhotoIndex(i - 1);
+                      setPhotoIndex(0);
                       setIsOpen(true);
                     }}
+                    className={classes.objectFill}
                   />
+                )}
+              </div>
+              <div className={classes.imagesWrapper}>
+                {media.map((image, i) => (
+                  <div
+                    className={"image-" + i++}
+                    /*  onClick={showImageModal} */
+                  >
+                    <img
+                      src={image}
+                      className={classes.objectFill}
+                      onClick={() => {
+                        setPhotoIndex(i - 1);
+                        setIsOpen(true);
+                      }}
+                    />
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div className={classes.right}>
+              <Typography variant="h2" className={classes.title}>
+                {name}
+              </Typography>
+              <HeaderCardHeader
+                project={project}
+                handleUpvotes={handleUpvotes}
+                isLiked={isLiked}
+                showUserProjectsModal={showUserProjectsModal}
+              />
+              <ContributorPill project={project} />
+
+              <Typography
+                variant="body1"
+                component="span"
+                className={classes.description}
+              >
+                {desc}
+              </Typography>
+              <div className={classes.statsWrapper}>
+                <div className={classes.stats}>
+                  <SvgIcon className={classes.statsIcon} fontSize="large">
+                    <UpVote2 />
+                  </SvgIcon>
+                  <div>
+                    <div className={classes.headerWrapper}>
+                      <Typography variant="h4" className={classes.statsHeader}>
+                        {upvotesCount}
+                      </Typography>
+                    </div>
+                    <Typography variant="h4" className={classes.statsSubHeader}>
+                      UP Votes
+                    </Typography>
+                  </div>
                 </div>
-              ))}
+                <div className={classes.stats}>
+                  <SvgIcon className={classes.statsIcon} fontSize="large">
+                    <LikeDonate />
+                  </SvgIcon>
+                  <div>
+                    <Typography variant="h4" className={classes.statsHeader}>
+                      {backers}
+                    </Typography>
+                    <Typography variant="h4" className={classes.statsSubHeader}>
+                      Donations
+                    </Typography>
+                  </div>
+                </div>
+
+                <div className={classes.buttons}>
+                  <DonateButton
+                    wallet={wallet}
+                    text="DONATE"
+                    recipientName={name}
+                  >
+                    <Button
+                      variant="contained"
+                      color="secondary"
+                      className={classes.button}
+                      style={{ border: "none", color: "white" }}
+                    >
+                      Donate Now
+                      <FavoriteSharp />
+                    </Button>
+                  </DonateButton>
+                  <Button
+                    variant="outlined"
+                    color="primary"
+                    className={classes.button}
+                    onClick={contactCreator}
+                  >
+                    Contact Creator
+                  </Button>
+                </div>
+              </div>
+              <hr className={classes.hr} />
+              {isProjectAuthor ? (
+                <div className={classes.editButton}>
+                  <Button
+                    color="primary"
+                    variant="contained"
+                    className={classes.button}
+                    onClick={onToggle}
+                  >
+                    Edit Project
+                  </Button>
+                </div>
+              ) : (
+                ""
+              )}
+              <Typography className={classes.projectTagsHeader}>
+                Project Tags:
+              </Typography>
+              <div className={classes.pills}>
+                <span>
+                  <HeaderTags
+                    tags={category}
+                    variant={variant}
+                    className={classes.categories}
+                  />
+                  <HeaderTags
+                    tags={project.tags}
+                    variant={variant}
+                    className={classes.tags}
+                  />
+                </span>
+              </div>
             </div>
-            <Typography className={classes.projectTagsHeader}>
-              Project Tags:
-            </Typography>
-            <div className={classes.pills}>
-              <span>
-                <HeaderTags
-                  tags={category}
-                  variant={variant}
-                  className={classes.categories}
-                />
-                <HeaderTags
-                  tags={project.tags}
-                  variant={variant}
-                  className={classes.tags}
-                />
-              </span>
+          </Card>
+        </Container>
+      </>
+    );
+  }
+
+  function renderDesktop() {
+    return (
+      <>
+        {isOpen && (
+          <Lightbox
+            mainSrc={media[photoIndex]}
+            nextSrc={media[(photoIndex + 1) % media.length]}
+            prevSrc={media[(photoIndex + media.length - 1) % media.length]}
+            onCloseRequest={() => setIsOpen(false)}
+            onMovePrevRequest={() => {
+              setPhotoIndex((photoIndex + media.length - 1) % media.length);
+            }}
+            onMoveNextRequest={() => {
+              setPhotoIndex((photoIndex + 1) % media.length);
+            }}
+          />
+        )}
+        <Snackbar
+          open={showError.length ? true : false}
+          autoHideDuration={6000}
+          onClose={handleCloseError}
+        >
+          <Alert onClose={handleCloseError} severity="error">
+            {showError}
+          </Alert>
+        </Snackbar>
+        <Snackbar
+          open={showSuccess.length ? true : false}
+          autoHideDuration={6000}
+          onClose={handleCloseSuccess}
+        >
+          <Alert onClose={handleCloseSuccess} severity="success">
+            {showSuccess}
+          </Alert>
+        </Snackbar>
+        <Container maxWidth={isMobile ? "xl" : "sm"}>
+          <Card className={classes.root}>
+            <div className={classes.left}>
+              <div
+                className={classes.mainImageWrapper}
+                /* onClick={() => showImageModal()} */
+              >
+                {video ? (
+                  <YTEmbed url={video} height="425px" width="100%" />
+                ) : (
+                  <img
+                    src={mainImage}
+                    onClick={() => {
+                      setPhotoIndex(0);
+                      setIsOpen(true);
+                    }}
+                    className={classes.objectFill}
+                  />
+                )}
+              </div>
+              <div className={classes.imagesWrapper}>
+                {media.map((image, i) => (
+                  <div
+                    className={"image-" + i++}
+                    /*  onClick={showImageModal} */
+                  >
+                    <img
+                      src={image}
+                      className={classes.objectFill}
+                      onClick={() => {
+                        setPhotoIndex(i - 1);
+                        setIsOpen(true);
+                      }}
+                    />
+                  </div>
+                ))}
+              </div>
+              <Typography className={classes.projectTagsHeader}>
+                Project Tags:
+              </Typography>
+              <div className={classes.pills}>
+                <span>
+                  <HeaderTags
+                    tags={category}
+                    variant={variant}
+                    className={classes.categories}
+                  />
+                  <HeaderTags
+                    tags={project.tags}
+                    variant={variant}
+                    className={classes.tags}
+                  />
+                </span>
+              </div>
             </div>
-          </div>
-          <div className={classes.right}>
-            <HeaderCardHeader
-              project={project}
-              handleUpvotes={handleUpvotes}
-              isLiked={isLiked}
-              showUserProjectsModal={showUserProjectsModal}
-            />
-            <ContributorPill project={project} />
-            {/* <ContributorPill project={project} /> 
+            <div className={classes.right}>
+              <HeaderCardHeader
+                project={project}
+                handleUpvotes={handleUpvotes}
+                isLiked={isLiked}
+                showUserProjectsModal={showUserProjectsModal}
+              />
+              <ContributorPill project={project} />
+              {/* <ContributorPill project={project} /> 
  <ContributorCheckBox
             project={project}
             checked={lookingForContributors}
@@ -494,60 +683,82 @@ export const ProjectHeader = (props: IProps) => {
           />
 
           */}
-            <Typography variant="h2" className={classes.title}>
-              {name}
-            </Typography>
-            <Typography
-              variant="body1"
-              component="span"
-              className={classes.description}
-            >
-              {desc}
-            </Typography>
-            <div className={classes.statsWrapper}>
-              <div className={classes.stats}>
-                <SvgIcon className={classes.statsIcon} fontSize="large">
-                  <UpVote2 />
-                </SvgIcon>
-                <div>
-                  <div className={classes.headerWrapper}>
-                    <Typography variant="h4" className={classes.statsHeader}>
-                      {upvotesCount}
+              <Typography variant="h2" className={classes.title}>
+                {name}
+              </Typography>
+              <Typography
+                variant="body1"
+                component="span"
+                className={classes.description}
+              >
+                {desc}
+              </Typography>
+              <div className={classes.statsWrapper}>
+                <div className={classes.stats}>
+                  <SvgIcon className={classes.statsIcon} fontSize="large">
+                    <UpVote2 />
+                  </SvgIcon>
+                  <div>
+                    <div className={classes.headerWrapper}>
+                      <Typography variant="h4" className={classes.statsHeader}>
+                        {upvotesCount}
+                      </Typography>
+                    </div>
+                    <Typography variant="h4" className={classes.statsSubHeader}>
+                      UP Votes
                     </Typography>
                   </div>
-                  <Typography variant="h4" className={classes.statsSubHeader}>
-                    UP Votes
-                  </Typography>
                 </div>
-              </div>
-              <div className={classes.stats}>
-                <SvgIcon className={classes.statsIcon} fontSize="large">
-                  <LikeDonate />
-                </SvgIcon>
-                <div>
-                  <Typography variant="h4" className={classes.statsHeader}>
-                    {backers}
-                  </Typography>
-                  <Typography variant="h4" className={classes.statsSubHeader}>
-                    Donations
-                  </Typography>
+                <div className={classes.stats}>
+                  <SvgIcon className={classes.statsIcon} fontSize="large">
+                    <LikeDonate />
+                  </SvgIcon>
+                  <div>
+                    <Typography variant="h4" className={classes.statsHeader}>
+                      {backers}
+                    </Typography>
+                    <Typography variant="h4" className={classes.statsSubHeader}>
+                      Donations
+                    </Typography>
+                  </div>
                 </div>
-              </div>
 
-              <div className={classes.buttons}>
-                <DonateButton
-                  wallet={wallet}
-                  text="DONATE"
-                  recipientName={name}
-                >
-                  <Button
-                    variant="contained"
-                    color="secondary"
-                    className={classes.button}
-                    style={{ border: "none", color: "white" }}
+                <div className={classes.buttons}>
+                  <DonateButton
+                    wallet={wallet}
+                    text="DONATE"
+                    recipientName={name}
                   >
-                    Donate Now
-                    <FavoriteSharp />
+                    <Button
+                      variant="contained"
+                      color="secondary"
+                      className={classes.button}
+                      style={{ border: "none", color: "white" }}
+                    >
+                      Donate Now
+                      <FavoriteSharp />
+                    </Button>
+                  </DonateButton>
+                  <Button
+                    variant="outlined"
+                    color="primary"
+                    className={classes.button}
+                    onClick={contactCreator}
+                  >
+                    Contact Creator
+                  </Button>
+                </div>
+              </div>
+              <hr className={classes.hr} />
+              {isProjectAuthor ? (
+                <div className={classes.editButton}>
+                  <Button
+                    color="primary"
+                    variant="contained"
+                    className={classes.button}
+                    onClick={onToggle}
+                  >
+                    Edit Project
                   </Button>
                 </DonateButton>
                 {!userInfo ||
@@ -565,24 +776,10 @@ export const ProjectHeader = (props: IProps) => {
                 )}
               </div>
             </div>
-            <hr className={classes.hr} />
-            {isProjectAuthor ? (
-              <div className={classes.editButton}>
-                <Button
-                  color="primary"
-                  variant="contained"
-                  className={classes.button}
-                  onClick={onToggle}
-                >
-                  Edit Project
-                </Button>
-              </div>
-            ) : (
-              ""
-            )}
-          </div>
-        </Card>
-      </Container>
-    </>
-  );
+          </Card>
+        </Container>
+      </>
+    );
+  }
+  return isMobile ? renderMobile() : renderDesktop();
 };

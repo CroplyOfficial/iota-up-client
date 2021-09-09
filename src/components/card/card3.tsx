@@ -103,6 +103,10 @@ export function ProjectsCard(props: IProps) {
   const [creator, setCreator] = useState<ICreator>();
   const [upvoted, setUpvoted] = useState<boolean>(false);
   const [upvotes, setUpvotes] = useState<number>(project?.upvotes);
+  const [showingModal, setShowingModal] = useState<boolean>(false);
+  const toggleShowingModal = () => {
+    setShowingModal(!showingModal);
+  };
   const fallbackImage = useFallbackImage();
   const image = media[0] || fallbackImage;
 
@@ -147,94 +151,106 @@ export function ProjectsCard(props: IProps) {
   }, [myInfo]);
 
   return (
-    <StyledCard className={classes.root}>
-      <CardActionArea
-        onClick={(e) => (window.location.href = `/project/${project._id}`)}
-      >
-        <CardMedia
-          className={classes.media}
-          image={image}
-          title="Project Image"
-        />
-        <StyledCardContent>
-          <Typography
-            gutterBottom
-            variant="h5"
-            component="h2"
-            className={`${classes.green} ${classes.poppins} ${classes.w700}`}
-            style={{
-              fontSize: "18px",
-              lineHeight: "27px",
-              textTransform: "uppercase",
-            }}
-          >
-            {category[0]}
-          </Typography>
-          <Typography
-            variant="body2"
-            color="textSecondary"
-            component="p"
-            className={`${classes.w700} ${classes.black} ${classes.poppins}`}
-            style={{ fontSize: "20px", lineHeight: "30px" }}
-          >
-            {name}
-          </Typography>
-
-          <div className={classes.stats}>
-            <Typography variant="h6" className={classes.stat}>
-              <FavoriteBorder style={{ paddingRight: "20px" }} />
-              UP Votes
-              <span style={{ paddingLeft: "20px" }}> {upvotes} </span>
-            </Typography>
-          </div>
-        </StyledCardContent>
-      </CardActionArea>
-      <CardHeader
-        className={classes.cardHeader}
-        avatar={
-          <Avatar
-            src={creator?.avatar}
-            aria-label="avatar"
-            className={classes.avatar}
-          >
-            {creator?.fullName[0] || "R J"}
-          </Avatar>
-        }
-        action={
-          <IconButton aria-label="settings">
-            <SvgIcon
-              onClick={handleUpvotes}
-              color={upvoted ? "primary" : "disabled"}
-              style={{ width: "30px", height: "auto" }}
-            >
-              <UpButton />
-            </SvgIcon>
-          </IconButton>
-        }
-        title={
-          <span
-            className={`${classes.black} ${classes.poppins}`}
-            style={{ fontWeight: 500 }}
-          >
-            {creator?.displayName}
-          </span>
-        }
-        subheader={
-          <span>
-            <span
-              className={`${classes.green} ${classes.openSans} ${classes.w700}`}
-            >
-              {creator?.projects?.length || 0} Projects
-            </span>{" "}
-            <span
-              className={`${classes.grey} ${classes.openSans}`}
-              style={{ fontWeight: 400 }}
-            >
-              &bull; {creator?.city}, {creator?.country}
-            </span>
-          </span>
-        }
+    <>
+      <UserProjectsModal
+        onClick={toggleShowingModal}
+        project={project}
+        showing={showingModal}
+        setChatId={() => null}
+        setShowList={() => null}
+        setShowMessages={() => null}
       />
-    </StyledCard>
+      <StyledCard className={classes.root}>
+        <CardActionArea
+          onClick={(e) => (window.location.href = `/project/${project._id}`)}
+        >
+          <CardMedia
+            className={classes.media}
+            image={image}
+            title="Project Image"
+          />
+          <StyledCardContent>
+            <Typography
+              gutterBottom
+              variant="h5"
+              component="h2"
+              className={`${classes.green} ${classes.poppins} ${classes.w700}`}
+              style={{
+                fontSize: "18px",
+                lineHeight: "27px",
+                textTransform: "uppercase",
+              }}
+            >
+              {category[0]}
+            </Typography>
+            <Typography
+              variant="body2"
+              color="textSecondary"
+              component="p"
+              className={`${classes.w700} ${classes.black} ${classes.poppins}`}
+              style={{ fontSize: "20px", lineHeight: "30px" }}
+            >
+              {name}
+            </Typography>
+
+            <div className={classes.stats}>
+              <Typography variant="h6" className={classes.stat}>
+                <FavoriteBorder style={{ paddingRight: "20px" }} />
+                UP Votes
+                <span style={{ paddingLeft: "20px" }}> {upvotes} </span>
+              </Typography>
+            </div>
+          </StyledCardContent>
+        </CardActionArea>
+        <CardHeader
+          className={classes.cardHeader}
+          avatar={
+            <Avatar
+              src={creator?.avatar}
+              aria-label="avatar"
+              className={classes.avatar}
+              onClick={toggleShowingModal}
+            >
+              {creator?.fullName[0] || "R J"}
+            </Avatar>
+          }
+          action={
+            <IconButton aria-label="settings">
+              <SvgIcon
+                onClick={handleUpvotes}
+                color={upvoted ? "primary" : "disabled"}
+                style={{ width: "30px", height: "auto" }}
+              >
+                <UpButton />
+              </SvgIcon>
+            </IconButton>
+          }
+          title={
+            <span
+              className={`${classes.black} ${classes.poppins}`}
+              style={{ fontWeight: 500 }}
+              onClick={toggleShowingModal}
+            >
+              {creator?.displayName}
+            </span>
+          }
+          subheader={
+            <span onClick={toggleShowingModal}>
+              <span
+                className={`${classes.green} ${classes.openSans} ${classes.w700}`}
+              >
+                {creator?.projects?.length || 0} Projects
+              </span>{" "}
+              <span
+                className={`${classes.grey} ${classes.openSans}`}
+                style={{ fontWeight: 400 }}
+              >
+                &bull; {creator?.city}, {creator?.country}
+              </span>
+            </span>
+          }
+        />
+      </StyledCard>
+    </>
   );
 }

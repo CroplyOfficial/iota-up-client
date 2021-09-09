@@ -25,6 +25,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../../store";
 import axios from "axios";
 import { YTEmbed } from "../../../components/YoutubeEmbed/YoutubeEmbed";
+import { useIsMobile } from "../../../utils/isMobile";
 
 const KeyCodes = {
   comma: [188],
@@ -142,7 +143,7 @@ export const EditableProjectHeader = (props: IProps) => {
         display: "flex",
         borderRadius: "20px",
         [theme.breakpoints.down("sm")]: {
-          flexDirection: "column-reverse",
+          flexDirection: "column",
         },
       },
       left: {
@@ -419,69 +420,71 @@ export const EditableProjectHeader = (props: IProps) => {
   };
 
   const classes = useStyles();
-  return (
-    <Container>
-      <Card className={classes.root}>
-        <div className={classes.left}>
-          <div
-            className={classes.mainImageWrapper}
-            onClick={() => showImageModal()}
-          >
-            <div className={classes.editOverlay}>
-              <h2 className={classes.editOverlayTitle}>EDIT</h2>
-            </div>
-            {video ? (
-              <YTEmbed height="425px" width="100%" url={video} />
-            ) : (
-              <img src={mainImage} className={classes.objectFill} />
-            )}
-          </div>
-          <div className={classes.imagesWrapper}>
-            {media.map((image, i) => (
-              <div className={"image-" + i++} onClick={showImageModal}>
-                <img src={image} className={classes.objectFill} />
+  const isMobile = useIsMobile();
+  function renderDesktop() {
+    return (
+      <Container>
+        <Card className={classes.root}>
+          <div className={classes.left}>
+            <div
+              className={classes.mainImageWrapper}
+              onClick={() => showImageModal()}
+            >
+              <div className={classes.editOverlay}>
+                <h2 className={classes.editOverlayTitle}>EDIT</h2>
               </div>
-            ))}
-          </div>
-          <Typography className={classes.projectTagsHeader}>
-            Project Tags:
-          </Typography>
-          <div className={classes.pills}>
-            <span>
-              <HeaderTags
-                tags={category}
-                variant={variant}
-                className={classes.categories}
-              />
-              <EditableHeaderTags
-                tags={tags}
-                variant={variant}
-                className={classes.tags}
-                onDelete={removeChipAt}
-              />
-              <form onSubmit={(e: any) => handleAddSkill(e)}>
-                <TextField
-                  label="Add a tag"
-                  onChange={(e: any) => handleNewSkill(e)}
-                  value={newTag}
+              {video ? (
+                <YTEmbed height="425px" width="100%" url={video} />
+              ) : (
+                <img src={mainImage} className={classes.objectFill} />
+              )}
+            </div>
+            <div className={classes.imagesWrapper}>
+              {media.map((image, i) => (
+                <div className={"image-" + i++} onClick={showImageModal}>
+                  <img src={image} className={classes.objectFill} />
+                </div>
+              ))}
+            </div>
+            <Typography className={classes.projectTagsHeader}>
+              Project Tags:
+            </Typography>
+            <div className={classes.pills}>
+              <span>
+                <HeaderTags
+                  tags={category}
+                  variant={variant}
+                  className={classes.categories}
                 />
-              </form>
-            </span>
+                <EditableHeaderTags
+                  tags={tags}
+                  variant={variant}
+                  className={classes.tags}
+                  onDelete={removeChipAt}
+                />
+                <form onSubmit={(e: any) => handleAddSkill(e)}>
+                  <TextField
+                    label="Add a tag"
+                    onChange={(e: any) => handleNewSkill(e)}
+                    value={newTag}
+                  />
+                </form>
+              </span>
+            </div>
           </div>
-        </div>
-        <div className={classes.right}>
-          <HeaderCardHeader
-            project={project}
-            handleUpvotes={handleUpvotes}
-            isLiked={isLiked}
-            showUserProjectsModal={showUserProjectsModal}
-          />
-          <ContributorCheckBox
-            project={project}
-            checked={lookingForContributors}
-            onChange={onToggleCheckbox}
-          />
-          {/* <ContributorPill project={project} /> 
+          <div className={classes.right}>
+            <HeaderCardHeader
+              project={project}
+              handleUpvotes={handleUpvotes}
+              isLiked={isLiked}
+              showUserProjectsModal={showUserProjectsModal}
+            />
+            <ContributorCheckBox
+              project={project}
+              checked={lookingForContributors}
+              onChange={onToggleCheckbox}
+            />
+            {/* <ContributorPill project={project} /> 
  <ContributorCheckBox
             project={project}
             checked={lookingForContributors}
@@ -489,18 +492,18 @@ export const EditableProjectHeader = (props: IProps) => {
           />
 
           */}
-          <input
-            className={classes.title}
-            value={title}
-            onChange={handleChangeTitle}
-          />
+            <input
+              className={classes.title}
+              value={title}
+              onChange={handleChangeTitle}
+            />
 
-          <textarea
-            className={classes.description}
-            value={description}
-            onChange={handleChangeDescription}
-          />
-          {/*
+            <textarea
+              className={classes.description}
+              value={description}
+              onChange={handleChangeDescription}
+            />
+            {/*
           <Typography variant="h2" className={classes.title}>
             {name}
           </Typography>
@@ -512,77 +515,252 @@ export const EditableProjectHeader = (props: IProps) => {
             {desc}
           </Typography>
             */}
-          <div className={classes.statsWrapper}>
-            <div className={classes.stats}>
-              <SvgIcon className={classes.statsIcon} fontSize="large">
-                <UpVote2 />
-              </SvgIcon>
-              <div>
-                <div className={classes.headerWrapper}>
-                  <Typography variant="h4" className={classes.statsHeader}>
-                    {upvotesCount}
+            <div className={classes.statsWrapper}>
+              <div className={classes.stats}>
+                <SvgIcon className={classes.statsIcon} fontSize="large">
+                  <UpVote2 />
+                </SvgIcon>
+                <div>
+                  <div className={classes.headerWrapper}>
+                    <Typography variant="h4" className={classes.statsHeader}>
+                      {upvotesCount}
+                    </Typography>
+                  </div>
+                  <Typography variant="h4" className={classes.statsSubHeader}>
+                    UP Votes
                   </Typography>
                 </div>
-                <Typography variant="h4" className={classes.statsSubHeader}>
-                  UP Votes
-                </Typography>
+              </div>
+              <div className={classes.stats}>
+                <SvgIcon className={classes.statsIcon} fontSize="large">
+                  <LikeDonate />
+                </SvgIcon>
+                <div>
+                  <Typography variant="h4" className={classes.statsHeader}>
+                    {backers}
+                  </Typography>
+                  <Typography variant="h4" className={classes.statsSubHeader}>
+                    Donations
+                  </Typography>
+                </div>
+              </div>
+
+              <div className={classes.buttons}>
+                <Button
+                  variant="contained"
+                  color="secondary"
+                  className={classes.button}
+                  style={{ border: "none", color: "white" }}
+                >
+                  Donate Now
+                  <FavoriteSharp />
+                </Button>
+                <Button
+                  variant="outlined"
+                  color="primary"
+                  className={classes.button}
+                >
+                  Contact Creator
+                </Button>
               </div>
             </div>
-            <div className={classes.stats}>
-              <SvgIcon className={classes.statsIcon} fontSize="large">
-                <LikeDonate />
-              </SvgIcon>
-              <div>
-                <Typography variant="h4" className={classes.statsHeader}>
-                  {backers}
-                </Typography>
-                <Typography variant="h4" className={classes.statsSubHeader}>
-                  Donations
-                </Typography>
+            <hr className={classes.hr} />
+            <div className={classes.editButton}>
+              <Button
+                color="primary"
+                variant="contained"
+                className={classes.button}
+                onClick={handleSaveProject}
+              >
+                Save Project
+              </Button>
+              <Button
+                color="secondary"
+                variant="outlined"
+                className={classes.button}
+                style={{ marginRight: "15px" }}
+                onClick={onToggle}
+              >
+                Cancel
+              </Button>
+            </div>
+          </div>
+        </Card>
+      </Container>
+    );
+  }
+
+  function renderMobile() {
+    return (
+      <Container>
+        <Card className={classes.root}>
+          <div className={classes.left}>
+            <div
+              className={classes.mainImageWrapper}
+              onClick={() => showImageModal()}
+            >
+              <div className={classes.editOverlay}>
+                <h2 className={classes.editOverlayTitle}>EDIT</h2>
               </div>
+              {video ? (
+                <YTEmbed height="425px" width="100%" url={video} />
+              ) : (
+                <img src={mainImage} className={classes.objectFill} />
+              )}
+            </div>
+            <div className={classes.imagesWrapper}>
+              {media.map((image, i) => (
+                <div className={"image-" + i++} onClick={showImageModal}>
+                  <img src={image} className={classes.objectFill} />
+                </div>
+              ))}
+            </div>
+             <input
+              className={classes.title}
+              value={title}
+              onChange={handleChangeTitle}
+            />
+            <HeaderCardHeader
+              project={project}
+              handleUpvotes={handleUpvotes}
+              isLiked={isLiked}
+              showUserProjectsModal={showUserProjectsModal}
+            />
+            <ContributorCheckBox
+              project={project}
+              checked={lookingForContributors}
+              onChange={onToggleCheckbox}
+            />
+
+                      </div>
+          <div className={classes.right}>
+                      {/* <ContributorPill project={project} /> 
+ <ContributorCheckBox
+            project={project}
+            checked={lookingForContributors}
+            onChange={onToggleCheckbox}
+          />
+
+          */}
+           
+
+            <textarea
+              className={classes.description}
+              value={description}
+              onChange={handleChangeDescription}
+            />
+            {/*
+          <Typography variant="h2" className={classes.title}>
+            {name}
+          </Typography>
+          <Typography
+            variant="body1"
+            component="span"
+            className={classes.description}
+          >
+            {desc}
+          </Typography>
+            */}
+            <div className={classes.statsWrapper}>
+              <div className={classes.stats}>
+                <SvgIcon className={classes.statsIcon} fontSize="large">
+                  <UpVote2 />
+                </SvgIcon>
+                <div>
+                  <div className={classes.headerWrapper}>
+                    <Typography variant="h4" className={classes.statsHeader}>
+                      {upvotesCount}
+                    </Typography>
+                  </div>
+                  <Typography variant="h4" className={classes.statsSubHeader}>
+                    UP Votes
+                  </Typography>
+                </div>
+              </div>
+              <div className={classes.stats}>
+                <SvgIcon className={classes.statsIcon} fontSize="large">
+                  <LikeDonate />
+                </SvgIcon>
+                <div>
+                  <Typography variant="h4" className={classes.statsHeader}>
+                    {backers}
+                  </Typography>
+                  <Typography variant="h4" className={classes.statsSubHeader}>
+                    Donations
+                  </Typography>
+                </div>
+              </div>
+
+              <div className={classes.buttons}>
+                <Button
+                  variant="contained"
+                  color="secondary"
+                  className={classes.button}
+                  style={{ border: "none", color: "white" }}
+                >
+                  Donate Now
+                  <FavoriteSharp />
+                </Button>
+                <Button
+                  variant="outlined"
+                  color="primary"
+                  className={classes.button}
+                >
+                  Contact Creator
+                </Button>
+              </div>
+            </div>
+            <hr className={classes.hr} />
+            <div className={classes.editButton}>
+              <Button
+                color="primary"
+                variant="contained"
+                className={classes.button}
+                onClick={handleSaveProject}
+              >
+                Save Project
+              </Button>
+              <Button
+                color="secondary"
+                variant="outlined"
+                className={classes.button}
+                style={{ marginRight: "15px" }}
+                onClick={onToggle}
+              >
+                Cancel
+              </Button>
+            </div>
+          <Typography className={classes.projectTagsHeader}>
+              Project Tags:
+            </Typography>
+            <div className={classes.pills}>
+              <span>
+                <HeaderTags
+                  tags={category}
+                  variant={variant}
+                  className={classes.categories}
+                />
+                <EditableHeaderTags
+                  tags={tags}
+                  variant={variant}
+                  className={classes.tags}
+                  onDelete={removeChipAt}
+                />
+                <form onSubmit={(e: any) => handleAddSkill(e)}>
+                  <TextField
+                    label="Add a tag"
+                    onChange={(e: any) => handleNewSkill(e)}
+                    value={newTag}
+                  />
+                </form>
+              </span>
             </div>
 
-            <div className={classes.buttons}>
-              <Button
-                variant="contained"
-                color="secondary"
-                className={classes.button}
-                style={{ border: "none", color: "white" }}
-              >
-                Donate Now
-                <FavoriteSharp />
-              </Button>
-              <Button
-                variant="outlined"
-                color="primary"
-                className={classes.button}
-              >
-                Contact Creator
-              </Button>
-            </div>
           </div>
-          <hr className={classes.hr} />
-          <div className={classes.editButton}>
-            <Button
-              color="primary"
-              variant="contained"
-              className={classes.button}
-              onClick={handleSaveProject}
-            >
-              Save Project
-            </Button>
-            <Button
-              color="secondary"
-              variant="outlined"
-              className={classes.button}
-              style={{ marginRight: "15px" }}
-              onClick={onToggle}
-            >
-              Cancel
-            </Button>
-          </div>
-        </div>
-      </Card>
-    </Container>
-  );
+        </Card>
+      </Container>
+    );
+  }
+
+  return isMobile ? renderMobile() : renderDesktop();
 };
