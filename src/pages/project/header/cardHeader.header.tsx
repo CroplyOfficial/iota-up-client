@@ -11,8 +11,9 @@ import {
   MenuItem,
   MenuProps,
   withStyles,
-ListItemIcon,
-  ListItemText
+  ListItemIcon,
+  Snackbar,
+  ListItemText,
 } from "@material-ui/core";
 import {
   Flag,
@@ -27,10 +28,12 @@ import { ReactComponent as UpButton } from "../../../static/images/icons/up.svg"
 import { UserProjectsModal } from "../../../components/modals/UserProjectsModal";
 import { useState, useEffect } from "react";
 import { RWebShare } from "react-web-share";
+import { Alert } from "../../../components/alert";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../store";
 import { VerifyDeleteProjectModal } from "../../../components/modals/verifyDeleteProjectModal";
-import {useIsMobile} from "../../../utils/isMobile";
+import { useIsMobile } from "../../../utils/isMobile";
+import axios from "axios";
 
 interface IProps {
   project: IProject;
@@ -70,8 +73,6 @@ const StyledMenuItem = withStyles((theme: Theme) => ({
   },
 }))(MenuItem);
 
-
-
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
@@ -81,7 +82,7 @@ const useStyles = makeStyles((theme: Theme) =>
       width: "100%",
       [theme.breakpoints.down("sm")]: {
         height: "40px",
-      }
+      },
     },
     headerWrapper: {},
     header: {
@@ -93,8 +94,8 @@ const useStyles = makeStyles((theme: Theme) =>
       cursor: "pointer",
       [theme.breakpoints.down("sm")]: {
         fontSize: "0.875rem",
-        lineHeight: "1.43"
-      }
+        lineHeight: "1.43",
+      },
     },
     subHeader: {
       fontFamily: "Open Sans",
@@ -108,9 +109,9 @@ const useStyles = makeStyles((theme: Theme) =>
       [theme.breakpoints.down("sm")]: {
         fontSize: "0.875rem",
         lineHeight: "1.43",
-      }
+      },
     },
-    
+
     subHeader2: {
       fontFamily: "Open Sans",
       fontWeight: 400,
@@ -121,8 +122,8 @@ const useStyles = makeStyles((theme: Theme) =>
       [theme.breakpoints.down("sm")]: {
         fontSize: "0.875rem",
         lineHeight: "1.43",
-        display: "none"
-      }
+        display: "none",
+      },
     },
     subHeaderWrapper: {
       display: "flex",
@@ -139,7 +140,7 @@ const useStyles = makeStyles((theme: Theme) =>
       [theme.breakpoints.down("sm")]: {
         height: "40px",
         width: "40px",
-      }
+      },
     },
     action: {
       display: "flex",
@@ -177,6 +178,30 @@ export const HeaderCardHeader = (props: IProps) => {
   const { userInfo }: any = userInfoMeta;
   //@ts-ignore
   const isProjectAuthor = userInfo?._id === project?.projectAuthor;
+  const [showError, setShowError] = useState<string>("");
+  const [showSuccess, setShowSuccess] = useState<string>("");
+
+  const handleFlagProject = async () => {
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+    axios
+      .get(`/api/projects/flag/${project._id}`, config)
+      .then(() => {
+        setShowSuccess("Project Reported!");
+      })
+      .catch((error) => {
+        setShowError(error.response.data.message);
+      });
+  };
+
+  const handleCloseSnack = () => {
+    setShowError("");
+    setShowSuccess("");
+  };
 
   const [showingDeleteModal, setShowingDeleteModal] = useState<boolean>(false);
   const toggleShowDeleteModal = () => {
@@ -191,6 +216,24 @@ export const HeaderCardHeader = (props: IProps) => {
           project={project}
         />
       )}
+      <Snackbar
+        open={showError.length ? true : false}
+        autoHideDuration={6000}
+        onClose={handleCloseSnack}
+      >
+        <Alert onClose={handleCloseSnack} severity="error">
+          {showError}
+        </Alert>
+      </Snackbar>
+      <Snackbar
+        open={showSuccess.length ? true : false}
+        autoHideDuration={6000}
+        onClose={handleCloseSnack}
+      >
+        <Alert onClose={handleCloseSnack} severity="success">
+          {showSuccess}
+        </Alert>
+      </Snackbar>
       <CardHeader
         className={classes.root}
         avatar={
@@ -226,107 +269,117 @@ export const HeaderCardHeader = (props: IProps) => {
         }
         action={
           <div className={classes.action}>
-            {isMobile ? <>
-              <IconButton onClick={handleClick}>
-                <MoreVert  />
-              </IconButton>
-      <StyledMenu
-        id="simple-menu"
-        anchorEl={anchorEl}
-        keepMounted
-        open={Boolean(anchorEl)}
-        onClose={handleClose}
-      >
-        <MenuItem onClick={() => {
-        handleClose();
-        if(isProjectAuthor) {
-          toggleShowDeleteModal();
-        }
-        else {
-          // TODO flag
-        }
-        }
-        }>
-          <ListItemIcon>
-          {isProjectAuthor ?
-            <DeleteForever
-              color="disabled"
-                          />
-            : <Flag color="disabled" />
-          }
-          </ListItemIcon>
-          <ListItemText primary={!isProjectAuthor ? "Flag" : "Delete"} />
-        </MenuItem>
-        <MenuItem onClick={() => {handleClose();}}>
-          <ListItemIcon>
-            <RWebShare
-                data={{
-                  text: `Checkout this project on the UP! It's called ${project.name}. I think you'll like it!`,
-                  url: window.location.href,
-                  title: "Share this project on the UP.",
-                }}
-                onClick={() => console.log(document.querySelectorAll(".rwebshare"))}
-                className="rwebshare"
-              >
-                <Share color="disabled" />
-              </RWebShare>
-          </ListItemIcon>
-          <ListItemText primary="Share" />
-        </MenuItem>
-        <MenuItem onClick={() => {
-        handleClose();
-        //@ts-ignore
-        handleUpvotes();
-        }} >
-          <ListItemIcon>
-            <SvgIcon
-                color={isLiked ? "primary" : "disabled"}
-              >
-                <UpButton />
-              </SvgIcon>
-          </ListItemIcon>
-          <ListItemText primary={isLiked ? "Remove Vote" : "UP Vote"} />
-        </MenuItem>
-      </StyledMenu>
-  
-            </> : <>
-            {isProjectAuthor ? 
-              <IconButton>
-                <DeleteForever
-                  fontSize="large"
-                  color="disabled"
-                  onClick={toggleShowDeleteModal}
-                />
-              </IconButton>
-             : (
-              <IconButton>
-                <Flag fontSize="large" color="disabled" />
-              </IconButton>
+            {isMobile ? (
+              <>
+                <IconButton onClick={handleClick}>
+                  <MoreVert />
+                </IconButton>
+                <StyledMenu
+                  id="simple-menu"
+                  anchorEl={anchorEl}
+                  keepMounted
+                  open={Boolean(anchorEl)}
+                  onClose={handleClose}
+                >
+                  <MenuItem
+                    onClick={() => {
+                      handleClose();
+                      if (isProjectAuthor) {
+                        toggleShowDeleteModal();
+                      } else {
+                        // TODO flag
+                      }
+                    }}
+                  >
+                    <ListItemIcon>
+                      {isProjectAuthor ? (
+                        <DeleteForever color="disabled" />
+                      ) : (
+                        <Flag color="disabled" />
+                      )}
+                    </ListItemIcon>
+                    <ListItemText
+                      primary={!isProjectAuthor ? "Flag" : "Delete"}
+                    />
+                  </MenuItem>
+                  <MenuItem
+                    onClick={() => {
+                      handleClose();
+                    }}
+                  >
+                    <ListItemIcon>
+                      <RWebShare
+                        data={{
+                          text: `Checkout this project on the UP! It's called ${project.name}. I think you'll like it!`,
+                          url: window.location.href,
+                          title: "Share this project on the UP.",
+                        }}
+                        onClick={() =>
+                          console.log(document.querySelectorAll(".rwebshare"))
+                        }
+                        className="rwebshare"
+                      >
+                        <Share color="disabled" />
+                      </RWebShare>
+                    </ListItemIcon>
+                    <ListItemText primary="Share" />
+                  </MenuItem>
+                  <MenuItem
+                    onClick={() => {
+                      handleClose();
+                      //@ts-ignore
+                      handleUpvotes();
+                    }}
+                  >
+                    <ListItemIcon>
+                      <SvgIcon color={isLiked ? "primary" : "disabled"}>
+                        <UpButton />
+                      </SvgIcon>
+                    </ListItemIcon>
+                    <ListItemText
+                      primary={isLiked ? "Remove Vote" : "UP Vote"}
+                    />
+                  </MenuItem>
+                </StyledMenu>
+              </>
+            ) : (
+              <>
+                {isProjectAuthor ? (
+                  <IconButton>
+                    <DeleteForever
+                      fontSize="large"
+                      color="disabled"
+                      onClick={toggleShowDeleteModal}
+                    />
+                  </IconButton>
+                ) : (
+                  <IconButton onClick={handleFlagProject}>
+                    <Flag fontSize="large" color="disabled" />
+                  </IconButton>
+                )}
+                <IconButton>
+                  <RWebShare
+                    data={{
+                      text: `Checkout this project on the UP! It's called ${project.name}. I think you'll like it!`,
+                      url: window.location.href,
+                      title: "Share this project on the UP.",
+                    }}
+                    onClick={() => console.log("shared it")}
+                  >
+                    <Share fontSize="large" color="disabled" />
+                  </RWebShare>
+                </IconButton>
+                <IconButton onClick={handleUpvotes}>
+                  {/* <ArrowUpward fontSize="large" color="primary" /> */}
+                  <SvgIcon
+                    fontSize="large"
+                    color={isLiked ? "primary" : "disabled"}
+                  >
+                    <UpButton />
+                  </SvgIcon>
+                </IconButton>
+              </>
             )}
-            <IconButton>
-              <RWebShare
-                data={{
-                  text: `Checkout this project on the UP! It's called ${project.name}. I think you'll like it!`,
-                  url: window.location.href,
-                  title: "Share this project on the UP.",
-                }}
-                onClick={() => console.log("shared it")}
-              >
-                <Share fontSize="large" color="disabled" />
-              </RWebShare>
-            </IconButton>
-            <IconButton onClick={handleUpvotes}>
-              {/* <ArrowUpward fontSize="large" color="primary" /> */}
-              <SvgIcon
-                fontSize="large"
-                color={isLiked ? "primary" : "disabled"}
-              >
-                <UpButton />
-              </SvgIcon>
-            </IconButton>
-            
-            </>
-            }
           </div>
         }
       />

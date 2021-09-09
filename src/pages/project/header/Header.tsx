@@ -760,10 +760,21 @@ export const ProjectHeader = (props: IProps) => {
                   >
                     Edit Project
                   </Button>
-                </div>
-              ) : (
-                ""
-              )}
+                </DonateButton>
+                {!userInfo ||
+                String(project?.author?.id) !== String(userInfo?._id) ? (
+                  <Button
+                    variant="outlined"
+                    color="primary"
+                    className={classes.button}
+                    onClick={contactCreator}
+                  >
+                    Contact Creator
+                  </Button>
+                ) : (
+                  <span></span>
+                )}
+              </div>
             </div>
           </Card>
         </Container>
