@@ -80,6 +80,7 @@ export const Users = () => {
       <table className="infractions">
         <tr>
           <th>User</th>
+          <th>Projects</th>
           <th>isBanned</th>
           <th>isAdmin</th>
           <th>Actions</th>
@@ -87,7 +88,33 @@ export const Users = () => {
         {users &&
           users?.map((user: IUser) => (
             <tr>
-              <td>{`${user.firstName} ${user.lastName} (${user.email})`}</td>
+              <td>
+                <div className="user-info">
+                  <img
+                    src={user.avatar}
+                    alt={user.username ?? user.firstName}
+                    className="user-avatar"
+                  />
+                  <div className="user-info-data">
+                    {`${user.firstName} ${user.lastName}`}
+                    <br />
+                    {`(${user.email}) (${user.username})`}
+                  </div>
+                </div>
+              </td>
+              <td>
+                <ul>
+                  {user.projects && user.projects.length > 0 ? (
+                    user.projects?.map((project: any) => (
+                      <li>
+                        <a href={`/project/${project._id}`}>{project.name}</a>
+                      </li>
+                    ))
+                  ) : (
+                    <li>No projects</li>
+                  )}
+                </ul>
+              </td>
               <td>{String(user.isBanned)}</td>
               <td>{String(user.isAdmin)}</td>
               <td>
