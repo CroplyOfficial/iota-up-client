@@ -63,7 +63,6 @@ const useStyles = makeStyles((theme: Theme) =>
     projectsWrapper: {
       display: "flex",
       flexWrap: "wrap",
-      gap: "25px",
       padding: "0",
       width: "100%",
       justifyContent: "flex-start",

@@ -39,6 +39,7 @@ const useStyles = makeStyles((theme: Theme) =>
       maxHeight: "569px",
       //height: "569px",
       borderRadius: ".8rem",
+      margin: "10px",
       [theme.breakpoints.down("sm")]: {
         width: "100%",
         maxWidth: "414px",
