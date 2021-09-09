@@ -66,17 +66,21 @@ export const ChatMessageList = (props: IProps) => {
         const otherMember = c?.members.filter(
           (member: any) => String(member._id) !== String(userInfo._id)
         )[0];
-        const otherName = otherMember.username ?? otherMember.firstName;
-        return {
-          avatar: otherMember.avatar,
-          alt: otherName,
-          title: otherName,
-          subtitle: c?.messages[0] ? c.messages[0].content : "",
-          date: new Date(
-            (c?.messages[0] && c?.messages[0].date) || new Date().getTime()
-          ),
-          id: c?._id,
-        };
+        if (otherMember) {
+          const otherName = otherMember
+            ? otherMember.username ?? otherMember.firstName
+            : "";
+          return {
+            avatar: otherMember.avatar,
+            alt: otherName,
+            title: otherName,
+            subtitle: c?.messages[0] ? c.messages[0].content : "",
+            date: new Date(
+              (c?.messages[0] && c?.messages[0].date) || new Date().getTime()
+            ),
+            id: c?._id,
+          };
+        }
       });
       setChatsData(handleDataSources);
     }
