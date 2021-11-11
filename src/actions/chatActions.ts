@@ -33,7 +33,7 @@ export const getMyChats = () => async (dispatch: any, getState: any) => {
       type: GET_CHATS_SUCCESS,
       payload: data,
     });
-  } catch (error) {
+  } catch (error: any) {
     dispatch({
       type: GET_CHATS_FAIL,
       payload:
@@ -66,7 +66,7 @@ export const chatById =
         type: GET_CHAT_SUCCESS,
         payload: data,
       });
-    } catch (error) {
+    } catch (error: any) {
       dispatch({
         type: GET_CHAT_FAIL,
         payload:

@@ -40,7 +40,7 @@ export const getProject = (id: string) => async (dispatch: any) => {
       type: PROJECT_LOADING_SUCCESS,
       payload: data,
     });
-  } catch (error) {
+  } catch (error: any) {
     dispatch({
       type: PROJECT_LOADING_FAIL,
       payload:
@@ -76,7 +76,7 @@ export const getProjects =
         config
       );
       dispatch({ type: PROJECTS_LOADING_SUCCESS, payload: data });
-    } catch (error) {
+    } catch (error: any) {
       dispatch({
         type: PROJECTS_LOADING_FAIL,
         payload:
@@ -108,7 +108,7 @@ export const getTrendingProjects = () => async (dispatch: any) => {
       type: GET_TRENDING_SUCCESS,
       payload: data,
     });
-  } catch (error) {
+  } catch (error: any) {
     dispatch({
       type: GET_TRENDING_FAIL,
       payload:
@@ -141,7 +141,7 @@ export const getRecommendedProjects = () => async (dispatch: any) => {
       type: GET_RECOMMENDED_SUCCESS,
       payload: data,
     });
-  } catch (error) {
+  } catch (error: any) {
     dispatch({
       type: GET_RECOMMENDED_FAIL,
       payload:
@@ -175,7 +175,7 @@ export const getLatestProjects = () => async (dispatch: any) => {
     });
     console.log(data);
     dispatch({ type: GET_LATEST_SUCCESS, payload: data });
-  } catch (error) {
+  } catch (error: any) {
     dispatch({
       type: GET_LATEST_FAIL,
       payload:
@@ -213,7 +213,7 @@ export const getMyProjects = () => async (dispatch: any, getState: any) => {
       config
     );
     dispatch({ type: GET_MY_PROJECTS_SUCCESS, payload: data });
-  } catch (error) {
+  } catch (error: any) {
     dispatch({
       type: GET_MY_PROJECTS_FAIL,
       payload:
