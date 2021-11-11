@@ -13,7 +13,7 @@ export const fallbackProjectImage =
   "https://images.unsplash.com/photo-1604966795869-8df0b4517138?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1051&q=80";
 export const iotaWalletAdress =
   "iota1qz82u5g8gd7vje2d64wtcunjeakasfm04729laqy32wknfwervfwgw65z3h";
-export const CHAT_URL = "https://api.iotaup.com";
+export const CHAT_URL = "http://api.iotaup.com";
 export const MainCategories = {
   community: [
     "business",
