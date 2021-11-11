@@ -136,8 +136,6 @@ export const ProjectsOverview = (props: IProps) => {
     console.log("projecc", projects);
   }, [projects]);
   const classes = useStyles();
-  // TODO get popular Tags from API
-  // TODO remove default popular tags in <ProjectsPopularSearch />
   const loadMoreThreshold = 100;
   const isMobile = useIsMobile();
   return (

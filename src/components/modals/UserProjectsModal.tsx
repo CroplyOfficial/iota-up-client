@@ -18,7 +18,7 @@ import axios from "axios";
 import { RootState } from "../../store";
 import { useSelector } from "react-redux";
 import { Facebook, LinkedIn } from "@material-ui/icons";
-import { API, CHAT_URL } from "../../config";
+import { CHAT_URL } from "../../config";
 import { IProject } from "../../interfaces/project.interface";
 import { CloseSharp } from "@material-ui/icons";
 import { Card2 } from "../card/card2";

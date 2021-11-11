@@ -2,7 +2,7 @@ import { RootState } from "../../../store";
 import { IUser } from "../../../interfaces/user.interface";
 import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
-import { API } from "../../../config";
+import { AUTH_ROOT } from "../../../config";
 import {
   createStyles,
   makeStyles,
@@ -344,7 +344,7 @@ export const DashboardProfile = (props: IProps) => {
             <div
               className={classes.social}
               onClick={() =>
-                (window.location.href = `${API}/users/authfacebook`)
+                (window.location.href = `${AUTH_ROOT}/users/authfacebook`)
               }
             >
               <Chip
@@ -359,7 +359,9 @@ export const DashboardProfile = (props: IProps) => {
             </div>
             <div
               className={classes.social}
-              onClick={() => (window.location.href = `${API}/users/authgoogle`)}
+              onClick={() =>
+                (window.location.href = `${AUTH_ROOT}/users/authgoogle`)
+              }
             >
               <Chip
                 label="Google"
@@ -372,7 +374,7 @@ export const DashboardProfile = (props: IProps) => {
             <div
               className={classes.social}
               onClick={() =>
-                (window.location.href = `${API}/users/authlinkedin`)
+                (window.location.href = `${AUTH_ROOT}/users/authlinkedin`)
               }
             >
               <Chip

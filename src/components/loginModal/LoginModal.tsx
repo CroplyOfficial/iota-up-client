@@ -4,7 +4,7 @@ import {
   LinkedInLoginButton,
   FacebookLoginButton,
 } from "react-social-login-buttons";
-import { API } from "../../config";
+import { AUTH_ROOT } from "../../config";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -77,13 +77,19 @@ export const LoginModal = (props: IProps) => {
         </header>
         <section className={classes.body}>
           <GoogleLoginButton
-            onClick={() => (window.location.href = `${API}/users/authgoogle`)}
+            onClick={() =>
+              (window.location.href = `${AUTH_ROOT}/users/authgoogle`)
+            }
           />
           <LinkedInLoginButton
-            onClick={() => (window.location.href = `${API}/users/authlinkedin`)}
+            onClick={() =>
+              (window.location.href = `${AUTH_ROOT}/users/authlinkedin`)
+            }
           />
           <FacebookLoginButton
-            onClick={() => (window.location.href = `${API}/users/authfacebook`)}
+            onClick={() =>
+              (window.location.href = `${AUTH_ROOT}/users/authfacebook`)
+            }
           />
         </section>
         <footer className={classes.footer}></footer>
