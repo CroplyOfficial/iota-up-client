@@ -13,7 +13,7 @@ import { RootState } from "../../store";
 import { MessageChatList } from "./chatList";
 import { io } from "socket.io-client";
 import { IChat } from "../../interfaces/chat.interface";
-import { BARE_API } from "../../config";
+import { CHAT_URL} from "../../config";
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -46,7 +46,7 @@ export const ChatMessageList = (props: IProps) => {
   const { userInfo } = usersMeta;
 
   useEffect(() => {
-    socket = io(BARE_API);
+    socket = io(CHAT_URL);
 
     socket.on("connect", () => {
       if (!userInfo) return;
