@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import socketIOClient from "socket.io-client";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
-import { BARE_API } from "../../config";
+import { CHAT_URL } from "../../config";
 
 const useChat = ({ token, chatId }: { token: string; chatId: string }) => {
   const [chat, setChat] = useState([]);
@@ -18,7 +18,7 @@ const useChat = ({ token, chatId }: { token: string; chatId: string }) => {
 
   useEffect(() => {
     if (socketRef) {
-      socketRef.current = socketIOClient(BARE_API, {
+      socketRef.current = socketIOClient(CHAT_URL, {
         query: { chatId },
       });
 
