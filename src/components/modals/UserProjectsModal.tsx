@@ -18,7 +18,7 @@ import axios from "axios";
 import { RootState } from "../../store";
 import { useSelector } from "react-redux";
 import { Facebook, LinkedIn } from "@material-ui/icons";
-import { API, BARE_API } from "../../config";
+import { API, CHAT_URL } from "../../config";
 import { IProject } from "../../interfaces/project.interface";
 import { CloseSharp } from "@material-ui/icons";
 import { Card2 } from "../card/card2";
@@ -248,7 +248,7 @@ export const UserProjectsModal = ({
 
   const handleContactCreator = () => {
     console.log("asdf");
-    const socket = io(BARE_API);
+    const socket = io(CHAT_URL);
     socket.emit("startChat", {
       partner: project?.author?.id,
       token: userInfo?.token,

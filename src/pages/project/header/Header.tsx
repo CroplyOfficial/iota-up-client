@@ -25,7 +25,7 @@ import { userLoginReducer } from "../../../reducers/userReducers";
 import axios from "axios";
 import { DonateButton } from "../../../components/DonateButton/DonateButton";
 import { useIsMobile } from "../../../utils/isMobile";
-import { BARE_API, useFallbackImage } from "../../../config";
+import { CHAT_URL, useFallbackImage } from "../../../config";
 import { io } from "socket.io-client";
 import { ReactComponent as UpVote2 } from "../../../static/images/icons/up2.svg";
 import { ReactComponent as LikeDonate } from "../../../static/images/icons/likedonate.svg";
@@ -361,7 +361,7 @@ export const ProjectHeader = (props: IProps) => {
     }
   };
 
-  const socket = io(BARE_API);
+  const socket = io(CHAT_URL);
 
   const contactCreator = async () => {
     console.log(author);

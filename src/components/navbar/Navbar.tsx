@@ -31,7 +31,7 @@ import { DashboardCreateProjectModal } from "../../pages/dashboard/createProject
 import { logout } from "../../actions/userActions";
 import { useDispatch } from "react-redux";
 import { BrandLogoOutlined } from "../../static/icons/brand-logo.outlined";
-import { ADMIN, BARE_API } from "../../config";
+import { ADMIN, CHAT_URL } from "../../config";
 import { io } from "socket.io-client";
 
 const paths = {
@@ -88,7 +88,7 @@ export const Navbar = (props: INavbarProps) => {
     toggleDrawerOpen();
   };
   const handleContactAdmin = () => {
-    const socket = io(BARE_API);
+    const socket = io(CHAT_URL);
 
     socket.emit("startChat", {
       // @ts-ignore
